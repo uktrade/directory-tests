@@ -15,7 +15,7 @@ from contextlib import contextmanager
 from pprint import pprint
 from random import choice
 from string import ascii_uppercase
-from typing import Callable, DefaultDict, List, Union
+from typing import DefaultDict, List, Union
 
 import lxml
 import requests
@@ -29,7 +29,7 @@ from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfinterp import PDFPageInterpreter, PDFResourceManager
 from pdfminer.pdfpage import PDFPage
-from requests import Response, Session
+from requests import Response
 from scrapy.selector import Selector
 from termcolor import cprint
 from directory_tests_shared import URLs
@@ -39,6 +39,7 @@ from tests.functional.utils.context_utils import (
     Company,
     Feedback,
     Message,
+    update_actor,
 )
 from tests.functional.utils.request import Method, check_response, make_request
 from tests.functional.utils.stannpclient import STANNP_CLIENT
@@ -625,7 +626,7 @@ def extract_and_set_csrf_middleware_token(
     :param response: request with HTML content containing CSRF middleware token
     """
     token = extract_csrf_middleware_token(response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+    update_actor(context, supplier_alias, csrfmiddlewaretoken=token)
 
 
 def random_case_study_data(alias: str) -> CaseStudy:

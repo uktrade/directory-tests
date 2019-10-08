@@ -42,7 +42,7 @@ from tests.functional.steps.when_impl import (
 
 @given('"{supplier_alias}" is an unauthenticated supplier')
 def given_an_unauthenticated_supplier(context, supplier_alias):
-    context.add_actor(unauthenticated_supplier(supplier_alias))
+    add_actor(context, unauthenticated_supplier(supplier_alias))
 
 
 @given(
@@ -103,7 +103,7 @@ def given_supplier_added_complete_case_study(context, supplier_alias, case_alias
 @given('"{buyer_alias}" is a buyer')
 def given_unauthenticated_buyer(context, buyer_alias):
     buyer = unauthenticated_buyer(buyer_alias)
-    context.add_actor(buyer)
+    add_actor(context, buyer)
 
 
 @given('"{buyer_alias}" has found a company "{company_alias}" on Find a Supplier site')

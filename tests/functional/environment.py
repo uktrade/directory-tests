@@ -4,10 +4,7 @@ import logging
 from pprint import pformat
 
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
-from tests.functional.utils.context_utils import (
-    initialize_scenario_data,
-    patch_context,
-)
+from tests.functional.utils.context_utils import initialize_scenario_data
 from tests.functional.utils.generic import (
     blue,
     delete_supplier_data_from_dir,
@@ -95,7 +92,7 @@ def after_scenario(context, scenario):
         if actor.type == "supplier":
             delete_supplier_data_from_sso(actor.email, context=context)
             if actor.company_alias:
-                company = context.get_company(actor.company_alias)
+                company = get_company(context, actor.company_alias)
                 if not company:
                     logging.warning(
                         f"Could not find company '{actor.company_alias}' details in context.scenario_data.companies. "
@@ -108,7 +105,7 @@ def after_scenario(context, scenario):
                     delete_supplier_data_from_dir(company.number, context=context)
                 else:
                     delete_supplier_data_from_dir(company.title, context=context)
-                context.set_company_details(alias=company.alias, deleted=True)
+                set_company_details(context, alias=company.alias, deleted=True)
             if scenario.status == "failed":
                 red("Deleted %s supplier data from DIR & SSO DB" % actor.email)
     # clear the scenario data after every scenario
@@ -118,5 +115,3 @@ def after_scenario(context, scenario):
 
 def before_all(context):
     context.config.setup_logging(configfile=".behave_logging")
-    # this will add some handy functions to the `context` object
-    patch_context(context)

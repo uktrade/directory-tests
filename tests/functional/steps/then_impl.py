@@ -30,6 +30,13 @@ from tests.functional.pages import (
     profile,
     sso,
 )
+from tests.functional.utils.context_utils import (
+    get_actor,
+    get_company,
+    reset_actor_session,
+    set_company_logo_detail,
+    update_actor,
+)
 from tests.functional.utils.generic import (
     assertion_msg,
     check_hash_of_remote_file,
@@ -63,9 +70,9 @@ def reg_should_get_verification_email(
 ):
     """Will check if the Supplier received an email verification message."""
     logging.debug("Looking for an email verification message...")
-    actor = context.get_actor(alias)
+    actor = get_actor(context, alias)
     link = get_verification_link(actor.email, subject=subject)
-    context.update_actor(alias, email_confirmation_link=link)
+    update_actor(context, alias, email_confirmation_link=link)
 
 
 def prof_should_be_told_about_missing_description(
@@ -76,15 +83,15 @@ def prof_should_be_told_about_missing_description(
 
 
 def fas_should_be_on_profile_page(context, supplier_alias, company_alias):
-    actor = context.get_actor(supplier_alias)
-    company = context.get_company(actor.company_alias)
+    actor = get_actor(context, supplier_alias)
+    company = get_company(context, actor.company_alias)
     fas.profile.should_be_here(context.response, number=company.number)
     logging.debug("%s is on the %s company's FAS page", supplier_alias, company_alias)
 
 
 def fas_check_profiles(context: Context, supplier_alias: str):
-    actor = context.get_actor(supplier_alias)
-    company = context.get_company(actor.company_alias)
+    actor = get_actor(context, supplier_alias)
+    company = get_company(context, actor.company_alias)
     # Step 1 - go to company's profile page on FAS
     response = fas.profile.go_to(actor.session, company.number)
     context.response = response
@@ -144,7 +151,7 @@ def sso_should_be_signed_in_to_sso_account(context: Context, supplier_alias: str
 
 def sso_should_be_signed_out_from_sso_account(context: Context, supplier_alias: str):
     """Sign out from SSO."""
-    actor = context.get_actor(supplier_alias)
+    actor = get_actor(context, supplier_alias)
     session = actor.session
 
     # Step 1 - Get to the Sign Out confirmation page
@@ -155,7 +162,7 @@ def sso_should_be_signed_out_from_sso_account(context: Context, supplier_alias: 
     # Step 2 - check if Supplier is on Log Out page & extract CSRF token
     sso.logout.should_be_here(response)
     token = extract_csrf_middleware_token(response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+    update_actor(context, supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 3 - log out
     next_param = URLs.PROFILE_LANDING.absolute
@@ -167,12 +174,12 @@ def sso_should_be_signed_out_from_sso_account(context: Context, supplier_alias: 
     profile.about.should_be_logged_out(response)
 
     # Step 5 - reset requests Session object
-    context.reset_actor_session(supplier_alias)
+    reset_actor_session(context, supplier_alias)
 
 
 def profile_should_be_told_about_invalid_links(context: Context, supplier_alias: str):
-    actor = context.get_actor(supplier_alias)
-    company = context.get_company(actor.company_alias)
+    actor = get_actor(context, supplier_alias)
+    company = get_company(context, actor.company_alias)
 
     facebook = True if company.facebook else False
     linkedin = True if company.linkedin else False
@@ -193,19 +200,19 @@ def profile_should_be_told_about_invalid_links(context: Context, supplier_alias:
 
 def profile_should_see_all_case_studies(context: Context, supplier_alias: str):
     """Check if Supplier can see all case studies on FAB profile page."""
-    actor = context.get_actor(supplier_alias)
-    case_studies = context.get_company(actor.company_alias).case_studies
+    actor = get_actor(context, supplier_alias)
+    case_studies = get_company(context, actor.company_alias).case_studies
     profile.edit_company_profile.should_see_case_studies(case_studies, context.response)
 
 
 def fas_should_see_all_case_studies(context: Context, supplier_alias: str):
     """Check if Supplier can see all case studies on FAS profile page."""
-    actor = context.get_actor(supplier_alias)
-    company = context.get_company(actor.company_alias)
+    actor = get_actor(context, supplier_alias)
+    company = get_company(context, actor.company_alias)
     response = fas.profile.go_to(actor.session, company.number)
     context.response = response
     fas.profile.should_be_here(response)
-    case_studies = context.get_company(actor.company_alias).case_studies
+    case_studies = get_company(context, actor.company_alias).case_studies
     fas.profile.should_see_case_studies(case_studies, response)
     logging.debug(
         "%s can see all %d Case Studies on FAS Company's " "Directory Profile Page",
@@ -218,8 +225,8 @@ def profile_should_see_logo_picture(context: Context, supplier_alias: str):
     """Will check if Company's Logo visible on FAB profile page is the same as
     the uploaded one.
     """
-    actor = context.get_actor(supplier_alias)
-    company = context.get_company(actor.company_alias)
+    actor = get_actor(context, supplier_alias)
+    company = get_company(context, actor.company_alias)
     logo_url = company.logo_url
     logo_hash = company.logo_hash
     logo_picture = company.logo_picture
@@ -237,9 +244,9 @@ def profile_should_see_logo_picture(context: Context, supplier_alias: str):
 
 def fas_should_see_png_logo_thumbnail(context: Context, supplier_alias: str):
     """Will check if Company's PNG thumbnail logo visible on FAS profile."""
-    actor = context.get_actor(supplier_alias)
+    actor = get_actor(context, supplier_alias)
     session = actor.session
-    company = context.get_company(actor.company_alias)
+    company = get_company(context, actor.company_alias)
 
     # Step 1 - Go to the FAS profile page & extract URL of visible logo image
     response = fas.profile.go_to(session, company.number)
@@ -254,7 +261,7 @@ def fas_should_see_png_logo_thumbnail(context: Context, supplier_alias: str):
         assert visible_logo_url != placeholder
     with assertion_msg("Expected PNG logo thumbnail, but got: %s", visible_logo_url):
         assert visible_logo_url.lower().endswith(".png")
-    context.set_company_logo_detail(actor.company_alias, url=visible_logo_url)
+    set_company_logo_detail(context, actor.company_alias, url=visible_logo_url)
     logging.debug("Set Company's logo URL to: %s", visible_logo_url)
 
 
@@ -262,9 +269,9 @@ def fas_should_see_different_png_logo_thumbnail(context: Context, actor_alias: s
     """Will check if Company's Logo visible on FAS profile page is the same as
     the one uploaded on FAB.
     """
-    actor = context.get_actor(actor_alias)
+    actor = get_actor(context, actor_alias)
     session = actor.session
-    company = context.get_company(actor.company_alias)
+    company = get_company(context, actor.company_alias)
     fas_logo_url = company.logo_url
 
     # Step 1 - Go to the FAS profile page & extract URL of visible logo image
@@ -307,8 +314,8 @@ def profile_all_unsupported_files_should_be_rejected(
 
 def profile_should_see_online_profiles(context: Context, supplier_alias: str):
     """Check if Supplier can see all online Profiles on FAB Profile page."""
-    actor = context.get_actor(supplier_alias)
-    company = context.get_company(actor.company_alias)
+    actor = get_actor(context, supplier_alias)
+    company = get_company(context, actor.company_alias)
     response = context.response
     profile.edit_company_profile.should_see_online_profiles(company, response)
 
@@ -345,8 +352,8 @@ def profile_profile_is_published(context: Context, supplier_alias: str):
 def profile_should_see_company_details(
     context: Context, supplier_alias: str, page_name: str
 ):
-    actor = context.get_actor(supplier_alias)
-    company = context.get_company(actor.company_alias)
+    actor = get_actor(context, supplier_alias)
+    company = get_company(context, actor.company_alias)
     page = get_page_object(page_name)
     has_action(page, "go_to")
     has_action(page, "should_see_details")
@@ -387,9 +394,9 @@ def fas_find_supplier_using_case_study_details(
     :param max_pages: (optional) maximum number of search result pages to go
                       through
     """
-    actor = context.get_actor(buyer_alias)
+    actor = get_actor(context, buyer_alias)
     session = actor.session
-    company = context.get_company(company_alias)
+    company = get_company(context, company_alias)
     case_study = company.case_studies[case_alias]
     keys = SEARCHABLE_CASE_STUDY_DETAILS
     if properties:
@@ -451,9 +458,9 @@ def fas_find_supplier_using_case_study_details(
 def fas_supplier_cannot_be_found_using_case_study_details(
     context: Context, buyer_alias: str, company_alias: str, case_alias: str
 ):
-    actor = context.get_actor(buyer_alias)
+    actor = get_actor(context, buyer_alias)
     session = actor.session
-    company = context.get_company(company_alias)
+    company = get_company(context, company_alias)
     case_study = company.case_studies[case_alias]
     keys = SEARCHABLE_CASE_STUDY_DETAILS
     search_terms = {}
@@ -503,7 +510,7 @@ def fas_should_not_find_with_company_details(
     This step requires the search_results dict to be stored in context
     """
     assert hasattr(context, "search_results")
-    company = context.get_company(company_alias)
+    company = get_company(context, company_alias)
     for result in context.search_results:
         # get response for specific search request. This helps to debug
         logging.debug(f"Search results: {context.search_results}")
@@ -527,7 +534,7 @@ def fas_should_find_with_company_details(
     This step requires the search_results dict to be stored in context
     """
     assert hasattr(context, "search_results")
-    company = context.get_company(company_alias)
+    company = get_company(context, company_alias)
     for result in context.search_results:
         # get response for specific search request. This helps to debug
         logging.debug(f"Search results: {context.search_results}")
@@ -642,7 +649,7 @@ def fas_should_be_told_that_message_has_been_sent(
     context: Context, buyer_alias: str, company_alias: str
 ):
     response = context.response
-    company = context.get_company(company_alias)
+    company = get_company(context, company_alias)
     fas.contact.should_see_that_message_has_been_sent(company, response)
     logging.debug(
         "%s was told that the message to '%s' (%s) has been sent",
@@ -655,8 +662,8 @@ def fas_should_be_told_that_message_has_been_sent(
 def fas_supplier_should_receive_message_from_buyer(
     context: Context, supplier_alias: str, buyer_alias: str
 ):
-    buyer = context.get_actor(buyer_alias)
-    supplier = context.get_actor(supplier_alias)
+    buyer = get_actor(context, buyer_alias)
+    supplier = get_actor(context, supplier_alias)
     context.response = get_email_notification(
         from_email=buyer.email,
         to_email=supplier.email,
@@ -764,7 +771,7 @@ def fas_should_see_unfiltered_search_results(context: Context, actor_alias: str)
 def fas_should_see_company_once_in_search_results(
     context: Context, actor_alias: str, company_alias: str
 ):
-    company = context.get_company(company_alias)
+    company = get_company(context, company_alias)
     results = context.results
     founds = [
         (page, result["found"]) for page, result in results.items() if result["found"]
@@ -863,9 +870,9 @@ def sso_should_be_told_about_password_reset(context: Context, supplier_alias: st
 def sso_should_get_password_reset_email(context: Context, supplier_alias: str):
     """Will check if the Supplier received an email verification message."""
     logging.debug("Searching for a password reset email...")
-    actor = context.get_actor(supplier_alias)
+    actor = get_actor(context, supplier_alias)
     link = get_password_reset_link(actor.email)
-    context.update_actor(supplier_alias, password_reset_link=link)
+    update_actor(context, supplier_alias, password_reset_link=link)
 
 
 def sso_should_see_invalid_password_reset_link_error(
@@ -935,13 +942,13 @@ def sso_should_get_request_for_collaboration_email(
 ):
     actor_aliases = [alias.strip() for alias in actor_aliases.split(",")]
     for actor_alias in actor_aliases:
-        actor = context.get_actor(actor_alias)
-        company = context.get_company(company_alias)
+        actor = get_actor(context, actor_alias)
+        company = get_company(context, company_alias)
         subject = PROFILE_INVITATION_MSG_SUBJECT.format(
             company_title=company.title.upper()
         )
         link = get_verification_link(actor.email, subject=subject)
-        context.update_actor(
+        update_actor(context,
             actor_alias,
             invitation_for_collaboration_link=link,
             company_alias=company_alias,
@@ -949,7 +956,7 @@ def sso_should_get_request_for_collaboration_email(
 
 
 def sud_should_see_options_to_manage_users(context: Context, actor_alias: str):
-    actor = context.get_actor(actor_alias)
+    actor = get_actor(context, actor_alias)
     session = actor.session
 
     context.response = profile.business_profile.go_to(session)
@@ -966,7 +973,7 @@ def sud_should_not_see_options_to_manage_users(context: Context, actor_alias: st
     To circumvent this behaviour we have to go to the "About" page first, and
     then visit the SUD "Find a Buyer" page
     """
-    actor = context.get_actor(actor_alias)
+    actor = get_actor(context, actor_alias)
     session = actor.session
     context.response = profile.about.go_to(session, set_next_page=False)
     profile.about.should_be_here(context.response)
@@ -981,11 +988,11 @@ def sud_should_not_see_options_to_manage_users(context: Context, actor_alias: st
 def profile_should_get_request_for_becoming_owner(
     context: Context, new_owner_alias: str, company_alias: str
 ):
-    actor = context.get_actor(new_owner_alias)
-    company = context.get_company(company_alias)
+    actor = get_actor(context, new_owner_alias)
+    company = get_company(context, company_alias)
     subject = PROFILE_INVITATION_MSG_SUBJECT.format(company_title=company.title.upper())
     link = get_verification_link(actor.email, subject=subject)
-    context.update_actor(
+    update_actor(context,
         new_owner_alias, ownership_request_link=link, company_alias=company_alias
     )
 
@@ -994,12 +1001,12 @@ def fab_should_not_see_collaborator(
     context: Context, supplier_alias: str, collaborators_aliases: str
 ):
     aliases = [alias.strip() for alias in collaborators_aliases.split(",")]
-    supplier = context.get_actor(supplier_alias)
+    supplier = get_actor(context, supplier_alias)
     response = fab.account_remove_collaborator.go_to(supplier.session)
     context.response = response
 
     for collaborator_alias in aliases:
-        collaborator = context.get_actor(collaborator_alias)
+        collaborator = get_actor(context, collaborator_alias)
         fab.account_remove_collaborator.should_not_see_collaborator(
             response, collaborator.email
         )
@@ -1008,7 +1015,7 @@ def fab_should_not_see_collaborator(
 def should_not_be_able_to_access_page(
     context: Context, collaborator_alias: str, page_name: str
 ):
-    collaborator = context.get_actor(collaborator_alias)
+    collaborator = get_actor(context, collaborator_alias)
     page_object = get_page_object(page_name)
     response = page_object.go_to(collaborator.session)
     try:
@@ -1026,8 +1033,8 @@ def should_not_be_able_to_access_page(
 def stannp_should_see_expected_details_in_verification_letter(
     context: Context, actor_alias: str, correct_details: Table
 ):
-    actor = context.get_actor(actor_alias)
-    company = context.get_company(actor.company_alias)
+    actor = get_actor(context, actor_alias)
+    company = get_company(context, actor.company_alias)
     letter = actor.verification_letter
     address = company.companies_house_details["address"]
     address_line_1 = address.get("address_line_1", "Fake address line 1")

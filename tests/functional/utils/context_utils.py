@@ -151,49 +151,45 @@ def initialize_scenario_data():
     return scenario_data
 
 
-def add_actor(self, actor):
+def add_actor(context: Context, actor: Actor):
     """Will add Actor details to Scenario Data.
 
-    :param self: behave `context` object
-    :type self: behave.runner.Context
+    :param context: behave `context` object
     :param actor: an instance of Actor Named Tuple
-    :type actor: tests.functional.features.ScenarioData.Actor
     """
     assert isinstance(
         actor, Actor
     ), "Expected Actor named tuple but got '{}'" " instead".format(type(actor))
-    self.scenario_data.actors[actor.alias] = actor
+    context.scenario_data.actors[actor.alias] = actor
     logging.debug("Successfully added actor: %s to Scenario Data", actor.alias)
 
 
-def get_actor(self, alias):
+def get_actor(context: Context, alias: str):
     """Get actor details from context Scenario Data.
 
-    :param self: behave `context` object
-    :type self: behave.runner.Context
+    :param context: behave `context` object
     :param alias: alias of sought actor
-    :type alias: str
     :return: an Actor named tuple
     :rtype actor: tests.functional.features.ScenarioData.Actor
     """
-    return self.scenario_data.actors.get(alias, None)
+    return context.scenario_data.actors.get(alias, None)
 
 
-def update_actor(self, alias: str, **kwargs):
-    actors = self.scenario_data.actors
+def update_actor(context: Context, alias: str, **kwargs):
+    actors = context.scenario_data.actors
 
     for arg in kwargs:
         if arg in Actor._fields:
             logging.debug("Set '%s'='%s' for %s", arg, kwargs[arg], alias)
             actors[alias] = actors[alias]._replace(**{arg: kwargs[arg]})
 
-    logging.debug(
-        "Successfully updated Actors's details %s: %s", alias, actors[alias]
-    )
+    logging.debug("Successfully updated Actors's details %s: %s", alias, actors[alias])
 
 
-def set_company_logo_detail(self, alias, *, picture=None, url=None, hash=None):
-    companies = self.scenario_data.companies
+def set_company_logo_detail(
+    context: Context, alias: str, *, picture=None, url=None, hash=None
+):
+    companies = context.scenario_data.companies
     if picture:
         companies[alias] = companies[alias]._replace(logo_picture=picture)
     if url:
@@ -202,38 +198,32 @@ def set_company_logo_detail(self, alias, *, picture=None, url=None, hash=None):
         companies[alias] = companies[alias]._replace(logo_hash=hash)
 
 
-def reset_actor_session(self, alias):
+def reset_actor_session(context: Context, alias: str):
     """Reset `requests` Session object.
 
     Can be useful when interacting with multiple domains.
 
-    :param self: behave `context` object
-    :type self: behave.runner.Context
+    :param context: behave `context` object
     :param alias: alias of sought actor
-    :type alias: str
     """
-    if alias in self.scenario_data.actors:
-        actors = self.scenario_data.actors
+    if alias in context.scenario_data.actors:
+        actors = context.scenario_data.actors
         actors[alias] = actors[alias]._replace(session=Session())
         logging.debug("Successfully reset %s's session object", alias)
     else:
         logging.debug("Could not find an actor aliased '%s'", alias)
 
 
-def add_company(self, company):
+def add_company(context: Context, company: Company):
     """Will add an Company to Scenario Data.
 
-    :param self: behave `context` object
-    :type self: behave.runner.Context
+    :param context: behave `context` object
     :param company: an instance of Company Tuple
-    :type company: test.functional.features.ScenarioData.Company
     """
     assert isinstance(
         company, Company
-    ), "Expected Company named tuple but got '{}' instead".format(
-        type(company)
-    )
-    self.scenario_data.companies[company.alias] = company
+    ), "Expected Company named tuple but got '{}' instead".format(type(company))
+    context.scenario_data.companies[company.alias] = company
     logging.debug(
         "Successfully added Company: %s - %s to " "Scenario Data as '%s'",
         company.title,
@@ -242,18 +232,18 @@ def add_company(self, company):
     )
 
 
-def get_company(self: Context, alias: str) -> Union[Company, None]:
+def get_company(context: Context, alias: str) -> Union[Company, None]:
     """Get the details of an Unregistered Company from context Scenario Data.
 
-    :param self: behave `context` object
+    :param context: behave `context` object
     :param alias: alias of sought Unregistered Company
     :return: an Company named tuple or None if not found
     """
-    return self.scenario_data.companies.get(alias)
+    return context.scenario_data.companies.get(alias)
 
 
-def set_company_details(self, alias: str, **kwargs):
-    companies = self.scenario_data.companies
+def update_company(context: Context, alias: str, **kwargs):
+    companies = context.scenario_data.companies
 
     for arg in kwargs:
         if arg in Company._fields:
@@ -261,23 +251,21 @@ def set_company_details(self, alias: str, **kwargs):
             companies[alias] = companies[alias]._replace(**{arg: kwargs[arg]})
 
     logging.debug(
-        "Successfully updated Company's details %s: %s",
-        alias,
-        companies[alias],
+        "Successfully updated Company's details %s: %s", alias, companies[alias]
     )
 
 
 def add_case_study(
-    self: Context, company_alias: str, case_alias: str, case_study: CaseStudy
+    context: Context, company_alias: str, case_alias: str, case_study: CaseStudy
 ):
     """This will add a CaseStudy to company's data or replace existing one.
 
-    :param self: behave `context` object
+    :param context: behave `context` object
     :param company_alias: alias of Company to update
     :param case_alias: alias of the case study to update
     :param case_study: a CaseStudy namedtuple
     """
-    cases = self.get_company(company_alias).case_studies
+    cases = get_company(context, company_alias).case_studies
     cases[case_alias] = case_study
 
     logging.debug(
@@ -289,34 +277,14 @@ def add_case_study(
     )
 
 
-def update_case_study(self, company, case, *, slug=None):
-    companies = self.scenario_data.companies
+def update_case_study(
+    context: Context, company_alias: str, case_alias: str, *, slug=None
+):
+    companies = context.scenario_data.companies
     if slug:
-        cases = companies[company].case_studies[case]._replace(slug=slug)
-        companies[company].case_studies[case] = cases
+        cases = companies[company_alias].case_studies[case_alias]._replace(slug=slug)
+        companies[company_alias].case_studies[case_alias] = cases
 
     logging.debug(
-        "Successfully updated Case Study '%s' for Company %s", case, company
-    )
-
-
-def patch_context(context):
-    """Will patch the Behave's `context` object with some handy functions.
-
-    Adds methods that allow to easily get & add data from/to Scenario Data.
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    """
-    context.add_actor = MethodType(add_actor, context)
-    context.get_actor = MethodType(get_actor, context)
-    context.update_actor = MethodType(update_actor, context)
-    context.reset_actor_session = MethodType(reset_actor_session, context)
-    context.add_company = MethodType(add_company, context)
-    context.get_company = MethodType(get_company, context)
-    context.add_case_study = MethodType(add_case_study, context)
-    context.update_case_study = MethodType(update_case_study, context)
-    context.set_company_details = MethodType(set_company_details, context)
-    context.set_company_logo_detail = MethodType(
-        set_company_logo_detail, context
+        "Successfully updated Case Study '%s' for Company %s", case_alias, company_alias
     )
