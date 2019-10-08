@@ -57,7 +57,7 @@ INDUSTRY_CHOICES = dict(choices.INDUSTRIES)
 # a type hint for a List of Company named tuples
 CompaniesList = List[Company]
 # make `langdetect` results deterministic
-DetectorFactory.seed = 0
+DetectorFactory.seed = 0  # noqa
 # A dict with currently supported languages on FAS and their short codes
 ERROR_INDICATORS = [
     "error",
@@ -91,19 +91,6 @@ def get_file_log_handler(
     file_handler.setLevel(log_level)
     file_handler.setFormatter(log_formatter)
     return file_handler
-
-
-def init_loggers(context: Context):
-    """Will initialize console and file loggers."""
-    # configure the formatter
-    fmt = (
-        "%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: "
-        "%(message)s"
-    )
-    log_formatter = logging.Formatter(fmt)
-    log_file_handler = get_file_log_handler(log_formatter)
-    # Add log file handler to Behave logging
-    context.config.setup_logging(handlers=[log_file_handler])
 
 
 def decode_as_utf8(content):
@@ -862,37 +849,6 @@ def already_registered(company_number: str) -> bool:
 
     response = make_request(Method.POST, url, headers=headers, data=data)
     return "Already registered" in response.content.decode("utf-8")
-
-
-def is_already_registered(response: Response) -> bool:
-    """Will check if response contains information that Company is already
-    registered with FAB.
-
-    :param response: requests response
-    :return: True/False based on the presence of FAB profile
-    """
-    return "Already registered" in response.content.decode("utf-8")
-
-
-def is_inactive(response: Response) -> bool:
-    """Will check if response contains information that Company is inactive.
-
-    :param response: requests response
-    :return: True/False based on the Company's Status in Companies House
-    """
-    return "Company not active." in response.content.decode("utf-8")
-
-
-def get_companies(*, number: int = 100) -> CompaniesList:
-    """Find a number of active companies without FAS profile.
-
-    NOTE:
-    The search is pretty slow. It takes roughly 10 mins to find 100 companies
-
-    :param number: (optional) expected number of companies to find
-    :return: a list of Company named tuples (all with "test" alias)
-    """
-    return [find_active_company_without_fas_profile("test") for _ in range(number)]
 
 
 def save_companies(companies: CompaniesList):

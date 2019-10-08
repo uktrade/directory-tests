@@ -2,7 +2,6 @@
 """Helpers added to the behave's `context` object."""
 import logging
 from collections import namedtuple
-from types import MethodType
 from typing import Union
 
 from behave.runner import Context
