@@ -6,7 +6,6 @@ from requests import Response, Session
 
 from directory_tests_shared import PageType, Service, URLs
 from tests.functional.utils.context_utils import Actor, Feedback
-from tests.functional.utils.generic import assert_that_captcha_is_in_dev_mode
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Service.FAS
@@ -66,7 +65,6 @@ def submit(actor: Actor, feedback: Feedback, *, referer: str = None) -> Response
     :param referer: (optional) Originating page. Defaults to "{FAS}/feedback"
     """
     session = actor.session
-    assert_that_captcha_is_in_dev_mode(go_to, session)
     if referer:
         headers = {"Referer": referer}
     else:

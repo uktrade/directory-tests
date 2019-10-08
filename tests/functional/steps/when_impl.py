@@ -55,6 +55,7 @@ from tests.functional.steps.then_impl import (
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.generic import (
     assertion_msg,
+    assert_that_captcha_is_in_dev_mode,
     create_test_isd_company,
     escape_html,
     extract_and_set_csrf_middleware_token,
@@ -1172,8 +1173,9 @@ def fas_should_be_told_to_enter_search_term_or_use_filters(
 def fas_send_feedback_request(context: Context, buyer_alias: str, page_name: str):
     actor = context.get_actor(buyer_alias)
     # Step 0: get csrf token
-    response = fas.feedback.go_to(actor.session)
-    token = extract_csrf_middleware_token(response)
+    context.response = fas.feedback.go_to(actor.session)
+    assert_that_captcha_is_in_dev_mode(context.response)
+    token = extract_csrf_middleware_token(context.response)
     context.update_actor(buyer_alias, csrfmiddlewaretoken=token)
 
     actor = context.get_actor(buyer_alias)
@@ -1332,9 +1334,9 @@ def fas_send_message_to_supplier(
     fas.profile.should_be_here(response, number=company.number)
 
     # Step 2 - go to the "email company" form
-    response = fas.contact.go_to(session, company_number=company.number)
-    context.response = response
-    fas.contact.should_be_here(response)
+    context.response = fas.contact.go_to(session, company_number=company.number)
+    fas.contact.should_be_here(context.response)
+    assert_that_captcha_is_in_dev_mode(context.response)
 
     # Step 3 - submit the form with the message data
     response = fas.contact.submit(session, message, company.number)
@@ -2343,9 +2345,9 @@ def enrol_select_business_type(context: Context, actor_alias: str, company_alias
 def enrol_enter_email_and_password(context: Context, actor_alias: str):
     actor = context.get_actor(actor_alias)
     logging.debug("# 1) Go to Enter your email & password")
-    response = profile.enter_your_email_and_password.go_to(actor.session)
-    context.response = response
-    token = extract_csrf_middleware_token(response)
+    context.response = profile.enter_your_email_and_password.go_to(actor.session)
+    assert_that_captcha_is_in_dev_mode(context.response)
+    token = extract_csrf_middleware_token(context.response)
     context.update_actor(actor.alias, csrfmiddlewaretoken=token)
 
     logging.debug("# 2) submit the form")
@@ -2642,6 +2644,7 @@ def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account):
         context.response
     )
 
+    assert_that_captcha_is_in_dev_mode(context.response)
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
     context.response = profile.non_ch_company_enter_your_email_and_password.submit(
         actor
@@ -2698,6 +2701,7 @@ def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account):
 def profile_enrol_individual(context: Context, actor: Actor, account: Account):
     context.response = profile.select_business_type.submit(actor, account.business_type)
     profile.individual_enter_your_email_and_password.should_be_here(context.response)
+    assert_that_captcha_is_in_dev_mode(context.response)
 
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
     context.response = profile.individual_enter_your_email_and_password.submit(actor)

@@ -7,10 +7,7 @@ from requests import Response, Session
 
 from directory_tests_shared import PageType, Service, URLs
 from tests.functional.utils.context_utils import Company, Feedback, Message
-from tests.functional.utils.generic import (
-    assert_that_captcha_is_in_dev_mode,
-    escape_html,
-)
+from tests.functional.utils.generic import escape_html
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Service.FAS
@@ -58,7 +55,6 @@ def should_be_here(response, *, name=None):
 
 
 def submit(session: Session, message: Message or Feedback, company_number: str):
-    assert_that_captcha_is_in_dev_mode(go_to, session, company_number)
     full_url = URL.format(company_number=company_number)
     headers = {"Referer": URL.format(company_number=company_number)}
     data = {

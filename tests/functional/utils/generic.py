@@ -708,13 +708,7 @@ def random_feedback_data(
     return feedback
 
 
-def assert_that_captcha_is_in_dev_mode(go_to: Callable[..., Response], session: Session, *args):
-    if args:
-        logging.debug(f"Calling go_to with args: {args}")
-        response = go_to(session, *args)
-    else:
-        logging.debug("Calling go_to without args")
-        response = go_to(session)
+def assert_that_captcha_is_in_dev_mode(response: Response):
     content = response.content.decode("UTF-8")
     dev_site_key = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
     if dev_site_key not in content:
