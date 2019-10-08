@@ -8,7 +8,7 @@ Feature: SSO password management
   @password
   @fake-sso-email-verification
   Scenario: Suppliers with just SSO/great.gov.uk account should be able to reset password
-    Given "Peter Alder" "has" an SSO/great.gov.uk account
+    Given "Peter Alder" created a "verified Individual" profile
     And "Peter Alder" signed out from SSO/great.gov.uk account
     And "Peter Alder" requested and received a password reset email
 
@@ -66,7 +66,7 @@ Feature: SSO password management
   @password
   @fake-sso-email-verification
   Scenario: Suppliers should not be able to change the password to one with only letters
-    Given "Peter Alder" "has" an SSO/great.gov.uk account
+    Given "Peter Alder" created a "verified Individual" profile
     And "Peter Alder" signed out from SSO/great.gov.uk account
     And "Peter Alder" requested and received a password reset email
 
@@ -82,7 +82,7 @@ Feature: SSO password management
   @password
   @fake-sso-email-verification
   Scenario: Suppliers should be able to reset (change) the password to the same one
-    Given "Peter Alder" "has" an SSO/great.gov.uk account
+    Given "Peter Alder" created a "verified Individual" profile
     And "Peter Alder" requested and received a password reset email
 
     When "Peter Alder" changes the password to the same one using the password reset link
@@ -97,7 +97,7 @@ Feature: SSO password management
   @password
   @fake-sso-email-verification
   Scenario: Suppliers should not be able to use the password reset link more than once
-    Given "Peter Alder" "has" an SSO/great.gov.uk account
+    Given "Peter Alder" created a "verified Individual" profile
     And "Peter Alder" signed out from SSO/great.gov.uk account
     And "Peter Alder" requested and received a password reset email
 

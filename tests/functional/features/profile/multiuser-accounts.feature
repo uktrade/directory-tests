@@ -34,7 +34,7 @@ Feature: Multi-user accounts
   @add-collaborator
   Scenario: Add "1" collaborator with an SSO/great.gov.uk account to a verified company
     Given "Peter Alder" created a "published LTD, PLC or Royal Charter" profile for a random company "Y"
-    And "Annette Geissinger" "has" an SSO/great.gov.uk account
+    And "Annette Geissinger" created a "verified Individual" profile
     And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
 
@@ -118,7 +118,7 @@ Feature: Multi-user accounts
   @ED-2268
   Scenario: Collaborators should not be able to add/remove other collaborators or transfer account ownership
     Given "Peter Alder" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "Y"
-    And "Annette Geissinger" "has" an SSO/great.gov.uk account
+    And "Annette Geissinger" created a "verified Individual" profile
     And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
@@ -185,7 +185,7 @@ Feature: Multi-user accounts
   @fake-sso-email-verification
   Scenario: Account owner should be able to remove one account collaborator
     Given "Peter Alder" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "Y"
-    And "Annette Geissinger" "has" an SSO/great.gov.uk account
+    And "Annette Geissinger" created a "verified Individual" profile
     And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
@@ -231,7 +231,7 @@ Feature: Multi-user accounts
   @fake-sso-email-verification
   Scenario: Collaborators should be able to set the company description and verify company profile with verification code
     Given "Peter Alder" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "Y"
-    And "Annette Geissinger" "has" an SSO/great.gov.uk account
+    And "Annette Geissinger" created a "verified Individual" profile
     And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
@@ -251,7 +251,7 @@ Feature: Multi-user accounts
   @fake-sso-email-verification
   Scenario: Account collaborators should be able to update company's details
     Given "Peter Alder" created an "unpublished verified LTD, PLC or Royal Charter" profile for a random company "Y"
-    And "Annette Geissinger" "has" an SSO/great.gov.uk account
+    And "Annette Geissinger" created a "verified Individual" profile
     And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
@@ -292,7 +292,7 @@ Feature: Multi-user accounts
   @fake-sso-email-verification
   Scenario Outline: Account collaborators should be able to upload "<valid_image>" as company's logo
     Given "Peter Alder" created an "unpublished verified LTD, PLC or Royal Charter" profile for a random company "Y"
-    And "Annette Geissinger" "has" an SSO/great.gov.uk account
+    And "Annette Geissinger" created a "verified Individual" profile
     And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
@@ -315,7 +315,7 @@ Feature: Multi-user accounts
   @fake-sso-email-verification
   Scenario: Account collaborators should be able to add a case study
     Given "Peter Alder" created an "unpublished verified LTD, PLC or Royal Charter" profile for a random company "Y"
-    And "Annette Geissinger" "has" an SSO/great.gov.uk account
+    And "Annette Geissinger" created a "verified Individual" profile
     And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
@@ -343,7 +343,7 @@ Feature: Multi-user accounts
   @fake-sso-email-verification
   Scenario: New account owner should be able to transfer it back to the original owner
     Given "Peter Alder" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "Y"
-    And "Annette Geissinger" "has" an SSO/great.gov.uk account
+    And "Annette Geissinger" created a "verified Individual" profile
 
     When "Peter Alder" transfers the ownership of company's "Y" Find a Buyer profile to "Annette Geissinger"
     Then "Annette Geissinger" should see options to manage Find a Buyer profile users on SSO Profile
@@ -365,7 +365,7 @@ Feature: Multi-user accounts
   @fake-sso-email-verification
   Scenario: New account owner should be able to add the original owner as an "editor" collaborator to the company profile
     Given "Peter Alder" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "Y"
-    And "Annette Geissinger" "has" an SSO/great.gov.uk account
+    And "Annette Geissinger" created a "verified Individual" profile
     And "Peter Alder" transferred the ownership of company's "Y" Find a Buyer profile to "Annette Geissinger"
 
     When "Annette Geissinger" decides to add "Peter Alder" as an "editor" collaborator

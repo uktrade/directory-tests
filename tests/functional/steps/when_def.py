@@ -2,6 +2,7 @@
 # flake8: noqa
 """When step definitions."""
 from behave import when
+from behave.runner import Context
 
 from tests.functional.steps.when_impl import (
     fab_choose_to_verify_with_code,
@@ -34,6 +35,7 @@ from tests.functional.steps.when_impl import (
     profile_add_online_profiles,
     profile_attempt_to_add_case_study,
     profile_confirm_collaboration_request,
+    profile_enrol_user,
     profile_go_to_letter_verification,
     profile_provide_business_details,
     profile_provide_products_and_services,
@@ -411,3 +413,14 @@ def when_supplier_removes_collaborators(
 @when('"{actor_alias}" downloads the pdf with the verification letter')
 def when_actor_downloads_pdf_with_verification_letter(context, actor_alias):
     stannp_download_verification_letter_and_extract_text(context, actor_alias)
+
+
+@when('"{actor_alias}" creates an "{account_type}" profile')
+def when_user_creates_a_profile(
+        context: Context,
+        actor_alias: str,
+        account_type: str,
+        *,
+        company_alias: str = None,
+):
+    profile_enrol_user(context, actor_alias, account_type, company_alias=company_alias)

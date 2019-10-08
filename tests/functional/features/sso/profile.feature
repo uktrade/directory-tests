@@ -11,7 +11,7 @@ Feature: SSO profile
   @no-sso-email-verification-required
   Scenario: Suppliers without verified email should be told to verify the email address first before being able to log in
     Given "Annette Geissinger" is an unauthenticated supplier
-    And "Annette Geissinger" created an unverified SSO/great.gov.uk account
+    And "Annette Geissinger" created an "unverified Individual" profile
 
     When "Annette Geissinger" attempts to sign in to SSO/great.gov.uk account
 
@@ -25,7 +25,7 @@ Feature: SSO profile
   Scenario: Suppliers should receive an email verification msg after creating a standalone SSO/great.gov.uk account
     Given "Peter Alder" is an unauthenticated supplier
 
-    When "Peter Alder" creates an unverified SSO/great.gov.uk account
+    When "Peter Alder" creates an "unverified Individual" profile
 
     Then "Peter Alder" should be told about the verification email
     And "Peter Alder" should receive an email verification msg entitled "Confirm your email address"
@@ -38,7 +38,7 @@ Feature: SSO profile
   @verification
   @real-sso-email-verification
   Scenario: Suppliers should be able to confirm email address for a standalone SSO/great.gov.uk account
-    Given "Peter Alder" created a standalone SSO/great.gov.uk account with unverified email address
+    Given "Peter Alder" created a "unverified Individual" profile
     And "Peter Alder" received the email verification message with the email confirmation link
 
     When "Peter Alder" decides to confirm her email address by using the email confirmation link
@@ -60,10 +60,10 @@ Feature: SSO profile
     # constraint configured on the `email` column.
     Given "Peter Alder" is an unauthenticated supplier
 
-    When "Peter Alder" creates an unverified SSO/great.gov.uk account
+    When "Peter Alder" creates an "unverified Individual" profile
     Then "Peter Alder" should be told about the verification email
 
-    When "Peter Alder" creates an unverified SSO/great.gov.uk account
+    When "Peter Alder" creates an "unverified Individual" profile
     Then "Peter Alder" should be told about the verification email
 
 
@@ -72,7 +72,7 @@ Feature: SSO profile
   @account
   @fake-sso-email-verification
   Scenario: Suppliers should be able to sign out and sign back in
-    Given "Peter Alder" "has" an SSO/great.gov.uk account
+    Given "Peter Alder" created a "verified Individual" profile
     And "Peter Alder" signed out from SSO/great.gov.uk account
 
     When "Peter Alder" signs in to SSO/great.gov.uk account
