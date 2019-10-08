@@ -28,9 +28,12 @@ from requests.exceptions import (
 )
 from urllib3.exceptions import HTTPError as BaseHTTPError
 
-
 # a list of exceptions that can be thrown by `requests` (and urllib3)
-from directory_tests_shared.settings import BASICAUTH_USER, BASICAUTH_PASS, USE_BASIC_AUTH
+from directory_tests_shared.settings import (
+    BASICAUTH_PASS,
+    BASICAUTH_USER,
+    USE_BASIC_AUTH,
+)
 
 REQUEST_EXCEPTIONS = (
     BaseHTTPError,
@@ -125,11 +128,7 @@ def make_request(
     :param no_filename_in_multipart_form_data: (optional) remove filename parameter from multipart form data
     :return: Response
     """
-    from tests.functional.utils.generic import (
-        assertion_msg,
-        log_response,
-        red,
-    )
+    from tests.functional.utils.generic import assertion_msg, log_response, red
 
     with assertion_msg("Can't make a request without a valid URL!"):
         assert url is not None
@@ -178,10 +177,7 @@ def make_request(
         else:
             raise KeyError("Unrecognized Method: %s", method.name)
     except REQUEST_EXCEPTIONS as ex:
-        red(
-            "Exception UTC datetime: %s"
-            % datetime.isoformat(datetime.utcnow())
-        )
+        red("Exception UTC datetime: %s" % datetime.isoformat(datetime.utcnow()))
         red("{} {}".format(method, url))
         red("Parameters: {}".format(params))
         if headers.get("Authorization"):
@@ -202,14 +198,15 @@ def make_request(
     return res
 
 
-def check_url(
-        response: Response, expected_url: str, *, startswith: bool = False
-):
+def check_url(response: Response, expected_url: str, *, startswith: bool = False):
     # avoid circular imports
     from tests.functional.utils.generic import assertion_msg
+
     if startswith:
-        error = (f"Expected response URL to start with {expected_url} but got "
-                 f"{response.url} instead")
+        error = (
+            f"Expected response URL to start with {expected_url} but got "
+            f"{response.url} instead"
+        )
         with assertion_msg(error):
             assert response.url.startswith(expected_url)
     else:
@@ -226,7 +223,7 @@ def check_response(
     locations: list = None,
     location_starts_with: str = None,
     body_contains: list = None,
-    unexpected_strings: list = None
+    unexpected_strings: list = None,
 ):
     """Check if SUT replied with an expected response.
 
@@ -245,8 +242,7 @@ def check_response(
     from tests.functional.utils.generic import assertion_msg
 
     with assertion_msg(
-        f"Expected {status_code} from {response.url} but got "
-        f"{response.status_code}"
+        f"Expected {status_code} from {response.url} but got " f"{response.status_code}"
     ):
         assert response.status_code == status_code
 
@@ -255,7 +251,9 @@ def check_response(
             assert response.content
         content = response.content.decode("utf-8").lower()
         for string in body_contains:
-            with assertion_msg(f"Could not find '{string}' in the response from: {response.request.url}"):
+            with assertion_msg(
+                f"Could not find '{string}' in the response from: {response.request.url}"
+            ):
                 assert string.lower() in content
 
     if unexpected_strings:
@@ -289,8 +287,7 @@ def check_response(
     if location_starts_with:
         new_location = response.headers.get("Location")
         with assertion_msg(
-            "Expected Location header to start with: '%s' but got '%s' "
-            "instead.",
+            "Expected Location header to start with: '%s' but got '%s' " "instead.",
             location_starts_with,
             new_location,
         ):

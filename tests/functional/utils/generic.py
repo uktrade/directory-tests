@@ -32,7 +32,15 @@ from pdfminer.pdfpage import PDFPage
 from requests import Response
 from scrapy.selector import Selector
 from termcolor import cprint
+
 from directory_tests_shared import URLs
+from directory_tests_shared.clients import (
+    DIRECTORY_TEST_API_CLIENT,
+    SSO_TEST_API_CLIENT,
+)
+from directory_tests_shared.constants import SECTORS, TEST_IMAGES_DIR, JPEGs, PNGs
+from directory_tests_shared.settings import STANNP_LETTER_TEMPLATE_ID
+from directory_tests_shared.utils import rare_word, sentence
 from tests.functional.schemas.Companies import COMPANIES
 from tests.functional.utils.context_utils import (
     CaseStudy,
@@ -43,20 +51,6 @@ from tests.functional.utils.context_utils import (
 )
 from tests.functional.utils.request import Method, check_response, make_request
 from tests.functional.utils.stannpclient import STANNP_CLIENT
-from directory_tests_shared.constants import (
-    JPEGs,
-    PNGs,
-    SECTORS,
-    TEST_IMAGES_DIR,
-)
-from directory_tests_shared.clients import (
-    DIRECTORY_TEST_API_CLIENT,
-    SSO_TEST_API_CLIENT,
-)
-from directory_tests_shared.settings import (
-    STANNP_LETTER_TEMPLATE_ID,
-)
-from directory_tests_shared.utils import rare_word, sentence
 
 INDUSTRY_CHOICES = dict(choices.INDUSTRIES)
 
@@ -209,7 +203,7 @@ def print_response(
     *,
     trim: bool = True,
     content_only: bool = True,
-    trim_offset: int = 2048
+    trim_offset: int = 2048,
 ):
     request = response.request
 
@@ -248,9 +242,7 @@ def print_response(
                     )
                     print(content[0:trim_offset])
                 else:
-                    blue(
-                        "Intermediate RESP Content{}:".format(content_only_msg)
-                    )
+                    blue("Intermediate RESP Content{}:".format(content_only_msg))
                     print(content)
 
         blue(
@@ -302,15 +294,12 @@ def log_response(
     *,
     trim: bool = True,
     trim_offset: int = 2048,
-    content_only: bool = True
+    content_only: bool = True,
 ):
     request = response.request
 
     logging.debug(
-        "RESPONSE TIME | %s | %s %s",
-        str(response.elapsed),
-        request.method,
-        request.url,
+        "RESPONSE TIME | %s | %s %s", str(response.elapsed), request.method, request.url
     )
     if response.history:
         logging.debug("REQ was redirected")
@@ -323,8 +312,7 @@ def log_response(
                 body = decode_as_utf8(r.request.body)
                 if trim:
                     logging.debug(
-                        "Intermediate REQ Body (trimmed): %s",
-                        body[0:trim_offset],
+                        "Intermediate REQ Body (trimmed): %s", body[0:trim_offset]
                     )
                 else:
                     logging.debug("Intermediate REQ Body: %s", body)
@@ -346,9 +334,7 @@ def log_response(
                     )
                 else:
                     logging.debug(
-                        "Intermediate RSP Content%s: %s",
-                        content,
-                        content_only_msg,
+                        "Intermediate RSP Content%s: %s", content, content_only_msg
                     )
         logging.debug(
             "Final destination: %s %s -> %d %s\n%s",
@@ -356,7 +342,7 @@ def log_response(
             request.url,
             response.status_code,
             response.url,
-            response.headers
+            response.headers,
         )
     else:
         logging.debug("REQ URL: %s %s", request.method, request.url)
@@ -376,9 +362,7 @@ def log_response(
         else:
             logging.debug("REQ had no body")
 
-        logging.debug(
-            "RSP Status: %s %s", response.status_code, response.reason
-        )
+        logging.debug("RSP Status: %s %s", response.status_code, response.reason)
         logging.debug("RSP URL: %s", response.url)
         logging.debug("RSP Headers: %s", response.headers)
         logging.debug("RSP Cookies: %s", response.cookies)
@@ -456,8 +440,7 @@ def extract_csrf_middleware_token(response: Response) -> str:
 
 def extract_registration_page_link(response: Response) -> str:
     with assertion_msg(
-        "Can't extract link to the Registration page as the response has "
-        "no content"
+        "Can't extract link to the Registration page as the response has " "no content"
     ):
         assert response.content
     css_selector = "#header-register-link::attr(href)"
@@ -492,7 +475,9 @@ def get_absolute_path_of_file(filename):
     """
     relative_path = os.path.join(TEST_IMAGES_DIR, filename)
     absolute_path = os.path.abspath(relative_path)
-    with assertion_msg(f"Could not find '{filename}' in ./tests/files. Please check the filename!"):
+    with assertion_msg(
+        f"Could not find '{filename}' in ./tests/files. Please check the filename!"
+    ):
         assert os.path.exists(absolute_path)
 
     return absolute_path
@@ -579,6 +564,7 @@ def assertion_msg(message: str, *args):
         if len(sys._current_frames()) == 1:
             print(f"Found 'shallow' Traceback, will inspect outer traceback frames")
             import inspect
+
             for f in inspect.getouterframes(sys._getframe(0)):
                 print(f"{f.filename} +{f.lineno} - in {f.function}")
                 if "_def.py" in f.filename:
@@ -684,7 +670,7 @@ def random_feedback_data(
     country: str = None,
     comment: str = None,
     terms: str = None,
-    g_recaptcha_response: str = None
+    g_recaptcha_response: str = None,
 ) -> Feedback:
     name = name or rare_word(min_length=12)
     email = email or (
@@ -728,7 +714,7 @@ def random_message_data(
     g_recaptcha_response: str = None,
     sector: str = None,
     subject: str = None,
-    terms: str = None
+    terms: str = None,
 ) -> Feedback:
     alias = alias or "test message"
     body = body or sentence(max_length=1000)
@@ -778,14 +764,12 @@ def find_active_company_without_fas_profile(alias: str) -> Company:
         has_profile = has_fas_profile(random_company_number)
         if has_profile:
             logging.debug(
-                "Selected company has a FAS profile: %s. Will try a "
-                "different one.",
+                "Selected company has a FAS profile: %s. Will try a " "different one.",
                 random_company_number,
             )
         else:
             logging.debug(
-                "Found a company without a FAS profile: %s.",
-                random_company_number,
+                "Found a company without a FAS profile: %s.", random_company_number
             )
         is_registered = already_registered(random_company_number)
         if is_registered:
@@ -815,12 +799,7 @@ def find_active_company_without_fas_profile(alias: str) -> Company:
                     assert json[0]["company_number"] == random_company_number
             else:
                 counter += 1
-                has_profile, is_registered, exists, active = (
-                    True,
-                    True,
-                    False,
-                    False,
-                )
+                has_profile, is_registered, exists, active = (True, True, False, False)
                 logging.debug(
                     "Company with number %s is not active. It's %s. "
                     "Trying a different one...",
@@ -829,12 +808,7 @@ def find_active_company_without_fas_profile(alias: str) -> Company:
                 )
         else:
             counter += 1
-            has_profile, is_registered, exists, active = (
-                True,
-                True,
-                False,
-                False,
-            )
+            has_profile, is_registered, exists, active = (True, True, False, False)
             logging.debug(
                 "Company with number %s does not exist or it didn't pass JSON "
                 "Schema validation. Trying a different one...",
@@ -918,9 +892,7 @@ def get_companies(*, number: int = 100) -> CompaniesList:
     :param number: (optional) expected number of companies to find
     :return: a list of Company named tuples (all with "test" alias)
     """
-    return [
-        find_active_company_without_fas_profile("test") for _ in range(number)
-    ]
+    return [find_active_company_without_fas_profile("test") for _ in range(number)]
 
 
 def save_companies(companies: CompaniesList):
@@ -931,10 +903,8 @@ def save_companies(companies: CompaniesList):
     # convert `Company` named tuples into dictionaries
     list_dict = []
     for company in companies:
-        list_dict.append(
-            {key: getattr(company, key) for key in company._fields}
-        )
-    list_dict = sorted(list_dict, key=lambda company: company['number'])
+        list_dict.append({key: getattr(company, key) for key in company._fields})
+    list_dict = sorted(list_dict, key=lambda company: company["number"])
     path = os.path.join(TEST_IMAGES_DIR, "companies.json")
     with open(path, "w", encoding="utf8") as f:
         f.write(json.dumps(list_dict, indent=4))
@@ -991,8 +961,7 @@ def update_companies():
             doesnt_exit_counter += 1
             red(
                 "Company %s - %s does not exist any more or it didn't pass "
-                "JSON schema validation"
-                % (company.number, company.title)
+                "JSON schema validation" % (company.number, company.title)
             )
         if not exists or (exists and not active):
             blue("Searching for a new replacement company")
@@ -1060,9 +1029,7 @@ def extract_main_error(content: str) -> str:
         if line
     ]
     has_errors = any(
-        indicator in line.lower()
-        for line in lines
-        for indicator in ERROR_INDICATORS
+        indicator in line.lower() for line in lines for indicator in ERROR_INDICATORS
     )
     return "\n".join(lines) if has_errors else ""
 
@@ -1084,9 +1051,7 @@ def extract_section_error(content: str) -> str:
         if line
     ]
     has_errors = any(
-        indicator in line.lower()
-        for line in lines
-        for indicator in ERROR_INDICATORS
+        indicator in line.lower() for line in lines for indicator in ERROR_INDICATORS
     )
     return "\n".join(lines) if has_errors else ""
 
@@ -1116,12 +1081,7 @@ def extract_form_errors(content: str) -> str:
 
 
 def detect_page_language(
-    name: str,
-    url: str,
-    content: str,
-    *,
-    main: bool = False,
-    rounds: int = 15
+    name: str, url: str, content: str, *, main: bool = False, rounds: int = 15
 ) -> DefaultDict[str, List]:
     """Detect the language of the page.
 
@@ -1162,10 +1122,7 @@ def detect_page_language(
             "header & footer"
         )
         text = extract_page_contents(
-            content,
-            strip_header=False,
-            strip_footer=False,
-            strip_unordered_lists=False,
+            content, strip_header=False, strip_footer=False, strip_unordered_lists=False
         )
 
     raw_results = {}
@@ -1181,7 +1138,7 @@ def detect_page_language(
 
     logging.debug(
         f"Language detection results for '{name}' -> {url} after {rounds} "
-        f"rounds: {flattened_results}",
+        f"rounds: {flattened_results}"
     )
     return flattened_results
 
@@ -1197,9 +1154,7 @@ def get_number_of_search_result_pages(response: Response) -> int:
     :return: a number of FAS Search Result pages or 0 if couldn't find
              information about number of pages
     """
-    last_page_css_selector = (
-        "#paginator ol li.active-blue-text ~ li a::text"
-    )
+    last_page_css_selector = "#paginator ol li.active-blue-text ~ li a::text"
     last_page = extract_by_css(response, last_page_css_selector).strip()
     last_page = int(last_page) if last_page.isdigit() else 0
     logging.debug(f"Number of search result pages: {last_page}")
@@ -1261,7 +1216,9 @@ def get_verification_code(context: Context, company_number: str):
 
 def verify_non_ch_company(context: Context, company: Company):
     """Verify company which requested manual verification."""
-    url = URLs.DIR_API_TEST_API_COMPANY.absolute_template.format(ch_id_or_name=company.title)
+    url = URLs.DIR_API_TEST_API_COMPANY.absolute_template.format(
+        ch_id_or_name=company.title
+    )
     data = {"verified_with_identity_check": True}
     context.response = DIRECTORY_TEST_API_CLIENT.patch(url, data)
     check_response(context.response, 204)
@@ -1279,16 +1236,12 @@ def is_verification_letter_sent(context: Context, company_number: str) -> bool:
     return result
 
 
-def delete_supplier_data_from_sso(
-    email_address: str, *, context: Context = None
-):
+def delete_supplier_data_from_sso(email_address: str, *, context: Context = None):
     response = SSO_TEST_API_CLIENT.delete_user_by_email(email_address)
     if context:
         context.response = response
     if response.status_code == 204:
-        logging.debug(
-            "Successfully deleted %s user data from SSO DB", email_address
-        )
+        logging.debug("Successfully deleted %s user data from SSO DB", email_address)
         logging.debug(
             "RESPONSE TIME | %s | %s %s",
             str(response.elapsed),
@@ -1351,10 +1304,7 @@ def filter_out_legacy_industries(company: dict) -> list:
 
 
 def send_verification_letter(
-    context: Context,
-    company: Company,
-    *,
-    template: str = STANNP_LETTER_TEMPLATE_ID
+    context: Context, company: Company, *, template: str = STANNP_LETTER_TEMPLATE_ID
 ) -> str:
     address = company.companies_house_details["address"]
     address_line_1 = address.get("address_line_1", "Fake address line 1")
@@ -1375,9 +1325,7 @@ def send_verification_letter(
             ("company", company.title),
         ],
     }
-    response = STANNP_CLIENT.send_letter(
-        template=template, recipient=recipient
-    )
+    response = STANNP_CLIENT.send_letter(template=template, recipient=recipient)
     context.response = response
     with assertion_msg(
         "Expected to get 200 OK from StanNP API, but got {}".format(
@@ -1408,7 +1356,7 @@ def extract_text_from_pdf(
     codec: str = "utf-8",
     password: str = "",
     maxpages: int = 0,
-    caching: bool = True
+    caching: bool = True,
 ) -> str:
     rsrcmgr = PDFResourceManager()
     retstr = io.StringIO()

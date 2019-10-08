@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import requests
 from requests import Response
+
 from directory_tests_shared.settings import STANNP_API_KEY
 
 
@@ -40,9 +41,7 @@ class StannpClient:
         data["template"] = template
         data["test"] = self.test_mode
 
-        response = self.post(
-            "https://dash.stannp.com/api/v1/letters/create", data
-        )
+        response = self.post("https://dash.stannp.com/api/v1/letters/create", data)
         return response
 
 

@@ -3,9 +3,13 @@
 import logging
 
 from retrying import retry
-from tests.functional.utils.generic import assertion_msg
+
 from directory_tests_shared.clients import GOV_NOTIFY_CLIENT
-from directory_tests_shared.constants import EMAIL_VERIFICATION_MSG_SUBJECT, SSO_PASSWORD_RESET_MSG_SUBJECT
+from directory_tests_shared.constants import (
+    EMAIL_VERIFICATION_MSG_SUBJECT,
+    SSO_PASSWORD_RESET_MSG_SUBJECT,
+)
+from tests.functional.utils.generic import assertion_msg
 
 
 def extract_email_confirmation_link(payload: str) -> str:
@@ -42,8 +46,7 @@ def extract_password_reset_link(payload: str) -> str:
     end = payload.find("\r\n", start)
     password_reset_link = payload[start:end]
     with assertion_msg(
-        "Extracted link is not a correct password reset link: %s",
-        password_reset_link,
+        "Extracted link is not a correct password reset link: %s", password_reset_link
     ):
         assert "accounts/password/reset/key/" in password_reset_link
     logging.debug("Found password reset link: %s", password_reset_link)
@@ -64,19 +67,21 @@ def filter_by_content(notifications: list, substring: str) -> list:
 
 @retry(wait_fixed=5000, stop_max_attempt_number=5)
 def get_email_notification(from_email: str, to_email: str, subject: str) -> dict:
-    all_notifications = GOV_NOTIFY_CLIENT.get_all_notifications(
-        template_type="email"
-    )["notifications"]
+    all_notifications = GOV_NOTIFY_CLIENT.get_all_notifications(template_type="email")[
+        "notifications"
+    ]
 
     recipient_notifications = filter_by_recipient(all_notifications, to_email)
-    assert len(recipient_notifications) > 0, (
-        f"Expected to find at least 1 notification send to {to_email} but found 0"
-    )
+    assert (
+        len(recipient_notifications) > 0
+    ), f"Expected to find at least 1 notification send to {to_email} but found 0"
     logging.debug(
         f"Found {len(recipient_notifications)} notifications send to: {to_email}"
     )
 
-    notifications_with_matching_subject = filter_by_subject(recipient_notifications, subject)
+    notifications_with_matching_subject = filter_by_subject(
+        recipient_notifications, subject
+    )
     assert len(notifications_with_matching_subject) == 1, (
         f"Expected to find 1 notification entitled '{subject}' send to {to_email} but "
         f"found {len(notifications_with_matching_subject)}"
@@ -86,7 +91,9 @@ def get_email_notification(from_email: str, to_email: str, subject: str) -> dict
         f"{to_email} with matching subject: '{subject}'"
     )
 
-    matching_notifications = filter_by_content(notifications_with_matching_subject, from_email)
+    matching_notifications = filter_by_content(
+        notifications_with_matching_subject, from_email
+    )
     assert len(matching_notifications) == 1, (
         f"Expected to find 1 notification entitled '{subject}' send from {from_email} "
         f"to {to_email} but found {len(matching_notifications)}"
@@ -103,9 +110,9 @@ def get_email_notification(from_email: str, to_email: str, subject: str) -> dict
 def get_email_confirmation_notification(email: str, *, subject: str = None) -> dict:
     subject = subject or EMAIL_VERIFICATION_MSG_SUBJECT
     logging.debug(f"Looking for email sent to '{email}' with subject: '{subject}'")
-    notifications = GOV_NOTIFY_CLIENT.get_all_notifications(
-        template_type="email"
-    )["notifications"]
+    notifications = GOV_NOTIFY_CLIENT.get_all_notifications(template_type="email")[
+        "notifications"
+    ]
 
     user_notifications = filter_by_recipient(notifications, email)
     email_confirmations = filter_by_subject(user_notifications, subject)
@@ -123,14 +130,12 @@ def get_email_confirmation_notification(email: str, *, subject: str = None) -> d
 def get_password_reset_notification(
     email: str, *, subject: str = SSO_PASSWORD_RESET_MSG_SUBJECT
 ) -> dict:
-    notifications = GOV_NOTIFY_CLIENT.get_all_notifications(
-        template_type="email"
-    )["notifications"]
+    notifications = GOV_NOTIFY_CLIENT.get_all_notifications(template_type="email")[
+        "notifications"
+    ]
 
     user_notifications = filter_by_recipient(notifications, email)
-    password_reset_notifications = filter_by_subject(
-        user_notifications, subject
-    )
+    password_reset_notifications = filter_by_subject(user_notifications, subject)
 
     assert len(password_reset_notifications) == 1, (
         "Expected to find 1 password reset notification for {} but found "
