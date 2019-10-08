@@ -2,7 +2,7 @@
 """Profile - Select Business Type"""
 from requests import Response, Session
 
-from directory_tests_shared import PageType, Service, URLs, BusinessType
+from directory_tests_shared import BusinessType, PageType, Service, URLs
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import Method, check_response, make_request
 
@@ -30,7 +30,10 @@ BUSINESS_TYPES = {
 
 
 def go_to(session: Session) -> Response:
-    return make_request(Method.GET, URL, session=session)
+    headers = {
+        "Referer": f"{URLs.PROFILE_ENROL.absolute}?next={URLs.DOMESTIC_LANDING_UK.absolute}"
+    }
+    return make_request(Method.GET, URL, headers=headers, session=session)
 
 
 def should_be_here(response: Response):
@@ -39,12 +42,17 @@ def should_be_here(response: Response):
 
 def submit(actor: Actor, business_type: BusinessType) -> Response:
     session = actor.session
-    headers = {"Referer": URL}
+    headers = {"Referer": URLs.PROFILE_ENROL_SELECT_BUSINESS_TYPE.absolute}
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
         "choice": BUSINESS_TYPES[business_type],
     }
 
     return make_request(
-        Method.POST, URL, session=session, headers=headers, files=data, no_filename_in_multipart_form_data=True
+        Method.POST,
+        URL,
+        session=session,
+        headers=headers,
+        files=data,
+        no_filename_in_multipart_form_data=True,
     )

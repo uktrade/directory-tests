@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """Profile - Enter your personal details"""
 
-from directory_tests_shared import PageType, Service, URLs
 from requests import Response, Session
+
+from directory_tests_shared import PageType, Service, URLs
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import (
     Method,
@@ -46,4 +47,11 @@ def submit(actor: Actor):
         "personal-details-terms_agreed": "on",
     }
 
-    return make_request(Method.POST, URL, session=session, headers=headers, data=data)
+    return make_request(
+        Method.POST,
+        URL,
+        session=session,
+        headers=headers,
+        files=data,
+        no_filename_in_multipart_form_data=True,
+    )

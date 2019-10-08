@@ -50,4 +50,11 @@ def submit(actor: Actor) -> Response:
         "g-recaptcha-response": "test mode",
     }
 
-    return make_request(Method.POST, URL, session=session, headers=headers, data=data)
+    return make_request(
+        Method.POST,
+        URL,
+        session=session,
+        headers=headers,
+        files=data,
+        no_filename_in_multipart_form_data=True,
+    )

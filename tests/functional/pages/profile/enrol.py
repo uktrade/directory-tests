@@ -19,7 +19,11 @@ EXPECTED_STRINGS = ["Create an ", "Start"]
 
 
 def go_to(session: Session) -> Response:
-    return make_request(Method.GET, URL, session=session)
+    url = f"{URL}?next={URLs.DOMESTIC_LANDING_UK.absolute}"
+    headers = {
+        "referer": f"{URLs.SSO_LOGIN.absolute}?next={URLs.DOMESTIC_LANDING_UK.absolute}"
+    }
+    return make_request(Method.GET, url, session=session, headers=headers)
 
 
 def should_be_here(response: Response):
