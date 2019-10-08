@@ -1181,8 +1181,7 @@ def fas_send_feedback_request(context: Context, buyer_alias: str, page_name: str
     feedback = random_feedback_data(email=actor.email)
 
     # Step 2: submit the form
-    response = fas.feedback.submit(actor, feedback, referer=referer_url)
-    context.response = response
+    context.response = fas.feedback.submit(actor, feedback, referer=referer_url)
     logging.debug("%s submitted the feedback request", buyer_alias)
 
 
@@ -1326,9 +1325,8 @@ def fas_send_message_to_supplier(
     )
 
     # Step 1 - go to Company's profile page
-    response = fas.profile.go_to_endpoint(session, endpoint)
-    context.response = response
-    fas.profile.should_be_here(response, number=company.number)
+    context.response = fas.profile.go_to_endpoint(session, endpoint)
+    fas.profile.should_be_here(context.response, number=company.number)
 
     # Step 2 - go to the "email company" form
     context.response = fas.contact.go_to(session, company_number=company.number)
@@ -1336,8 +1334,7 @@ def fas_send_message_to_supplier(
     assert_that_captcha_is_in_dev_mode(context.response)
 
     # Step 3 - submit the form with the message data
-    response = fas.contact.submit(session, message, company.number)
-    context.response = response
+    context.response = fas.contact.submit(session, message, company.number)
 
 
 def profile_provide_business_details(
@@ -2348,11 +2345,10 @@ def enrol_enter_email_and_password(context: Context, actor_alias: str):
     context.update_actor(actor.alias, csrfmiddlewaretoken=token)
 
     logging.debug("# 2) submit the form")
-    response = profile.enter_your_email_and_password.submit(actor)
-    context.response = response
-    token = extract_csrf_middleware_token(response)
+    context.response = profile.enter_your_email_and_password.submit(actor)
+    token = extract_csrf_middleware_token(context.response)
     context.update_actor(actor.alias, csrfmiddlewaretoken=token)
-    profile.enter_email_verification_code.should_be_here(response)
+    profile.enter_email_verification_code.should_be_here(context.response)
 
 
 def enrol_get_email_verification_code(context: Context, actor_alias: str):
