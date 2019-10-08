@@ -5,13 +5,20 @@ import logging
 from collections import defaultdict
 from statistics import median
 
-from requests import Response
-from retrying import retry
-
 from behave.model import Table
 from behave.runner import Context
+from requests import Response
+from retrying import retry
 from scrapy import Selector
+
 from directory_tests_shared import URLs
+from directory_tests_shared.constants import (
+    FAS_LOGO_PLACEHOLDER_IMAGE,
+    FAS_MESSAGE_FROM_BUYER_SUBJECT,
+    PROFILE_INVITATION_MSG_SUBJECT,
+    SEARCHABLE_CASE_STUDY_DETAILS,
+)
+from directory_tests_shared.enums import Language
 from directory_tests_shared.utils import check_for_errors
 from tests.functional.pages import (
     fab,
@@ -38,13 +45,6 @@ from tests.functional.utils.gov_notify import (
     get_password_reset_link,
     get_verification_link,
 )
-from directory_tests_shared.constants import (
-    FAS_LOGO_PLACEHOLDER_IMAGE,
-    FAS_MESSAGE_FROM_BUYER_SUBJECT,
-    SEARCHABLE_CASE_STUDY_DETAILS,
-    PROFILE_INVITATION_MSG_SUBJECT
-)
-from directory_tests_shared.enums import Language
 
 
 def reg_sso_account_should_be_created(response: Response, supplier_alias: str):
@@ -55,12 +55,12 @@ def reg_sso_account_should_be_created(response: Response, supplier_alias: str):
     contains selected phrases.
     """
     sso.verify_your_email.should_be_here(response)
-    logging.debug(
-        "Successfully created new SSO account for %s", supplier_alias
-    )
+    logging.debug("Successfully created new SSO account for %s", supplier_alias)
 
 
-def reg_should_get_verification_email(context: Context, alias: str, *, subject: str = None):
+def reg_should_get_verification_email(
+    context: Context, alias: str, *, subject: str = None
+):
     """Will check if the Supplier received an email verification message."""
     logging.debug("Looking for an email verification message...")
     actor = context.get_actor(alias)
@@ -79,9 +79,7 @@ def fas_should_be_on_profile_page(context, supplier_alias, company_alias):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     fas.profile.should_be_here(context.response, number=company.number)
-    logging.debug(
-        "%s is on the %s company's FAS page", supplier_alias, company_alias
-    )
+    logging.debug("%s is on the %s company's FAS page", supplier_alias, company_alias)
 
 
 def fas_check_profiles(context: Context, supplier_alias: str):
@@ -100,9 +98,7 @@ def fas_check_profiles(context: Context, supplier_alias: str):
     )
 
 
-def reg_supplier_has_to_verify_email_first(
-    context: Context, supplier_alias: str
-):
+def reg_supplier_has_to_verify_email_first(context: Context, supplier_alias: str):
     sso.verify_your_email.should_be_here(context.response)
     logging.debug(
         "%s was told that her/his email address has to be verified "
@@ -111,9 +107,7 @@ def reg_supplier_has_to_verify_email_first(
     )
 
 
-def sso_should_be_signed_in_to_sso_account(
-    context: Context, supplier_alias: str
-):
+def sso_should_be_signed_in_to_sso_account(context: Context, supplier_alias: str):
     response = context.response
     with assertion_msg(
         "Response doesn't contain 'Sign out' button. It looks "
@@ -137,9 +131,9 @@ def sso_should_be_signed_in_to_sso_account(
         intermediate_headers.append(cookies)
     logging.debug(f"SSO session cookie history: {intermediate_headers}")
     with assertion_msg(
-            "Expected to see following SSO Session cookies to be set in intermediate "
-            "responses: sso_display_logged_in=true and directory_sso_dev_session or "
-            "sso_stage_session. It looks like user did not log in successfully!"
+        "Expected to see following SSO Session cookies to be set in intermediate "
+        "responses: sso_display_logged_in=true and directory_sso_dev_session or "
+        "sso_stage_session. It looks like user did not log in successfully!"
     ):
         assert all(
             cookies["sso_display_logged_in"] == "true"
@@ -148,9 +142,7 @@ def sso_should_be_signed_in_to_sso_account(
     logging.debug("%s is logged in to the SSO account", supplier_alias)
 
 
-def sso_should_be_signed_out_from_sso_account(
-    context: Context, supplier_alias: str
-):
+def sso_should_be_signed_out_from_sso_account(context: Context, supplier_alias: str):
     """Sign out from SSO."""
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -178,9 +170,7 @@ def sso_should_be_signed_out_from_sso_account(
     context.reset_actor_session(supplier_alias)
 
 
-def profile_should_be_told_about_invalid_links(
-    context: Context, supplier_alias: str
-):
+def profile_should_be_told_about_invalid_links(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
 
@@ -218,8 +208,7 @@ def fas_should_see_all_case_studies(context: Context, supplier_alias: str):
     case_studies = context.get_company(actor.company_alias).case_studies
     fas.profile.should_see_case_studies(case_studies, response)
     logging.debug(
-        "%s can see all %d Case Studies on FAS Company's "
-        "Directory Profile Page",
+        "%s can see all %d Case Studies on FAS Company's " "Directory Profile Page",
         supplier_alias,
         len(case_studies),
     )
@@ -236,13 +225,11 @@ def profile_should_see_logo_picture(context: Context, supplier_alias: str):
     logo_picture = company.logo_picture
 
     logging.debug(
-        "Fetching logo image visible on the %s's FAB profile page",
-        company.title,
+        "Fetching logo image visible on the %s's FAB profile page", company.title
     )
     check_hash_of_remote_file(logo_hash, logo_url)
     logging.debug(
-        "The Logo visible on the %s's FAB profile page is the same "
-        "as uploaded %s",
+        "The Logo visible on the %s's FAB profile page is the same " "as uploaded %s",
         company.title,
         logo_picture,
     )
@@ -262,21 +249,16 @@ def fas_should_see_png_logo_thumbnail(context: Context, supplier_alias: str):
     placeholder = FAS_LOGO_PLACEHOLDER_IMAGE
 
     with assertion_msg(
-        "Expected company logo but got image placeholder '%s'",
-        visible_logo_url,
+        "Expected company logo but got image placeholder '%s'", visible_logo_url
     ):
         assert visible_logo_url != placeholder
-    with assertion_msg(
-        "Expected PNG logo thumbnail, but got: %s", visible_logo_url
-    ):
+    with assertion_msg("Expected PNG logo thumbnail, but got: %s", visible_logo_url):
         assert visible_logo_url.lower().endswith(".png")
     context.set_company_logo_detail(actor.company_alias, url=visible_logo_url)
     logging.debug("Set Company's logo URL to: %s", visible_logo_url)
 
 
-def fas_should_see_different_png_logo_thumbnail(
-    context: Context, actor_alias: str
-):
+def fas_should_see_different_png_logo_thumbnail(context: Context, actor_alias: str):
     """Will check if Company's Logo visible on FAS profile page is the same as
     the one uploaded on FAB.
     """
@@ -301,9 +283,7 @@ def fas_should_see_different_png_logo_thumbnail(
         visible_logo_url,
     ):
         assert visible_logo_url != fas_logo_url
-    with assertion_msg(
-        "Expected PNG logo thumbnail, but got: %s", visible_logo_url
-    ):
+    with assertion_msg("Expected PNG logo thumbnail, but got: %s", visible_logo_url):
         assert visible_logo_url.lower().endswith(".png")
 
 
@@ -322,9 +302,7 @@ def profile_all_unsupported_files_should_be_rejected(
         "were actually accepted. Please check the logs for more details"
     ):
         assert all(context.rejections)
-    logging.debug(
-        f"All files of unsupported types uploaded by %s were rejected"
-    )
+    logging.debug(f"All files of unsupported types uploaded by %s were rejected")
 
 
 def profile_should_see_online_profiles(context: Context, supplier_alias: str):
@@ -343,21 +321,17 @@ def profile_no_links_to_online_profiles_are_visible(
     response = context.response
     profile.edit_company_profile.should_not_see_links_to_online_profiles(response)
     logging.debug(
-        "%s cannot see links to Online Profiles on FAB Profile page",
-        supplier_alias,
+        "%s cannot see links to Online Profiles on FAB Profile page", supplier_alias
     )
 
 
-def fas_no_links_to_online_profiles_are_visible(
-    context: Context, supplier_alias: str
-):
+def fas_no_links_to_online_profiles_are_visible(context: Context, supplier_alias: str):
     """Supplier should't see any links to Online Profiles on FAS Profile page.
     """
     response = context.response
     fas.profile.should_not_see_online_profiles(response)
     logging.debug(
-        "%s cannot see links to Online Profiles on FAS Profile page",
-        supplier_alias,
+        "%s cannot see links to Online Profiles on FAS Profile page", supplier_alias
     )
 
 
@@ -369,7 +343,7 @@ def profile_profile_is_published(context: Context, supplier_alias: str):
 
 
 def profile_should_see_company_details(
-        context: Context, supplier_alias: str, page_name: str
+    context: Context, supplier_alias: str, page_name: str
 ):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
@@ -381,14 +355,10 @@ def profile_should_see_company_details(
     else:
         context.response = page.go_to(actor.session)
     page.should_see_details(company, context.response, context.table)
-    logging.debug(
-        f"{supplier_alias} can see all expected details on {page_name}"
-    )
+    logging.debug(f"{supplier_alias} can see all expected details on {page_name}")
 
 
-def profile_supplier_should_be_on_landing_page(
-    context: Context, supplier_alias: str
-):
+def profile_supplier_should_be_on_landing_page(context: Context, supplier_alias: str):
     """Check if Supplier is on Profile Landing page."""
     response = context.response
     profile.about.should_be_here(response)
@@ -444,15 +414,15 @@ def fas_find_supplier_using_case_study_details(
         response = fas.search.go_to(session, term=term)
         context.response = response
         fas.search.should_be_here(response)
-        found = fas.search.should_see_company(
-            response, company.title
-        )
+        found = fas.search.should_see_company(response, company.title)
         count = 1
         number_of_pages = get_number_of_search_result_pages(response)
         while not found and number_of_pages > 1 and count < max_pages:
             for page_number in range(2, number_of_pages + 1):
                 logging.debug(f"Checking search result page number: {page_number}")
-                context.response = fas.search.go_to(session, term=term, page=page_number)
+                context.response = fas.search.go_to(
+                    session, term=term, page=page_number
+                )
                 fas.search.should_be_here(context.response)
                 found = fas.search.should_see_company(context.response, company.title)
                 count += 1
@@ -461,8 +431,8 @@ def fas_find_supplier_using_case_study_details(
     logging.debug(f"Search results: {search_results}")
     not_found_by = {
         term_name: search
-        for term_name, search in
-        search_results.items() if not search["found"]
+        for term_name, search in search_results.items()
+        if not search["found"]
     }
     not_found_by_str = "; ".join(
         [f"{k} → {v['term']}" for k, v in not_found_by.items()]
@@ -502,17 +472,12 @@ def fas_supplier_cannot_be_found_using_case_study_details(
     for term_name in search_terms:
         term = search_terms[term_name]
         logging.debug(
-            "Searching for '%s' using %s: %s",
-            company.title,
-            term_name,
-            search_terms,
+            "Searching for '%s' using %s: %s", company.title, term_name, search_terms
         )
         response = fas.search.go_to(session, term=term)
         context.response = response
         fas.search.should_be_here(response)
-        found = fas.search.should_not_see_company(
-            response, company.title
-        )
+        found = fas.search.should_not_see_company(response, company.title)
         with assertion_msg(
             "Buyer found Supplier '%s' on FAS using %s: %s",
             company.title,
@@ -530,7 +495,7 @@ def fas_supplier_cannot_be_found_using_case_study_details(
 
 
 def fas_should_not_find_with_company_details(
-        context: Context, buyer_alias: str, company_alias: str
+    context: Context, buyer_alias: str, company_alias: str
 ):
     """Check if Buyer wasn't able to find Supplier using all selected search terms
 
@@ -544,11 +509,11 @@ def fas_should_not_find_with_company_details(
         logging.debug(f"Search results: {context.search_results}")
         context.response = context.search_responses[result]
         with assertion_msg(
-                "%s was able to find '%s' (alias: %s) using %s",
-                buyer_alias,
-                company.title,
-                company_alias,
-                result,
+            "%s was able to find '%s' (alias: %s) using %s",
+            buyer_alias,
+            company.title,
+            company_alias,
+            result,
         ):
             assert not context.search_results[result]
 
@@ -578,11 +543,7 @@ def fas_should_find_with_company_details(
 
 
 def generic_content_of_viewed_pages_should_in_selected_language(
-    context: Context,
-    language: str,
-    *,
-    page_part: str = None,
-    probability: float = 0.9
+    context: Context, language: str, *, page_part: str = None, probability: float = 0.9
 ):
     """Check if all viewed pages contain content in expected language
 
@@ -597,7 +558,9 @@ def generic_content_of_viewed_pages_should_in_selected_language(
     with assertion_msg("Required dictionary with page views is missing"):
         assert hasattr(context, "views")
     views = context.views
-    page_names = [row["page"] for row in context.table] if context.table else views.keys()
+    page_names = (
+        [row["page"] for row in context.table] if context.table else views.keys()
+    )
 
     if page_part:
         if page_part == "main":
@@ -605,9 +568,7 @@ def generic_content_of_viewed_pages_should_in_selected_language(
         elif page_part == "whole":
             main = False
         else:
-            raise KeyError(
-                "Please select valid part of the page: main or whole"
-            )
+            raise KeyError("Please select valid part of the page: main or whole")
     else:
         main = False
 
@@ -623,12 +584,8 @@ def generic_content_of_viewed_pages_should_in_selected_language(
         response = views[page_name]
         content = response.content.decode("utf-8")
         check_for_errors(content, response.url)
-        logging.debug(
-            f"Detecting the language of '{page_name}'' page {response.url}"
-        )
-        lang_detect_results = detect_page_language(
-            page_name, "", content, main=main
-        )
+        logging.debug(f"Detecting the language of '{page_name}'' page {response.url}")
+        lang_detect_results = detect_page_language(page_name, "", content, main=main)
         median_results = {
             language: median(probabilities)
             for language, probabilities in lang_detect_results.items()
@@ -652,8 +609,8 @@ def generic_content_of_viewed_pages_should_in_selected_language(
         if medians[expected_language_code] < probability
     }
     with assertion_msg(
-            f"Median '{expected_language_code}' language detection probability of "
-            f"{probability} was not met on following pages: {unmet_probabilities}"
+        f"Median '{expected_language_code}' language detection probability of "
+        f"{probability} was not met on following pages: {unmet_probabilities}"
     ):
         assert not unmet_probabilities
 
@@ -703,16 +660,14 @@ def fas_supplier_should_receive_message_from_buyer(
     context.response = get_email_notification(
         from_email=buyer.email,
         to_email=supplier.email,
-        subject=FAS_MESSAGE_FROM_BUYER_SUBJECT
+        subject=FAS_MESSAGE_FROM_BUYER_SUBJECT,
     )
     logging.debug(
         f"{supplier_alias} received a notification about a message from {buyer_alias}"
     )
 
 
-def profile_should_see_expected_error_messages(
-    context: Context, supplier_alias: str
-):
+def profile_should_see_expected_error_messages(context: Context, supplier_alias: str):
     results = context.results
     assertion_results = []
     for company, response, error in results:
@@ -720,7 +675,9 @@ def profile_should_see_expected_error_messages(
             context.response = response
             logging.debug(f"Modified company's details: {company}")
             logging.debug(f"Expected error message: {error}")
-            logging.debug(f"Response: {extract_page_contents(response.content.decode('utf-8'))}")
+            logging.debug(
+                f"Response: {extract_page_contents(response.content.decode('utf-8'))}"
+            )
             assertion_results.append((response, error))
 
     formatted_message = ";\n\n".join(
@@ -731,8 +688,8 @@ def profile_should_see_expected_error_messages(
         ]
     )
     with assertion_msg(
-            f"Expected to see correct error messages, but couldn't find them in"
-            f" following responses: {formatted_message}"
+        f"Expected to see correct error messages, but couldn't find them in"
+        f" following responses: {formatted_message}"
     ):
         assert not assertion_results
     logging.debug("%s has seen all expected form errors", supplier_alias)
@@ -741,7 +698,9 @@ def profile_should_see_expected_error_messages(
 def international_should_see_links_to_industry_pages(
     context: Context, actor_alias: str, language: str
 ):
-    page_name = f"{international.industries.SERVICE.value} - {international.industries.NAME}"
+    page_name = (
+        f"{international.industries.SERVICE.value} - {international.industries.NAME}"
+    )
     response = context.views[page_name]
     international.industries.should_see_links_to_industry_pages(response, language)
     logging.debug(
@@ -784,9 +743,7 @@ def fas_should_see_filtered_search_results(context: Context, actor_alias: str):
         )
 
 
-def fas_should_see_unfiltered_search_results(
-    context: Context, actor_alias: str
-):
+def fas_should_see_unfiltered_search_results(context: Context, actor_alias: str):
     response = context.response
     content = response.content.decode("utf-8")
     sector_filters_selector = "#id_sectors input"
@@ -810,9 +767,7 @@ def fas_should_see_company_once_in_search_results(
     company = context.get_company(company_alias)
     results = context.results
     founds = [
-        (page, result["found"])
-        for page, result in results.items()
-        if result["found"]
+        (page, result["found"]) for page, result in results.items() if result["found"]
     ]
     with assertion_msg(
         "Expected to see company '%s' only once on first %d search result "
@@ -868,25 +823,21 @@ def fas_should_see_highlighted_search_term(
 def fab_company_should_be_verified(context: Context, supplier_alias: str):
     response = context.response
     fab.verify_company.should_see_company_is_verified(response)
-    logging.debug(
-        "%s saw that his company's FAB profile is verified", supplier_alias
-    )
+    logging.debug("%s saw that his company's FAB profile is verified", supplier_alias)
 
 
 def profile_business_profile_should_be_ready_for_publishing(
-        context: Context, supplier_alias: str
+    context: Context, supplier_alias: str
 ):
     response = context.response
     profile.edit_company_profile.should_see_profile_is_verified(response)
     logging.debug(
         f"{supplier_alias} saw that his company's Business Profile is ready to"
-        f" be published on FAS",
+        f" be published on FAS"
     )
 
 
-def fab_should_see_case_study_error_message(
-    context: Context, supplier_alias: str
-):
+def fab_should_see_case_study_error_message(context: Context, supplier_alias: str):
     results = context.results
     logging.debug(results)
     for field, value_type, case_study, response, error in results:
@@ -904,9 +855,7 @@ def fab_should_see_case_study_error_message(
     logging.debug("%s has seen all expected case study errors", supplier_alias)
 
 
-def sso_should_be_told_about_password_reset(
-    context: Context, supplier_alias: str
-):
+def sso_should_be_told_about_password_reset(context: Context, supplier_alias: str):
     sso.password_reset.should_see_that_password_was_reset(context.response)
     logging.debug("%s was told that the password was reset", supplier_alias)
 
@@ -923,9 +872,7 @@ def sso_should_see_invalid_password_reset_link_error(
     context: Context, supplier_alias: str
 ):
     sso.invalid_password_reset_link.should_be_here(context.response)
-    logging.debug(
-        "%s was told about invalid password reset link", supplier_alias
-    )
+    logging.debug("%s was told about invalid password reset link", supplier_alias)
 
 
 def should_be_at(context: Context, supplier_alias: str, page_name: str):
@@ -942,13 +889,11 @@ def should_see_selected_pages(context: Context, actor_alias: str):
         context.response = response
         page = get_page_object(page_name.lower())
         page.should_be_here(response)
-        logging.debug(
-            "%s successfully got to '%s' page", actor_alias, page_name
-        )
+        logging.debug("%s successfully got to '%s' page", actor_alias, page_name)
 
 
 def should_be_taken_to_selected_page(
-        context: Context, actor_alias: str, page_name: str
+    context: Context, actor_alias: str, page_name: str
 ):
     page = get_page_object(page_name.lower())
     for _, response, _ in context.results:
@@ -960,9 +905,7 @@ def should_be_taken_to_selected_page(
     )
 
 
-def fab_should_be_asked_about_verification_form(
-    context: Context, supplier_alias: str
-):
+def fab_should_be_asked_about_verification_form(context: Context, supplier_alias: str):
     fab.confirm_identity.should_be_here(context.response)
     logging.debug(
         "%s was asked about the form of identity verification", supplier_alias
@@ -982,7 +925,9 @@ def should_not_see_message(context: Context, actor_alias: str, message: str):
     content = context.response.content.decode("utf-8")
     with assertion_msg(f"Response content contains unexpected message: '{message}'"):
         assert message not in content
-    logging.debug(f"As expected {actor_alias} haven't seen unexpected message: '{message}'")
+    logging.debug(
+        f"As expected {actor_alias} haven't seen unexpected message: '{message}'"
+    )
 
 
 def sso_should_get_request_for_collaboration_email(
@@ -992,7 +937,9 @@ def sso_should_get_request_for_collaboration_email(
     for actor_alias in actor_aliases:
         actor = context.get_actor(actor_alias)
         company = context.get_company(company_alias)
-        subject = PROFILE_INVITATION_MSG_SUBJECT.format(company_title=company.title.upper())
+        subject = PROFILE_INVITATION_MSG_SUBJECT.format(
+            company_title=company.title.upper()
+        )
         link = get_verification_link(actor.email, subject=subject)
         context.update_actor(
             actor_alias,
@@ -1012,9 +959,7 @@ def sud_should_see_options_to_manage_users(context: Context, actor_alias: str):
     logging.debug("%s can see options to control user accounts", actor_alias)
 
 
-def sud_should_not_see_options_to_manage_users(
-    context: Context, actor_alias: str
-):
+def sud_should_not_see_options_to_manage_users(context: Context, actor_alias: str):
     """
     Due to bug ED-2268 the first time you visit SUD pages by going directly
     to SUD "Find a Buyer" page, then you're redirected to SUD "About" page
@@ -1029,9 +974,7 @@ def sud_should_not_see_options_to_manage_users(
     context.response = profile.business_profile.go_to(session)
     profile.business_profile.should_be_here(context.response)
 
-    profile.business_profile.should_not_see_options_to_manage_users(
-        context.response
-    )
+    profile.business_profile.should_not_see_options_to_manage_users(context.response)
     logging.debug("%s can't see options to control user accounts", actor_alias)
 
 
@@ -1043,9 +986,7 @@ def profile_should_get_request_for_becoming_owner(
     subject = PROFILE_INVITATION_MSG_SUBJECT.format(company_title=company.title.upper())
     link = get_verification_link(actor.email, subject=subject)
     context.update_actor(
-        new_owner_alias,
-        ownership_request_link=link,
-        company_alias=company_alias,
+        new_owner_alias, ownership_request_link=link, company_alias=company_alias
     )
 
 
@@ -1072,9 +1013,7 @@ def should_not_be_able_to_access_page(
     response = page_object.go_to(collaborator.session)
     try:
         page_object.should_be_here(response)
-        raise Exception(
-            "%s was able to access '%' page", collaborator_alias, page_name
-        )
+        raise Exception("%s was able to access '%' page", collaborator_alias, page_name)
     except AssertionError:
         logging.debug(
             "As expected %s could not access '%s' page. Current URL is: %s",
@@ -1114,24 +1053,17 @@ def stannp_should_see_expected_details_in_verification_letter(
         )
     ):
         all(detail in letter for detail in expected_details.values())
-    logging.debug(
-        "All expected details are visible in the verification letter"
-    )
+    logging.debug("All expected details are visible in the verification letter")
 
 
-def isd_should_be_told_about_empty_search_results(
-        context: Context, buyer_alias: str
-):
+def isd_should_be_told_about_empty_search_results(context: Context, buyer_alias: str):
     isd.search.should_see_no_matches(context.response)
     logging.debug(
-        "%s was told that the search did not match any UK trade profiles",
-        buyer_alias,
+        "%s was told that the search did not match any UK trade profiles", buyer_alias
     )
 
 
-def isd_should_see_unfiltered_search_results(
-        context: Context, actor_alias: str
-):
+def isd_should_see_unfiltered_search_results(context: Context, actor_alias: str):
     response = context.response
     content = response.content.decode("utf-8")
     sector_filters_selector = "#filter-column input[type=checkbox]"
@@ -1143,9 +1075,9 @@ def isd_should_see_unfiltered_search_results(
         selector = "input::attr(checked)"
         checked = True if Selector(text=filter).css(selector).extract() else False
         with assertion_msg(
-                "Expected search results to be unfiltered but this "
-                "filter was checked: '%s'",
-                sector,
+            "Expected search results to be unfiltered but this "
+            "filter was checked: '%s'",
+            sector,
         ):
             assert not checked
     logging.debug("%s was shown with unfiltered search results", actor_alias)
@@ -1156,7 +1088,9 @@ def generic_page_language_should_be_set_to(context: Context, language: str):
     with assertion_msg("Required dictionary with page views is missing"):
         assert hasattr(context, "views")
     views = context.views
-    page_names = [row["page"] for row in context.table] if context.table else views.keys()
+    page_names = (
+        [row["page"] for row in context.table] if context.table else views.keys()
+    )
 
     results = defaultdict()
     for page_name in page_names:
@@ -1173,7 +1107,7 @@ def generic_page_language_should_be_set_to(context: Context, language: str):
         if language_code not in html_tag_lang
     }
     with assertion_msg(
-            f"HTML document language was not set to '{language_code}' in following pages: {undetected_languages}"
+        f"HTML document language was not set to '{language_code}' in following pages: {undetected_languages}"
     ):
         assert not undetected_languages
 
@@ -1183,7 +1117,9 @@ def generic_language_switcher_should_be_set_to(context: Context, language: str):
     with assertion_msg("Required dictionary with page views is missing"):
         assert hasattr(context, "views")
     views = context.views
-    page_names = [row["page"] for row in context.table] if context.table else views.keys()
+    page_names = (
+        [row["page"] for row in context.table] if context.table else views.keys()
+    )
 
     results = defaultdict()
     for page_name in page_names:
@@ -1191,7 +1127,9 @@ def generic_language_switcher_should_be_set_to(context: Context, language: str):
         content = response.content.decode("utf-8")
         check_for_errors(content, response.url)
         selector = f"#great-header-language-select option[selected]::attr(value)"
-        selected_language_switcher_option = Selector(text=content).css(selector).extract()
+        selected_language_switcher_option = (
+            Selector(text=content).css(selector).extract()
+        )
         error = f"Couldn't find language switcher on {response.url}"
         with assertion_msg(error):
             assert selected_language_switcher_option
@@ -1205,15 +1143,11 @@ def generic_language_switcher_should_be_set_to(context: Context, language: str):
         if language_code not in selected_language_switcher_option
     }
     with assertion_msg(
-            f"'{language}' was not selected in Language Switcher for following pages: {undetected_languages}"
+        f"'{language}' was not selected in Language Switcher for following pages: {undetected_languages}"
     ):
         assert not undetected_languages
 
 
-def profile_should_not_see_options_to_manage_users(
-        context: Context, actor_alias: str
-):
-    profile.business_profile.should_not_see_options_to_manage_users(
-        context.response
-    )
+def profile_should_not_see_options_to_manage_users(context: Context, actor_alias: str):
+    profile.business_profile.should_not_see_options_to_manage_users(context.response)
     logging.debug("%s can't see options to control user accounts", actor_alias)

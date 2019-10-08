@@ -82,25 +82,24 @@ def then_supplier_should_receive_verification_email(context, alias, subject):
 
 
 @then('"{supplier_alias}" should be told that her company has no description')
-def then_supplier_should_be_told_about_missing_description(
-        context, supplier_alias):
+def then_supplier_should_be_told_about_missing_description(context, supplier_alias):
     response = context.response
     prof_should_be_told_about_missing_description(response, supplier_alias)
 
 
 @then('"{supplier_alias}" should be told that her company is published')
-def then_supplier_should_be_told_that_profile_is_published(
-        context, supplier_alias):
+def then_supplier_should_be_told_that_profile_is_published(context, supplier_alias):
     profile_profile_is_published(context, supplier_alias)
 
 
 @then('"{supplier_alias}" should be on "{company_alias}"\'s FAS Business Profile page')
-def then_supplier_should_be_on_company_fas_page(context, supplier_alias,
-                                                company_alias):
+def then_supplier_should_be_on_company_fas_page(context, supplier_alias, company_alias):
     fas_should_be_on_profile_page(context, supplier_alias, company_alias)
 
 
-@then('"{supplier_alias}" should be told that she needs to verify her email address first')
+@then(
+    '"{supplier_alias}" should be told that she needs to verify her email address first'
+)
 def then_supplier_has_to_verify_email_first(context, supplier_alias):
     reg_supplier_has_to_verify_email_first(context, supplier_alias)
 
@@ -120,12 +119,16 @@ def then_supplier_should_see_new_details(context, supplier_alias, page_name):
     profile_should_see_company_details(context, supplier_alias, page_name)
 
 
-@then('"{supplier_alias}" should see links to all online profiles on Edit Business Profile page')
+@then(
+    '"{supplier_alias}" should see links to all online profiles on Edit Business Profile page'
+)
 def then_supplier_should_see_online_profiles_on_fab(context, supplier_alias):
     profile_should_see_online_profiles(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should see links to all online profiles on FAS Business Profile page')
+@then(
+    '"{supplier_alias}" should see links to all online profiles on FAS Business Profile page'
+)
 def then_supplier_should_see_online_profiles_on_fas(context, supplier_alias):
     fas_check_profiles(context, supplier_alias)
 
@@ -135,17 +138,23 @@ def then_supplier_should_be_told_to_use_valid_links(context, supplier_alias):
     profile_should_be_told_about_invalid_links(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should not see any links to online profiles on edit Business Profile page')
+@then(
+    '"{supplier_alias}" should not see any links to online profiles on edit Business Profile page'
+)
 def then_no_online_profiles_are_visible_on_fab(context, supplier_alias):
     profile_no_links_to_online_profiles_are_visible(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should not see any links to online profiles on FAS Business Profile page')
+@then(
+    '"{supplier_alias}" should not see any links to online profiles on FAS Business Profile page'
+)
 def then_no_online_profiles_are_visible_on_fas(context, supplier_alias):
     fas_no_links_to_online_profiles_are_visible(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should see all case studies on the edit Business Profile page')
+@then(
+    '"{supplier_alias}" should see all case studies on the edit Business Profile page'
+)
 def then_supplier_should_see_all_case_studies_fab(context, supplier_alias):
     profile_should_see_all_case_studies(context, supplier_alias)
 
@@ -155,63 +164,93 @@ def then_supplier_should_see_all_case_studies_fas(context, supplier_alias):
     fas_should_see_all_case_studies(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should see that logo on FAB Company\'s Directory Profile page')
+@then(
+    '"{supplier_alias}" should see that logo on FAB Company\'s Directory Profile page'
+)
 def then_supplier_should_see_logo_picture_on_fab(context, supplier_alias):
     profile_should_see_logo_picture(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should see that logo on FAS Company\'s Directory Profile page')
+@then(
+    '"{supplier_alias}" should see that logo on FAS Company\'s Directory Profile page'
+)
 def then_supplier_should_see_logo_picture_on_fas(context, supplier_alias):
     fas_should_see_png_logo_thumbnail(context, supplier_alias)
 
 
-@then('for every uploaded unsupported file "{supplier_alias}" should be told that only certain image types can be used as company\'s logo')
+@then(
+    'for every uploaded unsupported file "{supplier_alias}" should be told that only certain image types can be used as company\'s logo'
+)
 def then_every_invalid_logo_should_be_rejected(context, supplier_alias):
     profile_all_unsupported_files_should_be_rejected(context, supplier_alias)
 
 
-@then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS using words from case study "{case_alias}"')
+@then(
+    '"{buyer_alias}" should be able to find company "{company_alias}" on FAS using words from case study "{case_alias}"'
+)
 def then_buyer_should_find_supplier_using_part_of_case_study(
-        context, buyer_alias, company_alias, case_alias):
+    context, buyer_alias, company_alias, case_alias
+):
     fas_find_supplier_using_case_study_details(
-        context, buyer_alias, company_alias, case_alias,
-        properties=context.table)
+        context, buyer_alias, company_alias, case_alias, properties=context.table
+    )
 
 
-@then('"{buyer_alias}" should NOT be able to find company "{company_alias}" on FAS by using any part of case study "{case_alias}"')
-def then_buyer_should_not_be_able_to_find_company(context, buyer_alias, company_alias, case_alias):
+@then(
+    '"{buyer_alias}" should NOT be able to find company "{company_alias}" on FAS by using any part of case study "{case_alias}"'
+)
+def then_buyer_should_not_be_able_to_find_company(
+    context, buyer_alias, company_alias, case_alias
+):
     fas_supplier_cannot_be_found_using_case_study_details(
-        context, buyer_alias, company_alias, case_alias)
+        context, buyer_alias, company_alias, case_alias
+    )
 
 
-@then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS using any part of case study "{case_alias}"')
+@then(
+    '"{buyer_alias}" should be able to find company "{company_alias}" on FAS using any part of case study "{case_alias}"'
+)
 def then_buyer_should_find_supplier_using_any_part_of_case_study(
-        context, buyer_alias, company_alias, case_alias):
+    context, buyer_alias, company_alias, case_alias
+):
     fas_find_supplier_using_case_study_details(
-        context, buyer_alias, company_alias, case_alias)
+        context, buyer_alias, company_alias, case_alias
+    )
 
 
-@then('"{buyer_alias}" should NOT be able to find company "{company_alias}" on FAS using selected company\'s details')
+@then(
+    '"{buyer_alias}" should NOT be able to find company "{company_alias}" on FAS using selected company\'s details'
+)
 def then_buyer_should_find_supplier_using_company_details(
-        context, buyer_alias, company_alias):
+    context, buyer_alias, company_alias
+):
     fas_should_not_find_with_company_details(context, buyer_alias, company_alias)
 
 
-@then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS using selected company\'s details')
+@then(
+    '"{buyer_alias}" should be able to find company "{company_alias}" on FAS using selected company\'s details'
+)
 def then_buyer_should_find_supplier_using_company_details(
-        context, buyer_alias, company_alias):
+    context, buyer_alias, company_alias
+):
     fas_should_find_with_company_details(context, buyer_alias, company_alias)
 
 
-@then('the "{page_part}" part of the viewed FAS page should be presented in "{language}" language with probability greater than "{probability}"')
-@then('the "{page_part}" part of the viewed pages should be presented in "{language}" language with probability greater than "{probability}"')
+@then(
+    'the "{page_part}" part of the viewed FAS page should be presented in "{language}" language with probability greater than "{probability}"'
+)
+@then(
+    'the "{page_part}" part of the viewed pages should be presented in "{language}" language with probability greater than "{probability}"'
+)
 def then_page_should_be_in(context, page_part, language, probability):
     generic_content_of_viewed_pages_should_in_selected_language(
         context, language=language, page_part=page_part, probability=float(probability)
     )
 
 
-@then('"{buyer_alias}" should be told that the search did not match any UK trade profiles')
+@then(
+    '"{buyer_alias}" should be told that the search did not match any UK trade profiles'
+)
 def then_should_be_told_about_empty_search_results(context, buyer_alias):
     fas_should_be_told_about_empty_search_results(context, buyer_alias)
 
@@ -227,8 +266,7 @@ def then_should_be_told_about_empty_search_results(context, buyer_alias):
 
 
 @then('"{buyer_alias}" should be told that the feedback request has been submitted')
-def then_buyer_should_be_told_about_feedback_request_confirmation(
-        context, buyer_alias):
+def then_buyer_should_be_told_about_feedback_request_confirmation(context, buyer_alias):
     fas_feedback_request_should_be_submitted(context, buyer_alias)
 
 
@@ -237,25 +275,32 @@ def then_buyer_should_find_all_sought_companies(context, buyer_alias):
     fas_should_find_all_sought_companies(context, buyer_alias)
 
 
-@then('"{buyer_alias}" should be told that the message has been sent to company "{company_alias}"')
+@then(
+    '"{buyer_alias}" should be told that the message has been sent to company "{company_alias}"'
+)
 def then_buyer_should_be_told_that_message_has_been_sent(
-        context, buyer_alias, company_alias):
-    fas_should_be_told_that_message_has_been_sent(
-        context, buyer_alias, company_alias)
+    context, buyer_alias, company_alias
+):
+    fas_should_be_told_that_message_has_been_sent(context, buyer_alias, company_alias)
 
 
 @then('"{supplier_alias}" should receive an email message from "{buyer_alias}"')
 def then_supplier_should_receive_message_from_buyer(
-        context, supplier_alias, buyer_alias):
+    context, supplier_alias, buyer_alias
+):
     fas_supplier_should_receive_message_from_buyer(context, supplier_alias, buyer_alias)
 
 
-@then('"{actor_alias}" should see a PNG logo thumbnail on FAS Company\'s Directory Profile page')
+@then(
+    '"{actor_alias}" should see a PNG logo thumbnail on FAS Company\'s Directory Profile page'
+)
 def then_buyer_should_see_logo_on_fas_profile_page(context, actor_alias):
     fas_should_see_png_logo_thumbnail(context, actor_alias)
 
 
-@then('"{actor_alias}" should see different updated thumbnail of the logo on FAS Company\'s Directory Profile page')
+@then(
+    '"{actor_alias}" should see different updated thumbnail of the logo on FAS Company\'s Directory Profile page'
+)
 def then_actor_should_see_different_logo_on_fas(context, actor_alias):
     fas_should_see_different_png_logo_thumbnail(context, actor_alias)
 
@@ -265,8 +310,12 @@ def then_supplier_should_see_expected_error_messages(context, supplier_alias):
     profile_should_see_expected_error_messages(context, supplier_alias)
 
 
-@then('"{actor_alias}" should see links to all industry pages available in "{language}" language')
-def then_actor_should_see_links_to_industry_pages(context: Context, actor_alias: str, language: str):
+@then(
+    '"{actor_alias}" should see links to all industry pages available in "{language}" language'
+)
+def then_actor_should_see_links_to_industry_pages(
+    context: Context, actor_alias: str, language: str
+):
     international_should_see_links_to_industry_pages(context, actor_alias, language)
 
 
@@ -276,29 +325,39 @@ def then_actor_should_see_filtered_search_results(context, actor_alias):
     fas_should_see_filtered_search_results(context, actor_alias)
 
 
-@then('"{actor_alias}" should see that FAS search results are not filtered by any sector')
+@then(
+    '"{actor_alias}" should see that FAS search results are not filtered by any sector'
+)
 def then_actor_should_see_unfiltered_search_results(context, actor_alias):
     fas_should_see_unfiltered_search_results(context, actor_alias)
 
 
-@then('"{actor_alias}" should see that ISD search results are not filtered by any sector')
+@then(
+    '"{actor_alias}" should see that ISD search results are not filtered by any sector'
+)
 def then_actor_should_see_unfiltered_search_results(context, actor_alias):
     isd_should_see_unfiltered_search_results(context, actor_alias)
 
 
-@then('"{actor_alias}" should see company "{company_alias}" only once on browsed search result pages')
+@then(
+    '"{actor_alias}" should see company "{company_alias}" only once on browsed search result pages'
+)
 def then_actor_should_see_company_once_in_search_results(
-        context, actor_alias, company_alias):
-    fas_should_see_company_once_in_search_results(
-        context, actor_alias, company_alias)
+    context, actor_alias, company_alias
+):
+    fas_should_see_company_once_in_search_results(context, actor_alias, company_alias)
 
 
-@then('"{actor_alias}" should see that some of the results have the "{search_term}" search terms highlighted')
+@then(
+    '"{actor_alias}" should see that some of the results have the "{search_term}" search terms highlighted'
+)
 def then_should_see_highlighted_search_term(context, actor_alias, search_term):
     fas_should_see_highlighted_search_term(context, actor_alias, search_term)
 
 
-@then('"{supplier_alias}" should be told that business profile is ready to be published')
+@then(
+    '"{supplier_alias}" should be told that business profile is ready to be published'
+)
 def then_company_should_be_verified(context, supplier_alias):
     profile_business_profile_should_be_ready_for_publishing(context, supplier_alias)
 
@@ -309,8 +368,7 @@ def then_company_should_be_verified(context, supplier_alias):
 
 
 @then('"{supplier_alias}" should see expected case study error message')
-def then_supplier_should_see_expected_case_study_error_message(
-        context, supplier_alias):
+def then_supplier_should_see_expected_case_study_error_message(context, supplier_alias):
     fab_should_see_case_study_error_message(context, supplier_alias)
 
 
@@ -362,65 +420,93 @@ def then_actor_should_not_see_a_message(context, actor_alias, message):
     should_not_see_message(context, actor_alias, message)
 
 
-@then('"{actor_aliases}" should receive an email with a request to confirm that he\'s been added to company "{company_alias}" Find a Buyer profile')
-@then('"{actor_aliases}" should receive an email with a request to confirm that she\'s been added to company "{company_alias}" Find a Buyer profile')
-@then('"{actor_aliases}" should receive an email with a request to confirm that they\'ve been added to company "{company_alias}" Find a Buyer profile')
+@then(
+    '"{actor_aliases}" should receive an email with a request to confirm that he\'s been added to company "{company_alias}" Find a Buyer profile'
+)
+@then(
+    '"{actor_aliases}" should receive an email with a request to confirm that she\'s been added to company "{company_alias}" Find a Buyer profile'
+)
+@then(
+    '"{actor_aliases}" should receive an email with a request to confirm that they\'ve been added to company "{company_alias}" Find a Buyer profile'
+)
 def then_actor_should_receive_email_with_request_for_collaboration(
-        context, actor_aliases, company_alias):
+    context, actor_aliases, company_alias
+):
     sso_should_get_request_for_collaboration_email(
-        context, actor_aliases, company_alias)
+        context, actor_aliases, company_alias
+    )
 
 
-@then('"{actor_alias}" should see options to manage Find a Buyer profile users on SSO Profile')
+@then(
+    '"{actor_alias}" should see options to manage Find a Buyer profile users on SSO Profile'
+)
 def then_actor_should_see_options_to_manage_account_users(
-        context: Context, actor_alias: str):
+    context: Context, actor_alias: str
+):
     sud_should_see_options_to_manage_users(context, actor_alias)
 
 
-@then('"{actor_alias}" should not see options to manage Find a Buyer profile users on SSO Profile')
+@then(
+    '"{actor_alias}" should not see options to manage Find a Buyer profile users on SSO Profile'
+)
 def then_actor_should_not_see_options_to_manage_account_users(
-        context: Context, actor_alias: str):
+    context: Context, actor_alias: str
+):
     sud_should_not_see_options_to_manage_users(context, actor_alias)
 
 
-@then('"{new_owner_alias}" should receive an email with a request for becoming the owner of the company "{company_alias}" profile')
+@then(
+    '"{new_owner_alias}" should receive an email with a request for becoming the owner of the company "{company_alias}" profile'
+)
 def then_actor_should_receive_email_with_transfer_account_ownership_request(
-        context, new_owner_alias, company_alias):
+    context, new_owner_alias, company_alias
+):
     profile_should_get_request_for_becoming_owner(
-        context, new_owner_alias, company_alias)
+        context, new_owner_alias, company_alias
+    )
 
 
-@then('"{supplier_alias}" should not see "{collaborators_aliases}" among the users associated with company\'s profile')
+@then(
+    '"{supplier_alias}" should not see "{collaborators_aliases}" among the users associated with company\'s profile'
+)
 def then_supplier_should_not_see_collaborator(
-        context, supplier_alias, collaborators_aliases):
-    fab_should_not_see_collaborator(
-        context, supplier_alias, collaborators_aliases)
+    context, supplier_alias, collaborators_aliases
+):
+    fab_should_not_see_collaborator(context, supplier_alias, collaborators_aliases)
 
 
 @then('"{collaborator_alias}" should not be able to access "{page_name}" page')
 def then_collaborator_should_not_be_able_to_access_page(
-        context, collaborator_alias, page_name):
+    context, collaborator_alias, page_name
+):
     should_not_be_able_to_access_page(context, collaborator_alias, page_name)
 
 
-@then('"{actor_alias}" should see correct details in the pdf with the verification letter')
-def then_actor_should_see_expected_details_in_verification_letter(
-        context, actor_alias):
+@then(
+    '"{actor_alias}" should see correct details in the pdf with the verification letter'
+)
+def then_actor_should_see_expected_details_in_verification_letter(context, actor_alias):
     stannp_should_see_expected_details_in_verification_letter(
-        context, actor_alias, correct_details=context.table)
+        context, actor_alias, correct_details=context.table
+    )
 
 
-@then('the HTML document language for viewed pages should be set to "{language}" language')
+@then(
+    'the HTML document language for viewed pages should be set to "{language}" language'
+)
 def then_page_language_should_be_set_to(context: Context, language: str):
     generic_page_language_should_be_set_to(context, language)
 
 
-@then('the language switcher on viewed pages should show "{language}" as selected language')
+@then(
+    'the language switcher on viewed pages should show "{language}" as selected language'
+)
 def then_language_switcher_should_be_set_to(context: Context, language: str):
     generic_language_switcher_should_be_set_to(context, language)
 
 
 @then('"{actor_alias}" should not see options to manage profile')
 def then_actor_should_not_see_options_to_manage_account_users(
-        context: Context, actor_alias: str):
+    context: Context, actor_alias: str
+):
     profile_should_not_see_options_to_manage_users(context, actor_alias)

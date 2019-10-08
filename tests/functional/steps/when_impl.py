@@ -20,6 +20,10 @@ from directory_constants.expertise import (
     MANAGEMENT_CONSULTING,
     PUBLICITY,
 )
+from requests import Response, Session
+from retrying import retry
+from scrapy import Selector
+
 from directory_tests_shared import URLs
 from directory_tests_shared.constants import (
     NO_OF_EMPLOYEES,
@@ -31,9 +35,6 @@ from directory_tests_shared.constants import (
 )
 from directory_tests_shared.enums import Account, BusinessType, Language
 from directory_tests_shared.utils import rare_word, sentence
-from requests import Response, Session
-from retrying import retry
-from scrapy import Selector
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
     fab,
