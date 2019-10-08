@@ -249,6 +249,9 @@ def step_impl(context: Context, actor_alias: str):
     '"{actor_alias}" decided to create an "{account_type}" profile for a random company "{company_alias}"'
 )
 @given('"{actor_alias}" decided to create an "{account_type}" profile')
+@given('"{actor_alias}" decided to create a "{account_type}" profile')
+@given('"{actor_alias}" created an "{account_type}" profile')
+@given('"{actor_alias}" created a "{account_type}" profile')
 @given(
     '"{actor_alias}" created an "{account_type}" profile for a random company "{company_alias}"'
 )
