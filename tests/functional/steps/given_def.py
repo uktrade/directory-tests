@@ -34,7 +34,6 @@ from tests.functional.steps.when_impl import (
     profile_update_company_details,
     reg_create_standalone_unverified_sso_account,
     reg_should_get_verification_letter,
-    sso_create_standalone_unverified_sso_account,
     sso_get_password_reset_link,
     stannp_send_verification_letter,
     unauthenticated_buyer,
@@ -78,8 +77,10 @@ def given_supplier_creates_verified_and_published_isd_profile(
 @given(
     '"{supplier_alias}" created a standalone SSO/great.gov.uk account with unverified email address'
 )
-def given_supplier_creates_standalone_unverified_sso_account(context, supplier_alias):
-    sso_create_standalone_unverified_sso_account(context, supplier_alias)
+def given_supplier_creates_standalone_unverified_sso_account(
+        context, supplier_alias
+):
+    reg_create_standalone_unverified_sso_account(context, supplier_alias)
 
 
 @given('"{supplier_alias}" is signed in to SSO/great.gov.uk account')

@@ -177,12 +177,6 @@ def go_to_page(context: Context, supplier_alias: str, page_name: str):
     context.response = response
 
 
-def sso_create_standalone_unverified_sso_account(context: Context, supplier_alias: str):
-    supplier = unauthenticated_supplier(supplier_alias)
-    context.add_actor(supplier)
-    reg_create_standalone_unverified_sso_account(context, supplier_alias)
-
-
 def profile_provide_missing_details_as_an_individual(
     context: Context, supplier_alias: str
 ):
@@ -217,7 +211,7 @@ def profile_provide_missing_details_as_an_individual(
 
 
 def sso_create_standalone_verified_sso_account(context: Context, supplier_alias: str):
-    sso_create_standalone_unverified_sso_account(context, supplier_alias)
+    reg_create_standalone_unverified_sso_account(context, supplier_alias)
     supplier = context.get_actor(supplier_alias)
     flag_sso_account_as_verified(context, supplier.email)
     sso_sign_in(context, supplier_alias)
@@ -601,6 +595,8 @@ def reg_create_standalone_unverified_sso_account(context: Context, supplier_alia
     NOTE:
     There will be no association between this account and any company.
     """
+    if not context.get_actor(supplier_alias):
+        context.add_actor(unauthenticated_supplier(supplier_alias))
     actor = context.get_actor(supplier_alias)
     session = actor.session
 
