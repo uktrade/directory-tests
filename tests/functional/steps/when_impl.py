@@ -37,6 +37,7 @@ from directory_tests_shared.enums import Account, BusinessType, Language
 from directory_tests_shared.utils import rare_word, sentence
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
+    domestic,
     fab,
     fas,
     get_page_object,
@@ -2699,6 +2700,9 @@ def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account):
 
 
 def profile_enrol_individual(context: Context, actor: Actor, account: Account):
+    context.response = profile.enrol.go_to(actor.session)
+    context.response = profile.select_business_type.go_to(actor.session)
+
     context.response = profile.select_business_type.submit(actor, account.business_type)
     profile.individual_enter_your_email_and_password.should_be_here(context.response)
     assert_that_captcha_is_in_dev_mode(context.response)
@@ -2709,7 +2713,8 @@ def profile_enrol_individual(context: Context, actor: Actor, account: Account):
 
     if not account.verify_email:
         logging.debug(
-            f"Won't verify email address for '{actor.alias}' as '{account.description}' was requested"
+            f"Won't verify email address for '{actor.alias}' as '{account.description}'"
+            f" was requested"
         )
         return
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
@@ -2720,7 +2725,7 @@ def profile_enrol_individual(context: Context, actor: Actor, account: Account):
 
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
     context.response = profile.individual_enter_your_personal_details.submit(actor)
-    profile.individual_enrolment_finished.should_be_here(context.response)
+    domestic.landing.should_be_here(context.response)
 
 
 def profile_enrol_overseas_company(context: Context, actor: Actor, account: Account):
