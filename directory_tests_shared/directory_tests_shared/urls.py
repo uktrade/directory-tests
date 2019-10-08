@@ -567,6 +567,7 @@ class URLs(Enum):
     PROFILE_HEALTHCHECK_PING = ProfileUrl("healthcheck/ping/")
     PROFILE_SOO = ProfileUrl("selling-online-overseas/")
     PROFILE_BUSINESS_PROFILE = ProfileUrl("business-profile/")
+    PROFILE_PERSONAL_PROFILE = ProfileUrl("personal-profile/")
     PROFILE_EXOPS_ALERTS = ProfileUrl("export-opportunities/email-alerts/")
     PROFILE_EXOPS_APPLICATIONS = ProfileUrl("export-opportunities/applications/")
     PROFILE_LANDING = ProfileUrl("")
