@@ -32,7 +32,6 @@ from tests.functional.steps.when_impl import (
     profile_enrol_user,
     profile_supplier_uploads_logo,
     profile_update_company_details,
-    reg_create_standalone_unverified_sso_account,
     reg_should_get_verification_letter,
     sso_get_password_reset_link,
     stannp_send_verification_letter,
@@ -44,11 +43,6 @@ from tests.functional.steps.when_impl import (
 @given('"{supplier_alias}" is an unauthenticated supplier')
 def given_an_unauthenticated_supplier(context, supplier_alias):
     context.add_actor(unauthenticated_supplier(supplier_alias))
-
-
-@given('"{supplier_alias}" created an unverified SSO/great.gov.uk account')
-def when_supplier_creates_standalone_sso_account(context, supplier_alias):
-    reg_create_standalone_unverified_sso_account(context, supplier_alias)
 
 
 @given(
@@ -72,15 +66,6 @@ def given_supplier_creates_verified_and_published_isd_profile(
     isd_create_verified_and_published_business_profile(
         context, supplier_alias, company_alias
     )
-
-
-@given(
-    '"{supplier_alias}" created a standalone SSO/great.gov.uk account with unverified email address'
-)
-def given_supplier_creates_standalone_unverified_sso_account(
-        context, supplier_alias
-):
-    reg_create_standalone_unverified_sso_account(context, supplier_alias)
 
 
 @given('"{supplier_alias}" is signed in to SSO/great.gov.uk account')

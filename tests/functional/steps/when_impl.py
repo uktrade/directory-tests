@@ -177,48 +177,6 @@ def go_to_page(context: Context, supplier_alias: str, page_name: str):
     context.response = response
 
 
-def profile_provide_missing_details_as_an_individual(
-    context: Context, supplier_alias: str
-):
-    actor = context.get_actor(supplier_alias)
-    individual = Company(business_type=BusinessType.INDIVIDUAL)
-
-    # Ensure we start on the "Update your details (as an Individual)" page
-    profile.individual_update_your_details.should_be_here(context.response)
-    logging.debug(
-        f"As expected {supplier_alias} is on: '{profile.individual_update_your_details.NAME}' page"
-    )
-
-    context.response = profile.select_business_type.go_to(actor.session)
-    extract_and_set_csrf_middleware_token(context, context.response, supplier_alias)
-
-    context.response = profile.select_business_type.submit(
-        actor, individual.business_type
-    )
-    profile.individual_start_enrolment.should_be_here(context.response)
-
-    context.response = profile.individual_enter_your_personal_details.go_to(
-        actor.session
-    )
-    profile.individual_enter_your_personal_details.should_be_here(context.response)
-    extract_and_set_csrf_middleware_token(context, context.response, supplier_alias)
-
-    actor = context.get_actor(supplier_alias)
-    context.response = profile.individual_enter_your_personal_details.submit(actor)
-
-    profile.individual_enrolment_finished.should_be_here(context.response)
-    context.update_actor(supplier_alias, has_sso_account=True)
-
-
-def sso_create_standalone_verified_sso_account(context: Context, supplier_alias: str):
-    reg_create_standalone_unverified_sso_account(context, supplier_alias)
-    supplier = context.get_actor(supplier_alias)
-    flag_sso_account_as_verified(context, supplier.email)
-    sso_sign_in(context, supplier_alias)
-    sso_should_be_signed_in_to_sso_account(context, supplier_alias)
-    profile_provide_missing_details_as_an_individual(context, supplier_alias)
-
-
 @retry(wait_fixed=2000, stop_max_attempt_number=5)
 def fas_find_company_by_name(context: Context, buyer_alias: str, company_alias: str):
     buyer = context.get_actor(buyer_alias)
@@ -328,7 +286,9 @@ def create_actor_with_or_without_sso_account(
     actor_aliases = [alias.strip() for alias in actor_aliases.split(",")]
     for actor_alias in actor_aliases:
         if has_or_does_not_have in ["has", "have"]:
-            sso_create_standalone_verified_sso_account(context, actor_alias)
+            actor = context.get_actor(actor_alias)
+            account = Account("verified Individual")
+            profile_enrol_individual(context, actor, account=account)
         else:
             supplier = unauthenticated_supplier(actor_alias)
             context.add_actor(supplier)
@@ -587,47 +547,6 @@ def prof_attempt_to_sign_in_to_sso(context: Context, supplier_alias: str):
 
     # Step 3 - submit the login form
     context.response = sso.login.login(actor)
-
-
-def reg_create_standalone_unverified_sso_account(context: Context, supplier_alias: str):
-    """Will create a standalone SSO/great.gov.uk account.
-
-    NOTE:
-    There will be no association between this account and any company.
-    """
-    if not context.get_actor(supplier_alias):
-        context.add_actor(unauthenticated_supplier(supplier_alias))
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
-
-    # Step 1: Go to the SSO/great.gov.uk registration page
-    response = sso.register.go_to(session)
-    context.response = response
-    sso.register.should_be_here(response)
-
-    # Step 2 - extract CSRF token
-    token = extract_csrf_middleware_token(response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
-    actor = context.get_actor(supplier_alias)
-
-    # Step 3: Check if User is not logged in
-    with assertion_msg(
-        "It looks like user is still logged in, as the "
-        "sso_display_logged_in cookie is not equal to False"
-    ):
-        assert response.cookies.get("sso_display_logged_in") == "false"
-
-    # Step 4: POST SSO accounts/signup/
-    response = sso.register.submit_no_company(actor)
-    context.response = response
-
-    # Step 5: Check if Supplier is on Verify your email page & is not logged in
-    sso.verify_your_email.should_be_here(response)
-    with assertion_msg(
-        "It looks like user is still logged in, as the "
-        "sso_display_logged_in cookie is not equal to False"
-    ):
-        assert response.cookies.get("sso_display_logged_in") == "false"
 
 
 def sso_collaborator_confirm_email_address(context: Context, supplier_alias: str):

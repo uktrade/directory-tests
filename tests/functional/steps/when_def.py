@@ -48,7 +48,6 @@ from tests.functional.steps.when_impl import (
     profile_verify_company_profile,
     profile_view_published_profile,
     reg_create_sso_account,
-    reg_create_standalone_unverified_sso_account,
     reg_open_email_confirmation_link,
     reg_supplier_confirms_email_address,
     sso_change_password_with_password_reset_link,
@@ -107,11 +106,6 @@ def when_supplier_views_published_profile(context, supplier_alias):
 @when('"{supplier_alias}" attempts to sign in to SSO/great.gov.uk account')
 def when_supplier_attempts_to_sign_in_to_fab(context, supplier_alias):
     prof_attempt_to_sign_in_to_sso(context, supplier_alias)
-
-
-@when('"{supplier_alias}" creates an unverified SSO/great.gov.uk account')
-def when_supplier_creates_standalone_sso_account(context, supplier_alias):
-    reg_create_standalone_unverified_sso_account(context, supplier_alias)
 
 
 @when('"{supplier_alias}" updates company\'s details')
