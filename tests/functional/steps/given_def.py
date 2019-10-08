@@ -158,7 +158,7 @@ def given_supplier_received_verification_letter(context, supplier_alias):
     reg_should_get_verification_letter(context, supplier_alias)
 
 
-@given('"{supplier_alias}" received a password reset email')
+@given('"{supplier_alias}" requested and received a password reset email')
 def given_supplier_received_password_reset_email(context, supplier_alias):
     sso_get_password_reset_link(context, supplier_alias)
 
