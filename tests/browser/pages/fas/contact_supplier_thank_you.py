@@ -2,20 +2,19 @@
 """Find a Supplier Thank you for contacting supplier"""
 import logging
 from typing import List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import FIND_A_SUPPLIER_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import common_selectors
 from pages.common_actions import Selector, check_for_sections, take_screenshot
 
 NAME = "Thank you for contacting supplier"
 SERVICE = Service.FAS
 TYPE = "contact"
-URL = urljoin(FIND_A_SUPPLIER_URL, "suppliers/{company_number}/contact/success/{query}")
+URL = URLs.FAS_CONTACT_SUPPLIER_SUCCESS.absolute_template
 PAGE_TITLE = "Find a Buyer - GREAT.gov.uk"
 
 SELECTORS = {
