@@ -707,39 +707,39 @@ class URLs(Enum):
 
     # UNUSED DEFINITIONS
     # New Contact-Us UI - Domestic & International
-    CONTACT_US_DOMESTIC = ContactUrl("contact/triage/domestic/")
-    CONTACT_US_EXPORT_OPPORTUNITIES = ContactUrl("contact/triage/export-opportunities/")
+    CONTACT_US_DOMESTIC = ContactUrl("triage/domestic/")
     CONTACT_US_FEEDBACK = ContactUrl("feedback/")
+    CONTACT_US_EXPORT_OPPORTUNITIES = ContactUrl("triage/export-opportunities/")
     CONTACT_US_EXPORT_OPPORTUNITIES_NO_RESPONSE = ContactUrl(
-        "contact/triage/export-opportunities/opportunity-no-response/"
+        "triage/export-opportunities/opportunity-no-response/"
     )
     CONTACT_US_EXPORT_OPPORTUNITIES_NOT_RELEVANT = ContactUrl(
-        "contact/triage/export-opportunities/alerts-not-relevant/"
+        "triage/export-opportunities/alerts-not-relevant/"
     )
-    CONTACT_US_FORM_DOMESTIC = ContactUrl("contact/domestic/")
-    CONTACT_US_FORM_DSO = ContactUrl("contact/defence-and-security-organisation/")
-    CONTACT_US_FORM_EVENTS = ContactUrl("contact/events/")
-    CONTACT_US_FORM_EXPORT_ADVICE = ContactUrl("contact/export-advice/comment/")
-    CONTACT_US_FORM_INTERNATIONAL = ContactUrl("contact/international/")
-    CONTACT_US_GREAT_ACCOUNT = ContactUrl("contact/triage/great-account/")
+    CONTACT_US_FORM_DOMESTIC = ContactUrl("domestic/")
+    CONTACT_US_FORM_DSO = ContactUrl("defence-and-security-organisation/")
+    CONTACT_US_FORM_EVENTS = ContactUrl("events/")
+    CONTACT_US_FORM_EXPORT_ADVICE = ContactUrl("export-advice/comment/")
+    CONTACT_US_FORM_INTERNATIONAL = ContactUrl("international/")
+    CONTACT_US_GREAT_ACCOUNT = ContactUrl("triage/great-account/")
     CONTACT_US_GREAT_ACCOUNT_CH_LOGIN = ContactUrl(
-        "contact/triage/great-account/companies-house-login/"
+        "triage/great-account/companies-house-login/"
     )
     CONTACT_US_GREAT_ACCOUNT_NO_VERIFICATION_EMAIL = ContactUrl(
-        "contact/triage/great-account/no-verification-email/"
+        "triage/great-account/no-verification-email/"
     )
     CONTACT_US_GREAT_ACCOUNT_NO_VERIFICATION_LETTER = ContactUrl(
-        "contact/triage/great-account/no-verification-letter/"
+        "triage/great-account/no-verification-letter/"
     )
     CONTACT_US_GREAT_ACCOUNT_PASSWORD_RESET = ContactUrl(
-        "contact/triage/great-account/password-reset/"
+        "triage/great-account/password-reset/"
     )
     CONTACT_US_GREAT_ACCOUNT_VERIFICATION_LETTER_CODE = ContactUrl(
-        "contact/triage/great-account/verification-letter-code/"
+        "triage/great-account/verification-letter-code/"
     )
-    CONTACT_US_GREAT_SERVICES = ContactUrl("contact/triage/great-services/")
-    CONTACT_US_INTERNATIONAL = ContactUrl("contact/triage/international/")
-    CONTACT_US_LANDING = ContactUrl("contact/triage/location/")
+    CONTACT_US_GREAT_SERVICES = ContactUrl("triage/great-services/")
+    CONTACT_US_INTERNATIONAL = ContactUrl("triage/international/")
+    CONTACT_US_LANDING = ContactUrl("triage/location/")
     CONTACT_US_OTHER_DOMESTIC_EU_EXIT = ContactUrl("eu-exit-news/contact/")
     CONTACT_US_OTHER_GET_FINANCE = ContactUrl("get-finance/contact/")
     CONTACT_US_OTHER_INTERNATIONAL_EU_EXIT = ContactUrl(
