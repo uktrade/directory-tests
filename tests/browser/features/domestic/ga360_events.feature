@@ -209,7 +209,7 @@ Feature: Domestic - Google Analytics 360 Events
     Then following GTM events should be registered
       | action          | element         | event   | type        | value                                         |
       | ExpressInterest | ExpanderControl | gaEvent | Not present | Aerospace and engineering                     |
-      | ExpressInterest | ExpanderControl | gaEvent | Not present | Defence and cyber security                    |
+      | ExpressInterest | ExpanderControl | gaEvent | Not present | Cyber security                                |
       | ExpressInterest | ExpanderControl | gaEvent | Not present | Health and life sciences                      |
       | Cta             | NextStepCta     | gaEvent | Not present | Exporting to Italy if there's no EU Exit deal |
       | Cta             | NextStepCta     | gaEvent | Not present | Get in touch with one of our trade advisers   |
