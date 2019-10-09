@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """Selling Online Overseas - Marketplace details page."""
 from typing import List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import SOO_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
@@ -20,7 +19,7 @@ from pages.common_actions import (
 SERVICE = Service.SOO
 TYPE = "search"
 NAME = "Marketplace"
-URL = urljoin(SOO_URL, "markets/details")
+URL = URLs.SOO_MARKET_DETAILS.absolute
 PAGE_TITLE = "Marketplace details | Selling Online Overseas"
 
 

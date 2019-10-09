@@ -3,13 +3,12 @@
 import logging
 import random
 from typing import List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import SOO_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType
 from pages.common_actions import (
     Selector,
@@ -28,7 +27,7 @@ from pages.soo import search_criteria
 SERVICE = Service.SOO
 TYPE = "search"
 NAME = "Search results"
-URL = urljoin(SOO_URL, "markets/results/")
+URL = URLs.SOO_SEARCH_RESULTS.absolute
 PAGE_TITLE = "Search results | Selling online overseas"
 
 SEARCH_BUTTON = Selector(
