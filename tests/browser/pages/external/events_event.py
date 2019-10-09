@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 """Events Event Page Object."""
-
 import logging
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import EVENTS_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages.common_actions import (
     Selector,
     check_url,
@@ -19,7 +17,7 @@ from pages.common_actions import (
 NAME = "Event"
 SERVICE = Service.EVENTS
 TYPE = "event"
-URL = urljoin(EVENTS_URL, "")
+URL = URLs.EVENTS_EVENT.absolute
 GREAT_LOGO = Selector(By.CSS_SELECTOR, "div.event-logo")
 SELECTORS = {
     "general": {"great.gov.uk logo": GREAT_LOGO},
