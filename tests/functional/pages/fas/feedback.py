@@ -11,7 +11,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Service.FAS
 NAME = "Feedback"
 TYPE = PageType.FORM
-URL = URLs.DOMESTIC_FEEDBACK.absolute
+URL = URLs.CONTACT_US_FEEDBACK.absolute
 EXPECTED_STRINGS_FORM = [
     "Get UK companies to fulfil your business needs",
     (

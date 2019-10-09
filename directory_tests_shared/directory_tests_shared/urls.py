@@ -671,7 +671,6 @@ class URLs(Enum):
     DOMESTIC_SEARCH = DomesticUrl("search/")
     DOMESTIC_SITEMAP = DomesticUrl("sitemap.xml")
     DOMESTIC_LANDING = DomesticUrl("")
-    DOMESTIC_FEEDBACK = DomesticUrl("contact/feedback/")
     DOMESTIC_LANDING_UK = DomesticUrl("?lang=en-gb")
     DOMESTIC_INTERNATIONAL = DomesticUrl("international/")
     DOMESTIC_INTERNATIONAL_UK = DomesticUrl("international/?lang=en-gb")
@@ -710,6 +709,7 @@ class URLs(Enum):
     # New Contact-Us UI - Domestic & International
     CONTACT_US_DOMESTIC = ContactUrl("contact/triage/domestic/")
     CONTACT_US_EXPORT_OPPORTUNITIES = ContactUrl("contact/triage/export-opportunities/")
+    CONTACT_US_FEEDBACK = ContactUrl("feedback/")
     CONTACT_US_EXPORT_OPPORTUNITIES_NO_RESPONSE = ContactUrl(
         "contact/triage/export-opportunities/opportunity-no-response/"
     )
