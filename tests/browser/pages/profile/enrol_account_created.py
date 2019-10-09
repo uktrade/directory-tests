@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """Profile - Enrol - Account Created"""
 from typing import List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import PROFILE_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType
 from pages.common_actions import (
     Selector,
@@ -21,7 +20,7 @@ NAME = "Account created"
 NAMES = ["Account created (LTD, PLC or Royal Charter)"]
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
-URL = urljoin(PROFILE_URL, "enrol/business-type/companies-house/finished/#")
+URL = URLs.PROFILE_ENROL_FINISHED.absolute
 SubURLs = {"account created": URL, "account created (ltd, plc or royal charter)": URL}
 PAGE_TITLE = ""
 

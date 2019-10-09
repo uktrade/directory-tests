@@ -3,14 +3,13 @@
 import logging
 from types import ModuleType
 from typing import List
-from urllib.parse import urljoin
 from uuid import uuid4
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import PROFILE_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType
 from pages.common_actions import (
     Actor,
@@ -29,7 +28,7 @@ NAME = "Enter your details"
 NAMES = ["Enter your details (LTD, PLC or Royal Charter)"]
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
-URL = urljoin(PROFILE_URL, "enrol/business-type/companies-house/personal-details/")
+URL = URLs.PROFILE_ENROL_PERSONAL_DETAILS.absolute
 SubURLs = {"enter your details (ltd, plc or royal charter)": URL}
 PAGE_TITLE = ""
 

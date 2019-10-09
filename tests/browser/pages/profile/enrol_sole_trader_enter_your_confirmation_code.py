@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """Profile - Enrol - Enter your confirmation code (non Companies House company)"""
 from typing import List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import PROFILE_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType
 from pages.common_actions import (
     Actor,
@@ -23,9 +22,7 @@ from pages.common_actions import (
 NAME = "Enter your confirmation code (non Companies House company)"
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
-URL = urljoin(
-    PROFILE_URL, "enrol/business-type/non-companies-house-company/verification/"
-)
+URL = URLs.PROFILE_ENROL_NON_CH_COMPANY_EMAIL_VERIFICATION.absolute
 PAGE_TITLE = ""
 
 SELECTORS = {

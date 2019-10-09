@@ -2,6 +2,9 @@
 """Profile - Enrol - Start as Individual"""
 from typing import List
 
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
+
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import Service
 from pages import common_selectors
@@ -13,8 +16,6 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webdriver import WebDriver
 
 NAME = "Start as Individual"
 SERVICE = Service.PROFILE

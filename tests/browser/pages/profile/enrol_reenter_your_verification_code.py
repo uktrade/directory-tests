@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """Profile - Enrol - Enter your confirmation code"""
 from typing import List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import PROFILE_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType
 from pages.common_actions import (
     Actor,
@@ -23,7 +22,7 @@ from pages.common_actions import (
 NAME = "Re-enter your confirmation code"
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
-URL = urljoin(PROFILE_URL, "enrol/resend-verification/verification/")
+URL = URLs.PROFILE_ENROL_RESENT_VERIFICATION.absolute
 PAGE_TITLE = ""
 
 SELECTORS = {

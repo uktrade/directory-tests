@@ -6,11 +6,11 @@ from collections import defaultdict
 from types import ModuleType
 from typing import List
 
-from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType
 from pages.common_actions import (
     Actor,
@@ -21,8 +21,8 @@ from pages.common_actions import (
     find_and_click_on_page_element,
     find_elements_of_type,
     go_to_url,
+    pick_option_from_autosuggestion,
     take_screenshot,
-    pick_option_from_autosuggestion
 )
 from pages.profile import enrol_enter_your_business_details_step_2
 from pages.profile.autocomplete_callbacks import enrol_autocomplete_company_name
@@ -40,8 +40,12 @@ SELECTORS = {
     "enter your business details": {
         "itself": Selector(By.CSS_SELECTOR, "section form"),
         "heading": Selector(By.CSS_SELECTOR, "#form-step-body-text h1"),
-        "business category": Selector(By.ID, "id_address-search-company_type", type=ElementType.SELECT),
-        "business name": Selector(By.ID, "id_address-search-company_name", type=ElementType.INPUT),
+        "business category": Selector(
+            By.ID, "id_address-search-company_type", type=ElementType.SELECT
+        ),
+        "business name": Selector(
+            By.ID, "id_address-search-company_name", type=ElementType.INPUT
+        ),
         "business postcode": Selector(
             By.ID,
             "id_postal_code",
@@ -49,7 +53,9 @@ SELECTORS = {
             is_visible=False,
             autocomplete_callback=enrol_autocomplete_company_name,
         ),
-        "industry": Selector(By.ID, "id_address-search-sectors", type=ElementType.SELECT),
+        "industry": Selector(
+            By.ID, "id_address-search-sectors", type=ElementType.SELECT
+        ),
         "website": Selector(By.ID, "id_address-search-website", type=ElementType.INPUT),
         "submit": Selector(
             By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
@@ -57,9 +63,7 @@ SELECTORS = {
     },
 }
 FORM_FIELDS_WITH_USEFUL_DATA = {
-    "company address": Selector(
-        By.ID, "id_address", type=ElementType.TEXTAREA
-    ),
+    "company address": Selector(By.ID, "id_address", type=ElementType.TEXTAREA)
 }
 
 

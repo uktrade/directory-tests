@@ -5,13 +5,12 @@ import random
 from collections import defaultdict
 from types import ModuleType
 from typing import List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import PROFILE_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType
 from pages.common_actions import (
     Actor,
@@ -31,12 +30,8 @@ NAME = "Enter your business details"
 NAMES = ["Enter your business details (LTD, PLC or Royal Charter)"]
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
-URL = urljoin(PROFILE_URL, "enrol/business-type/companies-house/company-search/")
-SubURLs = {
-    "enter your business details (ltd, plc or royal charter)": urljoin(
-        PROFILE_URL, "enrol/business-type/companies-house/company-search/"
-    )
-}
+URL = URLs.PROFILE_ENROL_COMPANIES_HOUSE_SEARCH.absolute
+SubURLs = {"enter your business details (ltd, plc or royal charter)": URL}
 PAGE_TITLE = ""
 
 AUTOCOMPLETION = Selector(By.CSS_SELECTOR, "ul.SelectiveLookupDisplay")
@@ -53,7 +48,9 @@ SELECTORS = {
             is_visible=False,
             autocomplete_callback=enrol_autocomplete_company_name,
         ),
-        "i cannot find my business name": Selector(By.CSS_SELECTOR, "details summary", type=ElementType.LINK),
+        "i cannot find my business name": Selector(
+            By.CSS_SELECTOR, "details summary", type=ElementType.LINK
+        ),
         "submit": Selector(
             By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
         ),

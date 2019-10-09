@@ -3,13 +3,12 @@
 import logging
 from types import ModuleType
 from typing import List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import PROFILE_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
@@ -32,7 +31,7 @@ from pages.profile import (
 NAME = "Select your business type"
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
-URL = urljoin(PROFILE_URL, "enrol/business-type/")
+URL = URLs.PROFILE_ENROL_SELECT_BUSINESS_TYPE.absolute
 PAGE_TITLE = ""
 
 SELECTORS = {
