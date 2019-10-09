@@ -723,15 +723,21 @@ class URLs(Enum):
     PROFILE_COMPANY_EDIT_SOCIAL_MEDIA = ProfileUrl("business-profile/social-links/")
 
     # Domestic site
+    DOMESTIC_ADVICE = DomesticUrl("advice/")
     DOMESTIC_API_COMPANY_HOUSE_SEARCH = DomesticUrl(
         "api/internal/companies-house-search/"
     )
+    DOMESTIC_COMMUNITY = DomesticUrl("community/")
+    DOMESTIC_COMMUNITY_JOIN = DomesticUrl("community/join/")
     DOMESTIC_HEALTHCHECK = DomesticUrl("healthcheck/")
     DOMESTIC_HEALTHCHECK_PING = DomesticUrl("healthcheck/ping/")
     DOMESTIC_SEARCH = DomesticUrl("search/")
+    DOMESTIC_SERVICES = DomesticUrl("services/")
     DOMESTIC_SITEMAP = DomesticUrl("sitemap.xml")
     DOMESTIC_LANDING = DomesticUrl("")
     DOMESTIC_LANDING_UK = DomesticUrl("?lang=en-gb")
+    DOMESTIC_MARKETS = DomesticUrl("markets/")
+    DOMESTIC_TRADE_FINANCE = DomesticUrl("trade-finance/?lang=en-gb")
     DOMESTIC_INTERNATIONAL = DomesticUrl("international/")
     DOMESTIC_INTERNATIONAL_UK = DomesticUrl("international/?lang=en-gb")
     DOMESTIC_INTERNATIONAL_ZH = DomesticUrl("international/?lang=zh-hans")
@@ -757,7 +763,10 @@ class URLs(Enum):
     DOMESTIC_BUSINESS_PLANNING = DomesticUrl("business-planning/")
     DOMESTIC_GETTING_PAID = DomesticUrl("getting-paid/")
     DOMESTIC_OPERATIONS_AND_COMPLIANCE = DomesticUrl("operations-and-compliance/")
-    DOMESTIC_GET_FINANCE = DomesticUrl("get-finance/")
+    DOMESTIC_GET_FINANCE = DomesticUrl("get-finance/?lang=en-gb")
+    DOMESTIC_GET_FINANCE_YOUR_DETAILS = DomesticUrl("get-finance/your-details/")
+    DOMESTIC_GET_FINANCE_SUCCESS = DomesticUrl("get-finance/contact/thanks/")
+    DOMESTIC_GET_FINANCE_HELP = DomesticUrl("get-finance/help/")
     DOMESTIC_STORY_FIRST = DomesticUrl("story/hello-babys-rapid-online-growth/")
     DOMESTIC_STORY_SECOND = DomesticUrl(
         "story/york-bag-retailer-goes-global-via-e-commerce/"
@@ -769,6 +778,7 @@ class URLs(Enum):
     # New Contact-Us UI - Domestic & International
     CONTACT_US_DOMESTIC = ContactUrl("triage/domestic/")
     CONTACT_US_FEEDBACK = ContactUrl("feedback/")
+    CONTACT_US_FEEDBACK_SUCCESS = ContactUrl("feedback/success/")
     CONTACT_US_EXPORT_OPPORTUNITIES = ContactUrl("triage/export-opportunities/")
     CONTACT_US_EXPORT_OPPORTUNITIES_NO_RESPONSE = ContactUrl(
         "triage/export-opportunities/opportunity-no-response/"
@@ -777,8 +787,19 @@ class URLs(Enum):
         "triage/export-opportunities/alerts-not-relevant/"
     )
     CONTACT_US_FORM_DOMESTIC = ContactUrl("domestic/")
+    CONTACT_US_FORM_DOMESTIC_SUCCESS = ContactUrl("domestic/success/")
+    CONTACT_US_EXPORT_ADVICE_BUSINESS = ContactUrl("export-advice/business/")
+    CONTACT_US_EXPORT_ADVICE_COMMENT = ContactUrl("export-advice/comment/")
+    CONTACT_US_EXPORT_ADVICE_PERSONAL = ContactUrl("export-advice/personal/")
+    CONTACT_US_OFFICE_FINDER = ContactUrl("office-finder/")
     CONTACT_US_FORM_DSO = ContactUrl("defence-and-security-organisation/")
+    CONTACT_US_FORM_GET_FINANCE_COMPANY_DETAILS = DomesticUrl(
+        "get-finance/company-details/"
+    )
+    CONTACT_US_DOMESTIC_BREXIT_CONTACT = DomesticUrl("brexit/contact/")
+    CONTACT_US_DOMESTIC_BREXIT_CONTACT_SUCCESS = DomesticUrl("brexit/contact/success/")
     CONTACT_US_FORM_EVENTS = ContactUrl("events/")
+    CONTACT_US_FORM_DOMESTIC_ENQUIRES = ContactUrl("domestic/enquiries/")
     CONTACT_US_FORM_EXPORT_ADVICE = ContactUrl("export-advice/comment/")
     CONTACT_US_FORM_INTERNATIONAL = ContactUrl("international/")
     CONTACT_US_GREAT_ACCOUNT = ContactUrl("triage/great-account/")
@@ -796,6 +817,9 @@ class URLs(Enum):
     )
     CONTACT_US_GREAT_ACCOUNT_VERIFICATION_LETTER_CODE = ContactUrl(
         "triage/great-account/verification-letter-code/"
+    )
+    CONTACT_US_GREAT_ACCOUNT_VERIFICATION_MISSING = ContactUrl(
+        "triage/great-account/verification-missing/"
     )
     CONTACT_US_GREAT_SERVICES = ContactUrl("triage/great-services/")
     CONTACT_US_INTERNATIONAL = ContactUrl("triage/international/")
