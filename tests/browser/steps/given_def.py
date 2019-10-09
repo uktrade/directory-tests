@@ -4,7 +4,6 @@
 """Given step definitions."""
 from behave import given
 from behave.runner import Context
-
 from steps.then_impl import (
     domestic_search_finder_should_see_page_number,
     should_be_on_page,
@@ -30,13 +29,13 @@ from steps.when_impl import (
     get_barred_actor,
     profile_start_registration_as,
     registration_create_and_verify_account,
+    set_small_screen,
     sign_in,
     soo_find_and_open_random_marketplace,
     soo_find_random_marketplace_and_apply_via_dit,
     soo_look_for_marketplaces_from_home_page,
     sso_actor_received_email_confirmation_code,
     visit_page,
-    set_small_screen,
 )
 
 
@@ -47,11 +46,13 @@ def given_actor_has_small_screen(context, actor_alias):
 
 @given('"{actor_alias}" went to the "{page_name}" page')
 @given('"{actor_alias}" goes to the "{page_name}" page')
+@given('"{actor_alias}" visited the "{page_name}" page')
 @given('"{actor_alias}" visits the "{page_name}" page')
 def given_actor_visits_page(context, actor_alias, page_name):
     visit_page(context, actor_alias, page_name)
 
 
+@given('"{actor_alias}" got to the "{page_name}" page')
 @given('"{actor_alias}" is on the "{page_name}" page')
 def given_actor_is_on_page(context, actor_alias, page_name):
     should_be_on_page(context, actor_alias, page_name)
