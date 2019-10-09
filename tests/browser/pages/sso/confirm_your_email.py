@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 """SSO Confirm Your Email Address Page Object."""
-from urllib.parse import urljoin
-
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import SSO_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages.common_actions import (
     Selector,
     check_url,
@@ -18,7 +16,7 @@ from pages.common_actions import (
 NAME = "Confirm your email address"
 SERVICE = Service.SSO
 TYPE = "confirmation"
-URL = urljoin(SSO_URL, "accounts/confirm-email/")
+URL = URLs.SSO_EMAIL_CONFIRM.absolute
 PAGE_TITLE = "Confirm email Address"
 
 CONFIRM_LINK = Selector(By.CSS_SELECTOR, "#content form > button[type=submit]")

@@ -6,7 +6,9 @@ from directory_tests_shared.clients import SSO_TEST_API_CLIENT
 
 
 def verify_account(email: str):
-    response = SSO_TEST_API_CLIENT.flag_user_email_as_verified_or_not(email, verified=True)
+    response = SSO_TEST_API_CLIENT.flag_user_email_as_verified_or_not(
+        email, verified=True
+    )
     if response.status_code == 204:
         logging.debug("Flagged '%s' account as verified", email)
     else:

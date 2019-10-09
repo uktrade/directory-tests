@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """SSO Sign In Page Object."""
 from typing import List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import SSO_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
@@ -22,7 +21,7 @@ from pages.common_actions import (
 NAME = "Sign in"
 SERVICE = Service.SSO
 TYPE = "log in"
-URL = urljoin(SSO_URL, "accounts/login/")
+URL = URLs.SSO_LOGIN.absolute
 PAGE_TITLE = "Sign in - great.gov.uk"
 
 EMAIL_INPUT = Selector(By.ID, "id_login")

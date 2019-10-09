@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """SSO Registration Page Object."""
 from typing import List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import SSO_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Actor,
@@ -26,7 +25,7 @@ from pages.common_actions import (
 NAME = "Registration"
 SERVICE = Service.SSO
 TYPE = "registration"
-URL = urljoin(SSO_URL, "accounts/signup/")
+URL = URLs.SSO_SIGNUP.absolute
 PAGE_TITLE = "Register - great.gov.uk"
 
 SEND_BUTTON = Selector(

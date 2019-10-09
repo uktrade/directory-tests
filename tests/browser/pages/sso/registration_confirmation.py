@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 """SSO Registration Page Object."""
-from urllib.parse import urljoin
-
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import SSO_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages.common_actions import (
     Selector,
     check_url,
@@ -18,7 +16,7 @@ from pages.common_actions import (
 NAME = "Registration Confirmation"
 SERVICE = Service.SSO
 TYPE = "registration"
-URL = urljoin(SSO_URL, "accounts/confirm-email/")
+URL = URLs.SSO_EMAIL_CONFIRM.absolute
 
 SIGN_IN_LINK = Selector(By.ID, "header-sign-in-link")
 SELECTORS = {

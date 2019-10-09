@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 """SSO Sign Out Page Object."""
-from urllib.parse import urljoin
-
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import SSO_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages.common_actions import (
     Selector,
     check_url,
@@ -19,7 +17,7 @@ from pages.common_actions import (
 NAME = "Sign out"
 SERVICE = Service.SSO
 TYPE = "log out"
-URL = urljoin(SSO_URL, "accounts/logout/")
+URL = URLs.SSO_LOGOUT.absolute
 PAGE_TITLE = "Sign out - great.gov.uk"
 
 SIGN_OUT_BUTTON = Selector(By.CSS_SELECTOR, "form button")
