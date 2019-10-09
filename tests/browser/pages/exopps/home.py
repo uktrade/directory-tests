@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 """Export Opportunities Home Page Object."""
 import logging
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import EXPORT_OPPORTUNITIES_URL
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import common_selectors
 from pages.common_actions import (
     check_url,
@@ -18,7 +17,7 @@ from pages.common_actions import (
 NAME = "Home"
 SERVICE = Service.EXPORT_OPPORTUNITIES
 TYPE = "home"
-URL = urljoin(EXPORT_OPPORTUNITIES_URL, "")
+URL = URLs.EXOPPS_LANDING.absolute
 PAGE_TITLE = "Export opportunities"
 SELECTORS = {}
 SELECTORS.update(common_selectors.HEADER)
