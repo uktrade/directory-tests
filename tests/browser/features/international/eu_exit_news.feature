@@ -48,25 +48,6 @@ Feature: INTL - Updates for non-UK companies on EU Exit
     Then "Henry" should be on the "International - EU Exit - Contact us" page
 
 
-  @wip
-  @news
-  @eu-exit
-  @CMS-579
-  @tags
-  Scenario: International Visitors should see be able to filter out news articles by tags
-    Given "Henry" opened random "international" news article
-
-    When "Henry" decides to see related news articles by using one of the tags
-
-    Then "Henry" should be on the "Domestic - Search by tag" page
-    And "Henry" should see list of news articles filtered by selected tag
-    And "Henry" should see following sections
-      | sections        |
-      | Hero            |
-      | Article List    |
-      | Error reporting |
-
-
   @CMS-579
   @eu-exit
   @breadcrumbs
