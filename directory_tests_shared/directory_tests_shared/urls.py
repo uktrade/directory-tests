@@ -335,11 +335,17 @@ class URLs(Enum):
     INTERNATIONAL_INDUSTRY_CREATIVE_INDUSTRIES = InternationalUrl(
         "content/about-uk/industries/creative-industries/"
     )
+    INTERNATIONAL_INDUSTRY_CYBER_SECURITY = InternationalUrl(
+        "content/about-uk/industries/cyber-security/"
+    )
     INTERNATIONAL_INDUSTRY_DATA_ANALYTICS = InternationalUrl(
         "content/about-uk/industries/data-analytics/"
     )
     INTERNATIONAL_INDUSTRY_DIGITAL_MEDIA = InternationalUrl(
         "content/about-uk/industries/digital-media/"
+    )
+    INTERNATIONAL_INDUSTRY_EDUCATION = InternationalUrl(
+        "content/about-uk/industries/education/"
     )
     INTERNATIONAL_INDUSTRY_ELECTRICAL_NETWORKS = InternationalUrl(
         "content/about-uk/industries/electrical-networks/"
@@ -356,6 +362,9 @@ class URLs(Enum):
     INTERNATIONAL_INDUSTRY_FINANCIAL_SERVICES = InternationalUrl(
         "content/about-uk/industries/financial-services/"
     )
+    INTERNATIONAL_INDUSTRY_FINANCIAL_AND_PROFESSIONAL_SERVICES = InternationalUrl(
+        "content/about-uk/industries/financial-and-professional-services/"
+    )
     INTERNATIONAL_INDUSTRY_FINANCIAL_TECHNOLOGY = InternationalUrl(
         "content/about-uk/industries/financial-technology/"
     )
@@ -368,8 +377,14 @@ class URLs(Enum):
     INTERNATIONAL_INDUSTRY_FREE_FOODS = InternationalUrl(
         "content/about-uk/industries/free-foods/"
     )
+    INTERNATIONAL_INDUSTRY_LEGAL_SERVICES = InternationalUrl(
+        "content/about-uk/industries/legal-services/"
+    )
     INTERNATIONAL_INDUSTRY_HEALTH_AND_LIFE_SCIENCES = InternationalUrl(
         "content/about-uk/industries/health-and-life-sciences/"
+    )
+    INTERNATIONAL_INDUSTRY_MARITIME = InternationalUrl(
+        "content/about-uk/industries/maritime/"
     )
     INTERNATIONAL_INDUSTRY_MEAT_POULTRY_AND_DAIRY = InternationalUrl(
         "content/about-uk/industries/meat-poultry-and-dairy/"
@@ -392,8 +407,17 @@ class URLs(Enum):
     INTERNATIONAL_INDUSTRY_PHARMACEUTICAL_MANUFACTURING = InternationalUrl(
         "content/about-uk/industries/pharmaceutical-manufacturing/"
     )
+    INTERNATIONAL_INDUSTRY_REAL_ESTATE = InternationalUrl(
+        "content/about-uk/industries/real-estate/"
+    )
     INTERNATIONAL_INDUSTRY_RETAIL = InternationalUrl(
         "content/about-uk/industries/retail/"
+    )
+    INTERNATIONAL_INDUSTRY_SPACE = InternationalUrl(
+        "content/about-uk/industries/space/"
+    )
+    INTERNATIONAL_INDUSTRY_SPORTS_ECONOMY = InternationalUrl(
+        "content/about-uk/industries/sports-economy/"
     )
     INTERNATIONAL_INDUSTRY_TECHNOLOGY = InternationalUrl(
         "content/about-uk/industries/technology/"
