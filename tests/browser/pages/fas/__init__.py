@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 __all__ = [
-    "article",
     "company_profile",
     "empty_search_results",
     "landing",
