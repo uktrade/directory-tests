@@ -10,8 +10,6 @@ __all__ = [
     "hpo",
     "hpo_contact_us",
     "hpo_contact_us_thank_you",
-    "industries",
-    "industry",
     "pixels",
     "uk_setup_guide_pages",
 ]
