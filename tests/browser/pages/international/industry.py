@@ -2,13 +2,12 @@
 """International - Industry"""
 import logging
 from typing import List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import common_selectors
 from pages.common_actions import (
     Selector,
@@ -47,34 +46,32 @@ NAMES = [
 ]
 SERVICE = Service.INTERNATIONAL
 TYPE = "industry"
-URL = urljoin(DOMESTIC_URL, "international/content/about-uk/industries/")
+URL = URLs.INTERNATIONAL_INDUSTRIES.absolute
 PAGE_TITLE = "great.gov.uk International - "
 
 
 SubURLs = {
     "industry": URL,
-    "aerospace": urljoin(URL, "aerospace/"),
-    "agricultural technology": urljoin(URL, "agricultural-technology/"),
-    "automotive": urljoin(URL, "automotive/"),
-    "creative industries": urljoin(URL, "creative-industries/"),
-    "creative services": urljoin(URL, "creative-services/"),
-    "cyber security": urljoin(URL, "cyber-security/"),
-    "education": urljoin(URL, "education/"),
-    "energy": urljoin(URL, "energy/"),
-    "engineering and manufacturing": urljoin(URL, "engineering-and-manufacturing/"),
-    "financial and professional services": urljoin(URL, "financial-services/"),
-    "financial services": urljoin(URL, "financial-services/"),
-    "food and drink": urljoin(URL, "food-and-drink/"),
-    "health and life sciences": urljoin(URL, "health-and-life-sciences/"),
-    "healthcare and life sciences": urljoin(URL, "health-and-life-sciences/"),
-    "legal services": urljoin(URL, "legal-services/"),
-    "maritime": urljoin(URL, "maritime/"),
-    "nuclear energy": urljoin(URL, "nuclear-energy/"),
-    "real estate": urljoin(URL, "real-estate/"),
-    "retail": urljoin(URL, "retail/"),
-    "space": urljoin(URL, "space/"),
-    "sports economy": urljoin(URL, "sports-economy/"),
-    "technology": urljoin(URL, "technology/"),
+    "aerospace": URLs.INTERNATIONAL_INDUSTRY_AEROSPACE.absolute,
+    "agricultural technology": URLs.INTERNATIONAL_INDUSTRY_AGRICULTURAL_TECHNOLOGY.absolute,
+    "automotive": URLs.INTERNATIONAL_INDUSTRY_AUTOMOTIVE.absolute,
+    "creative industries": URLs.INTERNATIONAL_INDUSTRY_CREATIVE_INDUSTRIES.absolute,
+    "cyber security": URLs.INTERNATIONAL_INDUSTRY_CYBER_SECURITY.absolute,
+    "education": URLs.INTERNATIONAL_INDUSTRY_EDUCATION.absolute,
+    "energy": URLs.INTERNATIONAL_INDUSTRY_ENERGY.absolute,
+    "engineering and manufacturing": URLs.INTERNATIONAL_INDUSTRY_ENGINEERING_AND_MANUFACTURING.absolute,
+    "financial and professional services": URLs.INTERNATIONAL_INDUSTRY_FINANCIAL_AND_PROFESSIONAL_SERVICES.absolute,
+    "financial services": URLs.INTERNATIONAL_INDUSTRY_FINANCIAL_SERVICES.absolute,
+    "food and drink": URLs.INTERNATIONAL_INDUSTRY_FOOD_AND_DRINK.absolute,
+    "health and life sciences": URLs.INTERNATIONAL_INDUSTRY_HEALTH_AND_LIFE_SCIENCES.absolute,
+    "legal services": URLs.INTERNATIONAL_INDUSTRY_LEGAL_SERVICES.absolute,
+    "maritime": URLs.INTERNATIONAL_INDUSTRY_MARITIME.absolute,
+    "nuclear energy": URLs.INTERNATIONAL_INDUSTRY_NUCLEAR_ENERGY.absolute,
+    "real estate": URLs.INTERNATIONAL_INDUSTRY_REAL_ESTATE.absolute,
+    "retail": URLs.INTERNATIONAL_INDUSTRY_RETAIL.absolute,
+    "space": URLs.INTERNATIONAL_INDUSTRY_SPACE.absolute,
+    "sports economy": URLs.INTERNATIONAL_INDUSTRY_SPORTS_ECONOMY.absolute,
+    "technology": URLs.INTERNATIONAL_INDUSTRY_TECHNOLOGY.absolute,
 }
 
 SELECTORS = {

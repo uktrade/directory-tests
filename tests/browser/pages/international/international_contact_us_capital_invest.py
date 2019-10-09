@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 """International - Contact the Capital Investment team page"""
 from typing import List
-from urllib.parse import urljoin
 from uuid import uuid4
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import INTERNATIONAL_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Actor,
@@ -28,7 +27,7 @@ from pages.common_actions import (
 NAME = "Contact the Capital Investment team"
 SERVICE = Service.INTERNATIONAL
 TYPE = "Contact us"
-URL = urljoin(INTERNATIONAL_URL, "content/capital-invest/contact/")
+URL = URLs.INTERNATIONAL_CAPITAL_INVEST_CONTACT.absolute
 PAGE_TITLE = "Capital Invest Contact Form - great.gov.uk international"
 
 SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form[method=POST] button")

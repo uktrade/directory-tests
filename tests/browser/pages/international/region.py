@@ -2,13 +2,12 @@
 """Regional page."""
 import logging
 from typing import List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import INTERNATIONAL_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import common_selectors
 from pages.common_actions import (
     Selector,
@@ -32,19 +31,18 @@ NAMES = [
 ]
 SERVICE = Service.INTERNATIONAL
 TYPE = "region"
-URL = urljoin(INTERNATIONAL_URL, "content/about-uk/regions/")
-URL_LEGACY = urljoin(INTERNATIONAL_URL, "content/invest/uk-regions/")
+URL = URLs.INTERNATIONAL_REGIONS.absolute
 PAGE_TITLE = "Invest in Great Britain - "
 
 
 SubURLs = {
-    "london": urljoin(URL, "london/"),
-    "north england": urljoin(URL, "north-england/"),
-    "northern ireland": urljoin(URL, "northern-ireland/"),
-    "scotland": urljoin(URL_LEGACY, "scotland//"),
-    "south england": urljoin(URL, "south-england/"),
-    "midlands": urljoin(URL, "midlands/"),
-    "wales": urljoin(URL, "wales/"),
+    "london": URLs.INTERNATIONAL_REGIONS_LONDON.absolute,
+    "north england": URLs.INTERNATIONAL_REGIONS_NORTH_ENGLAND.absolute,
+    "northern ireland": URLs.INTERNATIONAL_REGIONS_NORTHERN_IRELAND.absolute,
+    "scotland": URLs.INVEST_REGIONS_SCOTLAND.absolute,
+    "south england": URLs.INTERNATIONAL_REGIONS_SOUTH_ENGLAND.absolute,
+    "midlands": URLs.INTERNATIONAL_REGIONS_MIDLANDS.absolute,
+    "wales": URLs.INTERNATIONAL_REGIONS_WALES.absolute,
 }
 
 

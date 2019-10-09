@@ -3,14 +3,13 @@
 import logging
 import random
 from types import ModuleType
-from urllib.parse import urljoin
 from uuid import uuid4
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType
 from pages.common_actions import (
     Actor,
@@ -31,7 +30,7 @@ from pages.domestic import contact_us_triage_domestic
 NAME = "Contact us"
 SERVICE = Service.INTERNATIONAL
 TYPE = "Contact us"
-URL = urljoin(DOMESTIC_URL, "contact/international/")
+URL = URLs.CONTACT_US_FORM_INTERNATIONAL.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(

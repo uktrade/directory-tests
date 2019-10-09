@@ -2,14 +2,13 @@
 """Find a Supplier - Contact us."""
 import logging
 from typing import List
-from urllib.parse import urljoin
 from uuid import uuid4
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import FIND_A_SUPPLIER_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Actor,
@@ -29,7 +28,7 @@ from pages.common_actions import (
 NAME = "Find a UK business partner"
 SERVICE = Service.INTERNATIONAL
 TYPE = "contact us"
-URL = urljoin(FIND_A_SUPPLIER_URL, "contact/")
+URL = URLs.FAS_CONTACT_US.absolute
 PAGE_TITLE = "Contact us - trade.great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
