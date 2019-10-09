@@ -273,6 +273,8 @@ class URLs(Enum):
     FAS_CONTACT_SUPPLIER = FASUrl(
         "suppliers/", template="suppliers/{ch_number}/contact/"
     )
+    FAS_CONTACT_US = FASUrl("feedback/")
+    FAS_CONTACT_US_SUCCESS = FASUrl("feedback/success/")
     FAS_FEEDBACK = FASUrl("feedback/")
     FAS_HEALTHCHECK = FASUrl("healthcheck/")
     FAS_INDUSTRIES = FASUrl("industries/", template="industries/{industry}/")
@@ -301,7 +303,11 @@ class URLs(Enum):
         "content/about-uk/industries/",
         template="content/about-uk/industries/{industry}/",
     )
+    INTERNATIONAL_BREXIT_NEWS = InternationalUrl("eu-exit-news/?lang=en")
     INTERNATIONAL_CAPITAL_INVEST = InternationalUrl("content/capital-invest/")
+    INTERNATIONAL_CAPITAL_INVEST_CONTACT = InternationalUrl(
+        "content/capital-invest/contact/"
+    )
     INTERNATIONAL_INDUSTRY_ADVANCED_MANUFACTURING = InternationalUrl(
         "content/about-uk/industries/advanced-manufacturing/"
     )
@@ -424,6 +430,8 @@ class URLs(Enum):
     )
     INTERNATIONAL_HEALTHCHECK_FORMS_API = InternationalUrl("healthcheck/forms-api/")
     INTERNATIONAL_HEALTHCHECK_SENTRY = InternationalUrl("healthcheck/sentry/")
+    INTERNATIONAL_REGIONS = InternationalUrl("content/about-uk/regions/")
+    INTERNATIONAL_REGIONS_LONDON = InternationalUrl("content/about-uk/regionslondon/")
     INTERNATIONAL_REGIONS_MIDLANDS = InternationalUrl(
         "content/about-uk/regions/midlands/"
     )
@@ -788,6 +796,13 @@ class URLs(Enum):
     )
     CONTACT_US_GREAT_SERVICES = ContactUrl("triage/great-services/")
     CONTACT_US_INTERNATIONAL = ContactUrl("triage/international/")
+    CONTACT_US_INTERNATIONAL_EXPORTING_TO_THE_UK = ContactUrl(
+        "triage/international/exporting-to-the-uk/"
+    )
+    CONTACT_US_INTERNATIONAL_BREXIT_CONTACT = InternationalUrl("brexit/contact/")
+    CONTACT_US_INTERNATIONAL_BREXIT_CONTACT_SUCCESS = InternationalUrl(
+        "brexit/contact/success/"
+    )
     CONTACT_US_LANDING = ContactUrl("triage/location/")
     CONTACT_US_OTHER_DOMESTIC_EU_EXIT = ContactUrl("eu-exit-news/contact/")
     CONTACT_US_OTHER_GET_FINANCE = ContactUrl("get-finance/contact/")
