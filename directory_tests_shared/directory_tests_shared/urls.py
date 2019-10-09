@@ -418,6 +418,7 @@ class URLs(Enum):
     INVEST_LANDING = InvestUrl("")
     INVEST_HEALTHCHECK = InvestUrl("healthcheck/")
     INVEST_CONTACT = InvestUrl("contact/")
+    INVEST_CONTACT_SUCCESS = InvestUrl("contact/success/")
     INVEST_SITEMAP = InvestUrl("sitemap.xml")
     INVEST_PIR = InvestUrl("perfectfit/")
     INVEST_HPO_CONTACT = InternationalUrl(
