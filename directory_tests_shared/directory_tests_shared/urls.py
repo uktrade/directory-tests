@@ -603,6 +603,12 @@ class URLs(Enum):
     PROFILE_ACCOUNT_ADD_COLLABORATOR = ProfileUrl("business-profile/admin/invite/")
     PROFILE_ENROL = ProfileUrl("enrol/")
     PROFILE_ENROL_SELECT_BUSINESS_TYPE = ProfileUrl("enrol/business-type/")
+    PROFILE_ENROL_RESEND_VERIFICATION_CODE = ProfileUrl(
+        "enrol/resend-verification/verification/"
+    )
+    PROFILE_ENROL_REQUEST_RESEND_VERIFICATION_CODE = ProfileUrl(
+        "enrol/resend-verification/resend/"
+    )
 
     PROFILE_ENROL_USER_ACCOUNT = ProfileUrl(
         "enrol/business-type/companies-house/user-account/"
