@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 """Domestic - Office finder search results page"""
-from urllib.parse import urljoin
-
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType
 from pages.common_actions import (
     Selector,
@@ -20,7 +18,7 @@ from pages.common_actions import (
 NAME = "New Office Finder"
 SERVICE = Service.DOMESTIC
 TYPE = "office finder"
-URL = urljoin(DOMESTIC_URL, "contact/office-finder/")
+URL = URLs.CONTACT_US_OFFICE_FINDER.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SEARCH_BUTTON = Selector(By.CSS_SELECTOR, "button.button", type=ElementType.BUTTON)

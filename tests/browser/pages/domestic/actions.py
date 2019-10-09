@@ -2,10 +2,10 @@
 """Common Actions for Domestic Page Objects"""
 import logging
 
-from directory_tests_shared.constants import MD5_CHECKSUM_DIT_FAVICON
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared.constants import MD5_CHECKSUM_DIT_FAVICON
 from pages.common_actions import (
     check_hash_of_remote_file,
     find_element,

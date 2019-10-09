@@ -3,14 +3,13 @@
 import logging
 import random
 from types import ModuleType
-from urllib.parse import urljoin
 from uuid import uuid4
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType
 from pages.common_actions import (
     Actor,
@@ -33,13 +32,12 @@ NAMES = [
     "Short contact form (Tell us how we can help)",
     "Short contact form (Events)",
     "Short contact form (Defence and Security Organisation (DSO))",
-    "Short contact form (Buying from the UK)",
     "Short contact form (Other)",
     "Short contact form (Office Finder)",
 ]
 SERVICE = Service.DOMESTIC
 TYPE = "Contact us"
-URL = urljoin(DOMESTIC_URL, "contact/domestic/")
+URL = URLs.CONTACT_US_FORM_DOMESTIC.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
@@ -74,15 +72,10 @@ OTHER_SELECTORS = {
 
 SubURLs = {
     "short contact form (tell us how we can help)": URL,
-    "short contact form (events)": urljoin(URL, "/contact/events/"),
-    "short contact form (defence and security organisation (dso))": urljoin(
-        URL, "/contact/defence-and-security-organisation/"
-    ),
-    "short contact form (other)": urljoin(URL, "/contact/domestic/enquiries/"),
-    "short contact form (buying from the uk)": urljoin(
-        URL, "/contact/find-uk-companies/"
-    ),
-    "short contact form (office finder)": urljoin(URL, "/contact/office-finder/"),
+    "short contact form (events)": URLs.CONTACT_US_FORM_EVENTS.absolute,
+    "short contact form (defence and security organisation (dso))": URLs.CONTACT_US_FORM_DSO.absolute,
+    "short contact form (other)": URLs.CONTACT_US_FORM_DOMESTIC_ENQUIRES.absolute,
+    "short contact form (office finder)": URLs.CONTACT_US_OFFICE_FINDER.absolute,
 }
 
 

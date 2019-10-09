@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """Domestic - First page of Long SOO Contact us form"""
 from types import ModuleType
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType
 from pages.common_actions import (
     Actor,
@@ -25,7 +24,7 @@ from pages.domestic import contact_us_soo_long_contact_details
 NAME = "Long Domestic (Your experience)"
 SERVICE = Service.DOMESTIC
 TYPE = "Contact us"
-URL = urljoin(DOMESTIC_URL, "contact/selling-online-overseas/your-experience/")
+URL = URLs.CONTACT_US_SOO_ORGANISATION_YOUR_EXPERIENCE.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(

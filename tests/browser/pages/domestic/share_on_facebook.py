@@ -3,10 +3,10 @@
 from urllib import parse as urlparse
 from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared.enums import Service
 from pages.common_actions import (
     Selector,
     assertion_msg,

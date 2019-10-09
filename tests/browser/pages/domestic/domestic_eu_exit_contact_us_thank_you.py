@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
 """Domestic - Domestic EU Exit Contact us - Thank you for your enquiry."""
 import logging
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages.common_actions import Selector, check_url, take_screenshot
 
 NAME = "Brexit help"
 SERVICE = Service.DOMESTIC
 TYPE = "Thank you for your enquiry"
-URL = urljoin(DOMESTIC_URL, "brexit/contact/success/")
+URL = URLs.CONTACT_US_DOMESTIC_BREXIT_CONTACT_SUCCESS.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 PDF_LINKS = Selector(By.CSS_SELECTOR, "#documents-section a.link")

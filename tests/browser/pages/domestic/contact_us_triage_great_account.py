@@ -3,13 +3,12 @@
 import logging
 from types import ModuleType
 from typing import List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType
 from pages.common_actions import (
     Selector,
@@ -24,13 +23,13 @@ from pages.common_actions import (
 )
 from pages.domestic import (
     contact_us_short_domestic,
-    contact_us_triage_great_account_dedicated_support_content,
+    contact_us_triage_great_account_dedicated_support_content as SUPPORT_CONTENT,
 )
 
 NAME = "Great.gov.uk account"
 SERVICE = Service.DOMESTIC
 TYPE = "Domestic Contact us"
-URL = urljoin(DOMESTIC_URL, "contact/triage/great-account/")
+URL = URLs.CONTACT_US_GREAT_ACCOUNT.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
@@ -91,18 +90,12 @@ SELECTORS = {
 }
 
 POs = {
-    "i have not received an email confirmation":
-        contact_us_triage_great_account_dedicated_support_content,
-    "i need to reset my password":
-        contact_us_triage_great_account_dedicated_support_content,
-    "my companies house login is not working":
-        contact_us_triage_great_account_dedicated_support_content,
-    "i do not know where to enter my verification code":
-        contact_us_triage_great_account_dedicated_support_content,
-    "i have not received my letter containing the verification code":
-        contact_us_triage_great_account_dedicated_support_content,
-    "i have not received a verification code":
-        contact_us_triage_great_account_dedicated_support_content,
+    "i have not received an email confirmation": SUPPORT_CONTENT,
+    "i need to reset my password": SUPPORT_CONTENT,
+    "my companies house login is not working": SUPPORT_CONTENT,
+    "i do not know where to enter my verification code": SUPPORT_CONTENT,
+    "i have not received my letter containing the verification code": SUPPORT_CONTENT,
+    "i have not received a verification code": SUPPORT_CONTENT,
     "other": contact_us_short_domestic,
 }
 

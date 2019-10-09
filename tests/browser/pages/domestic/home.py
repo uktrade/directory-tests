@@ -4,13 +4,12 @@ import logging
 import random
 import time
 from typing import List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
@@ -32,7 +31,7 @@ from pages.domestic import actions as domestic_actions
 NAME = "Home"
 SERVICE = Service.DOMESTIC
 TYPE = "home"
-URL = urljoin(DOMESTIC_URL, "?lang=en-gb")
+URL = URLs.DOMESTIC_LANDING_UK.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 PROMO_VIDEO = Selector(

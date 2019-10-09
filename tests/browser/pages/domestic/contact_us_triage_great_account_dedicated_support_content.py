@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 """Domestic - Domestic Contact us - Great.gov.uk account"""
-from urllib.parse import urljoin
-
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType
 from pages.common_actions import (
     Selector,
@@ -27,22 +25,26 @@ NAMES = [
 ]
 SERVICE = Service.DOMESTIC
 TYPE = "Dedicated Support Content"
-URL = urljoin(DOMESTIC_URL, "contact/triage/great-account/")
+URL = URLs.CONTACT_US_GREAT_ACCOUNT.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
+# fmt: off
 SubURLs = {
     "great.gov.uk account": URL,
-    "i have not received an email confirmation": urljoin(URL, "no-verification-email/"),
-    "i need to reset my password": urljoin(URL, "password-reset/"),
-    "my companies house login is not working": urljoin(URL, "companies-house-login/"),
-    "i do not know where to enter my verification code": urljoin(
-        URL, "verification-letter-code/"
-    ),
-    "i have not received my letter containing the verification code": urljoin(
-        URL, "no-verification-letter/"
-    ),
-    "i have not received a verification code": urljoin(URL, "verification-missing/"),
+    "i have not received an email confirmation":
+        URLs.CONTACT_US_GREAT_ACCOUNT_NO_VERIFICATION_EMAIL.absolute,
+    "i need to reset my password":
+        URLs.CONTACT_US_GREAT_ACCOUNT_PASSWORD_RESET.absolute,
+    "my companies house login is not working":
+        URLs.CONTACT_US_GREAT_ACCOUNT_CH_LOGIN.absolute,
+    "i do not know where to enter my verification code":
+        URLs.CONTACT_US_GREAT_ACCOUNT_VERIFICATION_LETTER_CODE.absolute,
+    "i have not received my letter containing the verification code":
+        URLs.CONTACT_US_GREAT_ACCOUNT_NO_VERIFICATION_LETTER.absolute,
+    "i have not received a verification code":
+        URLs.CONTACT_US_GREAT_ACCOUNT_VERIFICATION_MISSING.absolute,
 }
+# fmt: on
 
 SUBMIT_BUTTON = Selector(
     By.CSS_SELECTOR, "div.exred-triage-form button", type=ElementType.BUTTON

@@ -2,14 +2,13 @@
 """great.gov.uk Domestic EU Exit Contact us page"""
 import random
 from typing import List
-from urllib.parse import urljoin
 from uuid import uuid4
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType
 from pages.common_actions import (
     Actor,
@@ -29,7 +28,7 @@ from pages.common_actions import (
 NAME = "Brexit help"
 SERVICE = Service.DOMESTIC
 TYPE = "Contact us"
-URL = urljoin(DOMESTIC_URL, "brexit/contact/")
+URL = URLs.CONTACT_US_DOMESTIC_BREXIT_CONTACT.absolute
 PAGE_TITLE = ""
 
 

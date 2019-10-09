@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 """Domestic - SOO Domestic Long Contact us - Thank you for your enquiry."""
-from urllib.parse import urljoin
-
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages.common_actions import Selector, check_url, take_screenshot
 
 NAME = "Long Domestic (Thank you for your enquiry)"
 SERVICE = Service.DOMESTIC
 TYPE = "Contact us"
-URL = urljoin(DOMESTIC_URL, "contact/selling-online-overseas/success/")
+URL = URLs.CONTACT_US_SOO_ORGANISATION_SUCCESS.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 PDF_LINKS = Selector(By.CSS_SELECTOR, "#documents-section a.link")

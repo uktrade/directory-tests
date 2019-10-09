@@ -2,11 +2,11 @@
 """Domestic - Short Domestic Contact us - Thank you for your enquiry."""
 from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages.common_actions import Selector, check_url, take_screenshot
 
 NAME = "Thank you for your enquiry"
@@ -26,7 +26,7 @@ NAMES = [
 ]
 SERVICE = Service.DOMESTIC
 TYPE = "Short Domestic Contact us"
-URL = urljoin(DOMESTIC_URL, "contact/domestic/success/")
+URL = URLs.CONTACT_US_FORM_DOMESTIC_SUCCESS.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 PDF_LINKS = Selector(By.CSS_SELECTOR, "#documents-section a.link")
@@ -51,9 +51,9 @@ SELECTORS = {
 
 SubURLs = {
     "thank you for your enquiry": URL,
-    "thank you for your enquiry (events)": urljoin(URL, "/contact/events/success/"),
+    "thank you for your enquiry (events)": urljoin(URL, "events/success/"),
     "thank you for your enquiry (defence and security organisation (dso))": urljoin(
-        URL, "/contact/defence-and-security-organisation/success/"
+        URL, "defence-and-security-organisation/success/"
     ),
     "thank you for your enquiry (other)": URL,
     "thank you for your enquiry (i haven't had a response from the opportunity i applied for)": URL,

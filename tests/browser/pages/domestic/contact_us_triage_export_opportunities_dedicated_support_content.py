@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 """Domestic - Domestic Contact us - Great.gov.uk account"""
-from urllib.parse import urljoin
-
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType
 from pages.common_actions import (
     Selector,
@@ -24,16 +22,18 @@ NAMES = [
 ]
 SERVICE = Service.DOMESTIC
 TYPE = "Dedicated Support Content"
-URL = urljoin(DOMESTIC_URL, "contact/triage/export-opportunities/")
+URL = URLs.CONTACT_US_EXPORT_OPPORTUNITIES.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
+# fmt: off
 SubURLs = {
     "export opportunities service": URL,
-    "i haven't had a response from the opportunity i applied for": urljoin(
-        URL, "opportunity-no-response/"
-    ),
-    "my daily alerts are not relevant to me": urljoin(URL, "alerts-not-relevant/"),
+    "i haven't had a response from the opportunity i applied for":
+        URLs.CONTACT_US_EXPORT_OPPORTUNITIES_NO_RESPONSE.absolute,
+    "my daily alerts are not relevant to me":
+        URLs.CONTACT_US_EXPORT_OPPORTUNITIES_NOT_RELEVANT.absolute,
 }
+# fmt: on
 
 SUBMIT_BUTTON = Selector(
     By.CSS_SELECTOR, "div.exred-triage-form button", type=ElementType.BUTTON

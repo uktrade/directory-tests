@@ -2,10 +2,10 @@
 """Domestic Article List Page Object."""
 from typing import List
 
-from directory_tests_shared.enums import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared.enums import Service
 from pages.common_actions import (
     Selector,
     check_for_expected_sections_elements,

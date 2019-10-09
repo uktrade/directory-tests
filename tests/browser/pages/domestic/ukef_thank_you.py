@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
 """Domestic UKEF Contact Us - Page Object."""
 import logging
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType
 from pages.common_actions import Selector, check_url, go_to_url, take_screenshot
 
 NAME = "Thank you"
 SERVICE = Service.DOMESTIC
 TYPE = "UKEF Contact us"
-URL = urljoin(DOMESTIC_URL, "get-finance/contact/thanks/")
+URL = URLs.DOMESTIC_GET_FINANCE_SUCCESS.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
