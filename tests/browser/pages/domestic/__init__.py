@@ -31,8 +31,6 @@ __all__ = [
     "domestic_eu_exit_contact_us",
     "domestic_eu_exit_contact_us_thank_you",
     "home",
-    "news_domestic",
-    "search_by_tag",
     "share_on_facebook",
     "share_on_linkedin",
     "share_on_twitter",
