@@ -24,9 +24,9 @@ Feature: Domestic - Header-Footer
       | Domestic - Home                |
       | Find a Buyer - Home            |
       | Selling Online Overseas - Home |
-      | Single Sign-On - Profile about |
-      | Single Sign-On - Registration  |
-      | Single Sign-On - Sign in       |
+      | SSO - Profile about            |
+      | SSO - Registration             |
+      | SSO - Sign in                  |
 
 
   @stage-only
@@ -85,8 +85,8 @@ Feature: Domestic - Header-Footer
       | selected                       |
       | Domestic - Home                |
       | Domestic - Get finance         |
-      | Single Sign-On - Registration  |
-      | Single Sign-On - Sign in       |
+      | SSO - Registration             |
+      | SSO - Sign in                  |
       | Find a Buyer - Home            |
       | Selling Online Overseas - Home |
       | Profile - About                |
@@ -111,8 +111,8 @@ Feature: Domestic - Header-Footer
       | Domestic - Home                |
       | Find a Buyer - Home            |
       | Find a Supplier - Landing      |
-      | Single Sign-On - Registration  |
-      | Single Sign-On - Sign in       |
+      | SSO - Registration             |
+      | SSO - Sign in                  |
       | Profile - About                |
       | Selling Online Overseas - Home |
 
@@ -135,7 +135,7 @@ Feature: Domestic - Header-Footer
       | Domestic - Home                |
       | Find a Buyer - Home            |
       | Find a Supplier - Landing      |
-      | Single Sign-On - Registration  |
-      | Single Sign-On - Sign in       |
+      | SSO - Registration             |
+      | SSO - Sign in                  |
       | Profile - About                |
       | Selling Online Overseas - Home |

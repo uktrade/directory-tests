@@ -155,7 +155,7 @@ Feature: Profile - Non-CH enrolment flows
 
 
   @wip
-    @dev-only
+  @dev-only
   @TT-1124
   @ltd-plc-royal
   @sole-trader-other-business

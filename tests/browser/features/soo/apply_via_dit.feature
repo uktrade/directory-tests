@@ -17,7 +17,7 @@ Feature: SOO - Apply via DIT
 
     When "Robert" decides to "Apply now"
 
-    Then "Robert" should be on the "Single Sign-On - Sign in" page
+    Then "Robert" should be on the "SSO - Sign in" page
 
     Examples: products and countries
       | country   | products                 |
