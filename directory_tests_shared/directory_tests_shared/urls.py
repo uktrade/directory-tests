@@ -9,6 +9,7 @@ from .settings import (
     CONTACT_US_URL,
     DIRECTORY_API_URL,
     DOMESTIC_URL,
+    EVENTS_URL,
     EXPORT_OPPORTUNITIES_URL,
     FIND_A_BUYER_URL,
     FIND_A_SUPPLIER_URL,
@@ -813,4 +814,11 @@ class URLs(Enum):
     )
     TRADE_BARRIERS_REPORT_FORM_SUCCESS = DomesticUrl(
         "report-trade-barrier/report/success/"
+    )
+
+    EVENTS_LANDING = Url(EVENTS_URL, "")
+    EVENTS_EVENT = Url(
+        EVENTS_URL,
+        "ehome/index.php?eventid=",
+        template="ehome/index.php?eventid={eventid}&",
     )
