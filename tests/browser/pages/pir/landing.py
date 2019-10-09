@@ -2,13 +2,12 @@
 """PIR - Landing Page"""
 import logging
 from typing import List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
@@ -21,7 +20,7 @@ from pages.common_actions import (
 NAME = "Landing"
 SERVICE = Service.PIR
 TYPE = "landing"
-URL = urljoin(DOMESTIC_URL, "international/invest/perfectfit/")
+URL = URLs.INVEST_PIR.absolute
 
 SUBMIT_BUTTON = Selector(
     By.CSS_SELECTOR, "form input.button[type=submit]", type=ElementType.BUTTON
