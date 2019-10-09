@@ -4,15 +4,16 @@ import logging
 
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import Service
-from selenium.webdriver.remote.webdriver import WebDriver
-
 from pages import common_selectors
 from pages.common_actions import (
+    Selector,
     check_url,
     find_and_click_on_page_element,
     go_to_url,
     take_screenshot,
 )
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 NAME = "Home"
 SERVICE = Service.FAB
@@ -20,7 +21,14 @@ TYPE = "home"
 URL = URLs.FAB_LANDING.absolute
 PAGE_TITLE = "Business profile - great.gov.uk"
 
-SELECTORS = {}
+SELECTORS = {
+    "hero": {
+        "hero": Selector(By.CSS_SELECTOR, "#content > section.great-hero-with-cta"),
+        "start now": Selector(
+            By.CSS_SELECTOR, "#content > section.great-hero-with-cta a"
+        ),
+    }
+}
 SELECTORS.update(common_selectors.HEADER)
 SELECTORS.update(common_selectors.SSO_LOGGED_OUT)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
