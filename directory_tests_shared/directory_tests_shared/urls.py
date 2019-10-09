@@ -425,6 +425,9 @@ class URLs(Enum):
     INVEST_HPO_CONTACT = InternationalUrl(
         "content/invest/high-potential-opportunities/contact/"
     )
+    INVEST_HPO_CONTACT_THANK_YOU = InternationalUrl(
+        "content/invest/high-potential-opportunities/contact/success/"
+    )
     INVEST_HPO_RAIL = InternationalUrl(
         "content/invest/high-potential-opportunities/rail-infrastructure/"
     )
@@ -481,6 +484,21 @@ class URLs(Enum):
     )
     INVEST_UK_SETUP_GUIDE_UK_TAX = InternationalUrl(
         "content/invest/how-to-setup-in-the-uk/uk-tax-and-incentives/"
+    )
+    INVEST_UK_SETUP_GUIDE_DIT_CAPITAL_GAINS = InternationalUrl(
+        "content/invest/how-to-setup-in-the-uk/uk-capital-gains-tax/"
+    )
+    INVEST_UK_SETUP_GUIDE_DIT_CORPORATION_TAX = InternationalUrl(
+        "content/invest/how-to-setup-in-the-uk/uk-corporation-tax/"
+    )
+    INVEST_UK_SETUP_GUIDE_DIT_VENTURE_CAPITAL = InternationalUrl(
+        "content/invest/how-to-setup-in-the-uk/uk-venture-capital-schemes/"
+    )
+    INVEST_UK_SETUP_GUIDE_UK_INCOME_TAX = InternationalUrl(
+        "content/invest/how-to-setup-in-the-uk/uk-income-tax/"
+    )
+    INVEST_UK_SETUP_GUIDE_UK_INFRASTRUCTURE = InternationalUrl(
+        "content/invest/how-to-setup-in-the-uk/uk-infrastructure/"
     )
 
     INVEST_LEGACY_REGIONS_MIDLANDS = LegacyInvestUrl("uk-regions/midlands/")
