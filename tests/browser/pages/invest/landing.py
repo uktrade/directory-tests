@@ -3,11 +3,11 @@
 import logging
 from typing import List
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import INVEST_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
@@ -20,7 +20,7 @@ from pages.common_actions import (
 )
 
 NAME = "landing"
-URL = INVEST_URL
+URL = URLs.INVEST_LANDING.absolute
 SERVICE = Service.INVEST
 TYPE = "landing"
 PAGE_TITLE = "Invest in Great Britain - Home"

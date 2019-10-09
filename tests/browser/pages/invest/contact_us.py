@@ -2,13 +2,12 @@
 """Invest in Great - Contact us Page Object."""
 import logging
 from typing import List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import INVEST_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Actor,
@@ -28,7 +27,7 @@ from pages.common_actions import (
 NAME = "Contact us"
 SERVICE = Service.INVEST
 TYPE = "contact"
-URL = urljoin(INVEST_URL, "contact/")
+URL = URLs.INVEST_CONTACT.absolute
 PAGE_TITLE = ""
 
 IM_NOT_A_ROBOT = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")

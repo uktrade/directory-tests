@@ -2,13 +2,12 @@
 """Invest in Great - Contact us - Thank you for your enquiry Page Object."""
 import logging
 from typing import Dict, List
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import INTERNATIONAL_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import common_selectors
 from pages.common_actions import (
     Selector,
@@ -22,11 +21,11 @@ NAME = "Thank you for your enquiry"
 NAMES = ["Advanced food production", "Lightweight structures", "Rail infrastructure"]
 SERVICE = Service.INVEST
 TYPE = "HPO Contact us"
-URL = urljoin(INTERNATIONAL_URL, "content/invest/high-potential-opportunities/")
+URL = URLs.INVEST_HPO_CONTACT_THANK_YOU.absolute
 SubURLs = {
-    "advanced food production": urljoin(URL, "food-production/contact/success/"),
-    "lightweight structures": urljoin(URL, "lightweight-structures/contact/success/"),
-    "rail infrastructure": urljoin(URL, "rail-infrastructure/contact/success/"),
+    "advanced food production": URL,
+    "lightweight structures": URL,
+    "rail infrastructure": URL,
 }
 PAGE_TITLE = "High Potential Opportunities - great.gov.uk"
 

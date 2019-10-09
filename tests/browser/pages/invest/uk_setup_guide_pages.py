@@ -4,11 +4,12 @@ import logging
 from typing import List
 from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import INTERNATIONAL_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
+from directory_tests_shared.settings import INTERNATIONAL_URL
 from pages import common_selectors
 from pages.common_actions import (
     Selector,
@@ -39,7 +40,7 @@ NAMES = [
 ]
 SERVICE = Service.INVEST
 TYPE = "guide"
-URL = urljoin(INTERNATIONAL_URL, "content/invest/how-to-setup-in-the-uk/")
+URL = URLs.INVEST_UK_SETUP_GUIDE.absolute
 URL_STAGING = urljoin(INTERNATIONAL_URL, "content/how-to-setup-in-the-uk/")
 PAGE_TITLE = "Invest in Great Britain -"
 
@@ -59,22 +60,16 @@ SELECTORS.update(common_selectors.INVEST_FOOTER)
 
 SubURLs = {
     # Dev & UAT
-    "access finance in the uk": urljoin(URL, "access-finance-in-the-uk/"),
-    "dit's guide to uk capital gains tax": urljoin(URL, "uk-capital-gains-tax/"),
-    "dit's guide to uk corporation tax": urljoin(URL, "uk-corporation-tax/"),
-    "dit's guide to uk venture capital schemes": urljoin(
-        URL, "uk-venture-capital-schemes/"
-    ),
-    "establish a uk business base": urljoin(
-        URL, "establish-a-base-for-business-in-the-uk/"
-    ),
-    "register a company in the uk": urljoin(URL, "register-a-company-in-the-uk/"),
-    "uk income tax": urljoin(URL, "uk-income-tax/"),
-    "uk infrastructure": urljoin(URL, "uk-infrastructure/"),
-    "uk talent and labour": urljoin(
-        URL, "hire-skilled-workers-for-your-uk-operations/"
-    ),
-    "uk tax and incentives": urljoin(URL, "uk-tax-and-incentives/"),
+    "access finance in the uk": URLs.INVEST_UK_SETUP_GUIDE_ACCESS_FINANCE.absolute,
+    "dit's guide to uk capital gains tax": URLs.INVEST_UK_SETUP_GUIDE_DIT_CAPITAL_GAINS.absolute,
+    "dit's guide to uk corporation tax": URLs.INVEST_UK_SETUP_GUIDE_DIT_CORPORATION_TAX.absolute,
+    "dit's guide to uk venture capital schemes": URLs.INVEST_UK_SETUP_GUIDE_DIT_VENTURE_CAPITAL.absolute,
+    "establish a uk business base": URLs.INVEST_UK_SETUP_GUIDE_ESTABLISH_A_BASE.absolute,
+    "register a company in the uk": URLs.INVEST_UK_SETUP_GUIDE_REGISTER_A_COMPANY.absolute,
+    "uk income tax": URLs.INVEST_UK_SETUP_GUIDE_UK_INCOME_TAX.absolute,
+    "uk infrastructure": URLs.INVEST_UK_SETUP_GUIDE_UK_INFRASTRUCTURE.absolute,
+    "uk talent and labour": URLs.INVEST_UK_SETUP_GUIDE_HIRE_SKILLED_WORKERS.absolute,
+    "uk tax and incentives": URLs.INVEST_UK_SETUP_GUIDE_UK_TAX.absolute,
     # Staging
     "access finance in the uk (staging)": urljoin(
         URL_STAGING, "access-finance-in-the-uk/"

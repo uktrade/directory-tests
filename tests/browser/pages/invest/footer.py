@@ -2,11 +2,11 @@
 """Invest - Page Footer."""
 import logging
 
-from directory_tests_shared.constants import MD5_CHECKSUM_GREAT_LOGO
-from directory_tests_shared.enums import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared.constants import MD5_CHECKSUM_GREAT_LOGO
+from directory_tests_shared.enums import Service
 from pages.common_actions import (
     Selector,
     check_hash_of_remote_file,

@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
 """Invest in Great - Thank you for your message Page Object."""
 import logging
-from urllib.parse import urljoin
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import INVEST_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages.common_actions import Selector, check_url, take_screenshot, visit_url
 
 NAME = "Thank you for your message"
 SERVICE = Service.INVEST
 TYPE = "contact"
-URL = urljoin(INVEST_URL, "contact/success/")
+URL = URLs.INVEST_CONTACT_SUCCESS.absolute
 PAGE_TITLE = ""
 SELECTORS = {
     "hero": {"itself": Selector(By.CSS_SELECTOR, "section.hero")},

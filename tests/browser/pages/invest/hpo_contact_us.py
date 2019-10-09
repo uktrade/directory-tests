@@ -2,14 +2,13 @@
 """Invest in Great - Contact us Page Object."""
 import logging
 from typing import List
-from urllib.parse import urljoin
 from uuid import uuid4
 
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import INTERNATIONAL_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Actor,
@@ -32,11 +31,11 @@ NAME = "Contact us"
 NAMES = ["Advanced food production", "Lightweight structures", "Rail infrastructure"]
 SERVICE = Service.INVEST
 TYPE = "HPO Contact us"
-URL = urljoin(INTERNATIONAL_URL, "content/invest/high-potential-opportunities/")
+URL = URLs.INVEST_HPO_CONTACT.absolute
 SubURLs = {
-    "advanced food production": urljoin(URL, "food-production/contact/"),
-    "lightweight structures": urljoin(URL, "lightweight-structures/contact/"),
-    "rail infrastructure": urljoin(URL, "rail-infrastructure/contact/"),
+    "advanced food production": URL,
+    "lightweight structures": URL,
+    "rail infrastructure": URL,
 }
 PAGE_TITLE = ""
 
