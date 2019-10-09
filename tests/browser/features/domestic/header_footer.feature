@@ -24,7 +24,7 @@ Feature: Domestic - Header-Footer
       | Domestic - Home                |
       | Find a Buyer - Home            |
       | Selling Online Overseas - Home |
-      | SSO - Profile about            |
+      | Profile - About                |
       | SSO - Registration             |
       | SSO - Sign in                  |
 
