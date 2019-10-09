@@ -22,7 +22,7 @@ from pages.common_actions import (
 NAME = "Re-enter your confirmation code"
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
-URL = URLs.PROFILE_ENROL_RESENT_VERIFICATION.absolute
+URL = URLs.PROFILE_ENROL_RESEND_VERIFICATION_CODE.absolute
 PAGE_TITLE = ""
 
 SELECTORS = {
