@@ -279,3 +279,24 @@ Feature: Profile - Non-CH enrolment flows
       | selected business type                |
       | LTD, PLC or Royal Charter             |
       | Sole trader or other type of business |
+
+
+  @TT-1560
+  @uk-taxpayer
+  Scenario: New registration for an individual who starts journey in Business profiles
+    Given "Mirko" visited the "Find a Buyer - Home" page
+    And "Mirko" decided to "Start now"
+    And "Mirko" got to the "SSO - Sign in" page
+    And "Mirko" decided to "Create account"
+    And "Mirko" got to the "Profile - Create an account" page
+    And "Mirko" decided to "Start"
+    And "Mirko" got to the "Profile - Select your business type" page
+
+    When "Mirko" chooses "UK taxpayer" option
+
+    Then "Mirko" should be on the "Profile - Start as Individual" page
+    And "Mirko" should see following sections
+      | sections    |
+      | Breadcrumbs |
+      | Explanation |
+      | Links       |
