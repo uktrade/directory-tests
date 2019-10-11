@@ -70,15 +70,6 @@ def given_actor_is_on_random_case_study_page(context, actor_alias, page_name):
     case_studies_go_to_random(context, actor_alias, page_name)
 
 
-@given('"{actor_alias}" decided to use "{element_name}" link on "{page_name}" page')
-@given('"{actor_alias}" decided to use "{element_name}" link in "{page_name}"')
-@given('"{actor_alias}" decided to use "{element_name}" in "{page_name}"')
-@given('"{actor_alias}" decided to "{element_name}" via "{page_name}" page')
-def given_actor_decides_to_click_on_page_element(
-        context, actor_alias, element_name, page_name):
-    click_on_page_element(context, actor_alias, element_name, page_name=page_name)
-
-
 @given('"{actor_alias}" decided to use "{element_name}" button')
 @given('"{actor_alias}" decided to use "{element_name}" link')
 @given('"{actor_alias}" decided to "{element_name}"')

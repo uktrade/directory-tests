@@ -137,15 +137,6 @@ def when_actor_opens_link_from_header_menu(context, actor_alias, page_name, grou
     header_footer_open_link(context, actor_alias, group, page_name, location)
 
 
-@when('"{actor_alias}" decides to use "{element_name}" link on "{page_name}" page')
-@when('"{actor_alias}" decides to use "{element_name}" link from page "{page_name}"')
-@when('"{actor_alias}" decides to use "{element_name}" in "{page_name}"')
-@when('"{actor_alias}" decides to "{element_name}" via "{page_name}" page')
-def when_actor_decides_to_click_on_page_element(
-        context, actor_alias, element_name, page_name):
-    click_on_page_element(context, actor_alias, element_name, page_name=page_name)
-
-
 @when('"{actor_alias}" decides to find out more about "{element_name}"')
 @when('"{actor_alias}" decides to use "{element_name}" button')
 @when('"{actor_alias}" decides to use "{element_name}" link')
