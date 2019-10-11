@@ -112,12 +112,6 @@ def when_actor_closes_language_selector(context, actor_alias):
     language_selector_close(context, actor_alias)
 
 
-@when('"{actor_alias}" opens up the language selector using her keyboard')
-@when('"{actor_alias}" opens up the language selector using his keyboard')
-def when_actor_opens_up_language_selector_with_keyboard(context, actor_alias):
-    language_selector_open(context, actor_alias, with_keyboard=True)
-
-
 @when('"{actor_alias}" uses her keyboard to navigate through all links visible on language selector')
 @when('"{actor_alias}" uses his keyboard to navigate through all links visible on language selector')
 def when_actor_navigates_through_language_selector_links_with_keyboard(
@@ -188,12 +182,6 @@ def when_actor_chooses_form_option(
     generic_pick_radio_option(context, actor_alias, option)
 
 
-@when('"{actor_alias}" selects "{option}" from "{dropdown_name}" dropdown')
-def when_actor_selects_form_option(
-        context: Context, actor_alias: str, option: str, dropdown: str):
-    generic_select_dropdown_option(context, actor_alias, dropdown, option)
-
-
 @when('"{actor_alias}" decides to view more companies in the current industry')
 def fas_when_actors_views_more_companies(context: Context, actor_alias: str):
     fas_view_more_companies(context, actor_alias)
@@ -248,11 +236,6 @@ def when_actor_sets_lang_url_query_param(
 def when_actor_opens_news_article(
         context: Context, actor_alias: str, ordinal_number: str):
     generic_open_news_article(context, actor_alias, ordinal_number)
-
-
-@when('"{actor_alias}" decides to see related news articles by using one of the tags')
-def when_actor_open_tag(context: Context, actor_alias: str):
-    generic_open_any_tag(context, actor_alias)
 
 
 @when('"{actor_alias}" decides to read about one of listed industries')
@@ -375,3 +358,20 @@ def when_actor_looks_for_trade_office(context: Context, actor_alias: str, post_c
 @when('"{actor_alias}" clicks the Menu button')
 def when_actor_clicks_header_menu_button(context: Context, actor_alias: str):
     click_on_header_menu_button(context)
+
+
+@when('"{actor_alias}" selects "{option}" from "{dropdown_name}" dropdown')
+def when_actor_selects_form_option(
+        context: Context, actor_alias: str, option: str, dropdown_name: str):
+    generic_select_dropdown_option(context, actor_alias, dropdown_name, option)
+
+
+@when('"{actor_alias}" opens up the language selector using her keyboard')
+@when('"{actor_alias}" opens up the language selector using his keyboard')
+def when_actor_opens_up_language_selector_with_keyboard(context, actor_alias):
+    language_selector_open(context, actor_alias, with_keyboard=True)
+
+
+@when('"{actor_alias}" decides to see related news articles by using one of the tags')
+def when_actor_open_tag(context: Context, actor_alias: str):
+    generic_open_any_tag(context, actor_alias)
