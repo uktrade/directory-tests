@@ -16,6 +16,8 @@ from selenium.common.exceptions import (
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared.settings import BASICAUTH_PASS, BASICAUTH_USER
+from directory_tests_shared.utils import check_for_errors
 from pages import (
     common_language_selector,
     domestic,
@@ -38,12 +40,10 @@ from pages.common_actions import (
     update_actor,
     wait_for_page_load_after_action,
 )
-from directory_tests_shared.settings import BASICAUTH_PASS, BASICAUTH_USER
-from directory_tests_shared.utils import check_for_errors
 from steps import has_action
 from utils.cms_api import get_news_articles
-from utils.gtm import get_gtm_event_definitions, trigger_js_event
 from utils.gov_notify import get_verification_code, get_verification_link
+from utils.gtm import get_gtm_event_definitions, trigger_js_event
 
 NUMBERS = {
     "random": 0,
@@ -659,12 +659,6 @@ def generic_open_news_article(context: Context, actor_alias: str, ordinal_number
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_news_article")
     page.open_news_article(context.driver, ordinals[ordinal_number.lower()])
-
-
-def generic_open_any_news_article(context: Context, actor_alias: str):
-    page = get_last_visited_page(context, actor_alias)
-    has_action(page, "open_any_news_article")
-    page.open_any_news_article(context.driver)
 
 
 def generic_open_any_tag(context: Context, actor_alias: str):

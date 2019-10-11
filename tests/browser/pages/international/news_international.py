@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """great.gov.uk International EU Exit News Articles List page"""
-import random
 from typing import List
 
 from selenium.webdriver.common.by import By
@@ -76,12 +75,6 @@ def open_news_article(driver: WebDriver, article_number: int):
     article_links = find_elements(driver, ARTICLES)
     assert len(article_links) >= article_number
     article_links[article_number - 1].click()
-
-
-def open_any_news_article(driver: WebDriver):
-    article_links = find_elements(driver, ARTICLES)
-    assert len(article_links) > 0
-    article_links[random.randint(1, len(article_links)) - 1].click()
 
 
 def click_on_page_element(driver: WebDriver, element_name: str):

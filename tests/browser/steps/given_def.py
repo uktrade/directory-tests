@@ -4,6 +4,7 @@
 """Given step definitions."""
 from behave import given
 from behave.runner import Context
+
 from steps.then_impl import (
     domestic_search_finder_should_see_page_number,
     should_be_on_page,
@@ -22,7 +23,6 @@ from steps.when_impl import (
     generic_at_least_n_news_articles,
     generic_create_great_account,
     generic_get_in_touch,
-    generic_open_any_news_article,
     generic_open_industry_page,
     generic_open_random_news_article,
     generic_set_basic_auth_creds,
@@ -221,11 +221,6 @@ def then_actor_should_see_page_number(
 def fas_given_actor_opened_industry_page(
         context: Context, actor_alias: str, industry_name: str):
     generic_open_industry_page(context, actor_alias, industry_name)
-
-
-@given('"{actor_alias}" opened any news Article')
-def given_actor_opens_any_news_article(context, actor_alias):
-    generic_open_any_news_article(context, actor_alias)
 
 
 @given('"{actor_alias}" opened random "{article_type}" news article')
