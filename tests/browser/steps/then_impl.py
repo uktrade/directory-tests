@@ -391,14 +391,6 @@ def generic_should_see_message(context: Context, actor_alias: str, message: str 
     logging.debug(f"{actor_alias} saw expected error message '{message}'")
 
 
-def should_see_articles_filtered_by_tag(context: Context, actor_alias: str):
-    actor = get_actor(context, actor_alias)
-    tag = actor.last_tag
-    page = get_last_visited_page(context, actor_alias)
-    has_action(page, "is_filtered_by_tag")
-    page.is_filtered_by_tag(context.driver, tag)
-
-
 # BrowserStack times out after 60 seconds of inactivity
 # https://www.browserstack.com/automate/timeouts
 @retry(wait_fixed=10000, stop_max_attempt_number=5, wrap_exception=False)

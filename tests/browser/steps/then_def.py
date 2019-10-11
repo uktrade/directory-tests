@@ -41,7 +41,6 @@ from steps.then_impl import (
     should_be_on_page_or_be_redirected_to_page,
     should_be_on_page_or_international_page,
     should_not_see_sections,
-    should_see_articles_filtered_by_tag,
     should_see_links_in_specific_location,
     should_see_page_in_preferred_language,
     should_see_sections,
@@ -216,11 +215,6 @@ def then_should_not_see_dead_links_in_pdf(context: Context):
 @then('"{actor_alias}" should see "{message}" on the page')
 def then_should_see_message(context: Context, actor_alias: str, *, message: str = None):
     generic_should_see_message(context, actor_alias, message=message)
-
-
-@then('"{actor_alias}" should see list of news articles filtered by selected tag')
-def then_should_see_articles_filtered_by_tag(context: Context, actor_alias: str):
-    should_see_articles_filtered_by_tag(context, actor_alias)
 
 
 @then('"{actor_alias}" should see following form choices')
