@@ -23,7 +23,6 @@ from steps.when_impl import (
     fas_fill_out_and_submit_contact_us_form,
     fas_search_for_companies,
     fas_view_article,
-    fas_view_more_companies,
     fas_view_selected_company_profile,
     generic_click_on_random_industry,
     generic_click_on_random_marketplace,
@@ -41,14 +40,11 @@ from steps.when_impl import (
     generic_submit_form,
     generic_trigger_all_gtm_events,
     generic_visit_current_page_with_lang_parameter,
-    header_footer_open_link,
     language_selector_change_to,
     language_selector_close,
     language_selector_navigate_through_links_with_keyboard,
     language_selector_open,
     office_finder_find_trade_office,
-    open_link,
-    open_service_link_on_interim_page,
     promo_video_close,
     promo_video_watch,
     registration_submit_form_and_verify_account,
@@ -67,17 +63,6 @@ def given_actor_opens_any_article(context, actor_alias):
 @when('"{actor_alias}" goes to the "{case_number}" Case Study')
 def when_actor_goes_to_case_study(context, actor_alias, case_number):
     case_studies_go_to(context, actor_alias, case_number)
-
-
-@when('"{actor_alias}" goes to "{category}" using "{group}" link on "{location}"')
-@when('"{actor_alias}" goes to "{category}" using "{group}" links in "{location}"')
-def when_actor_opens_link(context, actor_alias, category, group, location):
-    open_link(context, actor_alias, group, category, location)
-
-
-@when('"{actor_alias}" opens the link to "{service}" from interim page')
-def when_open_service_link_on_interim_page(context, actor_alias, service):
-    open_service_link_on_interim_page(context, actor_alias, service)
 
 
 @when('"{actor_alias}" goes to the "{page_name}" page')
@@ -123,11 +108,6 @@ def when_actor_navigates_through_language_selector_links_with_keyboard(
 def when_actor_views_page_in_selected_language(
         context, actor_alias, preferred_language):
     language_selector_change_to(context, actor_alias, preferred_language)
-
-
-@when('"{actor_alias}" goes to the "{page_name}" page via "{group}" links in "{location}"')
-def when_actor_opens_link_from_header_menu(context, actor_alias, page_name, group, location):
-    header_footer_open_link(context, actor_alias, group, page_name, location)
 
 
 @when('"{actor_alias}" decides to find out more about "{element_name}"')
@@ -180,11 +160,6 @@ def when_actor_chooses_form_option_and_submits_form(
 def when_actor_chooses_form_option(
         context: Context, actor_alias: str, option: str):
     generic_pick_radio_option(context, actor_alias, option)
-
-
-@when('"{actor_alias}" decides to view more companies in the current industry')
-def fas_when_actors_views_more_companies(context: Context, actor_alias: str):
-    fas_view_more_companies(context, actor_alias)
 
 
 @when('"{actor_alias}" decides to view "{profile_number}" company profile')

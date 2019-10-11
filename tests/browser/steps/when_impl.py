@@ -145,23 +145,6 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     )
 
 
-# BrowserStack times out after 60 seconds of inactivity
-# https://www.browserstack.com/automate/timeouts
-@retry(
-    wait_fixed=5000,
-    stop_max_attempt_number=4,
-    retry_on_exception=retry_if_webdriver_error,
-)
-def open_group_element(context: Context, group: str, element: str, location: str):
-    driver = context.driver
-    if location.lower() == "domestic - home":
-        domestic.home.open(driver, group, element)
-    elif location.lower() == "international - landing":
-        international.landing.open(driver, group, element, same_tab=True)
-    else:
-        raise KeyError("Could not recognize location: {}".format(location))
-
-
 def articles_open_any(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_any_article")
@@ -187,37 +170,6 @@ def case_studies_go_to_random(context: Context, actor_alias: str, page_name: str
     visit_page(context, actor_alias, page_name)
     case_number = random.choice(["first", "second"])
     case_studies_go_to(context, actor_alias, case_number)
-
-
-def open_link(
-    context: Context, actor_alias: str, group: str, category: str, location: str
-):
-    if not get_actor(context, actor_alias):
-        add_actor(context, unauthenticated_actor(actor_alias))
-    update_actor(context, actor_alias, article_group=group, article_category=category)
-    logging.debug(
-        "%s is about to open link to '%s' '%s' via %s",
-        actor_alias,
-        group,
-        category,
-        location,
-    )
-    open_group_element(context, group=group, element=category, location=location)
-    update_actor(
-        context,
-        actor_alias,
-        article_group="advice",
-        article_category=category,
-        article_location=location,
-    )
-
-
-def open_service_link_on_interim_page(context: Context, actor_alias: str, service: str):
-    page_name = "domestic - interim {}".format(service)
-    page = get_page_object(page_name)
-    has_action(page, "go_to_service")
-    page.go_to_service(context.driver)
-    logging.debug("%s went to %s service page", actor_alias, service)
 
 
 def registration_should_get_verification_email(context: Context, actor_alias: str):
@@ -381,18 +333,6 @@ def language_selector_change_to(
     common_language_selector.change_to(context.driver, page, preferred_language)
 
 
-def header_footer_open_link(
-    context: Context, actor_alias: str, group: str, link_name: str, location: str
-):
-    open_group_element(context, group=group, element=link_name, location=location)
-    logging.debug(
-        "%s decided to go to '%s' page via '%s' links in header menu",
-        actor_alias,
-        link_name,
-        group,
-    )
-
-
 def click_on_page_element(
     context: Context, actor_alias: str, element_name: str, *, page_name: str = None
 ):
@@ -475,16 +415,6 @@ def fas_fill_out_and_submit_contact_us_form(
     }
     international.trade_contact_us.fill_out(context.driver, contact_us_details, captcha=captcha)
     international.trade_contact_us.submit(context.driver)
-
-
-def fas_view_more_companies(context: Context, actor_alias: str):
-    page = get_last_visited_page(context, actor_alias)
-    has_action(page, "click_on_page_element")
-    page.click_on_page_element(context.driver, "view more")
-    logging.debug(
-        "%s clicked on 'view more companies' button on %s",
-        actor_alias,
-        context.driver.current_url,
     )
 
 
