@@ -91,7 +91,6 @@ def when_actor_shares_article(context, actor_alias, social_media):
 
 
 @when('"{actor_alias}" decides to watch "{play_time:d}" seconds of the promotional video')
-@when('"{actor_alias}" decides to watch the promotional video')
 def when_actor_decides_to_watch_promo_video(
         context, actor_alias, *, play_time: int = None):
     promo_video_watch(context, actor_alias, play_time=play_time)
@@ -223,7 +222,6 @@ def when_actor_fills_out_and_submits_the_form(context: Context, actor_alias: str
     generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=context.table, retry_on_errors=True, go_back=True)
 
 
-@when('"{actor_alias}" fills out and submits the newsletter form')
 @when('"{actor_alias}" fills out and submits the form')
 def when_actor_fills_out_and_submits_the_form(context: Context, actor_alias: str):
     generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=context.table)

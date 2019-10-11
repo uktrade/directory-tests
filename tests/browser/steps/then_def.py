@@ -69,7 +69,6 @@ def then_should_not_see_sections(context, actor_alias):
 
 
 @then('"{actor_alias}" should see following sections')
-@then('"{actor_alias}" should see following section')
 def then_should_see_sections(context, actor_alias):
     should_see_sections(context, actor_alias, sections_table=context.table)
 
@@ -145,7 +144,6 @@ def fas_then_actor_should_see_expected_content(
     generic_should_see_expected_page_content(context, actor_alias, industry_name)
 
 
-@then('"{actor_alias}" should see search results filtered by "{industry_names}" industries')
 @then('"{actor_alias}" should see search results filtered by "{industry_names}" industry')
 def fas_should_see_filtered_search_results(
         context: Context, actor_alias: str, industry_names: str):
