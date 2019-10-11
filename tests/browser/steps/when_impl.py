@@ -181,7 +181,7 @@ def registration_should_get_verification_email(context: Context, actor_alias: st
 
 
 def generic_get_verification_code(
-        context: Context, actor_alias: str, *, resent_code: bool = False
+    context: Context, actor_alias: str, *, resent_code: bool = False
 ):
     """Will check if the Exporter received an email verification message."""
     logging.debug("Searching for an email verification message...")
@@ -210,7 +210,9 @@ def registration_submit_form_and_verify_account(
 ):
     actor = get_actor(context, actor_alias)
 
-    generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=context.table)
+    generic_fill_out_and_submit_form(
+        context, actor_alias, custom_details_table=context.table
+    )
 
     if fake_verification:
         sso.common.verify_account(actor.email)
@@ -413,9 +415,10 @@ def fas_fill_out_and_submit_contact_us_form(
         "source": sources,
         "accept t&c": accept_tc,
     }
-    international.trade_contact_us.fill_out(context.driver, contact_us_details, captcha=captcha)
-    international.trade_contact_us.submit(context.driver)
+    international.trade_contact_us.fill_out(
+        context.driver, contact_us_details, captcha=captcha
     )
+    international.trade_contact_us.submit(context.driver)
 
 
 def fas_view_selected_company_profile(
@@ -598,26 +601,6 @@ def generic_open_any_tag(context: Context, actor_alias: str):
     update_actor(context, actor_alias, last_tag=tag)
 
 
-def generic_open_random_news_article(
-    context: Context, actor_alias: str, article_type: str
-):
-    flow = {
-        "domestic": {
-            "start": "Domestic - Updates for UK companies on EU Exit - Domestic",
-            "finish": "Domestic - Domestic EU Exit news - article",
-        },
-        "international": {
-            "start": "Domestic - Updates for non-UK companies on EU Exit - International",
-            "finish": "Domestic - International EU Exit news - article",
-        },
-    }
-    start = flow[article_type.lower()]["start"]
-    finish = flow[article_type.lower()]["finish"]
-    visit_page(context, actor_alias, start)
-    generic_open_any_news_article(context, actor_alias)
-    should_be_on_page(context, actor_alias, finish)
-
-
 def generic_click_on_random_industry(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_any_article")
@@ -759,7 +742,7 @@ def generic_create_great_account(
 
 
 def profile_start_registration_as(
-        context: Context, actor_alias: str, business_type: str
+    context: Context, actor_alias: str, business_type: str
 ):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
@@ -767,7 +750,9 @@ def profile_start_registration_as(
     second_page = profile.enrol_select_business_type.pick_radio_option_and_submit(
         context.driver, name=business_type
     )
-    should_be_on_page(context, actor_alias, f"{second_page.SERVICE} - {second_page.NAME}")
+    should_be_on_page(
+        context, actor_alias, f"{second_page.SERVICE} - {second_page.NAME}"
+    )
 
 
 def soo_look_for_marketplace(
@@ -907,7 +892,7 @@ def generic_trigger_all_gtm_events(
 
 def click_on_header_menu_button(context: Context):
     try:
-        button = context.driver.find_element(by=By.ID, value='js-mobile-button')
+        button = context.driver.find_element(by=By.ID, value="js-mobile-button")
     except NoSuchElementException:
-        button = context.driver.find_element(by=By.ID, value='mobile-menu-button')
+        button = context.driver.find_element(by=By.ID, value="mobile-menu-button")
     button.click()
