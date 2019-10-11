@@ -10,7 +10,7 @@ Feature: Domestic - Advice articles
   Scenario: Any Exporter should see all expected sections on "Domestic - Advice landing" page
     When "Robert" goes to the "Domestic - Advice landing" page
 
-    Then  "Robert" should see following sections
+    Then "Robert" should see following sections
       | sections                 |
       | Hero                     |
 #      | Breadcrumbs              |  Breadcrumbs are not present on this page. See bug CMS-1698
@@ -27,7 +27,7 @@ Feature: Domestic - Advice articles
     When "Robert" opens any article on the list
 
     Then "Robert" should be on the "Domestic - Advice - article list" page
-    And  "Robert" should see following sections
+    And "Robert" should see following sections
       | sections                 |
       | Hero                     |
       | Breadcrumbs              |
@@ -44,7 +44,7 @@ Feature: Domestic - Advice articles
     When "Robert" opens any article on the list
 
     Then "Robert" should be on the "Domestic - Advice - Article" page
-    And  "Robert" should see following sections
+    And "Robert" should see following sections
       | sections        |
       | Breadcrumbs     |
       | Share buttons   |
