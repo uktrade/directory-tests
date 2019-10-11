@@ -58,11 +58,6 @@ def given_actor_is_on_page(context, actor_alias, page_name):
     should_be_on_page(context, actor_alias, page_name)
 
 
-@given('"{actor_alias}" opened any Article')
-def given_actor_opens_any_article(context, actor_alias):
-    articles_open_any(context, actor_alias)
-
-
 @given('"{actor_alias}" can see "{sections}" section on "{page_name}" page')
 @given('"{actor_alias}" can see "{sections}" sections on "{page_name}" page')
 def given_can_see_sections(context, actor_alias, sections, page_name):
@@ -227,3 +222,9 @@ def fas_given_actor_opened_industry_page(
 def given_actor_opened_random_news_article(
         context: Context, actor_alias: str, article_type: str):
     generic_open_random_news_article(context, actor_alias, article_type)
+
+
+@given('"{actor_alias}" opened any Article')
+def given_actor_opens_any_article(context, actor_alias):
+    articles_open_any(context, actor_alias)
+

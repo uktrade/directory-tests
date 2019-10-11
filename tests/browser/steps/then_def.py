@@ -52,15 +52,6 @@ from steps.then_impl import (
 )
 from steps.when_impl import generic_get_verification_code
 
-
-@then('"{actor_alias}" should be on the "{page_name}" page or be redirected to "{redirect_page}" page')
-def then_actor_should_be_on_page_on_international_page(
-        context, actor_alias, page_name, redirect_page):
-    should_be_on_page_or_be_redirected_to_page(
-        context, actor_alias, page_name, redirect_page
-    )
-
-
 @then('"{actor_alias}" should be on the "{page_name}" page')
 def then_actor_should_be_on_page(context, actor_alias, page_name):
     should_be_on_page(context, actor_alias, page_name)
@@ -322,3 +313,16 @@ def then_notification_should_be_sent_to_specific_dit_office(
     generic_a_notification_should_not_be_sent_to_specific_dit_office(
         context, actor_alias, mailbox_name
     )
+
+
+########################################################################################
+# Currently unused yet handy steps
+########################################################################################
+
+@then('"{actor_alias}" should be on the "{page_name}" page or be redirected to "{redirect_page}" page')
+def then_actor_should_be_on_page_on_international_page(
+        context, actor_alias, page_name, redirect_page):
+    should_be_on_page_or_be_redirected_to_page(
+        context, actor_alias, page_name, redirect_page
+    )
+
