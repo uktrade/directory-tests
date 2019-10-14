@@ -93,14 +93,6 @@ def get_article_name(driver: WebDriver) -> str:
     return current_article.text
 
 
-def should_see_article(driver: WebDriver, name: str):
-    current_article = get_article_name(driver)
-    with assertion_msg(
-        "Expected to see '%s' Article but got '%s'", name, current_article
-    ):
-        assert current_article.lower() == name.lower()
-
-
 def check_if_link_opens_new_tab(driver: WebDriver, social_media: str):
     share_button_selector = SHARE_BUTTONS[social_media.lower()]
     share_button = find_element(driver, share_button_selector)
