@@ -2328,25 +2328,6 @@ def enrol_enter_personal_details(context: Context, actor_alias: str):
     profile.enrolment_finished.should_be_here(response)
 
 
-def enrol_user(
-    context: Context, actor_alias: str, business_type: str, company_alias: str
-):
-    enrol_select_business_type(context, actor_alias, company_alias)
-    enrol_enter_email_and_password(context, actor_alias)
-    enrol_get_email_verification_code(context, actor_alias)
-    enrol_enter_email_verification_code(context, actor_alias)
-    enrol_enter_company_name(context, actor_alias, company_alias)
-    enrol_enter_company_website_and_industry(context, actor_alias, company_alias)
-    enrol_enter_personal_details(context, actor_alias)
-
-    actor = get_actor(context, actor_alias)
-    company = get_company(context, company_alias)
-    logging.debug(
-        f"'{actor.alias}' created an unverified Business Profile for "
-        f"'{company.title} - {company.number}'"
-    )
-
-
 def find_ch_company(alias: str, *, term: str = None, active: bool = True):
     search_terms = [
         "food",
