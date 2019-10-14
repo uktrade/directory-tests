@@ -81,12 +81,6 @@ def open_any_tag(driver: WebDriver) -> str:
     return tag
 
 
-def open_any_related_article(driver: WebDriver):
-    links = find_elements(driver, RELATED_ARTICLES)
-    assert len(links) > 0
-    links[random.randint(1, len(links)) - 1].click()
-
-
 def click_on_page_element(driver: WebDriver, element_name: str):
     find_and_click_on_page_element(driver, SELECTORS, element_name)
     take_screenshot(driver, NAME + " after clicking on " + element_name)
