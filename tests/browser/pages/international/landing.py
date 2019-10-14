@@ -27,14 +27,6 @@ TYPE = "home"
 URL = URLs.INTERNATIONAL_LANDING.absolute
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
-
-COUNTRY_SELECTOR = Selector(By.ID, "country-selector-activator")
-LANGUAGE_SELECTOR_CLOSE = Selector(By.ID, "header-language-selector-close")
-FIND_A_SUPPLIER = Selector(By.ID, "card-fas-link")
-SEE_THE_POTENTIAL = Selector(By.ID, "card-invest-link")
-LEARN_MORE = Selector(By.ID, "card-study-uk-link")
-PLAN_YOUR_TRIP = Selector(By.ID, "card-visit-uk-link")
-BETA_FEEDBACK = Selector(By.CSS_SELECTOR, "#header-beta-bar span > a")
 SELECTORS = {
     "service cards": {
         "itself": Selector(By.ID, "featured-cards-section"),

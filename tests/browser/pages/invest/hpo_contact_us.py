@@ -41,7 +41,6 @@ PAGE_TITLE = ""
 
 IM_NOT_A_ROBOT = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")
 SUBMIT_BUTTON = Selector(By.ID, "submit-button")
-COUNTRY_SELECTOR = Selector(By.CSS_SELECTOR, "select[name='country']")
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),

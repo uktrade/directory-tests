@@ -34,8 +34,6 @@ URL = URLs.PROFILE_ENROL_COMPANIES_HOUSE_SEARCH.absolute
 SubURLs = {"enter your business details (ltd, plc or royal charter)": URL}
 PAGE_TITLE = ""
 
-AUTOCOMPLETION = Selector(By.CSS_SELECTOR, "ul.SelectiveLookupDisplay")
-AUTOCOMPLETION_OPTIONS = Selector(By.CSS_SELECTOR, "li[role='option']")
 SELECTORS = {
     "enrolment progress bar": {"itself": Selector(By.ID, "progress-column")},
     "enter your business details": {

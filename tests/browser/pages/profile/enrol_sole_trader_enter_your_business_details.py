@@ -33,8 +33,6 @@ TYPE = "Enrol"
 URL = URLs.PROFILE_ENROL_NON_CH_COMPANY_ENTER_BUSINESS_DETAILS.absolute
 PAGE_TITLE = ""
 
-AUTOCOMPLETION = Selector(By.CSS_SELECTOR, "ul.SelectiveLookupDisplay")
-AUTOCOMPLETION_OPTIONS = Selector(By.CSS_SELECTOR, "li[role='option']")
 SELECTORS = {
     "enrolment progress bar": {"itself": Selector(By.ID, "progress-column")},
     "enter your business details": {

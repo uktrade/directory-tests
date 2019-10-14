@@ -24,8 +24,6 @@ TYPE = "international"
 URL = URLs.INTERNATIONAL_BREXIT_NEWS.absolute
 PAGE_TITLE = ""
 
-
-BETA_FEEDBACK = Selector(By.CSS_SELECTOR, "#header-beta-bar span > a")
 SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form[method=POST] button")
 ARTICLES = Selector(By.CSS_SELECTOR, "li.article a")
 SELECTORS = {

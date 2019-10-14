@@ -17,8 +17,6 @@ PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 LANGUAGE_SELECTOR = Selector(
     By.CSS_SELECTOR, "#international-header-bar .LanguageSelectorDialog-Tracker"
 )
-LANGUAGE_SELECTOR_CLOSE = Selector(By.ID, "header-language-selector-close")
-BETA_FEEDBACK = Selector(By.CSS_SELECTOR, "#header-beta-bar span > a")
 SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form[method=POST] button")
 SELECTORS = {
     "header bar": {"itself": Selector(By.ID, "international-header-bar")},
