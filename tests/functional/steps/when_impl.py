@@ -26,14 +26,7 @@ from directory_constants.expertise import (
     PUBLICITY,
 )
 from directory_tests_shared import URLs
-from directory_tests_shared.constants import (
-    NO_OF_EMPLOYEES,
-    SECTORS,
-    SEPARATORS,
-    BMPs,
-    JP2s,
-    WEBPs,
-)
+from directory_tests_shared.constants import SECTORS, SEPARATORS, BMPs, JP2s, WEBPs
 from directory_tests_shared.enums import Account, BusinessType, Language
 from directory_tests_shared.utils import rare_word, sentence
 from tests.functional.common import DETAILS, PROFILES
@@ -79,7 +72,6 @@ from tests.functional.utils.generic import (
     filter_out_legacy_industries,
     get_absolute_path_of_file,
     get_active_company_without_fas_profile,
-    get_company_by_id,
     get_md5_hash_of_file,
     get_number_of_search_result_pages,
     get_pdf_from_stannp,
@@ -319,33 +311,6 @@ def stannp_send_verification_letter(context: Context, actor_alias: str):
     response = send_verification_letter(context, company)
     context.response = response
     logging.debug("Successfully sent letter in test mode via StanNP")
-
-
-def find_unregistered_company(
-    context: Context, supplier_alias: str, company_alias: str
-) -> Company:
-    max_attempts = 15
-    counter = 0
-
-    while True:
-        # Step 1 - find an active company without a FAS profile
-        company = get_active_company_without_fas_profile(company_alias)
-        company_details = get_company_by_id(company.number)
-        counter += 1
-        if counter >= max_attempts:
-            with assertion_msg(
-                "Failed to find an active company which is not registered "
-                "with FAB after %d attempts",
-                max_attempts,
-            ):
-                assert False
-        if not company_details:
-            logging.debug(f"Found company not registered with us: '{company.number}'")
-            break
-
-    add_company(context, company)
-    update_actor(context, supplier_alias, company_alias=company_alias)
-    return company
 
 
 def reg_create_sso_account(context: Context, supplier_alias: str, company_alias: str):
@@ -2196,114 +2161,12 @@ def stannp_download_verification_letter_and_extract_text(
     update_actor(context, actor_alias, verification_letter=pdf_text)
 
 
-def enrol_select_business_type(context: Context, actor_alias: str, company_alias: str):
-    actor = get_actor(context, actor_alias)
-    company = get_company(context, company_alias)
-
-    logging.debug("# 1) Go to 'Select your business type' page")
-    response = profile.select_business_type.go_to(actor.session)
-    context.response = response
-    token = extract_csrf_middleware_token(response)
-    update_actor(context, actor.alias, csrfmiddlewaretoken=token)
-
-    if not company.business_type:
-        business_type = BusinessType.COMPANIES_HOUSE.value
-        update_company(context, company.alias, business_type=business_type)
-        company = get_company(context, company_alias)
-
-    logging.debug("# 2) submit 'select business type' form")
-    response = profile.select_business_type.submit(actor, company.business_type)
-    context.response = response
-    token = extract_csrf_middleware_token(response)
-    update_actor(context, actor.alias, csrfmiddlewaretoken=token)
-    profile.enter_your_email_and_password.should_be_here(response)
-
-
-def enrol_enter_email_and_password(context: Context, actor_alias: str):
-    actor = get_actor(context, actor_alias)
-    logging.debug("# 1) Go to Enter your email & password")
-    context.response = profile.enter_your_email_and_password.go_to(actor.session)
-    assert_that_captcha_is_in_dev_mode(context.response)
-    token = extract_csrf_middleware_token(context.response)
-    update_actor(context, actor.alias, csrfmiddlewaretoken=token)
-
-    logging.debug("# 2) submit the form")
-    context.response = profile.enter_your_email_and_password.submit(actor)
-    token = extract_csrf_middleware_token(context.response)
-    update_actor(context, actor.alias, csrfmiddlewaretoken=token)
-    profile.enter_email_verification_code.should_be_here(context.response)
-
-
 def enrol_get_email_verification_code(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     logging.debug("# 3) get email verification code")
     code = get_email_verification_code(actor.email)
     assert code, f"Could not find email verification code for {actor.email}"
     update_actor(context, actor.alias, email_confirmation_code=code)
-
-
-def enrol_enter_email_verification_code(context: Context, actor_alias: str):
-    actor = get_actor(context, actor_alias)
-    logging.debug("# 4) submit email verification code")
-    response = profile.enter_email_verification_code.submit(actor)
-    context.response = response
-    token = extract_csrf_middleware_token(response)
-    update_actor(context, actor.alias, csrfmiddlewaretoken=token)
-    profile.enter_your_business_details.should_be_here(response)
-
-
-def retry_if_assertion_error(exception):
-    """Return True if we should retry on AssertionError, False otherwise"""
-    return isinstance(exception, AssertionError)
-
-
-@retry(
-    wait_fixed=500,
-    stop_max_attempt_number=3,
-    retry_on_exception=retry_if_assertion_error,
-    wrap_exception=False,
-)
-def enrol_enter_company_name(context: Context, actor_alias: str, company_alias: str):
-    actor = get_actor(context, actor_alias)
-    company = get_company(context, company_alias)
-    logging.debug("# 5) submit company details - 1st part")
-    response = profile.enter_your_business_details.submit(actor, company)
-    context.response = response
-
-    token = extract_csrf_middleware_token(response)
-    update_actor(context, actor.alias, csrfmiddlewaretoken=token)
-    profile.enter_your_business_details_part_2.should_be_here(response)
-
-
-def enrol_enter_company_website_and_industry(
-    context: Context, actor_alias: str, company_alias: str
-):
-    actor = get_actor(context, actor_alias)
-    company = get_company(context, company_alias)
-    logging.debug("# 6) submit company details - 2nd part")
-    if not company.website:
-        words = ".".join(sentence().split())
-        update_company(context, company.alias, website=f"https://{words}/")
-    if not company.sector:
-        industry, _ = random.choice(choices.INDUSTRIES)
-        update_company(context, company.alias, sector=industry)
-    if not company.no_employees:
-        size = random.choice(NO_OF_EMPLOYEES)
-        update_company(context, company.alias, no_employees=size)
-    company = get_company(context, company.alias)
-    response = profile.enter_your_business_details_part_2.submit(actor, company)
-    context.response = response
-    token = extract_csrf_middleware_token(response)
-    update_actor(context, actor.alias, csrfmiddlewaretoken=token)
-    profile.enter_your_personal_details.should_be_here(response)
-
-
-def enrol_enter_personal_details(context: Context, actor_alias: str):
-    actor = get_actor(context, actor_alias)
-    logging.debug("# 7) submit personal details")
-    response = profile.enter_your_personal_details.submit(actor)
-    context.response = response
-    profile.enrolment_finished.should_be_here(response)
 
 
 def find_ch_company(alias: str, *, term: str = None, active: bool = True):
