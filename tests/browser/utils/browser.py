@@ -3,7 +3,6 @@
 import json
 import logging
 import socket
-import time
 from http.client import CannotSendRequest
 
 import requests
@@ -11,7 +10,6 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.remote.command import Command
 from selenium.webdriver.remote.webdriver import WebDriver
-
 
 CAPABILITIES_TEMPLATES = {
     "local": {
@@ -86,8 +84,13 @@ def get_driver_capabilities() -> dict:
         BROWSER_VERSION,
         BUILD_ID,
     )
-    common = CAPABILITIES_TEMPLATES[BROWSER_ENVIRONMENT]["common_capabilities"][BROWSER_TYPE]
-    browser = CAPABILITIES_TEMPLATES[BROWSER_ENVIRONMENT]["browser_capabilities"][BROWSER]
+
+    common = CAPABILITIES_TEMPLATES[BROWSER_ENVIRONMENT]["common_capabilities"][
+        BROWSER_TYPE
+    ]
+    browser = CAPABILITIES_TEMPLATES[BROWSER_ENVIRONMENT]["browser_capabilities"][
+        BROWSER
+    ]
     capabilities = {}
     capabilities.update(common)
     capabilities.update(browser)
@@ -124,10 +127,7 @@ def flag_browserstack_session_as_failed(session_id: str, reason: str):
 
 
 def start_driver_session(session_name: str, capabilities: dict) -> WebDriver:
-    from directory_tests_shared.settings import (
-        BROWSER_HEADLESS,
-        HUB_URL,
-    )
+    from directory_tests_shared.settings import BROWSER_HEADLESS, HUB_URL
 
     capabilities["name"] = session_name
 
@@ -220,98 +220,3 @@ def clear_driver_cookies(driver: WebDriver, *, log_cleanup: bool = False):
             logging.debug(f"Driver cookies after clearing them: {driver.get_cookies()}")
     except WebDriverException as ex:
         logging.error(f"Failed to clear cookies: '{ex.msg}'")
-
-
-def show_snackbar_message(driver: WebDriver, message: str):
-    script = """
-    function removeElement(id) {{
-        var existing = document.getElementById(id);
-        if(existing) {{
-            existing.parentNode.removeChild(existing);
-        }};
-    }};
-
-    function addElement(tag, innerHTML, id) {{
-        removeElement(id);
-        var node = document.createElement(tag);
-        node.innerHTML = innerHTML;
-        node.id = id;
-        document.body.appendChild(node);
-    }};
-
-    function showSnackBar() {{
-        var x = document.getElementById("snackbar");
-        x.className = "show";
-        setTimeout(function(){{ x.className = x.className.replace("show", ""); }}, 3000);
-    }};
-
-    function createSnackBarElements(message) {{
-        var snackbar_css = `
-        #snackbar {{
-            visibility: hidden;
-            min-width: 250px;
-            margin-left: -125px;
-            background-color: #333;
-            color: #00FF00;
-            text-align: center;
-            border-radius: 2px;
-            padding: 16px;
-            position: fixed;
-            z-index: 1;
-            left: 10%;
-            top: 30px;
-        }}
-
-        #snackbar.show {{
-            visibility: visible;
-            -webkit-animation: fadein 0.1s, fadeout 0.1s 1s;
-            animation: fadein 0.1s, fadeout 0.1s 1s;
-        }}
-
-        @-webkit-keyframes fadein {{
-            from {{top: 0; opacity: 0;}}
-            to {{top: 30px; opacity: 1;}}
-        }}
-
-        @keyframes fadein {{
-            from {{top: 0; opacity: 0;}}
-            to {{top: 30px; opacity: 1;}}
-        }}
-
-        @-webkit-keyframes fadeout {{
-            from {{top: 30px; opacity: 1;}}
-            to {{top: 0; opacity: 0;}}
-        }}
-
-        @keyframes fadeout {{
-            from {{top: 30px; opacity: 1;}}
-            to {{top: 0; opacity: 0;}}
-        }}`;
-
-        addElement('style', snackbar_css, 'snackbar_css');
-        addElement('div', message, 'snackbar');
-    }};
-
-    function deleteSnackBarElements() {{
-        removeElement('snackbar');
-        removeElement('snackbar_css');
-    }};
-
-    function showMessage(message) {{
-        deleteSnackBarElements();
-        createSnackBarElements(message);
-        showSnackBar();
-        setTimeout(deleteSnackBarElements, 1000);
-    }};
-
-    showMessage(`{message}`);
-    """
-    message = message.replace("`", "")
-    try:
-        driver.execute_script(script.format(message=message))
-    except WebDriverException:
-        logging.error(f"Failed to show snackbar with message: {message}")
-
-    # in order to keep the snackbar visible after the scenario is finished,
-    # wait for 200 ms
-    time.sleep(0.2)
