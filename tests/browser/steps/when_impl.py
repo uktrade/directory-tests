@@ -133,15 +133,22 @@ def set_small_screen(context: Context):
 
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
+    if "Access denied" in context.driver.page_source:
+        logging.debug(f"Trying to re-authenticate on '{page_name}'' {page.URL}")
+        generic_set_basic_auth_creds(context, page_name)
+        context.driver.get(page.URL)
+        error = f"Got blocked again on {context.driver.current_url}"
+        assert "Access denied" not in context.driver.page_source, error
+    check_for_errors(context.driver.page_source, context.driver.current_url)
     has_action(page, "should_be_here")
-    if hasattr(page, "URLs"):
+    if hasattr(page, "SubURLs"):
         special_page_name = page_name.split(" - ")[1]
         page.should_be_here(context.driver, page_name=special_page_name)
     else:
         page.should_be_here(context.driver)
     update_actor(context, actor_alias, visited_page=page)
     logging.debug(
-        f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> {page}"
+        f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> " f"{page}"
     )
 
 
