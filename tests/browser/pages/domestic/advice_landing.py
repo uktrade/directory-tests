@@ -64,14 +64,6 @@ def should_see_sections(driver: WebDriver, names: List[str]):
     check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
-def extract_text(text: str) -> tuple:
-    advice_name_index = 1
-    article_counter_index = -2
-    name = text.splitlines()[advice_name_index]
-    counter = int(text.split()[article_counter_index])
-    return name, counter
-
-
 def open_any_article(driver: WebDriver) -> str:
     article_links = find_elements(driver, ARTICLE_LINKS)
     link = random.choice(article_links)

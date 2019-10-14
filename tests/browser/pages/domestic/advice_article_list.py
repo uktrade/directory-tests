@@ -56,10 +56,6 @@ SubURLs = {
     ),
 }
 
-
-ARTICLES_LIST = Selector(By.CSS_SELECTOR, "#js-paginate-list > li")
-FIRST_ARTICLE = Selector(By.CSS_SELECTOR, "#js-paginate-list > li:nth-child(1) > a")
-
 ARTICLE_LINKS = Selector(
     By.CSS_SELECTOR, "#article-list-page li.article a", type=ElementType.LINK
 )
