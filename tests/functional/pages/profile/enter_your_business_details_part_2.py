@@ -15,8 +15,6 @@ TYPE = PageType.FORM
 URL = URLs.PROFILE_ENROL_BUSINESS_DETAILS.absolute
 EXPECTED_STRINGS = ["Enter your business details"]
 
-PROFILE_ALREADY_EXISTS = "Good news, a Business Profile already exists for this company"
-
 
 def go_to(session: Session) -> Response:
     return make_request(Method.GET, URL, session=session)
@@ -45,7 +43,3 @@ def submit(actor: Actor, company: Company) -> Response:
         files=data,
         no_filename_in_multipart_form_data=True,
     )
-
-
-def profile_already_exists(response: Response) -> bool:
-    return PROFILE_ALREADY_EXISTS in response.content.decode("UTF-8")
