@@ -79,10 +79,6 @@ def should_see_sections(driver: WebDriver, names: List[str]):
     check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
-def open_link(driver: WebDriver, name: str):
-    driver.find_element_by_link_text(name).click()
-
-
 def open_guide(driver: WebDriver, guide_name: str):
     guide_name = guide_name.split(" - ")[1].strip()
     selector = Selector(By.PARTIAL_LINK_TEXT, guide_name)

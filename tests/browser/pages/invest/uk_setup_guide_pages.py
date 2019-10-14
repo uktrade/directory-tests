@@ -100,10 +100,6 @@ def should_see_sections(driver: WebDriver, names: List[str]):
     check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
-def open_link(driver: WebDriver, name: str):
-    driver.find_element_by_link_text(name).click()
-
-
 def should_see_content_for(driver: WebDriver, guide_name: str):
     source = driver.page_source
     guide_name = clean_name(guide_name)
