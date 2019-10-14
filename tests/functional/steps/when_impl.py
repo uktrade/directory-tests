@@ -7,6 +7,7 @@ import re
 import uuid
 from random import choice, randrange
 from string import ascii_letters, digits
+from typing import Tuple
 from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 
 from behave.model import Table
@@ -2256,27 +2257,6 @@ def retry_if_assertion_error(exception):
     return isinstance(exception, AssertionError)
 
 
-def check_if_found_wrong_company(
-    context: Context, actor_alias: str, company_alias: str
-):
-    content = context.response.content.decode("UTF-8")
-    actor = get_actor(context, actor_alias)
-    company = get_company(context, company_alias)
-    errors = {
-        "Company not active": f"Found wrong company '{company.number} - {company.title}' is inactive",
-        "74990": f"Found wrong company '{company.number} - {company.title}' has SIC=74990",
-        "88100": f"Found wrong company '{company.number} - {company.title}' has SIC=88100",
-    }
-    for string, error in errors.items():
-        if string in content:
-            with assertion_msg(error):
-                logging.debug(error)
-                token = extract_csrf_middleware_token(context.response)
-                update_actor(context, actor.alias, csrfmiddlewaretoken=token)
-                find_unregistered_company(context, actor.alias, company.alias)
-                assert string not in content
-
-
 @retry(
     wait_fixed=500,
     stop_max_attempt_number=3,
@@ -2289,8 +2269,6 @@ def enrol_enter_company_name(context: Context, actor_alias: str, company_alias: 
     logging.debug("# 5) submit company details - 1st part")
     response = profile.enter_your_business_details.submit(actor, company)
     context.response = response
-
-    check_if_found_wrong_company(context, actor_alias, company_alias)
 
     token = extract_csrf_middleware_token(response)
     update_actor(context, actor.alias, csrfmiddlewaretoken=token)
@@ -2426,6 +2404,20 @@ def find_ch_company(alias: str, *, term: str = None, active: bool = True):
     return Company(**details_mapping)
 
 
+def should_skip_company(response: Response) -> Tuple[bool, str]:
+    content = response.content.decode("UTF-8")
+    errors = {
+        "Company not active": "Inactive company",
+        "74990": "Company with unsupported SIC=74990",
+        "88100": "Company with unsupported SIC=88100",
+        "Good news, a Business Profile already exists for this company": "A business profile already exists",
+    }
+    for string, error in errors.items():
+        if string in content:
+            return True, error
+    return False, "No problems were found with selected company"
+
+
 def profile_enrol_companies_house_registered_company(
     context: Context, actor: Actor, account: Account
 ):
@@ -2449,20 +2441,16 @@ def profile_enrol_companies_house_registered_company(
 
     max_attempt = 10
     attempt_counter = 1
-    profile_already_exists = True
-    while profile_already_exists and attempt_counter < max_attempt:
+    skip_company = True
+    while skip_company and attempt_counter < max_attempt:
         company = find_ch_company(actor.company_alias)
         extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
         context.response = profile.enter_your_business_details.submit(actor, company)
-        profile_already_exists = profile.enter_your_business_details_part_2.profile_already_exists(
-            context.response
-        )
-        logging.debug(
-            f"Has '{company.title}' have already a business profile: {profile_already_exists}"
-        )
+        skip_company, error = should_skip_company(context.response)
+        logging.debug(f"'{company.title}': {error}")
         attempt_counter += 1
     error = f"Could not find unregistered CH company after {attempt_counter} attempts"
-    assert not profile_already_exists, error
+    assert not skip_company, error
     add_company(context, company)
     update_company(
         context, alias=actor.company_alias, business_type=account.business_type
