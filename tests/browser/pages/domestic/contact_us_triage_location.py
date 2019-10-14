@@ -27,12 +27,6 @@ TYPE = "Contact us"
 URL = URLs.CONTACT_US_LANDING.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-THE_UK = Selector(
-    By.ID, "id_location-choice_0", type=ElementType.RADIO, is_visible=False
-)
-OUTSIDE_THE_UK = Selector(
-    By.ID, "id_location-choice_1", type=ElementType.RADIO, is_visible=False
-)
 SUBMIT_BUTTON = Selector(
     By.CSS_SELECTOR, "div.exred-triage-form button", type=ElementType.BUTTON
 )

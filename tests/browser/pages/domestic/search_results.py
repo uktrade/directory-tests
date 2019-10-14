@@ -110,15 +110,6 @@ def click_on_page_element(driver, element_name):
     take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
-def paginator(driver: WebDriver, existing_page: str):
-    selector = find_element(driver, NEXT)
-    existing_page_text = selector.text
-    with assertion_msg(
-        f"Expected to see {existing_page} page but got {existing_page_text}"
-    ):
-        assert existing_page == existing_page_text
-
-
 def search(driver: WebDriver, phrase: str):
     search_input = find_element(driver, find_selector_by_name(SELECTORS, "search box"))
     search_button = find_element(
