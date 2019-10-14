@@ -14,7 +14,6 @@ from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
     assertion_msg,
-    check_for_section,
     check_for_sections,
     check_if_element_is_not_present,
     check_if_element_is_visible,
@@ -142,10 +141,6 @@ def visit(driver: WebDriver):
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
-
-
-def should_see_section(driver: WebDriver, name: str):
-    check_for_section(driver, all_sections=SELECTORS, sought_section=name)
 
 
 def should_see_sections(driver: WebDriver, names: List[str]):

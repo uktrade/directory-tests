@@ -11,7 +11,6 @@ from directory_tests_shared.enums import Service
 from pages import common_selectors
 from pages.common_actions import (
     Selector,
-    check_for_section,
     check_for_sections,
     check_if_element_is_visible,
     check_url,
@@ -71,10 +70,6 @@ def visit(driver: WebDriver):
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
-
-
-def should_see_section(driver: WebDriver, name: str):
-    check_for_section(driver, SELECTORS, sought_section=name)
 
 
 def should_see_sections(driver: WebDriver, names: List[str]):

@@ -9,7 +9,6 @@ from directory_tests_shared.enums import Service
 from pages.common_actions import (
     Selector,
     check_for_expected_sections_elements,
-    check_for_section,
     check_for_sections,
     check_if_element_is_not_visible,
     take_screenshot,
@@ -48,10 +47,6 @@ def should_be_here(driver: WebDriver):
     all_except_save_progress = copy.copy(SELECTORS)
     all_except_save_progress.pop("save progress")
     check_for_expected_sections_elements(driver, all_except_save_progress)
-
-
-def should_see_section(driver: WebDriver, name: str):
-    check_for_section(driver, all_sections=SELECTORS, sought_section=name)
 
 
 def should_see_sections(driver: WebDriver, names: List[str]):
