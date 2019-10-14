@@ -2,7 +2,6 @@
 """Common PageObject actions."""
 import hashlib
 import logging
-import os
 import random
 import string
 import sys
@@ -19,7 +18,6 @@ from urllib.parse import urlparse
 
 import requests
 from behave.runner import Context
-from directory_tests_shared.settings import BARRED_USERS, TAKE_SCREENSHOTS
 from retrying import retry
 from selenium.common.exceptions import (
     ElementClickInterceptedException,
@@ -32,9 +30,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.expected_conditions import staleness_of
 from selenium.webdriver.support.wait import WebDriverWait
 
+from directory_tests_shared.settings import BARRED_USERS, TAKE_SCREENSHOTS
 from pages import ElementType
 
 ScenarioData = namedtuple("ScenarioData", ["actors"])
@@ -109,37 +107,6 @@ def check_title(driver: WebDriver, expected_title: str, *, exact_match: bool = F
     logging.debug(
         f"Page title on '{driver.current_url}' matches expected '{expected_title}'"
     )
-
-
-def check_for_section(driver: WebDriver, all_sections: dict, sought_section: str):
-    """Check if all page elements from sought section are visible."""
-    section = all_sections[sought_section.lower()]
-    for element_name, selector in section.items():
-        element = find_element(driver, selector, element_name=element_name)
-        with assertion_msg(
-            f"'{element_name}' in '{sought_section}' is not displayed on: {driver.current_url}"
-        ):
-            assert element.is_displayed()
-            logging.debug(f"'{element_name}' in '{sought_section}' is displayed")
-
-
-def check_for_expected_elements(
-    driver: WebDriver, elements: Dict, *, wait_for_it: bool = True
-):
-    """Check if all page elements are visible."""
-    for element_name, selector in elements.items():
-        if not isinstance(selector, Selector):
-            raise TypeError(
-                f"Expected '{selector}' to be a Selector, got {type(selector)}"
-            )
-        element = find_element(
-            driver, selector, element_name=element_name, wait_for_it=wait_for_it
-        )
-        with assertion_msg(
-            f"It looks like '{element_name}' element is not visible on {driver.current_url}"
-        ):
-            assert element.is_displayed()
-    logging.debug(f"All expected elements are visible on '{driver.current_url}'")
 
 
 def check_for_expected_sections_elements(
@@ -355,41 +322,6 @@ def selenium_action(driver: WebDriver, message: str, *args):
         raise
 
 
-def get_file_log_handler(
-    log_formatter: logging.Formatter,
-    *,
-    log_level: int = logging.DEBUG,
-    task_id: str = None,
-) -> logging.FileHandler:
-    """Configure the console logger.
-
-    Will use DEBUG logging level by default.
-    """
-    if task_id:
-        log_file = os.path.join("reports", ("behave-%s.log" % task_id))
-    else:
-        log_file = os.path.join("reports", "behave.log")
-    print(f"Behave log file: {log_file}")
-    file_handler = logging.FileHandler(log_file)
-    file_handler.setLevel(log_level)
-    file_handler.setFormatter(log_formatter)
-    return file_handler
-
-
-def init_loggers(context: Context, *, task_id: str = None):
-    """Will initialize console and file loggers."""
-    # configure the formatter
-    pattern = (
-        "%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: "
-        "%(message)s"
-    )
-    log_formatter = logging.Formatter(pattern)
-    log_file_handler = get_file_log_handler(log_formatter, task_id=task_id)
-    # Add log file handler to Behave logging system
-    logging.getLogger("selenium").setLevel(logging.WARNING)
-    context.config.setup_logging(handlers=[log_file_handler])
-
-
 def wait_for_visibility(
     driver: WebDriver, selector: Selector, *, time_to_wait: int = 5
 ):
@@ -525,18 +457,6 @@ def try_js_click_on_element_click_intercepted_exception(
             f"Click was intercepted. Will try JS workaround. Exception msg: " f"{e.msg}"
         )
         driver.execute_script("arguments[0].click();", element)
-
-
-@contextmanager
-def wait_for_page_load(driver: WebDriver, timeout: int = 30):
-    """Alternative Context manager for waiting for page to load.
-    src:
-    http://www.obeythetestinggoat.com/how-to-get-selenium-to-wait-for-page-load-after-a-click.html
-    """
-    old_page = driver.find_element_by_tag_name("html")
-    yield
-    logging.debug(f"WAITING FOR STALENESS OF OLD PAGE {driver.current_url}")
-    WebDriverWait(driver, timeout).until(staleness_of(old_page))
 
 
 class wait_for_page_load_after_action(object):
