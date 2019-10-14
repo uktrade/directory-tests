@@ -2,7 +2,6 @@
 """Selling Online Overseas - Search results page"""
 import logging
 import random
-from typing import List
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -66,26 +65,6 @@ def open_random_marketplace(driver: WebDriver):
     link = random.choice(find_elements(driver, selector))
     logging.debug(f"Clicked on {link.text}")
     link.click()
-
-
-def collate_products_and_countries(
-    product_types: List[str], country_names: List[str]
-) -> List[dict]:
-    if len(product_types) > len(country_names):
-        iterations = len(product_types)
-    else:
-        iterations = len(country_names)
-
-    list_of_values = []
-    for i in range(iterations):
-        list_of_values.append(
-            {
-                "product_type": dict(enumerate(product_types)).get(i, None),
-                "country_name": dict(enumerate(country_names)).get(i, None),
-            }
-        )
-    logging.debug(f"Collated list of products & countries: {list_of_values}")
-    return list_of_values
 
 
 def generate_form_details(country: str = None, category: str = None) -> dict:
