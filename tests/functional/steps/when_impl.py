@@ -11,6 +11,10 @@ from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 
 from behave.model import Table
 from behave.runner import Context
+from requests import Response, Session
+from retrying import retry
+from scrapy import Selector
+
 from directory_constants import choices
 from directory_constants.expertise import (
     BUSINESS_SUPPORT,
@@ -20,10 +24,6 @@ from directory_constants.expertise import (
     MANAGEMENT_CONSULTING,
     PUBLICITY,
 )
-from requests import Response, Session
-from retrying import retry
-from scrapy import Selector
-
 from directory_tests_shared import URLs
 from directory_tests_shared.constants import (
     NO_OF_EMPLOYEES,
@@ -74,7 +74,6 @@ from tests.functional.utils.generic import (
     extract_csrf_middleware_token,
     extract_form_action,
     extract_logo_url,
-    extract_registration_page_link,
     extract_text_from_pdf,
     filter_out_legacy_industries,
     get_absolute_path_of_file,
@@ -1987,56 +1986,6 @@ def fab_open_collaboration_request_link(
         collaborator_alias,
         company_alias,
     )
-
-
-def reg_create_standalone_unverified_sso_account_from_sso_login_page(
-    context: Context, actor_alias: str
-):
-    """Create a standalone SSO/great.gov.uk account."""
-    actor = get_actor(context, actor_alias)
-    response = context.response
-
-    # Step 1: Check if we are on the SSO/great.gov.uk login page
-    sso.login.should_be_here(response)
-
-    # Step 2 - extract CSRF token
-    token = extract_csrf_middleware_token(response)
-    update_actor(context, actor_alias, csrfmiddlewaretoken=token)
-
-    # Step 3 - extract Registration link
-    referer = response.url
-    registration_page_link = extract_registration_page_link(response)
-
-    # Step 4: Go to the SSO/great.gov.uk registration page
-    response = sso.register.go_to(
-        actor.session, next=registration_page_link, referer=referer
-    )
-    context.response = response
-
-    # Step 5 - extract CSRF token
-    token = extract_csrf_middleware_token(response)
-    update_actor(context, actor_alias, csrfmiddlewaretoken=token)
-
-    # Step 6: Check if User is not logged in
-    with assertion_msg(
-        "It looks like user is still logged in, as the "
-        "sso_display_logged_in cookie is not equal to False"
-    ):
-        assert response.cookies.get("sso_display_logged_in") == "false"
-
-    # Step 7: POST SSO accounts/signup/
-    response = sso.register.submit_no_company(
-        actor, next=registration_page_link, referer=response.url
-    )
-    context.response = response
-
-    # Step 8: Check if Supplier is on Verify your email page & is not logged in
-    sso.verify_your_email.should_be_here(response)
-    with assertion_msg(
-        "It looks like user is still logged in, as the "
-        "sso_display_logged_in cookie is not equal to False"
-    ):
-        assert response.cookies.get("sso_display_logged_in") == "false"
 
 
 def sso_create_standalone_unverified_sso_account_from_collaboration_request(
