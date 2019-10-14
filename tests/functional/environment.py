@@ -4,7 +4,13 @@ import logging
 from pprint import pformat
 
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
-from tests.functional.utils.context_utils import initialize_scenario_data
+
+from directory_tests_shared.settings import AUTO_RETRY, AUTO_RETRY_MAX_ATTEMPTS
+from tests.functional.utils.context_utils import (
+    get_company,
+    initialize_scenario_data,
+    update_company,
+)
 from tests.functional.utils.generic import (
     blue,
     delete_supplier_data_from_dir,
@@ -17,7 +23,6 @@ from tests.functional.utils.generic import (
     red,
 )
 from tests.functional.utils.request import REQUEST_EXCEPTIONS
-from directory_tests_shared.settings import AUTO_RETRY, AUTO_RETRY_MAX_ATTEMPTS
 
 
 def before_feature(context, feature):
@@ -105,7 +110,7 @@ def after_scenario(context, scenario):
                     delete_supplier_data_from_dir(company.number, context=context)
                 else:
                     delete_supplier_data_from_dir(company.title, context=context)
-                set_company_details(context, alias=company.alias, deleted=True)
+                update_company(context, alias=company.alias, deleted=True)
             if scenario.status == "failed":
                 red("Deleted %s supplier data from DIR & SSO DB" % actor.email)
     # clear the scenario data after every scenario
