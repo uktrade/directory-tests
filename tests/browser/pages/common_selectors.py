@@ -9,7 +9,6 @@ from directory_tests_shared.constants import (
     MD5_CHECKSUM_GREAT_LOGO,
     MD5_CHECKSUM_INVEST_IN_GREAT,
 )
-
 from pages import ElementType
 from pages.common_actions import By, Selector
 
@@ -44,12 +43,6 @@ HEADER = {
             "#great-header-search-box ~ button",
             type=ElementType.BUTTON,
         ),
-    }
-}
-SSO_LOGGED_IN = {
-    "sso links - logged out": {
-        "account": Selector(By.ID, "header-profile-link", is_visible=False),
-        "sign out": Selector(By.ID, "header-sign-out-link", is_visible=False),
     }
 }
 SSO_LOGGED_OUT = {
@@ -105,10 +98,7 @@ FOOTER = {
 FAVICON = Selector(By.CSS_SELECTOR, "link[rel='shortcut icon']")
 EXOPPS_FAVICON = Selector(By.CSS_SELECTOR, "link[rel='icon']")
 EIG_LOGO = Selector(By.CSS_SELECTOR, "#great-header-logo > img")
-REGISTRATION_LINK = Selector(By.ID, "header-register-link")
 SIGN_IN_LINK = Selector(By.ID, "header-sign-in-link")
-PROFILE_LINK = Selector(By.ID, "header-profile-link")
-SIGN_OUT_LINK = Selector(By.ID, "header-sign-out-link")
 
 LOGOS = {
     "eig": {"selector": EIG_LOGO, "md5": MD5_CHECKSUM_EIG_LOGO},
@@ -256,16 +246,5 @@ INVEST_FOOTER = {
         "go to the page for uk businesses": Selector(By.ID, "footer-domestic"),
         "dit footer logo": Selector(By.ID, "great-global-footer-logo"),
         "copyright notice": Selector(By.ID, "great-footer-copyright"),
-    }
-}
-
-EU_EXIT_NEWS_BANNER = {
-    "eu exit news banner": {
-        "itself": Selector(By.ID, "information-banner"),
-        "badge": Selector(By.CSS_SELECTOR, "#information-banner span"),
-        "text": Selector(By.CSS_SELECTOR, "#information-banner p"),
-        "see our updates on eu exit": Selector(
-            By.CSS_SELECTOR, "#information-banner a"
-        ),
     }
 }
