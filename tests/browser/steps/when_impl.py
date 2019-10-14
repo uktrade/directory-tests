@@ -789,12 +789,7 @@ def soo_find_random_marketplace_and_apply_via_dit(
 ):
     soo_find_and_open_random_marketplace(context, actor_alias, country, category)
     click_on_page_element(context, actor_alias, "Apply now")
-    should_be_on_page(
-        context,
-        actor_alias,
-        f"{domestic.contact_us_soo_long_your_business.SERVICE} - "
-        f"{domestic.contact_us_soo_long_your_business.NAME}",
-    )
+    domestic.contact_us_soo_long_your_business.should_be_here(context.driver)
 
 
 def domestic_submit_soo_contact_us_form(
@@ -803,36 +798,16 @@ def domestic_submit_soo_contact_us_form(
     generic_fill_out_and_submit_form(
         context, actor_alias, custom_details_table=custom_details_table
     )
-    should_be_on_page(
-        context,
-        actor_alias,
-        f"{domestic.contact_us_soo_long_organisation_details.SERVICE} - "
-        f"{domestic.contact_us_soo_long_organisation_details.NAME}",
-    )
+    domestic.contact_us_soo_long_organisation_details.should_be_here(context.driver)
 
     generic_fill_out_and_submit_form(context, actor_alias)
-    should_be_on_page(
-        context,
-        actor_alias,
-        f"{domestic.contact_us_soo_long_your_experience.SERVICE} - "
-        f"{domestic.contact_us_soo_long_your_experience.NAME}",
-    )
+    domestic.contact_us_soo_long_your_experience.should_be_here(context.driver)
 
     generic_fill_out_and_submit_form(context, actor_alias)
-    should_be_on_page(
-        context,
-        actor_alias,
-        f"{domestic.contact_us_soo_long_contact_details.SERVICE} - "
-        f"{domestic.contact_us_soo_long_contact_details.NAME}",
-    )
+    domestic.contact_us_soo_long_contact_details.should_be_here(context.driver)
 
     generic_fill_out_and_submit_form(context, actor_alias)
-    should_be_on_page(
-        context,
-        actor_alias,
-        f"{domestic.contact_us_soo_long_thank_you.SERVICE} - "
-        f"{domestic.contact_us_soo_long_thank_you.NAME}",
-    )
+    domestic.contact_us_soo_long_thank_you.should_be_here(context.driver)
 
 
 def domestic_search_for_phrase(context: Context, actor_alias: str, phrase: str):
