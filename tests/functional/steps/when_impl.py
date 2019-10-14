@@ -71,12 +71,12 @@ from tests.functional.utils.generic import (
     extract_text_from_pdf,
     filter_out_legacy_industries,
     get_absolute_path_of_file,
-    get_active_company_without_fas_profile,
     get_md5_hash_of_file,
     get_number_of_search_result_pages,
     get_pdf_from_stannp,
     get_published_companies,
     get_published_companies_with_n_sectors,
+    get_random_company,
     get_verification_code,
     is_verification_letter_sent,
     random_case_study_data,
@@ -298,18 +298,11 @@ def create_actor_with_or_without_sso_account(
 
 def stannp_send_verification_letter(context: Context, actor_alias: str):
     company_alias = "Test"
-    company = get_active_company_without_fas_profile(alias=company_alias)
-    add_company(context, company)
-    if not get_actor(context, actor_alias):
-        add_actor(context, unauthenticated_buyer(actor_alias))
-    update_actor(context, actor_alias, company_alias=company_alias)
+    company = get_random_company(alias=company_alias)
     verification_code = str(random.randint(1000000, 9999999))
-    update_company(
-        context, company_alias, verification_code=verification_code, owner=actor_alias
-    )
-    company = get_company(context, company_alias)
-    response = send_verification_letter(context, company)
-    context.response = response
+    updated_details = {"verification_code": verification_code, "owner": actor_alias}
+    company = company._replace(updated_details)
+    context.response = send_verification_letter(context, company)
     logging.debug("Successfully sent letter in test mode via StanNP")
 
 

@@ -21,8 +21,6 @@ import lxml
 import requests
 from behave.runner import Context
 from bs4 import BeautifulSoup
-from jsonschema import validate
-from jsonschema.exceptions import ValidationError
 from langdetect import DetectorFactory, detect_langs
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
@@ -41,7 +39,6 @@ from directory_tests_shared.clients import (
 from directory_tests_shared.constants import SECTORS, TEST_IMAGES_DIR, JPEGs, PNGs
 from directory_tests_shared.settings import STANNP_LETTER_TEMPLATE_ID
 from directory_tests_shared.utils import rare_word, sentence
-from tests.functional.schemas.Companies import COMPANIES
 from tests.functional.utils.context_utils import (
     CaseStudy,
     Company,
@@ -347,41 +344,6 @@ def log_response(
             )
         else:
             logging.debug("RSP Content%s:\n %s", content_only_msg, content)
-
-
-def int_api_ch_search(term: str) -> dict:
-    """Will search for companies using provided term.
-
-    NOTE:
-    This will validate the response data against appropriate JSON Schema.
-
-    :param term: search term, can be: company name or number, keywords etc.
-    :type term: str
-    :return: a JSON response from Companies House Search endpoint
-    """
-    url = URLs.PROFILE_API_COMPANIES_HOUSE_SEARCH.absolute
-    params = {"term": term}
-    response = make_request(Method.GET, url, params=params)
-    if response.status_code == 404:
-        red(f"404 for {term}")
-        return {}
-    with assertion_msg(
-        "Expected 200 OK from GET %s but instead got %s. In case you're "
-        "getting 301 Redirect then check if you're using correct protocol "
-        "https or http",
-        response.url,
-        response.status_code,
-    ):
-        assert response.status_code == 200
-    json_data = response.json()
-    logging.debug("Company House Search result: %s", response.json())
-    try:
-        validate(json_data, COMPANIES)
-    except ValidationError as ex:
-        red(f"didn't pass JSON Schema validation: {ex}")
-        json_data = {}
-
-    return json_data
 
 
 def extract_csrf_middleware_token(response: Response) -> str:
@@ -702,138 +664,6 @@ def random_message_data(
     return message
 
 
-def find_active_company_without_fas_profile(alias: str) -> Company:
-    """Will find an active company without a FAS profile.
-
-    :param alias: alias that will be given to the found company
-    :return: an Company named tuple
-    """
-    has_profile = True
-    is_registered = True
-    exists = False
-    active = False
-    counter = 1
-    while has_profile and is_registered and not exists and not active:
-        random_company_number = str(random.randint(0, 9999999)).zfill(8)
-        red(random_company_number)
-        has_profile = has_fas_profile(random_company_number)
-        if has_profile:
-            logging.debug(
-                "Selected company has a FAS profile: %s. Will try a " "different one.",
-                random_company_number,
-            )
-        else:
-            logging.debug(
-                "Found a company without a FAS profile: %s.", random_company_number
-            )
-        is_registered = already_registered(random_company_number)
-        if is_registered:
-            logging.debug(
-                "Company %s is already registered with FAB. Will try a "
-                "different one.",
-                random_company_number,
-            )
-        else:
-            logging.debug(
-                "Company %s is not registered with FAB: Getting "
-                "it details from CH...",
-                random_company_number,
-            )
-
-        json = int_api_ch_search(random_company_number)
-
-        if len(json) == 1:
-            exists = True
-            if json[0]["company_status"] == "active":
-                active = True
-                with assertion_msg(
-                    "Expected to get details of company no: %s but got %s",
-                    random_company_number,
-                    json[0]["company_number"],
-                ):
-                    assert json[0]["company_number"] == random_company_number
-            else:
-                counter += 1
-                has_profile, is_registered, exists, active = (True, True, False, False)
-                logging.debug(
-                    "Company with number %s is not active. It's %s. "
-                    "Trying a different one...",
-                    random_company_number,
-                    json[0]["company_status"],
-                )
-        else:
-            counter += 1
-            has_profile, is_registered, exists, active = (True, True, False, False)
-            logging.debug(
-                "Company with number %s does not exist or it didn't pass JSON "
-                "Schema validation. Trying a different one...",
-                random_company_number,
-            )
-
-    logging.debug(
-        "It took %d attempt(s) to find an active Company without a "
-        "FAS profile and not already registered with FAB: %s - %s",
-        counter,
-        json[0]["title"],
-        json[0]["company_number"],
-    )
-    company = Company(
-        alias=alias,
-        title=json[0]["title"].strip(),
-        number=json[0]["company_number"],
-        companies_house_details=json[0],
-        case_studies={},
-    )
-    return company
-
-
-def has_fas_profile(company_number: str) -> bool:
-    """Will check if company has an active FAS profile.
-
-    It will do it by calling FAS /suppliers/{} UI endpoint. This endpoint
-    returns:
-     - 404 Not Found when there's no profile for selected company
-     - and 301 with Location header pointing at the profile page
-
-    :param company_number: Companies House number (8 digit long number padded
-                                                   with zeroes)
-    :return: True/False based on the presence of FAS profile
-    """
-    endpoint = URLs.FAS_SUPPLIERS.absolute
-    url = "{}/{}".format(endpoint, company_number)
-    response = make_request(Method.GET, url, allow_redirects=False)
-    return response.status_code == 301
-
-
-def already_registered(company_number: str) -> bool:
-    """Will check if Company is already registered with FAB.
-
-    :param company_number:
-    :return: True/False based on the presence of FAB profile
-    """
-    url = URLs.FAB_LANDING.absolute
-    data = {"company_number": company_number}
-    headers = {"Referer": url}
-
-    response = make_request(Method.POST, url, headers=headers, data=data)
-    return "Already registered" in response.content.decode("utf-8")
-
-
-def save_companies(companies: CompaniesList):
-    """Save pre-selected Companies in a JSON file.
-
-    :param companies: a list of named tuples with basic Company details
-    """
-    # convert `Company` named tuples into dictionaries
-    list_dict = []
-    for company in companies:
-        list_dict.append({key: getattr(company, key) for key in company._fields})
-    list_dict = sorted(list_dict, key=lambda company: company["number"])
-    path = os.path.join(TEST_IMAGES_DIR, "companies.json")
-    with open(path, "w", encoding="utf8") as f:
-        f.write(json.dumps(list_dict, indent=4))
-
-
 def load_companies() -> CompaniesList:
     """Load stored list of Companies from a JSON file.
 
@@ -845,73 +675,15 @@ def load_companies() -> CompaniesList:
     return [Company(**company) for company in companies]
 
 
-def update_companies():
-    """Update existing pre-defined list of Companies."""
-    companies = load_companies()
-    updated_companies = []
-    companies_number = len(companies)
-    doesnt_exit_counter = 0
-    inactive_counter = 0
-    registered_counter = 0
-    for index, company in enumerate(companies):
-        progress_message = "Updating company {} out of {}: {} - {}".format(
-            index + 1, companies_number, company.number, company.title
-        )
-        blue(progress_message)
-        exists, active, is_registered = False, False, False
-        ch_result = int_api_ch_search(company.number)
-        if len(ch_result) == 1:
-            exists = True
-            if ch_result[0]["company_status"] == "active":
-                active = True
-                is_registered = already_registered(company.number)
-                if is_registered:
-                    registered_counter += 1
-                    red("Company is already registered with FAB")
-                    blue("Will remove company data from DIR & SSO DBs")
-                    email_address = get_company_email(company.number)
-                    delete_supplier_data_from_sso(email_address)
-                    blue("Successfully deleted supplier data from SSO DB")
-                    delete_supplier_data_from_dir(company.number)
-                    blue("Successfully deleted company from DIR DB")
-                    is_registered = False
-            else:
-                inactive_counter += 1
-                red(
-                    "Company %s - %s is not active any more"
-                    % (company.number, company.title)
-                )
-        else:
-            doesnt_exit_counter += 1
-            red(
-                "Company %s - %s does not exist any more or it didn't pass "
-                "JSON schema validation" % (company.number, company.title)
-            )
-        if not exists or (exists and not active):
-            blue("Searching for a new replacement company")
-            new = find_active_company_without_fas_profile("test")
-            updated_companies.append(new)
-            blue("Found company %s - %s" % (new.number, new.title))
+def get_random_company(alias: str) -> Company:
+    """Randomly select one of predefined companies and set it alias.
 
-        if exists and active and not is_registered:
-            green(
-                "Company %s - %s is still active, it's not registered with "
-                "FAB" % (company.number, company.title)
-            )
-            updated_company = Company(
-                alias="test",
-                title=ch_result[0]["title"].strip(),
-                number=ch_result[0]["company_number"],
-                companies_house_details=ch_result[0],
-                case_studies={},
-            )
-            updated_companies.append(updated_company)
-
-    blue("Number of already registered companies %d" % registered_counter)
-    blue("Number of replaced inactive companies %d" % inactive_counter)
-    blue("Number of non-existent companies %d" % doesnt_exit_counter)
-    green("Saving updated list of companies")
-    save_companies(updated_companies)
+    :param alias: alias of the company used withing the scope of the scenario
+    :return: a Company named tuple with all basic company details
+    """
+    company = random.choice(load_companies())._replace(alias=alias)
+    logging.debug("Selected company: %s", company)
+    return company
 
 
 def escape_html(text: str, *, upper: bool = False) -> str:
@@ -925,17 +697,6 @@ def escape_html(text: str, *, upper: bool = False) -> str:
     if upper:
         text = text.upper()
     return "".join(html_escape_table.get(c, c) for c in text)
-
-
-def get_active_company_without_fas_profile(alias: str) -> Company:
-    """Randomly select one of predefined companies and set it alias.
-
-    :param alias: alias of the company used withing the scope of the scenario
-    :return: a Company named tuple with all basic company details
-    """
-    company = random.choice(load_companies())._replace(alias=alias)
-    logging.debug("Selected company: %s", company)
-    return company
 
 
 def extract_main_error(content: str) -> str:
@@ -1089,15 +850,6 @@ def get_company_by_id(number: str) -> dict:
     """Get email address associated with company."""
     response = DIRECTORY_TEST_API_CLIENT.get_company_by_ch_id(number)
     return response.json() if response.status_code == 200 else None
-
-
-def get_company_email(number: str) -> str:
-    """Get email address associated with company."""
-    response = DIRECTORY_TEST_API_CLIENT.get_company_by_ch_id(number)
-    check_response(response, 200)
-    email = response.json()["company_email"]
-    logging.debug("Email for company %s is %s", number, email)
-    return email
 
 
 def get_published_companies(context: Context) -> list:
