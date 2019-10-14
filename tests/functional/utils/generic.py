@@ -72,27 +72,6 @@ ERROR_INDICATORS = [
 ]
 
 
-def get_file_log_handler(
-    log_formatter,
-    log_file=os.path.join(".", "tests", "functional", "reports", "behave.log"),
-    log_level=logging.DEBUG,
-):
-    """Configure the console logger.
-
-    Will use DEBUG logging level by default.
-
-    :param log_formatter: specifies how the log entries will look like
-    :param log_file: specifies log file path relative to the project's root
-    :param log_level: specifies logging level, e.g.: logging.ERROR
-    :return: configured console log handler
-    """
-    print("Behave log file: {}".format(log_file))
-    file_handler = logging.FileHandler(log_file)
-    file_handler.setLevel(log_level)
-    file_handler.setFormatter(log_formatter)
-    return file_handler
-
-
 def decode_as_utf8(content):
     """Try to decode provided content as UTF-8
 
