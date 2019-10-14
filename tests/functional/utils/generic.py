@@ -21,7 +21,6 @@ import lxml
 import requests
 from behave.runner import Context
 from bs4 import BeautifulSoup
-from directory_constants import choices
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
 from langdetect import DetectorFactory, detect_langs
@@ -33,6 +32,7 @@ from requests import Response
 from scrapy.selector import Selector
 from termcolor import cprint
 
+from directory_constants import choices
 from directory_tests_shared import URLs
 from directory_tests_shared.clients import (
     DIRECTORY_TEST_API_CLIENT,
@@ -1198,12 +1198,6 @@ def delete_supplier_data_from_sso(email_address: str, *, context: Context = None
         context.response = response
     if response.status_code == 204:
         logging.debug("Successfully deleted %s user data from SSO DB", email_address)
-        logging.debug(
-            "RESPONSE TIME | %s | %s %s",
-            str(response.elapsed),
-            response.request.method,
-            response.url,
-        )
     else:
         logging.error(
             "Something went wrong when trying to delete user data for %s from "
@@ -1220,12 +1214,6 @@ def delete_supplier_data_from_dir(ch_id_or_name: str, *, context: Context = None
         logging.debug(
             "Successfully deleted supplier data for company %s from DIR DB",
             ch_id_or_name,
-        )
-        logging.debug(
-            "RESPONSE TIME | %s | %s %s",
-            str(response.elapsed),
-            response.request.method,
-            response.url,
         )
     else:
         msg = (
