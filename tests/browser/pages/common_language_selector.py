@@ -18,18 +18,6 @@ from pages.common_actions import (
 NAME = "Language selector"
 
 LANGUAGE_SELECTOR = Selector(By.ID, "great-header-language-select")
-LANGUAGE_SELECTOR_CLOSE = Selector(By.ID, "header-language-selector-close")
-DOMESTIC_PAGE = Selector(
-    By.CSS_SELECTOR, "section.language-selector-dialog div.domestic-redirect > p > a"
-)
-ENGLISH = Selector(By.ID, "header-language-selector-en-gb")
-CHINESE = Selector(By.ID, "header-language-selector-zh-hans")
-GERMAN = Selector(By.ID, "header-language-selector-de")
-JAPANESE = Selector(By.ID, "header-language-selector-ja")
-SPANISH = Selector(By.ID, "header-language-selector-es")
-PORTUGUESE = Selector(By.ID, "header-language-selector-pt")
-ARABIC = Selector(By.ID, "header-language-selector-ar")
-FRENCH = Selector(By.ID, "header-language-selector-fr")
 ELEMENTS_ON = {
     "domestic - home": {
         "English": "en-gb",
@@ -70,31 +58,6 @@ ELEMENTS_ON = {
         "Português": "pt",
         "Français": "fr",
     },
-}
-KEYBOARD_NAVIGABLE_ELEMENTS = {
-    "domestic - home": [
-        ("English", ENGLISH),
-        ("简体中文", CHINESE),
-        ("Deutsch", GERMAN),
-        ("日本語", JAPANESE),
-        ("Español", SPANISH),
-        ("Português", PORTUGUESE),
-        ("العربيّة", ARABIC),
-        ("Français", FRENCH),
-        ("close", LANGUAGE_SELECTOR_CLOSE),
-    ],
-    "international - landing": [
-        ("English", ENGLISH),
-        ("简体中文", CHINESE),
-        ("Deutsch", GERMAN),
-        ("日本語", JAPANESE),
-        ("Español", SPANISH),
-        ("Português", PORTUGUESE),
-        ("العربيّة", ARABIC),
-        ("Français", FRENCH),
-        ("domestic page", DOMESTIC_PAGE),
-        ("close", LANGUAGE_SELECTOR_CLOSE),
-    ],
 }
 LANGUAGE_INDICATOR_VALUES = {
     "English": "en-gb",
