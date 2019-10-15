@@ -31,7 +31,6 @@ from directory_tests_shared.enums import Account, BusinessType, Language
 from directory_tests_shared.utils import rare_word, sentence
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
-    domestic,
     fab,
     fas,
     get_page_object,
@@ -2424,7 +2423,7 @@ def profile_enrol_individual(context: Context, actor: Actor, account: Account):
 
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
     context.response = profile.individual_enter_your_personal_details.submit(actor)
-    domestic.landing.should_be_here(context.response)
+    profile.individual_enrolment_finished.should_be_here(context.response)
 
 
 def profile_enrol_overseas_company(context: Context, actor: Actor, account: Account):
