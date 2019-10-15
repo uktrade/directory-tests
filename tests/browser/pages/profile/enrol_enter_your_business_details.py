@@ -49,7 +49,13 @@ SELECTORS = {
             autocomplete_callback=enrol_autocomplete_company_name,
         ),
         "i cannot find my business name": Selector(
-            By.CSS_SELECTOR, "details summary", type=ElementType.LINK
+            By.CSS_SELECTOR,
+            "details summary",
+            type=ElementType.LINK,
+            wait_after_click=False,
+        ),
+        "contact us": Selector(
+            By.CSS_SELECTOR, "details a", type=ElementType.LINK, is_visible=False
         ),
         "submit": Selector(
             By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
@@ -129,3 +135,8 @@ def get_form_details(driver: WebDriver) -> dict:
         result[key] = value
 
     return dict(result)
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)
