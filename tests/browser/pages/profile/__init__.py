@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 __all__ = [
     "about",
+    "autocomplete_callbacks",
+    "edit_company_profile",
     "enrol_account_created",
     "enrol_create_account",
     "enrol_enter_your_business_details",
@@ -8,5 +10,17 @@ __all__ = [
     "enrol_enter_your_business_email_and_set_password",
     "enrol_enter_your_confirmation_code",
     "enrol_enter_your_details",
+    "enrol_individual_enter_your_confirmation_code",
+    "enrol_individual_start",
+    "enrol_reenter_your_verification_code",
+    "enrol_resend_verification_code",
     "enrol_select_business_type",
+    "enrol_sole_trader_enter_your_business_details",
+    "enrol_sole_trader_enter_your_confirmation_code",
+    "enrol_sole_trader_enter_your_details",
+    "enrol_sole_trader_enter_your_email_and_set_password",
+    "enrol_uk_taxpayer_enter_your_email_and_set_password",
+    "enrol_uk_taxpayer_enter_your_details",
+    "enrol_uk_taxpayer_enter_your_confirmation_code",
+    "enrol_you_cannot_create_account",
 ]
