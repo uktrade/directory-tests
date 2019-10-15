@@ -58,15 +58,13 @@ Feature: Profile - Non-CH enrolment flows
     Then "Mirko" should be on the "International - landing" page
 
 
-  @wip
   @dev-only
   @TT-1120
   @ltd-plc-royal
   @sole-trader-other-business
   @tax-payer
   Scenario Outline: "<selected business type>" representative should receive an email with confirmation code
-    Given "Natalia" opted to register for a great.gov.uk account as "<selected business type>"
-    And "Natalia" is on the "Profile - Enter your email and set a password (<selected business type>)" page
+    Given "Natalia" visits the "Profile - Enter your email address and set a password (<selected business type>)" page
 
     When "Natalia" fills out and submits the form
 
@@ -77,11 +75,10 @@ Feature: Profile - Non-CH enrolment flows
       | Confirmation code form       |
       | An option to resend the code |
       | Enrolment progress bar       |
-    And "Natalia" should receive a "Your confirmation code" email
+    And "Natalia" should receive email confirmation code
 
     Examples:
       | selected business type                |
-      | LTD, PLC or Royal Charter             |
       | Sole trader or other type of business |
       | UK taxpayer                           |
 
