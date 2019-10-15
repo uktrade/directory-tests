@@ -13,6 +13,7 @@ from steps.then_impl import (
 from steps.when_impl import (
     articles_open_any,
     case_studies_go_to_random,
+    clear_the_cookies,
     click_on_page_element,
     contact_us_get_to_page_via,
     contact_us_navigate_through_options,
@@ -201,6 +202,12 @@ def then_actor_should_see_page_number(
 @given('"{actor_alias}" filled out and submitted the form')
 def given_actor_fills_out_and_submits_the_form(context: Context, actor_alias: str):
     generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=context.table)
+
+
+@given('"{actor_alias}" cleared the cookies')
+@given('"{actor_alias}" quickly signed out')
+def when_actor_clears_the_cookies(context, actor_alias):
+    clear_the_cookies(context, actor_alias)
 
 
 ###############################################################################
