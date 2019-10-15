@@ -150,24 +150,6 @@ Feature: Profile - Non-CH enrolment flows
       | Sole trader or other type of business |
 
 
-  @dev-only
-  @TT-1125
-  @TT-1017
-  Scenario Outline: When CH record doesn't include business' address the business representative should be referred to a contact page
-    Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
-    And "Natalia" filled out and submitted the form
-    And "Natalia" got to the "Profile - Enter your business details (<selected business type>)" page
-
-    When "Natalia" decides to use "I cannot find my business name" link
-    And "Natalia" decides to "contact us"
-
-    Then "Natalia" should be on the "Domestic - Short contact form (Tell us how we can help)" page
-
-    Examples:
-      | selected business type                |
-      | LTD, PLC or Royal Charter             |
-
-
   @wip
   @dev-only
   @TT-1128

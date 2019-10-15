@@ -190,17 +190,22 @@ Feature: Profile - CH enrolment flows
     Then "Natalia" should be on the "Profile - Enter your business details (LTD, PLC or Royal Charter)" page
 
 
-  @wip
   @dev-only
   @TT-1125
   @TT-1017
-  Scenario: When CH record doesn't include business' address the business representative should be referred to a contact page
-    Given "Natalia" has received the email confirmation code by opting to register as "LTD, PLC or Royal Charter"
-    And "Natalia" is on the "Profile - Enter your confirmation code (LTD, PLC or Royal Charter)" page
+  Scenario Outline: When CH record doesn't include business' address the business representative should be referred to a contact page
+    Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
+    And "Natalia" filled out and submitted the form
+    And "Natalia" got to the "Profile - Enter your business details (<selected business type>)" page
 
     When "Natalia" decides to use "I cannot find my business name" link
+    And "Natalia" decides to "contact us"
 
-    Then "Natalia" should be on the "Domestic - I cannot find my business name - Dedicated Support Content" page
+    Then "Natalia" should be on the "Domestic - Short contact form (Tell us how we can help)" page
+
+    Examples:
+      | selected business type                |
+      | LTD, PLC or Royal Charter             |
 
 
   # this scenario uses deprecated form of registration via SSO signup page
