@@ -706,7 +706,9 @@ def get_barred_actor(context: Context, actor_alias: str):
 def sso_actor_received_email_confirmation_code(
     context: Context, actor_alias: str, business_type: str
 ):
-    page_name = f"Profile - Enter your business email address and set a password ({business_type})"  # noqa
+    page_name = (
+        f"Profile - Enter your email address and set a password ({business_type})"
+    )  # noqa
     visit_page(context, actor_alias, page_name)
     generic_fill_out_and_submit_form(context, actor_alias)
     end_page_name = "Profile - Enter your confirmation code"
@@ -717,34 +719,62 @@ def sso_actor_received_email_confirmation_code(
 def generic_create_great_account(
     context: Context, actor_alias: str, business_type: str
 ):
-    page_name = f"Profile - Enter your business email address and set a password ({business_type})"  # noqa
+    page_name = (
+        f"Profile - Enter your email address and set a password ({business_type})"
+    )  # noqa
 
     visit_page(context, actor_alias, page_name)
     generic_fill_out_and_submit_form(context, actor_alias)
-    should_be_on_page(context, actor_alias, "Profile - Enter your confirmation code")
-
-    generic_get_verification_code(context, actor_alias)
-    generic_fill_out_and_submit_form(context, actor_alias)
-    should_be_on_page(
-        context, actor_alias, f"Profile - Enter your business details ({business_type})"
-    )
-
-    generic_fill_out_and_submit_form(
-        context, actor_alias, retry_on_errors=True, go_back=True
-    )
     should_be_on_page(
         context,
         actor_alias,
-        f"Profile - Enter your business details [step 2] ({business_type})",
+        f"Profile - Enter your confirmation code ({business_type})",
     )
 
+    generic_get_verification_code(context, actor_alias)
     generic_fill_out_and_submit_form(context, actor_alias)
+
+    if business_type == "LTD, PLC or Royal Charter":
+        should_be_on_page(
+            context,
+            actor_alias,
+            f"Profile - Enter your business details ({business_type})",
+        )
+        generic_fill_out_and_submit_form(
+            context, actor_alias, retry_on_errors=True, go_back=True
+        )
+        should_be_on_page(
+            context,
+            actor_alias,
+            f"Profile - Enter your business details [step 2] ({business_type})",
+        )
+        generic_fill_out_and_submit_form(context, actor_alias)
+        should_be_on_page(
+            context, actor_alias, f"Profile - Enter your details ({business_type})"
+        )
+        generic_fill_out_and_submit_form(context, actor_alias)
+    elif business_type == "Sole trader or other type of business":
+        should_be_on_page(
+            context,
+            actor_alias,
+            f"Profile - Enter your business details ({business_type})",
+        )
+        generic_fill_out_and_submit_form(
+            context, actor_alias, retry_on_errors=False, go_back=False
+        )
+        should_be_on_page(
+            context, actor_alias, f"Profile - Enter your details ({business_type})"
+        )
+        generic_fill_out_and_submit_form(context, actor_alias)
+    elif business_type == "UK taxpayer":
+        should_be_on_page(
+            context, actor_alias, f"Profile - Enter your details ({business_type})"
+        )
+        generic_fill_out_and_submit_form(context, actor_alias)
+
     should_be_on_page(
-        context, actor_alias, f"Profile - Enter your details ({business_type})"
+        context, actor_alias, f"Profile - Account created ({business_type})"
     )
-
-    generic_fill_out_and_submit_form(context, actor_alias)
-    should_be_on_page(context, actor_alias, "Profile - Account created")
 
 
 def profile_start_registration_as(
