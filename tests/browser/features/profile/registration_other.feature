@@ -127,23 +127,21 @@ Feature: Profile - Non-CH enrolment flows
 
 
 
-  @wip
   @dev-only
   @TT-1123
   @ltd-plc-royal
   @sole-trader-other-business
   Scenario Outline: A representative of a "<selected business type>" company should be asked to enter their details after providing business details
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
-    And "Natalia" is on the "Profile - Enter your business details (<selected business type>)" page
+    And "Natalia" is on the "Profile - Enter your confirmation code (<selected business type>)" page
 
     When "Natalia" fills out and submits the form
 
-    Then "Natalia" should be on the "Profile - Enter your details (<selected business type>)" page
+    Then "Natalia" should be on the "Profile - Enter your business details (<selected business type>)" page
     And "Natalia" should see following sections
       | sections                    |
       | Your business type          |
-      | Your business details       |
-      | Enter your details form     |
+      | Enter your business details |
       | Enrolment progress bar      |
 
     Examples:
