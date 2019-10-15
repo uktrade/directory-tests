@@ -11,7 +11,6 @@ from steps.then_impl import (
     domestic_search_finder_should_see_page_number,
     fas_search_results_filtered_by_industries,
     form_check_state_of_element,
-    generic_should_see_message,
     forms_confirmation_email_should_not_be_sent,
     generic_a_notification_should_be_sent,
     generic_a_notification_should_be_sent_to_specific_dit_office,
@@ -23,6 +22,7 @@ from steps.then_impl import (
     generic_should_be_on_one_of_the_pages,
     generic_should_see_expected_page_content,
     generic_should_see_form_choices,
+    generic_should_see_message,
     header_check_favicon,
     header_check_logo,
     hpo_agent_should_receive_enquiry_email,
@@ -39,7 +39,6 @@ from steps.then_impl import (
     share_page_via_email_should_have_article_details,
     should_be_on_page,
     should_be_on_page_or_be_redirected_to_page,
-    should_be_on_page_or_international_page,
     should_not_see_sections,
     should_see_links_in_specific_location,
     should_see_page_in_preferred_language,
@@ -51,15 +50,18 @@ from steps.then_impl import (
 )
 from steps.when_impl import generic_get_verification_code
 
+
+@then('"{actor_alias}" should be on the "{page_name}" page or be redirected to "{redirect_page}" page')
+def then_actor_should_be_on_page_on_international_page(
+        context, actor_alias, page_name, redirect_page):
+    should_be_on_page_or_be_redirected_to_page(
+        context, actor_alias, page_name, redirect_page
+    )
+
+
 @then('"{actor_alias}" should be on the "{page_name}" page')
 def then_actor_should_be_on_page(context, actor_alias, page_name):
     should_be_on_page(context, actor_alias, page_name)
-
-
-@then('"{actor_alias}" should be on the "{page_name}" page or on the International page')
-def then_actor_should_be_on_page_on_international_page(
-        context, actor_alias, page_name):
-    should_be_on_page_or_international_page(context, actor_alias, page_name)
 
 
 @then('"{actor_alias}" should not see following sections')
@@ -305,16 +307,3 @@ def then_notification_should_be_sent_to_specific_dit_office(
     generic_a_notification_should_not_be_sent_to_specific_dit_office(
         context, actor_alias, mailbox_name
     )
-
-
-########################################################################################
-# Currently unused yet handy steps
-########################################################################################
-
-@then('"{actor_alias}" should be on the "{page_name}" page or be redirected to "{redirect_page}" page')
-def then_actor_should_be_on_page_on_international_page(
-        context, actor_alias, page_name, redirect_page):
-    should_be_on_page_or_be_redirected_to_page(
-        context, actor_alias, page_name, redirect_page
-    )
-

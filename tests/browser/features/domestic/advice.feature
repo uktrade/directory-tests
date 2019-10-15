@@ -87,7 +87,7 @@ Feature: Domestic - Advice articles
 
     When "Robert" decides to open "<breadcrumb>"
 
-    Then "Robert" should be on the "Domestic - <target>" page or on the International page
+    Then "Robert" should be on the "Domestic - <target>" page or be redirected to "International - Landing" page
 
     Examples:
       | breadcrumb   | target                |

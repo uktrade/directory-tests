@@ -13,12 +13,19 @@ from retrying import retry
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 
+from directory_tests_shared.constants import (
+    FORMS_API_MAILBOXES,
+    HPO_AGENT_EMAIL_ADDRESS,
+    HPO_AGENT_EMAIL_SUBJECT,
+    HPO_ENQUIRY_CONFIRMATION_SUBJECT,
+    HPO_PDF_URLS,
+)
+from directory_tests_shared.utils import check_for_errors
 from pages import (
     common_language_selector,
     domestic,
     fas,
     get_page_object,
-    international,
     invest,
     profile,
 )
@@ -29,23 +36,14 @@ from pages.common_actions import (
     get_last_visited_page,
     update_actor,
 )
-from utils.browser import clear_driver_cookies
 from pages.domestic import contact_us_office_finder_search_results
-from directory_tests_shared.constants import (
-    FORMS_API_MAILBOXES,
-    HPO_AGENT_EMAIL_ADDRESS,
-    HPO_AGENT_EMAIL_SUBJECT,
-    HPO_ENQUIRY_CONFIRMATION_SUBJECT,
-    HPO_PDF_URLS,
-)
-from directory_tests_shared.utils import check_for_errors
 from steps import has_action
 from steps.when_impl import generic_set_basic_auth_creds
-
+from utils.browser import clear_driver_cookies
 from utils.forms_api import (
     find_form_submissions,
     find_form_submissions_by_subject_and_action,
-    find_form_submissions_for_dit_office
+    find_form_submissions_for_dit_office,
 )
 from utils.gov_notify import (
     get_email_confirmation_notification,
@@ -80,22 +78,8 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     )
 
 
-def should_be_on_page_or_international_page(
-    context: Context, actor_alias: str, page_name: str
-):
-    try:
-        should_be_on_page(context, actor_alias, page_name)
-    except AssertionError:
-        logging.warning(
-            f"'{actor_alias}' is not on expected '{page_name}' page. Will check if it "
-            f"was redirected to the international site"
-        )
-        international.landing.should_be_here(context.driver)
-        logging.debug("%s was redirected to the International page", actor_alias)
-
-
 def should_be_on_page_or_be_redirected_to_page(
-        context: Context, actor_alias: str, page_name: str, redirect_page: str
+    context: Context, actor_alias: str, page_name: str, redirect_page: str
 ):
     try:
         should_be_on_page(context, actor_alias, page_name)
@@ -406,7 +390,7 @@ def generic_contact_us_should_receive_confirmation_email(
 
 
 def generic_contact_us_should_receive_confirmation_email_containing_message(
-        context: Context, actor_alias: str, subject: str, message: str
+    context: Context, actor_alias: str, subject: str, message: str
 ):
     actor = get_actor(context, actor_alias)
     confirmation = get_email_confirmations_with_matching_string(
@@ -421,15 +405,13 @@ def generic_contact_us_should_receive_confirmation_email_containing_message(
 
 @retry(wait_fixed=5000, stop_max_attempt_number=15)
 def generic_a_notification_should_be_sent(
-        context: Context, actor_alias: str, action: str, subject: str
+    context: Context, actor_alias: str, action: str, subject: str
 ):
     actor = get_actor(context, actor_alias)
     submissions = find_form_submissions_by_subject_and_action(
         email=actor.email, subject=subject, action=action
     )
-    logging.debug(
-        f"Email submissions from '{actor.email}': {submissions}"
-    )
+    logging.debug(f"Email submissions from '{actor.email}': {submissions}")
     error = (
         f"Expected to find 1 '{action}' notification entitled '{subject}' sent to "
         f"'{actor.email}', but found {len(submissions)}"
@@ -444,13 +426,12 @@ def generic_a_notification_should_be_sent(
 
 
 def generic_a_notification_should_be_sent_to_specific_dit_office(
-        context: Context, actor_alias: str, mailbox_name: str
+    context: Context, actor_alias: str, mailbox_name: str
 ):
     actor = get_actor(context, actor_alias)
     mailbox_email = FORMS_API_MAILBOXES[mailbox_name]
     submissions = find_form_submissions_for_dit_office(
-        mailbox=mailbox_email,
-        sender=actor.email,
+        mailbox=mailbox_email, sender=actor.email
     )
     logging.debug(
         f"Email submissions from '{actor.email}' to '{mailbox_email}': {submissions}"
@@ -468,11 +449,12 @@ def generic_a_notification_should_be_sent_to_specific_dit_office(
     assert submissions[0]["is_sent"], error
     logging.debug(
         f"A notification about enquiry from {actor.email} was successfully sent to "
-        f"{mailbox_name} mailbox: {mailbox_email}")
+        f"{mailbox_name} mailbox: {mailbox_email}"
+    )
 
 
 def generic_a_notification_should_not_be_sent_to_specific_dit_office(
-        context: Context, actor_alias: str, mailbox_name: str
+    context: Context, actor_alias: str, mailbox_name: str
 ):
     actor = get_actor(context, actor_alias)
     forms_data = actor.forms_data
@@ -493,9 +475,7 @@ def generic_a_notification_should_not_be_sent_to_specific_dit_office(
     assert uuid, f"Could not find last name UUID in user's form data: {forms_data}"
     mailbox_email = FORMS_API_MAILBOXES[mailbox_name]
     submissions = find_form_submissions_for_dit_office(
-        mailbox=mailbox_email,
-        sender=actor.email,
-        uuid=uuid,
+        mailbox=mailbox_email, sender=actor.email, uuid=uuid
     )
     logging.debug(
         f"Email submissions from '{actor.email}' to '{mailbox_email}': {submissions}"
@@ -514,7 +494,8 @@ def generic_a_notification_should_not_be_sent_to_specific_dit_office(
     assert not submissions[0]["is_sent"], error
     logging.debug(
         f"Unfortunately a notification about enquiry from {actor.email} was sent to "
-        f"{mailbox_name} mailbox: {mailbox_email}")
+        f"{mailbox_name} mailbox: {mailbox_email}"
+    )
 
 
 def generic_should_see_form_choices(
@@ -650,32 +631,26 @@ def generic_check_gtm_events(context: Context):
     registered_gtm_events = get_gtm_data_layer_events(context.driver)
 
     missing_events = [
-        event
-        for event in expected_gtm_events
-        if event not in registered_gtm_events
+        event for event in expected_gtm_events if event not in registered_gtm_events
     ]
     with assertion_msg(
-            f"Could not find following GTM events:\n{missing_events}\n"
-            f"among following GTM events:\n{registered_gtm_events}\n"
-            f"registered on: {context.driver.current_url}\n"
-            f"Diff:\n{diff(expected_gtm_events, registered_gtm_events)}"
+        f"Could not find following GTM events:\n{missing_events}\n"
+        f"among following GTM events:\n{registered_gtm_events}\n"
+        f"registered on: {context.driver.current_url}\n"
+        f"Diff:\n{diff(expected_gtm_events, registered_gtm_events)}"
     ):
         assert not missing_events
 
     with assertion_msg(
-            f"Expected to find {len(expected_gtm_events)} registered GTM event(s) but "
-            f"found {len(registered_gtm_events)} instead: "
-            f"{registered_gtm_events}"
+        f"Expected to find {len(expected_gtm_events)} registered GTM event(s) but "
+        f"found {len(registered_gtm_events)} instead: "
+        f"{registered_gtm_events}"
     ):
         assert len(expected_gtm_events) == len(registered_gtm_events)
 
 
 def menu_items_should_be_visible(context: Context):
-    ids = [
-        'great-header-nav-mobile',
-        'great-header-mobile-nav',
-        'great-header-nav',
-    ]
+    ids = ["great-header-nav-mobile", "great-header-mobile-nav", "great-header-nav"]
     for value in ids:
         try:
             element = context.driver.find_element(by=By.ID, value=value)

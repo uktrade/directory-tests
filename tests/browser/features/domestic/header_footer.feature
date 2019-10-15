@@ -79,7 +79,7 @@ Feature: Domestic - Header-Footer
 
     When "Robert" decides to click on "Invest in Great logo"
 
-    Then "Robert" should be on the "Domestic - Home" page or on the International page
+    Then "Robert" should be on the "Domestic - Home" page or be redirected to "International - Landing" page
 
     Examples:
       | selected                       |

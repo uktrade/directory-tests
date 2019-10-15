@@ -44,7 +44,7 @@ Feature: Domestic - UK Export Finance page & contact-us form
 
     When "Robert" decides to click on "<breadcrumb>"
 
-    Then "Robert" should be on the "Domestic - <expected>" page or on the International page
+    Then "Robert" should be on the "Domestic - <expected>" page or be redirected to "International - Landing" page
 
     Examples: Breadcrumbs
       | breadcrumb   | expected    |
