@@ -212,6 +212,8 @@ def then_should_not_see_dead_links_in_pdf(context: Context):
 
 
 @then('"{actor_alias}" should see error message saying that mandatory fields are required')
+@then('"{actor_alias}" should see that she can "{message}"')
+@then('"{actor_alias}" should see that he can "{message}"')
 @then('"{actor_alias}" should see "{message}" on the page')
 def then_should_see_message(context: Context, actor_alias: str, *, message: str = None):
     generic_should_see_message(context, actor_alias, message=message)
