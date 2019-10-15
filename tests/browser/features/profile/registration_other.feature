@@ -147,21 +147,34 @@ Feature: Profile - Non-CH enrolment flows
       | Sole trader or other type of business |
 
 
-  @wip
+  @captcha
   @dev-only
+  @sole-trader-other-business
   @TT-1128
   @TT-1036
-  Scenario Outline: Handle invalid user state - has company already - redirect to their profile
-    Given "Natalia" created a verified Profile/great.gov.uk account associated with randomly selected company "X"
+  Scenario: Handle invalid user state - has company already - redirect to their profile
+    Given "Natalia" has created a great.gov.uk account for a "Sole trader or other type of business"
 
-    When "Natalia" goes to the "<specific>" page
+    When "Natalia" goes to the "SSO - Sign in" page
+    Then "Natalia" should be on the "Profile - About" page
 
-    Then "Natalia" should be on the "Find a Buyer - Edit Company Profile" page
+    When "Natalia" goes to the "Profile - Create an account" page
+    Then "Natalia" should be on the "Profile - Edit Company Profile" page
 
-    Examples:
-      | specific                    |
-      | Profile - Sign in           |
-      | Profile - Create an account |
+
+  @captcha
+  @dev-only
+  @uk-taxpayer
+  @TT-1128
+  @TT-1036
+  Scenario: Handle invalid user state - has company already - redirect to their profile
+    Given "Natalia" has created a great.gov.uk account for a "UK taxpayer"
+
+    When "Natalia" goes to the "SSO - Sign in" page
+    Then "Natalia" should be on the "Profile - About" page
+
+    When "Natalia" goes to the "Profile - Create an account" page
+    Then "Natalia" should be on the "Profile - Create an account" page
 
 
   @wip
