@@ -177,25 +177,6 @@ Feature: Profile - Non-CH enrolment flows
     Then "Natalia" should be on the "Profile - Create an account" page
 
 
-  @wip
-  @dev-only
-  @TT-1130
-  @TT-1037
-  Scenario Outline: Log user in on verification submit, not on account creation
-    Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
-    And "Natalia" is on the "Profile - Enter your confirmation code (<selected business type>)" page
-
-    When "Natalia" fills out and submits the form
-
-    Then "Natalia" should be on the "Profile - Enter your business details (<selected business type>)" page
-    And "Natalia" should be logged in
-
-    Examples:
-      | selected business type                |
-      | LTD, PLC or Royal Charter             |
-      | Sole trader or other type of business |
-
-
   @TT-1560
   @uk-taxpayer
   Scenario: New registration for an individual who starts journey in Business profiles
