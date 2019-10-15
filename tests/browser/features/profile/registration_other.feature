@@ -15,7 +15,7 @@ Feature: Profile - Non-CH enrolment flows
 
     When "Natalia" chooses "Sole trader or other type of business" option
 
-    Then "Natalia" should be on the "Profile - Enter your email address and set a password (Sole trader)" page
+    Then "Natalia" should be on the "Profile - Enter your email address and set a password (Sole trader or other type of business)" page
     And "Natalia" should see following sections
       | sections               |
       | Registration form      |
@@ -66,11 +66,11 @@ Feature: Profile - Non-CH enrolment flows
   @tax-payer
   Scenario Outline: "<selected business type>" representative should receive an email with confirmation code
     Given "Natalia" opted to register for a great.gov.uk account as "<selected business type>"
-    And "Natalia" is on the "Profile - Enter your email and set a password" page
+    And "Natalia" is on the "Profile - Enter your email and set a password (<selected business type>)" page
 
     When "Natalia" fills out and submits the form
 
-    Then "Natalia" should be on the "Profile - Enter your confirmation code" page
+    Then "Natalia" should be on the "Profile - Enter your confirmation code (<selected business type>)" page
     And "Natalia" should see following sections
       | sections                     |
       | Confirmation code message    |
@@ -93,11 +93,11 @@ Feature: Profile - Non-CH enrolment flows
   @sole-trader-other-business
   Scenario Outline: A representative of a "<selected business type>" company should be asked to enter their business details after providing email confirmation code
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
-    And "Natalia" is on the "Profile - Enter your confirmation code" page
+    And "Natalia" is on the "Profile - Enter your confirmation code (<selected business type>)" page
 
     When "Natalia" fills out and submits the form
 
-    Then "Natalia" should be on the "Profile - Enter your business details (for <selected business type>)" page
+    Then "Natalia" should be on the "Profile - Enter your business details (<selected business type>)" page
     And "Natalia" should see following sections
       | sections                    |
       | Your business type          |
@@ -116,11 +116,11 @@ Feature: Profile - Non-CH enrolment flows
   @uk-taxpayer
   Scenario: A UK taxpayers wanting to register should be asked to enter their details after providing email confirmation code
     Given "Natalia" has received the email confirmation code by opting to register as "UK taxpayer"
-    And "Natalia" is on the "Profile - Enter your confirmation code" page
+    And "Natalia" is on the "Profile - Enter your confirmation code (UK taxpayer)" page
 
     When "Natalia" fills out and submits the form
 
-    Then "Natalia" should be on the "Profile - Enter your details (for UK taxpayer)" page
+    Then "Natalia" should be on the "Profile - Enter your details (UK taxpayer)" page
     And "Natalia" should see following sections
       | sections               |
       | Your business type     |
@@ -136,11 +136,11 @@ Feature: Profile - Non-CH enrolment flows
   @sole-trader-other-business
   Scenario Outline: A representative of a "<selected business type>" company should be asked to enter their details after providing business details
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
-    And "Natalia" is on the "Profile - Enter your business details (for <selected business type>)" page
+    And "Natalia" is on the "Profile - Enter your business details (<selected business type>)" page
 
     When "Natalia" fills out and submits the form
 
-    Then "Natalia" should be on the "Profile - Enter your details (for <selected business type>)" page
+    Then "Natalia" should be on the "Profile - Enter your details (<selected business type>)" page
     And "Natalia" should see following sections
       | sections                    |
       | Your business type          |
@@ -161,7 +161,7 @@ Feature: Profile - Non-CH enrolment flows
   @sole-trader-other-business
   @uk-taxpayer
   Scenario Outline: A representative of a "<selected business type>" company should receive a confirmation email when a great.gov.uk account is created
-    Given "Natalia" got to the "Profile - Enter your details (for <selected business type>)" by opting to register as "<selected business type>"
+    Given "Natalia" got to the "Profile - Enter your details (<selected business type>)" by opting to register as "<selected business type>"
 
     When "Natalia" fills out and submits the form
 
@@ -185,7 +185,7 @@ Feature: Profile - Non-CH enrolment flows
   @TT-1017
   Scenario: When CH record doesn't include business' address the business representative should be referred to a contact page
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
-    And "Natalia" is on the "Profile - Enter your confirmation code" page
+    And "Natalia" is on the "Profile - Enter your confirmation code (<selected business type>)" page
 
     When "Natalia" decides to use "I cannot find my business name" link
 
@@ -210,13 +210,13 @@ Feature: Profile - Non-CH enrolment flows
   @TT-1035
   Scenario Outline: Handle case of if the email already present in Profile-Profile
     Given "Natalia" opted to register for a great.gov.uk account as "<selected business type>"
-    And "Natalia" is on the "Profile - Enter your email and set a password" page
+    And "Natalia" is on the "Profile - Enter your email and set a password (<selected business type>)" page
 
     When "Natalia" fills out and submits the form
       | field              | value                             |
       | Your email address | already-registered-email@test.com |
 
-    Then "Natalia" should be on the "Profile - Enter your confirmation code" page
+    Then "Natalia" should be on the "Profile - Enter your confirmation code (<selected business type>)" page
     And "Natalia" should receive "Someone is trying to create an account with us. You already have an account." email
 
     Examples:
@@ -254,7 +254,7 @@ Feature: Profile - Non-CH enrolment flows
     Then "Natalia" should be on the "Profile - Select your business type" page
 
     When "Natalia" chooses "<selected business type>" option
-    Then "Natalia" should be on the "Profile - Enter your business details (for <selected business type>)" page
+    Then "Natalia" should be on the "Profile - Enter your business details (<selected business type>)" page
 
     Examples:
       | selected business type                |
@@ -268,11 +268,11 @@ Feature: Profile - Non-CH enrolment flows
   @TT-1037
   Scenario Outline: Log user in on verification submit, not on account creation
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
-    And "Natalia" is on the "Profile - Enter your confirmation code" page
+    And "Natalia" is on the "Profile - Enter your confirmation code (<selected business type>)" page
 
     When "Natalia" fills out and submits the form
 
-    Then "Natalia" should be on the "Profile - Enter your business details (for <selected business type>)" page
+    Then "Natalia" should be on the "Profile - Enter your business details (<selected business type>)" page
     And "Natalia" should be logged in
 
     Examples:

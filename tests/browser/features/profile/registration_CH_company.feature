@@ -67,7 +67,7 @@ Feature: Profile - CH enrolment flows
 
     When "Natalia" fills out and submits the form
 
-    Then "Natalia" should be on the "Profile - Enter your confirmation code" page
+    Then "Natalia" should be on the "Profile - Enter your confirmation code (<business type>)" page
     And "Natalia" should see following sections
       | sections                     |
       | Confirmation code message    |
@@ -87,7 +87,7 @@ Feature: Profile - CH enrolment flows
   @sole-trader-other-business
   Scenario Outline: A representative of a "<selected business type>" company should be asked to enter their business details after providing email confirmation code
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
-    And "Natalia" is on the "Profile - Enter your confirmation code" page
+    And "Natalia" is on the "Profile - Enter your confirmation code (<selected business type>)" page
 
     When "Natalia" fills out and submits the form
 
@@ -108,7 +108,7 @@ Feature: Profile - CH enrolment flows
   @sole-trader-other-business
   Scenario Outline: A representative of a "<selected business type>" company should be asked to enter their details after providing business details
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
-    And "Natalia" is on the "Profile - Enter your confirmation code" page
+    And "Natalia" is on the "Profile - Enter your confirmation code (<selected business type>)" page
 
     When "Natalia" fills out and submits the form
     Then "Natalia" should be on the "Profile - Enter your business details (<selected business type>)" page
@@ -135,7 +135,7 @@ Feature: Profile - CH enrolment flows
   @uk-taxpayer
   Scenario Outline: A representative of a "selected business type" company should receive a confirmation email when a great.gov.uk account is created
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
-    And "Natalia" is on the "Profile - Enter your confirmation code" page
+    And "Natalia" is on the "Profile - Enter your confirmation code (<selected business type>)" page
 
     When "Natalia" fills out and submits the form
     Then "Natalia" should be on the "Profile - Enter your business details (<selected business type>)" page
@@ -148,11 +148,11 @@ Feature: Profile - CH enrolment flows
 
     When "Natalia" fills out and submits the form
 
-    Then "Natalia" should be on the "Profile - Account created" page
+    Then "Natalia" should be on the "Profile - Account created (<selected business type>)" page
     And "Natalia" should see following sections
       | sections                   |
       | Confirmation email message |
-#      | Next steps                 |
+      | Next steps                 |
 
     Examples:
       | selected business type     |
@@ -174,7 +174,7 @@ Feature: Profile - CH enrolment flows
   @verification-code
   Scenario: Users should be able to resend email verification code
     Given "Natalia" has received the email confirmation code by opting to register as "LTD, PLC or Royal Charter"
-    And "Natalia" is on the "Profile - Enter your confirmation code" page
+    And "Natalia" is on the "Profile - Enter your confirmation code (LTD, PLC or Royal Charter)" page
 
     When "Natalia" decides to use "Resend my code" link
     Then "Natalia" should be on the "Domestic - I have not received a verification code - Dedicated Support Content" page
@@ -196,7 +196,7 @@ Feature: Profile - CH enrolment flows
   @TT-1017
   Scenario: When CH record doesn't include business' address the business representative should be referred to a contact page
     Given "Natalia" has received the email confirmation code by opting to register as "LTD, PLC or Royal Charter"
-    And "Natalia" is on the "Profile - Enter your confirmation code" page
+    And "Natalia" is on the "Profile - Enter your confirmation code (LTD, PLC or Royal Charter)" page
 
     When "Natalia" decides to use "I cannot find my business name" link
 
@@ -212,14 +212,14 @@ Feature: Profile - CH enrolment flows
 
     When "Natalia" fills out and submits the form
 
-    Then "Natalia" should be on the "<email verification>" page
+    Then "Natalia" should be on the "Profile - Enter your confirmation code (<selected business type>)" page
     And "Natalia" should receive "Sign in to great.gov.uk services" email containing "There is an account already registered to this email address" message
 
     Examples:
-      | selected business type                | email verification                                                   |
-      | LTD, PLC or Royal Charter             | Profile - Enter your confirmation code                               |
-      | Sole trader or other type of business | Profile - Enter your confirmation code (Sole trader or other type of business) |
-      | UK taxpayer                           | Profile - Enter your confirmation code (Individual)                  |
+      | selected business type                |
+      | LTD, PLC or Royal Charter             |
+      | Sole trader or other type of business |
+      | UK taxpayer                           |
 
 
   @captcha
@@ -256,18 +256,17 @@ Feature: Profile - CH enrolment flows
       | Sole trader or other type of business |
 
 
-  @wip
   @dev-only
   @TT-1130
   @TT-1037
   Scenario Outline: Log user in on verification submit, not on account creation for "<selected business type>"
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
-    And "Natalia" is on the "Profile - Enter your confirmation code" page
+    And "Natalia" is on the "Profile - Enter your confirmation code (<selected business type>)" page
 
     When "Natalia" fills out and submits the form
 
     Then "Natalia" should be on the "Profile - Enter your business details (<selected business type>)" page
-    And "Natalia" should be logged in
+    And "Natalia" should see that she can "Sign out"
 
     Examples:
       | selected business type                |
