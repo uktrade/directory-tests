@@ -203,12 +203,34 @@ Feature: Profile - CH enrolment flows
     Then "Natalia" should be on the "Domestic - I cannot find my business name - Dedicated Support Content" page
 
 
+  # this scenario uses deprecated form of registration via SSO signup page
   @dev-only
+  @legacy-sso-registration
   @TT-1127
   @TT-1035
   Scenario Outline: Handle case of if the email already present in Profile-Profile
     Given "Natalia" has a verified standalone SSO/great.gov.uk account
     And "Natalia" decided to create a great.gov.uk account as "<selected business type>"
+
+    When "Natalia" fills out and submits the form
+
+    Then "Natalia" should be on the "Profile - Enter your confirmation code (<selected business type>)" page
+    And "Natalia" should receive "Sign in to great.gov.uk services" email containing "There is an account already registered to this email address" message
+
+    Examples:
+      | selected business type                |
+      | LTD, PLC or Royal Charter             |
+      | Sole trader or other type of business |
+      | UK taxpayer                           |
+
+
+  @dev-only
+  @TT-1127
+  @TT-1035
+  Scenario Outline: Handle case of if the email already present in Profile-Profile
+    Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
+    And "Natalia" quickly signed out
+    And "Natalia" went to the "Profile - Enter your email address and set a password (<selected business type>)" page
 
     When "Natalia" fills out and submits the form
 

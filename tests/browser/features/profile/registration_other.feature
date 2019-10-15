@@ -170,28 +170,6 @@ Feature: Profile - Non-CH enrolment flows
 
   @wip
   @dev-only
-  @TT-1127
-  @TT-1035
-  Scenario Outline: Handle case of if the email already present in Profile-Profile
-    Given "Natalia" opted to register for a great.gov.uk account as "<selected business type>"
-    And "Natalia" is on the "Profile - Enter your email and set a password (<selected business type>)" page
-
-    When "Natalia" fills out and submits the form
-      | field              | value                             |
-      | Your email address | already-registered-email@test.com |
-
-    Then "Natalia" should be on the "Profile - Enter your confirmation code (<selected business type>)" page
-    And "Natalia" should receive "Someone is trying to create an account with us. You already have an account." email
-
-    Examples:
-      | selected business type                |
-      | LTD, PLC or Royal Charter             |
-      | Sole trader or other type of business |
-      | UK taxpayer                           |
-
-
-  @wip
-  @dev-only
   @TT-1128
   @TT-1036
   Scenario Outline: Handle invalid user state - has company already - redirect to their profile
