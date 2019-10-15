@@ -31,15 +31,11 @@ PAGE_TITLE = ""
 
 SELECTORS = {
     "enrolment progress bar": {"itself": Selector(By.ID, "progress-column")},
-    "your business details": {
-        "itself": Selector(By.ID, "business-details-information-box"),
-        "company name": Selector(By.ID, "company-name"),
-        "company address": Selector(By.ID, "company-address"),
-        "change business details": Selector(
-            By.ID, "change-business-details", type=ElementType.LINK
-        ),
+    "your business type": {
+        "information box": Selector(By.ID, "business-type-information-box"),
+        "change business type": Selector(By.ID, "change-business-type"),
     },
-    "enter your details form": {
+    "enter your details": {
         "itself": Selector(By.CSS_SELECTOR, "section form"),
         "heading": Selector(By.CSS_SELECTOR, "h1"),
         "first name": Selector(
@@ -88,7 +84,7 @@ def generate_form_details(actor: Actor) -> dict:
 
 
 def fill_out(driver: WebDriver, details: dict):
-    form_selectors = SELECTORS["enter your details form"]
+    form_selectors = SELECTORS["enter your details"]
     fill_out_input_fields(driver, form_selectors, details)
     take_screenshot(driver, "After filling out the form")
 

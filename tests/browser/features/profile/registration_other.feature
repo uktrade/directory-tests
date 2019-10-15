@@ -109,7 +109,6 @@ Feature: Profile - Non-CH enrolment flows
       | Sole trader or other type of business |
 
 
-  @wip
   @dev-only
   @TT-1122
   @uk-taxpayer
