@@ -22,6 +22,7 @@ from steps.when_impl import (
     fas_searched_for_companies,
     generic_at_least_n_news_articles,
     generic_create_great_account,
+    generic_fill_out_and_submit_form,
     generic_get_in_touch,
     generic_open_industry_page,
     generic_set_basic_auth_creds,
@@ -195,6 +196,11 @@ def given_actor_sees_more_than_one_page(
 def then_actor_should_see_page_number(
         context: Context, actor_alias: str, page_num: int, first_phrase: str):
     domestic_search_finder_should_see_page_number(context, actor_alias, page_num)
+
+
+@given('"{actor_alias}" filled out and submitted the form')
+def given_actor_fills_out_and_submits_the_form(context: Context, actor_alias: str):
+    generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=context.table)
 
 
 ###############################################################################
