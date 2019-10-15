@@ -195,18 +195,6 @@ Feature: Profile - Non-CH enrolment flows
 
   @wip
   @dev-only
-  @TT-1126
-  @TT-1031
-  Scenario: Companies House company enrolment creates a business profile
-    Given "Natalia" has created a great.gov.uk account for a "LTD, PLC or Royal Charter"
-
-    When "Natalia" goes to the "Find a Buyer - Edit Company Profile" page
-
-    Then "Natalia" should be on the "Find a Buyer - Edit Company Profile" page
-
-
-  @wip
-  @dev-only
   @TT-1127
   @TT-1035
   Scenario Outline: Handle case of if the email already present in Profile-Profile
