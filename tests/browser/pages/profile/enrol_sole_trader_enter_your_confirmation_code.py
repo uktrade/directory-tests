@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Profile - Enrol - Enter your confirmation code (non Companies House company)"""
+"""Profile - Enrol - Enter your confirmation code (Sole trader or other type of business)"""
 from typing import List
 
 from selenium.webdriver.common.by import By
@@ -19,7 +19,7 @@ from pages.common_actions import (
     take_screenshot,
 )
 
-NAME = "Enter your confirmation code (non Companies House company)"
+NAME = "Enter your confirmation code (Sole trader or other type of business)"
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
 URL = URLs.PROFILE_ENROL_NON_CH_COMPANY_EMAIL_VERIFICATION.absolute

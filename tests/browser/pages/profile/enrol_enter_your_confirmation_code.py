@@ -19,7 +19,7 @@ from pages.common_actions import (
     take_screenshot,
 )
 
-NAME = "Enter your confirmation code"
+NAME = "Enter your confirmation code (LTD, PLC or Royal Charter)"
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
 URL = URLs.PROFILE_ENROL_EMAIL_VERIFICATION.absolute

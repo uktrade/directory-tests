@@ -24,7 +24,7 @@ from pages.common_actions import (
 )
 from pages.profile import enrol_enter_your_confirmation_code
 
-NAME = "Enter your email address and set a password (Sole trader)"
+NAME = "Enter your email address and set a password (Sole trader or other type of business)"
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
 URL = URLs.PROFILE_ENROL_NON_CH_COMPANY_ENTER_USER_NAME_AND_PASSWORD.absolute

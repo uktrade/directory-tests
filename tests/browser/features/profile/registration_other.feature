@@ -289,7 +289,7 @@ Feature: Profile - Non-CH enrolment flows
     And "Mirko" got to the "SSO - Sign in" page
     And "Mirko" decided to "Create account"
     And "Mirko" got to the "Profile - Create an account" page
-    And "Mirko" decided to "Start"
+    And "Mirko" decided to "start"
     And "Mirko" got to the "Profile - Select your business type" page
 
     When "Mirko" chooses "UK taxpayer" option

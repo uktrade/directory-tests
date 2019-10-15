@@ -24,12 +24,10 @@ from pages.common_actions import (
 )
 from pages.profile import enrol_account_created
 
-NAME = "Enter your details"
-NAMES = ["Enter your details (LTD, PLC or Royal Charter)"]
+NAME = "Enter your details (LTD, PLC or Royal Charter)"
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
 URL = URLs.PROFILE_ENROL_PERSONAL_DETAILS.absolute
-SubURLs = {"enter your details (ltd, plc or royal charter)": URL}
 PAGE_TITLE = ""
 
 SELECTORS = {
@@ -74,10 +72,9 @@ def visit(driver: WebDriver):
     go_to_url(driver, URL, NAME)
 
 
-def should_be_here(driver: WebDriver, *, page_name: str = None):
+def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
-    url = SubURLs[page_name.lower()] if page_name else URL
-    check_url(driver, url, exact_match=False)
+    check_url(driver, URL, exact_match=False)
     msg = f"Got 404 on {driver.current_url}"
     assert "This page cannot be found" not in driver.page_source, msg
 

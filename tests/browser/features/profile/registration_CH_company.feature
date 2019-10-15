@@ -11,7 +11,7 @@ Feature: Profile - CH enrolment flows
   Scenario: Users should be presented with the Enrolment Steps prior to starting the registration process
     Given "Natalia" visits the "Profile - Create an account" page
 
-    When "Natalia" decides to "Start now"
+    When "Natalia" decides to "start"
 
     Then "Natalia" should be on the "Profile - Select your business type" page
     And "Natalia" should see following sections
@@ -33,7 +33,7 @@ Feature: Profile - CH enrolment flows
 
     When "Natalia" chooses "LTD, PLC or Royal Charter" option
 
-    Then "Natalia" should be on the "Profile - Enter your business email address and set a password" page
+    Then "Natalia" should be on the "Profile - Enter your email address and set a password (LTD, PLC or Royal Charter)" page
     And "Natalia" should see following sections
       | sections                  |
       | Breadcrumbs               |
@@ -45,7 +45,7 @@ Feature: Profile - CH enrolment flows
   @ltd-plc-royal
   @tax-payer
   Scenario Outline: "<business type>" representative should be asked to enter their email and set a password after selecting their business type
-    Given "Natalia" visits the "Profile - Enter your business email address and set a password (<business type>)" page
+    Given "Natalia" visits the "Profile - Enter your email address and set a password (<business type>)" page
 
     Then "Natalia" should see following sections
       | sections               |
@@ -63,7 +63,7 @@ Feature: Profile - CH enrolment flows
   @sole-trader-other-business
   @tax-payer
   Scenario Outline: "<business type>" representative should receive an email with confirmation code
-    Given "Natalia" visits the "Profile - Enter your business email address and set a password (<business type>)" page
+    Given "Natalia" visits the "Profile - Enter your email address and set a password (<business type>)" page
 
     When "Natalia" fills out and submits the form
 
@@ -218,7 +218,7 @@ Feature: Profile - CH enrolment flows
     Examples:
       | selected business type                | email verification                                                   |
       | LTD, PLC or Royal Charter             | Profile - Enter your confirmation code                               |
-      | Sole trader or other type of business | Profile - Enter your confirmation code (non Companies House company) |
+      | Sole trader or other type of business | Profile - Enter your confirmation code (Sole trader or other type of business) |
       | UK taxpayer                           | Profile - Enter your confirmation code (Individual)                  |
 
 
@@ -244,7 +244,7 @@ Feature: Profile - CH enrolment flows
     And "Natalia" is signed in
 
     When "Natalia" goes to the "Profile - Create an account" page
-    And "Natalia" decides to "Start now"
+    And "Natalia" decides to "start"
     Then "Natalia" should be on the "Profile - Select your business type" page
 
     When "Natalia" chooses "<selected business type>" option
@@ -283,7 +283,7 @@ Feature: Profile - CH enrolment flows
   Scenario Outline: Newly registered users should see their business type on "Profile - Business profile" page
     Given "Natalia" has created a great.gov.uk account for a "<selected business type>"
 
-    When "Natalia" goes to the "Profile - Business profile" page
+    When "Natalia" goes to the "Profile - Edit Company Profile" page
 
     Then "Natalia" should see "<expected business type>" on the page
 
@@ -291,4 +291,4 @@ Feature: Profile - CH enrolment flows
       | selected business type                | expected business type                        |
       | LTD, PLC or Royal Charter             | UK business registered in Companies House     |
       | Sole trader or other type of business | UK business not registered in Companies House |
-      | UK taxpayer                           | Individual                                    |
+      | UK taxpayer                           | Get a business profile                        |
