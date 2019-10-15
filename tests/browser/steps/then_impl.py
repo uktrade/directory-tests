@@ -370,9 +370,13 @@ def pdf_check_for_dead_links(context: Context):
 def generic_should_see_message(context: Context, actor_alias: str, message: str = None):
     message = message or "This field is required"
     page_source = context.driver.page_source
-    assertion_error = f"Expected error message '{message}' is not present"
+    assertion_error = (
+        f"Expected message '{message}' is not present on {context.driver.current_url}"
+    )
     assert message in page_source, assertion_error
-    logging.debug(f"{actor_alias} saw expected error message '{message}'")
+    logging.debug(
+        f"{actor_alias} saw expected: '{message}' on {context.driver.current_url}"
+    )
 
 
 # BrowserStack times out after 60 seconds of inactivity
