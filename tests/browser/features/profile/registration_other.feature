@@ -53,7 +53,7 @@ Feature: Profile - Non-CH enrolment flows
   Scenario: Foreing business representative should be able to come back to our International site after learning that they can't create an account
     Given "Mirko" visits the "Profile - You cannot create an account" page
 
-    When "Mirko" decides to "view our site for international businesses"
+    When "Mirko" decides to "visit our site for international businesses"
 
     Then "Mirko" should be on the "International - landing" page
 

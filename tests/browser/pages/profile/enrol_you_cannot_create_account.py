@@ -34,8 +34,8 @@ SELECTORS = {
     "explanation": {
         "heading": Selector(By.CSS_SELECTOR, "#content div > h1"),
         "back": Selector(By.PARTIAL_LINK_TEXT, "Back"),
-        "view our site for international businesses": Selector(
-            By.PARTIAL_LINK_TEXT, "View our site for international businesses"
+        "visit our site for international businesses": Selector(
+            By.PARTIAL_LINK_TEXT, "visit our site for international businesses."
         ),
     }
 }
