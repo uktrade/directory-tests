@@ -179,25 +179,6 @@ Feature: Profile - Non-CH enrolment flows
 
   @wip
   @dev-only
-  @TT-1129
-  @TT-1036
-  Scenario Outline: Handle invalid user state - already logged in - skip ahead to page where they enter business details
-    Given "Natalia" has a verified standalone Profile/great.gov.uk account
-
-    When "Natalia" goes to the "Create an account" page
-    Then "Natalia" should be on the "Profile - Select your business type" page
-
-    When "Natalia" chooses "<selected business type>" option
-    Then "Natalia" should be on the "Profile - Enter your business details (<selected business type>)" page
-
-    Examples:
-      | selected business type                |
-      | LTD, PLC or Royal Charter             |
-      | Sole trader or other type of business |
-
-
-  @wip
-  @dev-only
   @TT-1130
   @TT-1037
   Scenario Outline: Log user in on verification submit, not on account creation
