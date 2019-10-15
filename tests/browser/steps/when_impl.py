@@ -708,10 +708,10 @@ def sso_actor_received_email_confirmation_code(
 ):
     page_name = (
         f"Profile - Enter your email address and set a password ({business_type})"
-    )  # noqa
+    )
     visit_page(context, actor_alias, page_name)
     generic_fill_out_and_submit_form(context, actor_alias)
-    end_page_name = "Profile - Enter your confirmation code"
+    end_page_name = f"Profile - Enter your confirmation code ({business_type})"
     should_be_on_page(context, actor_alias, end_page_name)
     generic_get_verification_code(context, actor_alias)
 
