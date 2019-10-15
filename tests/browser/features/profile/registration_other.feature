@@ -86,7 +86,6 @@ Feature: Profile - Non-CH enrolment flows
       | UK taxpayer                           |
 
 
-  @wip
   @dev-only
   @TT-1121
   @ltd-plc-royal

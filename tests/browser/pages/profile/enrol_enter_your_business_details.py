@@ -34,6 +34,10 @@ PAGE_TITLE = ""
 
 SELECTORS = {
     "enrolment progress bar": {"itself": Selector(By.ID, "progress-column")},
+    "your business type": {
+        "information box": Selector(By.ID, "business-type-information-box"),
+        "change business type": Selector(By.ID, "change-business-type"),
+    },
     "enter your business details": {
         "itself": Selector(By.CSS_SELECTOR, "section form"),
         "heading": Selector(By.CSS_SELECTOR, "#form-step-body-text h1"),
