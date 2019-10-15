@@ -67,12 +67,24 @@ Selector = namedtuple(
         "is_visible",
         "group_id",
         "autocomplete_callback",
+        "wait_after_click",
     ],
 )
 
 # define default values for various named tuples
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
-Selector.__new__.__defaults__ = (None, None, True, True, True, None, True, None, None)
+Selector.__new__.__defaults__ = (
+    None,
+    None,
+    True,
+    True,
+    True,
+    None,
+    True,
+    None,
+    None,
+    True,
+)
 
 
 def go_to_url(driver: WebDriver, url: str, page_name: str):
@@ -158,7 +170,10 @@ def find_and_click_on_page_element(
                     href = web_element.get_attribute("href")
                     driver.get(href)
             else:
-                with wait_for_page_load_after_action(driver):
+                if selector.wait_after_click:
+                    with wait_for_page_load_after_action(driver):
+                        web_element.click()
+                else:
                     web_element.click()
     with assertion_msg(f"Could not find '{element_name}' in any section"):
         assert found_selector
