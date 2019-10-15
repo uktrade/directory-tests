@@ -701,7 +701,11 @@ def pick_option_from_autosuggestion(
             option = form_details[key]
         else:
             options = select.find_elements_by_css_selector("option")
-            values = [option.get_property("text") for option in options]
+            values = [
+                option.get_attribute("value")
+                for option in options
+                if option.get_attribute("value")
+            ]
             logging.debug(f"Available options: {values}")
             option = random.choice(values)
         logging.debug(f"Selected option: {option}")
