@@ -133,7 +133,7 @@ Feature: Profile - CH enrolment flows
   @ltd-plc-royal
   @sole-trader-other-business
   @uk-taxpayer
-  Scenario Outline: A representative of a "selected business type" company should receive a confirmation email when a great.gov.uk account is created
+  Scenario Outline: A representative of a "<selected business type>" company should be told when account is created and the are the next possible steps
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
     And "Natalia" is on the "Profile - Enter your confirmation code (<selected business type>)" page
 

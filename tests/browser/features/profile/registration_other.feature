@@ -150,31 +150,6 @@ Feature: Profile - Non-CH enrolment flows
       | Sole trader or other type of business |
 
 
-  @wip
-  @dev-only
-  @TT-1124
-  @ltd-plc-royal
-  @sole-trader-other-business
-  @uk-taxpayer
-  Scenario Outline: A representative of a "<selected business type>" company should receive a confirmation email when a great.gov.uk account is created
-    Given "Natalia" got to the "Profile - Enter your details (<selected business type>)" by opting to register as "<selected business type>"
-
-    When "Natalia" fills out and submits the form
-
-    Then "Natalia" should be on the "Profile - Account created" page
-    And "Natalia" should see following sections
-      | sections                   |
-      | Confirmation email message |
-      | Next steps                 |
-    And "Natalia" should receive "Account registration confirmation" email
-
-    Examples:
-      | selected business type                |
-      | LTD, PLC or Royal Charter             |
-      | Sole trader or other type of business |
-      | UK taxpayer                           |
-
-
   @dev-only
   @TT-1125
   @TT-1017
