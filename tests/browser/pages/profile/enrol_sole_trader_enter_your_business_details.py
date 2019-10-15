@@ -93,7 +93,7 @@ def generate_form_details(actor: Actor) -> dict:
     ]
     result = {
         "business category": None,
-        "business name": Actor.company_name,
+        "business name": "DIT AUTOMATED TESTS (delete me)",
         "business postcode": random.choice(postcodes),
         "industry": None,
         "website": "https://browser.tests.com",
