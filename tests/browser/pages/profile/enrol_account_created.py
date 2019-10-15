@@ -17,24 +17,35 @@ from pages.common_actions import (
 )
 
 NAME = "Account created"
-NAMES = ["Account created (LTD, PLC or Royal Charter)"]
+NAMES = [
+    "Account created (LTD, PLC or Royal Charter)",
+    "Account created (Sole trader or other type of business)",
+    "Account created (UK taxpayer)",
+]
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
 URL = URLs.PROFILE_ENROL_FINISHED.absolute
-SubURLs = {"account created": URL, "account created (ltd, plc or royal charter)": URL}
+SubURLs = {
+    "account created (ltd, plc or royal charter)": URL,
+    "account created (sole trader or other type of business)": URLs.PROFILE_ENROL_NON_CH_COMPANY_FINISHED.absolute,
+    "account created (uk taxpayer)": URLs.PROFILE_ENROL_INDIVIDUAL_FINISHED.absolute,
+}
 PAGE_TITLE = ""
 
 SELECTORS = {
     "confirmation email message": {
         "itself": Selector(By.ID, "success-message-container")
     },
-    "next steps": {
+    "publish your business profile": {
         "itself": Selector(By.ID, "next-container"),
         "publish your business profile": Selector(
             By.CSS_SELECTOR,
             "#next-container li:nth-child(1) > a",
             type=ElementType.LINK,
         ),
+    },
+    "next steps": {
+        "itself": Selector(By.ID, "next-container"),
         "find export opportunities": Selector(
             By.CSS_SELECTOR,
             "#next-container li:nth-child(2) > a",
