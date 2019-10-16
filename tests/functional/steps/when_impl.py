@@ -295,16 +295,6 @@ def create_actor_with_or_without_sso_account(
             add_actor(context, supplier)
 
 
-def stannp_send_verification_letter(context: Context, actor_alias: str):
-    company_alias = "Test"
-    company = get_random_company(alias=company_alias)
-    verification_code = str(random.randint(1000000, 9999999))
-    updated_details = {"verification_code": verification_code, "owner": actor_alias}
-    company = company._replace(**updated_details)
-    context.response = send_verification_letter(context, company)
-    logging.debug("Successfully sent letter in test mode via StanNP")
-
-
 def reg_create_sso_account(context: Context, supplier_alias: str, company_alias: str):
     """Will create a SSO account for selected company.
 
@@ -2134,6 +2124,22 @@ def fab_remove_collaborators(
     collaborators = company.collaborators
     collaborators = [alias for alias in collaborators if alias not in aliases]
     update_company(context, company.alias, collaborators=collaborators)
+
+
+def stannp_send_verification_letter(context: Context, actor_alias: str):
+    company_alias = "Test"
+    company = get_random_company(alias=company_alias)
+    verification_code = str(random.randint(1000000, 9999999))
+    updated_details = {"verification_code": verification_code, "owner": actor_alias}
+    company = company._replace(**updated_details)
+    add_company(context, company)
+
+    actor = unauthenticated_supplier(actor_alias)
+    actor = actor._replace(**{"company_alias": company_alias})
+    add_actor(context, actor)
+
+    context.response = send_verification_letter(context, company)
+    logging.debug("Successfully sent letter in test mode via StanNP")
 
 
 def stannp_download_verification_letter_and_extract_text(
