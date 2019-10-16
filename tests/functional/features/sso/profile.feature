@@ -31,6 +31,7 @@ Feature: SSO profile
     And "Peter Alder" should receive an email verification msg entitled "Your confirmation code for great.gov.uk"
 
 
+  @wip
   @ED-1756
   @ED-1692
   @sso
