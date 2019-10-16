@@ -300,7 +300,7 @@ def stannp_send_verification_letter(context: Context, actor_alias: str):
     company = get_random_company(alias=company_alias)
     verification_code = str(random.randint(1000000, 9999999))
     updated_details = {"verification_code": verification_code, "owner": actor_alias}
-    company = company._replace(updated_details)
+    company = company._replace(**updated_details)
     context.response = send_verification_letter(context, company)
     logging.debug("Successfully sent letter in test mode via StanNP")
 
