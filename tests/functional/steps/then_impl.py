@@ -19,6 +19,11 @@ from directory_tests_shared.constants import (
     SEARCHABLE_CASE_STUDY_DETAILS,
 )
 from directory_tests_shared.enums import Language
+from directory_tests_shared.gov_notify import (
+    get_email_notification,
+    get_password_reset_link,
+    get_verification_link,
+)
 from directory_tests_shared.utils import check_for_errors
 from tests.functional.pages import (
     fab,
@@ -46,11 +51,6 @@ from tests.functional.utils.generic import (
     extract_page_contents,
     get_number_of_search_result_pages,
     surround,
-)
-from tests.functional.utils.gov_notify import (
-    get_email_notification,
-    get_password_reset_link,
-    get_verification_link,
 )
 
 

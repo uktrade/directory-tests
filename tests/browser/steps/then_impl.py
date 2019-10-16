@@ -20,6 +20,10 @@ from directory_tests_shared.constants import (
     HPO_ENQUIRY_CONFIRMATION_SUBJECT,
     HPO_PDF_URLS,
 )
+from directory_tests_shared.gov_notify import (
+    get_email_confirmation_notification,
+    get_email_confirmations_with_matching_string,
+)
 from directory_tests_shared.pdf import extract_text_from_pdf
 from directory_tests_shared.utils import check_for_errors
 from pages import (
@@ -45,10 +49,6 @@ from utils.forms_api import (
     find_form_submissions,
     find_form_submissions_by_subject_and_action,
     find_form_submissions_for_dit_office,
-)
-from utils.gov_notify import (
-    get_email_confirmation_notification,
-    get_email_confirmations_with_matching_string,
 )
 from utils.gtm import (
     get_gtm_data_layer_events,

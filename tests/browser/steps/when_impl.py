@@ -16,6 +16,10 @@ from selenium.common.exceptions import (
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared.gov_notify import (
+    get_verification_code,
+    get_verification_link,
+)
 from directory_tests_shared.settings import BASICAUTH_PASS, BASICAUTH_USER
 from directory_tests_shared.utils import check_for_errors
 from pages import (
@@ -42,7 +46,6 @@ from pages.common_actions import (
 )
 from steps import has_action
 from utils.cms_api import get_news_articles
-from utils.gov_notify import get_verification_code, get_verification_link
 from utils.gtm import get_gtm_event_definitions, trigger_js_event
 
 NUMBERS = {

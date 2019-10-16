@@ -28,6 +28,7 @@ from directory_constants.expertise import (
 from directory_tests_shared import URLs
 from directory_tests_shared.constants import SECTORS, SEPARATORS, BMPs, JP2s, WEBPs
 from directory_tests_shared.enums import Account, BusinessType, Language
+from directory_tests_shared.gov_notify import get_email_verification_code
 from directory_tests_shared.pdf import extract_text_from_pdf
 from directory_tests_shared.utils import rare_word, sentence
 from tests.functional.common import DETAILS, PROFILES
@@ -85,7 +86,6 @@ from tests.functional.utils.generic import (
     send_verification_letter,
     verify_non_ch_company,
 )
-from tests.functional.utils.gov_notify import get_email_verification_code
 from tests.functional.utils.request import Method, check_response, make_request
 
 INDUSTRIES_FOR_PRODUCTS_AND_SERVICES = {
