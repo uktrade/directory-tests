@@ -28,6 +28,7 @@ from directory_constants.expertise import (
 from directory_tests_shared import URLs
 from directory_tests_shared.constants import SECTORS, SEPARATORS, BMPs, JP2s, WEBPs
 from directory_tests_shared.enums import Account, BusinessType, Language
+from directory_tests_shared.pdf import extract_text_from_pdf
 from directory_tests_shared.utils import rare_word, sentence
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
@@ -67,7 +68,6 @@ from tests.functional.utils.generic import (
     extract_csrf_middleware_token,
     extract_form_action,
     extract_logo_url,
-    extract_text_from_pdf,
     filter_out_legacy_industries,
     get_absolute_path_of_file,
     get_md5_hash_of_file,
@@ -2144,7 +2144,7 @@ def stannp_download_verification_letter_and_extract_text(
 
     pdf_link = context.response["data"]["pdf"]
     pdf_path = get_pdf_from_stannp(pdf_link)
-    pdf_text = extract_text_from_pdf(pdf_path)
+    pdf_text = extract_text_from_pdf(pdf_path=pdf_path)
 
     try:
         os.remove(pdf_path)

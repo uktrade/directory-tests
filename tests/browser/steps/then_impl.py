@@ -20,6 +20,7 @@ from directory_tests_shared.constants import (
     HPO_ENQUIRY_CONFIRMATION_SUBJECT,
     HPO_PDF_URLS,
 )
+from directory_tests_shared.pdf import extract_text_from_pdf
 from directory_tests_shared.utils import check_for_errors
 from pages import (
     common_language_selector,
@@ -54,7 +55,6 @@ from utils.gtm import (
     get_gtm_data_layer_properties,
     replace_string_representations,
 )
-from utils.pdf import extract_text_from_pdf_bytes
 
 
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
@@ -327,7 +327,9 @@ def pdf_check_expected_details(
     context: Context, actor_alias: str, details_table: Table
 ):
     pdfs = context.pdfs
-    pdf_texts = [(pdf["href"], extract_text_from_pdf_bytes(pdf["pdf"])) for pdf in pdfs]
+    pdf_texts = [
+        (pdf["href"], extract_text_from_pdf(pdf_bytes=pdf["pdf"])) for pdf in pdfs
+    ]
     details = {
         item[0].split(" = ")[0]: item[0].split(" = ")[1] for item in details_table
     }

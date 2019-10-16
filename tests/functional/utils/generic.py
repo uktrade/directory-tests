@@ -2,7 +2,6 @@
 """Various utils used across the project."""
 import datetime
 import hashlib
-import io
 import json
 import logging
 import os
@@ -22,10 +21,6 @@ import requests
 from behave.runner import Context
 from bs4 import BeautifulSoup
 from langdetect import DetectorFactory, detect_langs
-from pdfminer.converter import TextConverter
-from pdfminer.layout import LAParams
-from pdfminer.pdfinterp import PDFPageInterpreter, PDFResourceManager
-from pdfminer.pdfpage import PDFPage
 from requests import Response
 from scrapy.selector import Selector
 from termcolor import cprint
@@ -1012,40 +1007,6 @@ def get_pdf_from_stannp(pdf_url: str):
     with open(target_path, "wb") as file:
         file.write(response.content)
     return target_path
-
-
-def extract_text_from_pdf(
-    path: str,
-    *,
-    codec: str = "utf-8",
-    password: str = "",
-    maxpages: int = 0,
-    caching: bool = True,
-) -> str:
-    rsrcmgr = PDFResourceManager()
-    retstr = io.StringIO()
-    laparams = LAParams()
-    device = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
-    file_stream = open(path, "rb")
-    interpreter = PDFPageInterpreter(rsrcmgr, device)
-    page_numbers = set()
-
-    for page in PDFPage.get_pages(
-        file_stream,
-        page_numbers,
-        maxpages=maxpages,
-        password=password,
-        caching=caching,
-        check_extractable=True,
-    ):
-        interpreter.process_page(page)
-
-    text = retstr.getvalue()
-
-    file_stream.close()
-    device.close()
-    retstr.close()
-    return text
 
 
 def create_test_isd_company(context: Context) -> dict:
