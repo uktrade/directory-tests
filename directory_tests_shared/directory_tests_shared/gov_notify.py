@@ -181,15 +181,7 @@ def get_password_reset_link(email: str) -> str:
 
 
 @retry(wait_fixed=2000, stop_max_attempt_number=5)
-def get_email_verification_code(email: str) -> str:
-    """Find email confirmation code inside the plain text email payload."""
-    subject = "Your confirmation code for great.gov.uk"
-    notification = get_email_confirmation_notification(email, subject=subject)
-    body = notification["body"]
-    return extract_email_confirmation_code(body)
-
-
-def get_verification_code(email: str, *, resent_code: bool = False) -> str:
+def get_email_verification_code(email: str, *, resent_code: bool = False) -> str:
     """Find email confirmation code inside the plain text email payload."""
     subject = EMAIL_VERIFICATION_CODE_SUBJECT
     notification = get_email_confirmation_notification(
