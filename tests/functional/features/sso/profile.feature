@@ -27,8 +27,8 @@ Feature: SSO profile
 
     When "Peter Alder" creates an "unverified Individual" profile
 
-    Then "Peter Alder" should be told about the verification email
-    And "Peter Alder" should receive an email verification msg entitled "Confirm your email address"
+    Then "Peter Alder" should be on "Profile - Enter email verification code (UK taxpayer)" page
+    And "Peter Alder" should receive an email verification msg entitled "Your confirmation code for great.gov.uk"
 
 
   @ED-1756
@@ -61,10 +61,10 @@ Feature: SSO profile
     Given "Peter Alder" is an unauthenticated supplier
 
     When "Peter Alder" creates an "unverified Individual" profile
-    Then "Peter Alder" should be told about the verification email
+    Then "Peter Alder" should be on "Profile - Enter email verification code (UK taxpayer)" page
 
     When "Peter Alder" creates an "unverified Individual" profile
-    Then "Peter Alder" should be told about the verification email
+    Then "Peter Alder" should be on "Profile - Enter email verification code (UK taxpayer)" page
 
 
   @ED-2147

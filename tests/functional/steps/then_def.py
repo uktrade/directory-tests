@@ -47,7 +47,6 @@ from tests.functional.steps.then_impl import (
     profile_should_see_online_profiles,
     profile_supplier_should_be_on_landing_page,
     reg_should_get_verification_email,
-    reg_sso_account_should_be_created,
     reg_supplier_has_to_verify_email_first,
     should_be_at,
     should_be_taken_to_selected_page,
@@ -69,11 +68,6 @@ from tests.functional.steps.when_impl import (
     fas_should_be_told_about_empty_search_results,
     fas_should_be_told_to_enter_search_term_or_use_filters,
 )
-
-
-@then('"{alias}" should be told about the verification email')
-def then_sso_account_was_created(context, alias):
-    reg_sso_account_should_be_created(context.response, alias)
 
 
 @then('"{alias}" should receive an email verification msg entitled "{subject}"')

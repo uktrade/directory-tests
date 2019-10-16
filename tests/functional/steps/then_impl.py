@@ -54,17 +54,6 @@ from tests.functional.utils.generic import (
 )
 
 
-def reg_sso_account_should_be_created(response: Response, supplier_alias: str):
-    """Will verify if SSO account was successfully created.
-
-    Note:
-    It's a very crude check, as it will only check if the response body
-    contains selected phrases.
-    """
-    sso.verify_your_email.should_be_here(response)
-    logging.debug("Successfully created new SSO account for %s", supplier_alias)
-
-
 def reg_should_get_verification_email(
     context: Context, alias: str, *, subject: str = None
 ):
