@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 """Common operations for Gov Notify service"""
 import logging
+from pprint import pformat
+from typing import List
 
 from retrying import retry
 
-from directory_tests_shared.clients import GOV_NOTIFY_CLIENT
-from directory_tests_shared.constants import (
+from .clients import GOV_NOTIFY_CLIENT
+from .constants import (
+    EMAIL_VERIFICATION_CODE_SUBJECT,
     EMAIL_VERIFICATION_MSG_SUBJECT,
     SSO_PASSWORD_RESET_MSG_SUBJECT,
 )
-from tests.functional.utils.generic import assertion_msg
+from .utils import assertion_msg
 
 
 def extract_email_confirmation_link(payload: str) -> str:
@@ -65,6 +68,12 @@ def filter_by_content(notifications: list, substring: str) -> list:
     return list(filter(lambda x: substring in x["body"], notifications))
 
 
+def filter_by_strings_in_body(notifications: list, strings: List[str]) -> list:
+    return list(
+        filter(lambda x: all(string in x["body"] for string in strings), notifications)
+    )
+
+
 @retry(wait_fixed=5000, stop_max_attempt_number=5)
 def get_email_notification(from_email: str, to_email: str, subject: str) -> dict:
     all_notifications = GOV_NOTIFY_CLIENT.get_all_notifications(template_type="email")[
@@ -107,7 +116,9 @@ def get_email_notification(from_email: str, to_email: str, subject: str) -> dict
 
 
 @retry(wait_fixed=5000, stop_max_attempt_number=5)
-def get_email_confirmation_notification(email: str, *, subject: str = None) -> dict:
+def get_email_confirmation_notification(
+    email: str, *, subject: str = None, resent_code: bool = False
+) -> dict:
     subject = subject or EMAIL_VERIFICATION_MSG_SUBJECT
     logging.debug(f"Looking for email sent to '{email}' with subject: '{subject}'")
     notifications = GOV_NOTIFY_CLIENT.get_all_notifications(template_type="email")[
@@ -117,13 +128,23 @@ def get_email_confirmation_notification(email: str, *, subject: str = None) -> d
     user_notifications = filter_by_recipient(notifications, email)
     email_confirmations = filter_by_subject(user_notifications, subject)
 
-    assert len(email_confirmations) == 1, (
-        "Expected to find 1 email confirmation notification for {} but found "
-        "{}".format(email, len(email_confirmations))
-    )
-    logging.debug(f"Matching notifications: {email_confirmations}")
+    if email_confirmations:
+        logging.debug(pformat(email_confirmations))
+    if resent_code:
+        assert len(email_confirmations) > 1, (
+            "Expected to find more than 1 email confirmation notification for {} but "
+            "found {}".format(email, len(email_confirmations))
+        )
 
-    return email_confirmations[0]
+        result = max(email_confirmations, key=lambda x: x["created_at"])
+    else:
+        assert len(email_confirmations) == 1, (
+            "Expected to find only 1 email confirmation notification for {} but found "
+            "{}".format(email, len(email_confirmations))
+        )
+        result = min(email_confirmations, key=lambda x: x["created_at"])
+
+    return result
 
 
 @retry(wait_fixed=5000, stop_max_attempt_number=5)
@@ -146,6 +167,7 @@ def get_password_reset_notification(
 
 
 def get_verification_link(email: str, *, subject: str = None) -> str:
+    logging.debug(f"Searching for verification email of: {email}")
     notification = get_email_confirmation_notification(email, subject=subject)
     body = notification["body"]
     return extract_email_confirmation_link(body)
@@ -165,3 +187,38 @@ def get_email_verification_code(email: str) -> str:
     notification = get_email_confirmation_notification(email, subject=subject)
     body = notification["body"]
     return extract_email_confirmation_code(body)
+
+
+def get_verification_code(email: str, *, resent_code: bool = False) -> str:
+    """Find email confirmation code inside the plain text email payload."""
+    subject = EMAIL_VERIFICATION_CODE_SUBJECT
+    notification = get_email_confirmation_notification(
+        email, subject=subject, resent_code=resent_code
+    )
+    body = notification["body"]
+    activation_code = extract_email_confirmation_code(body)
+    logging.debug("Found email confirmation code: %s", activation_code)
+    return activation_code
+
+
+@retry(wait_fixed=5000, stop_max_attempt_number=5)
+def get_email_confirmations_with_matching_string(
+    recipient_email: str, subject: str, strings: List[str]
+) -> dict:
+    notifications = GOV_NOTIFY_CLIENT.get_all_notifications(template_type="email")[
+        "notifications"
+    ]
+
+    user_notifications = filter_by_recipient(notifications, recipient_email)
+    email_confirmations = filter_by_subject(user_notifications, subject)
+    with_matching_string = filter_by_strings_in_body(email_confirmations, strings)
+
+    logging.debug(pformat(with_matching_string))
+    assert len(with_matching_string) == 1, (
+        f"Expected to find 1 email confirmation notification containing "
+        f"'{strings}' in message body send to {recipient_email} but found "
+        f"{len(email_confirmations)}. BTW. Check what's the agent's email "
+        f"address used in the application configuration"
+    )
+
+    return with_matching_string[0]

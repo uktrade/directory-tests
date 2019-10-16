@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
+import logging
+import sys
+import traceback
 import uuid
+from contextlib import contextmanager
 from random import choice, randint
 
 from .constants import OPERATING_COUNTRIES, PRODUCT_CATEGORIES, RARE_WORDS, SECTORS
-from .settings import BASICAUTH_USER, BASICAUTH_PASS
+from .settings import BASICAUTH_PASS, BASICAUTH_USER
 
 
 def get_random_email_address():
@@ -12,7 +16,7 @@ def get_random_email_address():
 
 def retriable_error(exception):
     """Return True if test should be re-run based on the Exception"""
-    return isinstance(exception, (AssertionError, ))
+    return isinstance(exception, (AssertionError,))
 
 
 def is_500(exception):
@@ -25,11 +29,11 @@ def basic_auth():
 
 
 def sentence(
-        *,
-        max_length: int = 60,
-        min_word_length: int = 9,
-        max_words: int = 10,
-        min_words: int = 3
+    *,
+    max_length: int = 60,
+    min_word_length: int = 9,
+    max_words: int = 10,
+    min_words: int = 3,
 ) -> str:
     """Generate a random string consisting of rare english words.
 
@@ -87,5 +91,34 @@ def check_for_errors(source: str, url: str):
     assert "404 Not Found" not in source, f"404 Not Found → {url}"
     assert "This page cannot be found" not in source, f"404 Not Found → {url}"
     assert "Internal Server Error" not in source, f"500 ISE → {url}"
-    assert "Sorry, there is a problem with the service" not in source, f"500 ISE → {url}"
+    assert (
+        "Sorry, there is a problem with the service" not in source
+    ), f"500 ISE → {url}"
     assert "trollface.dk" not in url, f"Faced the troll face!"
+
+
+@contextmanager
+def assertion_msg(message: str, *args):
+    """This will:
+        * print the custom assertion message
+        * print the traceback (stack trace)
+        * raise the original AssertionError exception
+    """
+    try:
+        yield
+    except AssertionError as e:
+        if args:
+            message = message % args
+        logging.error(message)
+        e.args += (message,)
+        _, _, tb = sys.exc_info()
+        if len(sys._current_frames()) == 1:
+            print(f"Found 'shallow' Traceback, will inspect outer traceback frames")
+            import inspect
+
+            for f in inspect.getouterframes(sys._getframe(0)):
+                print(f"{f.filename} +{f.lineno} - in {f.function}")
+                if "_def.py" in f.filename:
+                    break
+        traceback.print_tb(tb)
+        raise

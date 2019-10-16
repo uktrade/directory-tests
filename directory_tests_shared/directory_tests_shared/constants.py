@@ -48,7 +48,7 @@ MD5_CHECKSUM_INVEST_IN_GREAT = env.str(
 MD5_CHECKSUM_DIT_FAVICON = env.str(
     "DIT_FAVICON_MD5_CHECKSUM", default="93bd34ac9de2cb059c65c5e7931667a2"
 )
-
+EMAIL_VERIFICATION_CODE_SUBJECT = "Your confirmation code for great.gov.uk"
 EMAIL_VERIFICATION_MSG_SUBJECT = "Confirm your email address"
 FAS_MESSAGE_FROM_BUYER_SUBJECT = (
     "New message through your great.gov.uk business profile"
@@ -58,7 +58,9 @@ FAB_CONFIRM_COLLABORATION_SUBJECT = (
 )
 FAB_TRANSFER_OWNERSHIP_SUBJECT = "Confirm ownership of {}’s Find a buyer " "profile"
 SSO_PASSWORD_RESET_MSG_SUBJECT = "Reset your great.gov.uk password"
-PROFILE_INVITATION_MSG_SUBJECT = "You’ve been invited to join {company_title} on great.gov.uk"
+PROFILE_INVITATION_MSG_SUBJECT = (
+    "You’ve been invited to join {company_title} on great.gov.uk"
+)
 NO_OF_EMPLOYEES = [
     "1-10",
     "11-50",
