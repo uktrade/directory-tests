@@ -116,7 +116,7 @@ def after_scenario(context, scenario):
                 update_company(context, alias=company.alias, deleted=True)
         else:
             logging.debug(
-                f"'{actor.name}' is not a supplier. No need to delete anything"
+                f"'{actor.alias}' is not a supplier. No need to delete anything"
             )
     # clear the scenario data after every scenario
     context.scenario_data = None
