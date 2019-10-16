@@ -138,10 +138,13 @@ def get_email_confirmation_notification(
 
         result = max(email_confirmations, key=lambda x: x["created_at"])
     else:
-        assert len(email_confirmations) == 1, (
+        other_subjects = {mail["subject"] for mail in user_notifications}
+        error = (
             f"Expected to find only 1 email confirmation notification for {email} but "
-            f"found {len(email_confirmations)}"
+            f"found {len(email_confirmations)}. PS. I found {len(user_notifications)} "
+            f"other emails to this user with following subjects: {other_subjects}"
         )
+        assert len(email_confirmations) == 1, error
         result = min(email_confirmations, key=lambda x: x["created_at"])
 
     return result
