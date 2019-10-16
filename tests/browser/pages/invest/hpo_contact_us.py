@@ -28,12 +28,16 @@ from pages.common_actions import (
 )
 
 NAME = "Contact us"
-NAMES = ["Advanced food production", "Lightweight structures", "Rail infrastructure"]
+NAMES = [
+    "High productivity food production",
+    "Lightweight structures",
+    "Rail infrastructure",
+]
 SERVICE = Service.INVEST
 TYPE = "HPO Contact us"
 URL = URLs.INVEST_HPO_CONTACT.absolute
 SubURLs = {
-    "advanced food production": URL,
+    "high productivity food production": URL,
     "lightweight structures": URL,
     "rail infrastructure": URL,
 }
