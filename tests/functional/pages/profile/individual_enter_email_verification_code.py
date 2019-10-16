@@ -8,7 +8,7 @@ from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Service.PROFILE
-NAME = "Individual enter email verification code"
+NAME = "Enter email verification code (UK taxpayer)"
 TYPE = PageType.FORM
 URL = URLs.PROFILE_ENROL_INDIVIDUAL_EMAIL_VERIFICATION.absolute
 EXPECTED_STRINGS = ["Enter your confirmation code"]
