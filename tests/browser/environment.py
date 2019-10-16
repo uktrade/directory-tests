@@ -5,6 +5,15 @@ import logging
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
 from behave.model import Feature, Scenario, Step
 from behave.runner import Context
+
+from directory_tests_shared.pdf import NoPDFMinerLogEntriesFilter
+from directory_tests_shared.settings import (
+    AUTO_RETRY,
+    BROWSER_ENVIRONMENT,
+    BROWSER_RESTART_POLICY,
+)
+from pages import sso
+from pages.common_actions import initialize_scenario_data
 from utils.browser import (
     clear_driver_cookies,
     flag_browserstack_session_as_failed,
@@ -12,15 +21,6 @@ from utils.browser import (
     is_driver_responsive,
     start_driver_session,
     terminate_driver,
-)
-from utils.pdf import NoPDFMinerLogEntriesFilter
-
-from pages import sso
-from pages.common_actions import initialize_scenario_data
-from directory_tests_shared.settings import (
-    AUTO_RETRY,
-    BROWSER_ENVIRONMENT,
-    BROWSER_RESTART_POLICY,
 )
 
 DRIVER_CAPABILITIES = get_driver_capabilities()
@@ -101,7 +101,11 @@ def after_feature(context: Context, feature: Feature):
     if BROWSER_RESTART_POLICY == "feature":
         if hasattr(context, "driver"):
             driver = context.driver
-            if driver and feature.status == "failed" and BROWSER_ENVIRONMENT == "remote":
+            if (
+                driver
+                and feature.status == "failed"
+                and BROWSER_ENVIRONMENT == "remote"
+            ):
                 scenarios = feature.scenarios
                 failed = sum(1 for scenario in scenarios if scenario.status == "failed")
                 session_id = driver.session_id

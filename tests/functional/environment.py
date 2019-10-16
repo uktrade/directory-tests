@@ -5,6 +5,7 @@ from pprint import pformat
 
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
 
+from directory_tests_shared.pdf import NoPDFMinerLogEntriesFilter
 from directory_tests_shared.settings import AUTO_RETRY, AUTO_RETRY_MAX_ATTEMPTS
 from tests.functional.utils.context_utils import (
     get_company,
@@ -124,3 +125,5 @@ def after_scenario(context, scenario):
 
 def before_all(context):
     context.config.setup_logging(configfile=".behave_logging")
+    logger = logging.getLogger()
+    logger.addFilter(NoPDFMinerLogEntriesFilter())
