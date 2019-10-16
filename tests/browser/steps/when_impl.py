@@ -17,7 +17,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared.gov_notify import (
-    get_verification_code,
+    get_email_verification_code,
     get_verification_link,
 )
 from directory_tests_shared.settings import BASICAUTH_PASS, BASICAUTH_USER
@@ -196,7 +196,7 @@ def generic_get_verification_code(
     """Will check if the Exporter received an email verification message."""
     logging.debug("Searching for an email verification message...")
     actor = get_actor(context, actor_alias)
-    code = get_verification_code(actor.email, resent_code=resent_code)
+    code = get_email_verification_code(actor.email, resent_code=resent_code)
     update_actor(context, actor_alias, email_confirmation_code=code)
 
 
