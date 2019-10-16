@@ -27,9 +27,9 @@ def extract_email_confirmation_link(payload: str) -> str:
             activation_link = payload[start:new_line]
         else:
             activation_link = payload[start:]
-    with assertion_msg(f"activation link shouldn't contain new line character"):
+    with assertion_msg("activation link shouldn't contain new line character"):
         assert "\n" not in activation_link
-    logging.debug("Found email confirmation link: %s", activation_link)
+    logging.debug(f"Found email confirmation link: {activation_link}")
     return activation_link
 
 
@@ -39,7 +39,7 @@ def extract_email_confirmation_code(payload: str) -> str:
     start = payload.find(reference) + len(reference)
     end = start + 5
     confirmation_code = payload[start:end]
-    logging.debug("Found email confirmation code: %s", confirmation_code)
+    logging.debug(f"Found email confirmation code: {confirmation_code}")
     return confirmation_code
 
 
@@ -49,10 +49,10 @@ def extract_password_reset_link(payload: str) -> str:
     end = payload.find("\r\n", start)
     password_reset_link = payload[start:end]
     with assertion_msg(
-        "Extracted link is not a correct password reset link: %s", password_reset_link
+        f"Extracted link is not a correct password reset link: {password_reset_link}"
     ):
         assert "accounts/password/reset/key/" in password_reset_link
-    logging.debug("Found password reset link: %s", password_reset_link)
+    logging.debug(f"Found password reset link: {password_reset_link}")
     return password_reset_link
 
 
@@ -132,15 +132,15 @@ def get_email_confirmation_notification(
         logging.debug(pformat(email_confirmations))
     if resent_code:
         assert len(email_confirmations) > 1, (
-            "Expected to find more than 1 email confirmation notification for {} but "
-            "found {}".format(email, len(email_confirmations))
+            f"Expected to find more than 1 email confirmation notification for {email}"
+            f" but found {len(email_confirmations)}"
         )
 
         result = max(email_confirmations, key=lambda x: x["created_at"])
     else:
         assert len(email_confirmations) == 1, (
-            "Expected to find only 1 email confirmation notification for {} but found "
-            "{}".format(email, len(email_confirmations))
+            f"Expected to find only 1 email confirmation notification for {email} but "
+            f"found {len(email_confirmations)}"
         )
         result = min(email_confirmations, key=lambda x: x["created_at"])
 
@@ -159,8 +159,8 @@ def get_password_reset_notification(
     password_reset_notifications = filter_by_subject(user_notifications, subject)
 
     assert len(password_reset_notifications) == 1, (
-        "Expected to find 1 password reset notification for {} but found "
-        "{}".format(email, len(password_reset_notifications))
+        f"Expected to find 1 password reset notification for {email} but found "
+        f"{len(password_reset_notifications)}"
     )
 
     return password_reset_notifications[0]
@@ -174,7 +174,7 @@ def get_verification_link(email: str, *, subject: str = None) -> str:
 
 
 def get_password_reset_link(email: str) -> str:
-    logging.debug("Searching for password reset email of: %s", email)
+    logging.debug(f"Searching for password reset email of: {email}")
     notification = get_password_reset_notification(email)
     body = notification["body"]
     return extract_password_reset_link(body)
@@ -197,7 +197,7 @@ def get_verification_code(email: str, *, resent_code: bool = False) -> str:
     )
     body = notification["body"]
     activation_code = extract_email_confirmation_code(body)
-    logging.debug("Found email confirmation code: %s", activation_code)
+    logging.debug(f"Found email confirmation code: {activation_code}")
     return activation_code
 
 
