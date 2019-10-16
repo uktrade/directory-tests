@@ -37,8 +37,9 @@ class NoPDFMinerLogEntriesFilter(logging.Filter):
         return all(not record.getMessage().startswith(word) for word in skip)
 
 
-def extract_text_from_pdf_bytes(
-    pdf_bytes: bytes,
+def extract_text_from_pdf(
+    pdf_bytes: bytes = None,
+    pdf_path: str = None,
     *,
     codec: str = "utf-8",
     password: str = "",
@@ -46,11 +47,16 @@ def extract_text_from_pdf_bytes(
     caching: bool = True,
     remove_empty_lines: bool = True,
 ) -> str:
+    error = f"Please provide PDF in-memory buffer stream or path to PDF file"
+    assert pdf_bytes or pdf_path, error
+    if pdf_bytes:
+        pdf_file = io.BytesIO(pdf_bytes)
+    else:
+        pdf_file = open(pdf_path, "rb")
     resource_manager = PDFResourceManager()
     out_file = io.StringIO()
     laparams = LAParams()
     device = TextConverter(resource_manager, out_file, codec=codec, laparams=laparams)
-    pdf_file = io.BytesIO(pdf_bytes)
     interpreter = PDFPageInterpreter(resource_manager, device)
     page_numbers = set()
     pdf_pages = PDFPage.get_pages(

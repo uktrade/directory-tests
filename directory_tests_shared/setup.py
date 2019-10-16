@@ -2,8 +2,7 @@
 """
 Shared resources for Directory Tests
 """
-from setuptools import setup, find_packages
-
+from setuptools import find_packages, setup
 
 setup(
     name="directory_tests_shared",
@@ -22,6 +21,7 @@ setup(
         "directory-cms-client>=11.0.0",
         "directory-sso-api-client>=6.1.0",
         "notifications-python-client>=5.3.0",
+        "pdfminer2>=20151206",
     ],
     extras_require={},
     classifiers=[
@@ -33,5 +33,5 @@ setup(
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3.6",
         "Topic :: Software Development :: Libraries :: Python Modules",
-    ]
+    ],
 )

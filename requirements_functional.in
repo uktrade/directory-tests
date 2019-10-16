@@ -10,7 +10,6 @@ jsonschema
 langdetect
 nodeenv
 notifications-python-client
-pdfminer2
 pytest
 requests
 retrying

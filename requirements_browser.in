@@ -8,7 +8,6 @@ directory-sso-api-client
 docopt
 nodeenv
 notifications-python-client
-pdfminer2
 requests
 retrying
 selenium
