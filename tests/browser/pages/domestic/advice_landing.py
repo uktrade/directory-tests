@@ -8,7 +8,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import Service
-from pages import ElementType
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -30,25 +30,16 @@ ARTICLE_LINKS = Selector(
     By.CSS_SELECTOR, "#advice-list-section a", type=ElementType.LINK
 )
 SELECTORS = {
-    "hero": {
-        "itself": Selector(By.CSS_SELECTOR, "section.hero"),
-        "heading": Selector(By.ID, "hero-heading"),
-    },
-    "breadcrumbs": {
-        "itself": Selector(By.CSS_SELECTOR, "nav.breadcrumbs"),
-        "links": Selector(By.CSS_SELECTOR, "nav.breadcrumbs a"),
-    },
     "advice & guidance tiles": {
         "itself": Selector(By.ID, "advice-list-section"),
         "cards": Selector(By.CSS_SELECTOR, "#advice-list-section div.card"),
         "articles": ARTICLE_LINKS,
         "article images": Selector(By.CSS_SELECTOR, "#advice-list-section .card-image"),
-    },
-    "error reporting": {
-        "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
-        "link": Selector(By.ID, "error-reporting-section-contact-us"),
-    },
+    }
 }
+SELECTORS.update(common_selectors.BREADCRUMBS)
+SELECTORS.update(common_selectors.INTERNATIONAL_HERO)
+SELECTORS.update(common_selectors.ERROR_REPORTING)
 
 
 def visit(driver: WebDriver):
