@@ -21,6 +21,7 @@ from directory_tests_shared.constants import (
 from directory_tests_shared.enums import Language
 from directory_tests_shared.gov_notify import (
     get_email_notification,
+    get_notifications_by_subject,
     get_password_reset_link,
     get_verification_link,
 )
@@ -62,6 +63,12 @@ def reg_should_get_verification_email(
     actor = get_actor(context, alias)
     link = get_verification_link(actor.email, subject=subject)
     update_actor(context, alias, email_confirmation_link=link)
+
+
+def generic_should_get_email_notifications(context: Context, alias: str, subject: str):
+    actor = get_actor(context, alias)
+    notifications = get_notifications_by_subject(actor.email, subject=subject)
+    update_actor(context, alias, notifications=notifications)
 
 
 def prof_should_be_told_about_missing_description(

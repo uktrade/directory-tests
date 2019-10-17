@@ -29,6 +29,7 @@ from tests.functional.steps.then_impl import (
     generic_content_of_viewed_pages_should_in_selected_language,
     generic_language_switcher_should_be_set_to,
     generic_page_language_should_be_set_to,
+    generic_should_get_email_notifications,
     international_should_see_links_to_industry_pages,
     isd_should_be_told_about_empty_search_results,
     isd_should_see_unfiltered_search_results,
@@ -504,3 +505,8 @@ def then_actor_should_not_see_options_to_manage_account_users(
     context: Context, actor_alias: str
 ):
     profile_should_not_see_options_to_manage_users(context, actor_alias)
+
+
+@then('"{actor_alias}" should receive an email notification with subject "{subject}"')
+def then_actor_should_get_email(context: Context, actor_alias: str, subject: str):
+    generic_should_get_email_notifications(context, actor_alias, subject)
