@@ -12,15 +12,20 @@ URL = URLs.PROFILE_PUBLISH_BUSINESS_PROFILE_TO_FAS.absolute
 EXPECTED_STRINGS = []
 
 
-def submit(session: Session) -> Response:
+def submit(session: Session, *, unpublish: bool = False) -> Response:
     """Submit the form with verification code."""
     headers = {"Referer": URL}
-    data = {"is_published_find_a_supplier": "on"}
-    return make_request(
-        Method.POST,
-        URL,
-        session=session,
-        headers=headers,
-        files=data,
-        no_filename_in_multipart_form_data=True,
-    )
+    if unpublish:
+        return make_request(
+            Method.POST, URL, session=session, headers=headers, data=None
+        )
+    else:
+        data = {"is_published_find_a_supplier": "on"}
+        return make_request(
+            Method.POST,
+            URL,
+            session=session,
+            headers=headers,
+            files=data,
+            no_filename_in_multipart_form_data=True,
+        )
