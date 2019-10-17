@@ -13,7 +13,7 @@ Feature: Domestic - Advice articles
     Then "Robert" should see following sections
       | sections                 |
       | Hero                     |
-#      | Breadcrumbs              |  Breadcrumbs are not present on this page. See bug CMS-1698
+      | Breadcrumbs              |
       | Advice & Guidance tiles  |
       | Error reporting          |
 
