@@ -173,30 +173,25 @@ Feature: Trade Profile
   @captcha
   @dev-only
   @fake-sso-email-verification
-  Scenario Outline: Users should see "<expected business classification>" for their "<trade>" profile on "Profile - Business Profile" page
+  Scenario Outline: An owner of a "<trade>" profile should be able to view their profile on "Find a Supplier" service
     Given "Annette" created an "<trade>" profile for a random company "X"
 
     When "Annette" goes to "Profile - Business Profile" page
+    Then "Annette" should see "View Find a Supplier profile" on the page
 
-    Then "Annette" should see "<expected business classification>" on the page
-    And "Annette" should not see "<option to verify>" on the page
+    When "Annette" decides to view published FAS Business Profile
+    Then "Annette" should be on "X"'s FAS Business Profile page
 
     Examples: business types
-      | trade                                                         | expected business classification              | option to verify      |
-      | published LTD, PLC or Royal Charter                           | UK business registered in Companies House     | Confirm your identity |
-
-    @bug
-    @TT-1933
-    @fixed
-    Examples: business types
-      | trade                                                         | expected business classification              | option to verify  |
-      | published Sole trader                                         | UK business not registered in Companies House | Request to verify |
-      | published Charity                                             | UK business not registered in Companies House | Request to verify |
-      | published Partnership                                         | UK business not registered in Companies House | Request to verify |
-      | published Other UK business not registered in Companies House | UK business not registered in Companies House | Request to verify |
+      | trade                                                         |
+      | published LTD, PLC or Royal Charter                           |
+      | published Sole trader                                         |
+      | published Charity                                             |
+      | published Partnership                                         |
+      | published Other UK business not registered in Companies House |
 
     @wip
     Examples: ISD business accounts
-      | trade                                                         | expected business classification              |
-      | published ISD only                                            | ISD Company                                   |
-      | published ISD & Trade                                         | ISD Company                                   |
+      | trade                                                         |
+      | published ISD only                                            |
+      | published ISD & Trade                                         |
