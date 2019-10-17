@@ -217,3 +217,19 @@ def get_email_confirmations_with_matching_string(
     )
 
     return with_matching_string[0]
+
+
+@retry(wait_fixed=5000, stop_max_attempt_number=5)
+def get_notifications_by_subject(email: str, subject: str) -> List[dict]:
+    logging.debug(f"Looking for email sent to '{email}' with subject: '{subject}'")
+    notifications = GOV_NOTIFY_CLIENT.get_all_notifications(template_type="email")[
+        "notifications"
+    ]
+    user_notifications = filter_by_recipient(notifications, email)
+    matching_notifications = filter_by_subject(user_notifications, subject)
+
+    assert len(matching_notifications) >= 1, (
+        f"Expected to find at least 1 notification for {email} with subject '{subject}'"
+        f" but found {len(matching_notifications)}"
+    )
+    return matching_notifications
