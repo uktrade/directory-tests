@@ -168,6 +168,7 @@ Feature: Trade Profile
       | unpublished ISD & published Trade                                        | ISD Company                                   | Publish your business profile |
 
 
+  @TT-2027
   @published
   @verified
   @captcha
@@ -197,6 +198,7 @@ Feature: Trade Profile
       | published ISD & Trade                                         |
 
 
+  @TT-2033
   @unpublish
   @published
   @verified
