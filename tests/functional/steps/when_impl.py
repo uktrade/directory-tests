@@ -2396,7 +2396,7 @@ def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account):
     profile.non_ch_company_request_to_verify.submit(actor)
     verify_non_ch_company(context, company)
     company_number = get_company_by_id_or_title(company.title)["number"]
-    update_company(context, company, number=company_number)
+    update_company(context, company.alias, number=company_number)
 
     if not account.publish:
         logging.debug(
