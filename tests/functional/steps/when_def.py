@@ -43,6 +43,7 @@ from tests.functional.steps.when_impl import (
     profile_send_transfer_ownership_request,
     profile_supplier_uploads_logo,
     profile_to_upload_unsupported_logos,
+    profile_unpublish_profile_from_fas,
     profile_update_case_study,
     profile_update_company_details,
     profile_verify_company_profile,
@@ -414,3 +415,8 @@ def when_user_creates_a_profile(
     context: Context, actor_alias: str, account_type: str, *, company_alias: str = None
 ):
     profile_enrol_user(context, actor_alias, account_type, company_alias=company_alias)
+
+
+@when('"{actor_alias}" decides to unpublish profile from Find a Supplier service')
+def when_actor_unpublishes_profile(context: Context, actor_alias: str):
+    profile_unpublish_profile_from_fas(context, actor_alias)

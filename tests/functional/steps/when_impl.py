@@ -469,6 +469,14 @@ def profile_publish_profile_to_fas(context: Context, supplier_alias: str):
     profile.edit_company_profile.should_see_profile_is_published(context.response)
 
 
+def profile_unpublish_profile_from_fas(context: Context, supplier_alias: str):
+    actor = get_actor(context, supplier_alias)
+    context.response = profile.publish_company_profile.submit(
+        actor.session, unpublish=True
+    )
+    profile.edit_company_profile.should_see_profile_is_verified(context.response)
+
+
 def profile_view_published_profile(context: Context, supplier_alias: str):
     """Whilst being on Profile page it will `click` on
     the `View published profile` link.
