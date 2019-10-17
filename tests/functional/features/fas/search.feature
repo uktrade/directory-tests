@@ -118,7 +118,6 @@ Feature: Find a Supplier
     And "Peter Alder" updates company's details
       | detail         |
       | other keywords |
-    And "Peter Alder" has updated business details
     And "Peter Alder" gets the slug for company "Y"
 
     When "Annette Geissinger" searches for company "Y" on FAS using selected company's details

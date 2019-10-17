@@ -399,36 +399,6 @@ def profile_add_business_description(
     logging.debug("Supplier is back to the Profile Page")
 
 
-def profile_edit_business_details(
-    context: Context, supplier_alias: str, *, table_of_details: Table
-):
-    actor = get_actor(context, supplier_alias)
-    company = get_company(context, actor.company_alias)
-
-    # Step 0 - prepare company's details to update
-    table_of_details = table_of_details or []
-    details_to_update = [row["detail"] for row in table_of_details]
-    title = DETAILS["NAME"] in details_to_update
-    website = DETAILS["WEBSITE"] in details_to_update
-    size = DETAILS["SIZE"] in details_to_update
-    sector = DETAILS["SECTOR"] in details_to_update
-
-    logging.debug(f"Details to update: {details_to_update}")
-    # Step 1 - Update company's details
-    response, new_details = profile.edit_company_business_details.submit(
-        actor,
-        company,
-        change_name=title,
-        change_website=website,
-        change_size=size,
-        change_sector=sector,
-    )
-    context.response = response
-
-    # Step 2 - Supplier should be on Edit Profile page
-    profile.edit_company_profile.should_be_here(response)
-
-
 def profile_verify_company_profile(context: Context, supplier_alias: str):
     """Will verify the company by submitting the verification code that is sent
     by post to the company's address.

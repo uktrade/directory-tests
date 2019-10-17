@@ -28,7 +28,6 @@ from tests.functional.steps.when_impl import (
     profile_add_collaborator,
     profile_add_online_profiles,
     profile_confirm_collaboration_request,
-    profile_edit_business_details,
     profile_enrol_user,
     profile_supplier_uploads_logo,
     profile_update_company_details,
@@ -212,12 +211,6 @@ def given_supplier_transfers_the_account_ownership(
 )
 def given_actor_sends_a_verification_letter(context, actor_alias):
     stannp_send_verification_letter(context, actor_alias)
-
-
-@given('"{actor_alias}" has updated business details')
-def given_supplier_edit_business_details(context, actor_alias):
-    """This step was added as a workaround for bug TT-1256"""
-    profile_edit_business_details(context, actor_alias, table_of_details=context.table)
 
 
 @given('"{supplier_alias}" decided to verify her identity with a verification letter')
