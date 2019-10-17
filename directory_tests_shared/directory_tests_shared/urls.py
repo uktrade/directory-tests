@@ -825,7 +825,7 @@ class URLs(Enum):
         "triage/great-account/verification-missing/"
     )
     CONTACT_US_GREAT_SERVICES = ContactUrl("triage/great-services/")
-    CONTACT_US_INTERNATIONAL = ContactUrl("triage/international/")
+    CONTACT_US_INTERNATIONAL = InternationalUrl("contact/")
     CONTACT_US_INTERNATIONAL_EXPORTING_TO_THE_UK = ContactUrl(
         "triage/international/exporting-to-the-uk/"
     )
