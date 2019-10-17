@@ -31,24 +31,6 @@ Feature: SSO profile
     And "Peter Alder" should receive an email verification msg entitled "Your confirmation code for great.gov.uk"
 
 
-  @wip
-  @ED-1756
-  @ED-1692
-  @sso
-  @account
-  @verification
-  @real-sso-email-verification
-  Scenario: Suppliers should be able to confirm email address for a standalone SSO/great.gov.uk account
-    Given "Peter Alder" created a "unverified Individual" profile
-    And "Peter Alder" received the email verification message with the email confirmation link
-
-    When "Peter Alder" decides to confirm her email address by using the email confirmation link
-    And "Peter Alder" confirms the email address for SSO/great.gov.uk account
-
-    Then "Peter Alder" should be on Welcome to your great.gov.uk profile page
-    And "Peter Alder" should be signed in to SSO/great.gov.uk account
-
-
   @ED-2145
   @sso
   @account
