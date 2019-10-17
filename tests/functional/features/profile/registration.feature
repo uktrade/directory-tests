@@ -187,7 +187,7 @@ Feature: Trade Profile
 
     @bug
     @TT-1933
-    @fixme
+    @fixed
     Examples: business types
       | trade                                                                      | expected business classification              | option to verify      |
       | published Sole trader                                                      | UK business not registered in Companies House | Request to verify     |
