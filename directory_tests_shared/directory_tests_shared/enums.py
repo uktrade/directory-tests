@@ -77,7 +77,9 @@ class Account:
         elif self.description == BusinessType.OVERSEAS_COMPANY.value:
             self.business_type = BusinessType.OVERSEAS_COMPANY
         else:
-            LookupError(f"Could not identify state of account in account description: '{self.description}'")
+            LookupError(
+                f"Could not identify state of account in account description: '{self.description}'"
+            )
 
         if BusinessType.COMPANIES_HOUSE.value.lower() in self.description:
             self.business_type = BusinessType.COMPANIES_HOUSE
@@ -97,10 +99,15 @@ class Account:
             self.business_type = BusinessType.ISD_ONLY
         elif BusinessType.ISD_AND_TRADE.value.lower() in self.description:
             self.business_type = BusinessType.ISD_AND_TRADE
-        elif BusinessType.UNPUBLISHED_ISD_AND_PUBLISHED_TRADE.value.lower() in self.description:
+        elif (
+            BusinessType.UNPUBLISHED_ISD_AND_PUBLISHED_TRADE.value.lower()
+            in self.description
+        ):
             self.business_type = BusinessType.UNPUBLISHED_ISD_AND_PUBLISHED_TRADE
         else:
-            raise LookupError(f"Could not identify business type in account description: '{self.description}'")
+            raise LookupError(
+                f"Could not identify business type in account description: '{self.description}'"
+            )
 
     def __str__(self) -> str:
         return (
@@ -118,6 +125,7 @@ class Service(Enum):
     FAB = "Find a Buyer"
     FACEBOOK = "Facebook"
     FAS = "Find a Supplier"
+    GENERIC = "Generic"
     INTERNATIONAL = "International"
     INVEST = "Invest"
     ISD = "ISD"
