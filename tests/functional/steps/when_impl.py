@@ -71,6 +71,7 @@ from tests.functional.utils.generic import (
     extract_logo_url,
     filter_out_legacy_industries,
     get_absolute_path_of_file,
+    get_company_by_id_or_title,
     get_md5_hash_of_file,
     get_number_of_search_result_pages,
     get_pdf_from_stannp,
@@ -2394,6 +2395,8 @@ def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account):
     profile_add_business_description(context, actor.alias, ch_company=False)
     profile.non_ch_company_request_to_verify.submit(actor)
     verify_non_ch_company(context, company)
+    company_number = get_company_by_id_or_title(company.title)["number"]
+    update_company(context, company, number=company_number)
 
     if not account.publish:
         logging.debug(
