@@ -226,3 +226,24 @@ Feature: Trade Profile
       | trade                                                         |
       | published ISD only                                            |
       | published ISD & Trade                                         |
+
+
+  @TT-2034
+  @unpublished
+  @unverified
+  @captcha
+  @dev-only
+  @fake-sso-email-verification
+  Scenario Outline: An owner of a "<trade>" profile should receive an email notification when they request a verification
+    Given "Annette" created an "<trade>" profile for a random company "X"
+
+    When "Annette" requests to verify her company profile
+
+    Then "Annette" should receive an email notification with subject "We’ve received your verification request"
+
+    Examples: business types
+      | trade                                                                      |
+      | unpublished unverified Sole trader                                         |
+      | unpublished unverified Charity                                             |
+      | unpublished unverified Partnership                                         |
+      | unpublished unverified Other UK business not registered in Companies House |
