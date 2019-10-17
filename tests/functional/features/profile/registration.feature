@@ -182,21 +182,21 @@ Feature: Trade Profile
     And "Annette" should not see "<option to verify>" on the page
 
     Examples: business types
-      | trade                                                                      | expected business classification              | option to verify      |
-      | published LTD, PLC or Royal Charter                                        | UK business registered in Companies House     | Confirm your identity |
+      | trade                                                         | expected business classification              | option to verify      |
+      | published LTD, PLC or Royal Charter                           | UK business registered in Companies House     | Confirm your identity |
 
     @bug
     @TT-1933
     @fixed
     Examples: business types
-      | trade                                                                      | expected business classification              | option to verify      |
-      | published Sole trader                                                      | UK business not registered in Companies House | Request to verify     |
-      | published Charity                                                          | UK business not registered in Companies House | Request to verify     |
-      | published Partnership                                                      | UK business not registered in Companies House | Request to verify     |
-      | published Other UK business not registered in Companies House              | UK business not registered in Companies House | Request to verify     |
+      | trade                                                         | expected business classification              | option to verify  |
+      | published Sole trader                                         | UK business not registered in Companies House | Request to verify |
+      | published Charity                                             | UK business not registered in Companies House | Request to verify |
+      | published Partnership                                         | UK business not registered in Companies House | Request to verify |
+      | published Other UK business not registered in Companies House | UK business not registered in Companies House | Request to verify |
 
     @wip
     Examples: ISD business accounts
-      | trade                                                                      | expected business classification              |
-      | published ISD only                                                         | ISD Company                                   |
-      | published ISD & Trade                                                      | ISD Company                                   |
+      | trade                                                         | expected business classification              |
+      | published ISD only                                            | ISD Company                                   |
+      | published ISD & Trade                                         | ISD Company                                   |

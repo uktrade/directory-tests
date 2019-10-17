@@ -49,7 +49,7 @@ Feature: Profile pages
     Examples: Profile pages
       | Profile                           | expected        |
       | Profile - Export Opportunities    | SSO - Login     |
-      | Profile - Business Profile            | Profile - Enrol |
+      | Profile - Business Profile        | Profile - Enrol |
       | Profile - Selling Online Overseas | SSO - Login     |
 
 
