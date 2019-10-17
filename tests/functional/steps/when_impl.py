@@ -2550,3 +2550,9 @@ def isd_search(context: Context, buyer_alias: str, term: str):
     session = actor.session
     context.response = isd.search.go_to(session, term=term)
     isd.search.should_be_here(context.response)
+
+
+def profile_request_to_verify(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    profile_add_business_description(context, actor.alias, ch_company=False)
+    profile.non_ch_company_request_to_verify.submit(actor)

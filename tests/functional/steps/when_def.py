@@ -40,6 +40,7 @@ from tests.functional.steps.when_impl import (
     profile_provide_business_details,
     profile_provide_products_and_services,
     profile_remove_links_to_online_profiles,
+    profile_request_to_verify,
     profile_send_transfer_ownership_request,
     profile_supplier_uploads_logo,
     profile_to_upload_unsupported_logos,
@@ -428,3 +429,8 @@ def when_user_creates_a_profile(
 @when('"{actor_alias}" decides to unpublish profile from Find a Supplier service')
 def when_actor_unpublishes_profile(context: Context, actor_alias: str):
     profile_unpublish_profile_from_fas(context, actor_alias)
+
+
+@when('"{actor_alias}" requests to verify her company profile')
+def when_actor_requests_verification(context: Context, actor_alias: str):
+    profile_request_to_verify(context, actor_alias)
