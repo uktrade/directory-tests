@@ -478,18 +478,18 @@ def profile_unpublish_profile_from_fas(context: Context, supplier_alias: str):
 
 
 def profile_view_published_profile(context: Context, supplier_alias: str):
-    """Whilst being on Profile page it will `click` on
-    the `View published profile` link.
-    """
     actor = get_actor(context, supplier_alias)
     session = actor.session
     company = get_company(context, actor.company_alias)
-
-    # STEP 1 - go to the "View published profile" page
-    response = fas.profile.go_to(session, company.number)
-    context.response = response
-    fas.profile.should_be_here(response)
+    context.response = fas.profile.go_to(session, company.number)
+    fas.profile.should_be_here(context.response)
     logging.debug("Supplier is on the company's FAS page")
+
+
+def profile_view_unpublished_profile(context: Context, supplier_alias: str):
+    actor = get_actor(context, supplier_alias)
+    company = get_company(context, actor.company_alias)
+    context.response = fas.profile.go_to(actor.session, company.number)
 
 
 def prof_attempt_to_sign_in_to_sso(context: Context, supplier_alias: str):

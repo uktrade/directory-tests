@@ -48,6 +48,7 @@ from tests.functional.steps.when_impl import (
     profile_update_company_details,
     profile_verify_company_profile,
     profile_view_published_profile,
+    profile_view_unpublished_profile,
     reg_create_sso_account,
     reg_open_email_confirmation_link,
     reg_supplier_confirms_email_address,
@@ -102,6 +103,13 @@ def when_supplier_verifies_company(context, supplier_alias):
 @when('"{supplier_alias}" decides to view published FAS Business Profile')
 def when_supplier_views_published_profile(context, supplier_alias):
     profile_view_published_profile(context, supplier_alias)
+
+
+@when(
+    '"{supplier_alias}" decides to view unpublished profile on Find a Supplier service'
+)
+def when_supplier_views_published_profile(context, supplier_alias):
+    profile_view_unpublished_profile(context, supplier_alias)
 
 
 @when('"{supplier_alias}" attempts to sign in to SSO/great.gov.uk account')
