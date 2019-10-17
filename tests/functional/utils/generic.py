@@ -841,9 +841,9 @@ def get_number_of_search_result_pages(response: Response) -> int:
     return last_page
 
 
-def get_company_by_id(number: str) -> dict:
+def get_company_by_id_or_title(number_or_title: str) -> dict:
     """Get email address associated with company."""
-    response = DIRECTORY_TEST_API_CLIENT.get_company_by_ch_id(number)
+    response = DIRECTORY_TEST_API_CLIENT.get_company_by_ch_id(number_or_title)
     return response.json() if response.status_code == 200 else None
 
 
