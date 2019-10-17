@@ -184,13 +184,12 @@ def fas_find_company_by_name(context: Context, buyer_alias: str, company_alias: 
     buyer = get_actor(context, buyer_alias)
     session = buyer.session
     company = get_company(context, company_alias)
-    found, response, profile_endpoint = can_find_supplier_by_term(
+    found, context.response, profile_endpoint = can_find_supplier_by_term(
         session=session,
         name=company.title,
         term=company.title,
         term_type="company title",
     )
-    context.response = response
     with assertion_msg(
         "%s could not find company '%s' of FAS using company's title",
         buyer_alias,
@@ -1057,14 +1056,13 @@ def fas_get_company_profile_url(response: Response, name: str) -> str:
     href_selector = "a::attr(href)"
     links_to_profiles = Selector(text=content).css(links_to_profiles_selector).extract()
     profile_url = None
+    clean_name = escape_html(name.replace("  ", " ")).lower()
     for link in links_to_profiles:
         # try to find Profile URL by escaping html chars or not in found link
-        if (escape_html(name).lower() in link.lower()) or (
-            escape_html(name).lower() in escape_html(link).lower()
-        ):
+        if (clean_name in link.lower()) or (clean_name in escape_html(link).lower()):
             profile_url = Selector(text=link).css(href_selector).extract()[0]
     with assertion_msg(
-        f"Couldn't find link to '{name}' company profile page in the response"
+        f"Couldn't find link to '{name}' company profile page on {response.url}"
     ):
         assert profile_url
     logging.debug(f"Found link to '{name}'s profile: {profile_url}")

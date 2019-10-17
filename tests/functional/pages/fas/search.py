@@ -52,11 +52,13 @@ def should_be_here(response, *, number=None):
 def should_see_company(response: Response, company_title: str) -> bool:
     content = extract_page_contents(response.content.decode("utf-8")).lower()
     no_match = NO_UK_BUSINESS_MATCH.lower() in content
-    contains_company_title = company_title.lower().replace("  ", " ") in content
+    clean_title = escape_html(company_title.replace("  ", " ")).lower()
+    contains_company_title = clean_title in content
     if not contains_company_title:
-        contains_company_title = escape_html(company_title).lower() in content
+        # try using raw company title
+        contains_company_title = company_title.lower() in content
     if not contains_company_title:
-        logging.debug(f"Could not find company: '{escape_html(company_title).lower()}'")
+        logging.debug(f"Could not find company: '{company_title}'")
     return contains_company_title and not no_match
 
 
