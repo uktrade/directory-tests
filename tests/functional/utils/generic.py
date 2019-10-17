@@ -893,6 +893,9 @@ def verify_non_ch_company(context: Context, company: Company):
     data = {"verified_with_identity_check": True}
     context.response = DIRECTORY_TEST_API_CLIENT.patch(url, data)
     check_response(context.response, 204)
+    logging.debug(
+        f"Successfully flagged '{company.title}' as verified with identity check"
+    )
 
 
 def is_verification_letter_sent(context: Context, company_number: str) -> bool:
