@@ -195,3 +195,32 @@ Feature: Trade Profile
       | trade                                                         |
       | published ISD only                                            |
       | published ISD & Trade                                         |
+
+
+  @unpublish
+  @published
+  @verified
+  @captcha
+  @dev-only
+  @fake-sso-email-verification
+  Scenario Outline: An owner of a "<trade>" profile should be able to remove (unpublish) their profile from "Find a Supplier" service
+    Given "Annette" created an "<trade>" profile for a random company "X"
+
+    When "Annette" decides to unpublish profile from Find a Supplier service
+    And "Annette" decides to view unpublished profile on Find a Supplier service
+
+    Then "Annette" should be on "Generic - This page cannot be found" page
+
+    Examples: business types
+      | trade                                                         |
+      | published LTD, PLC or Royal Charter                           |
+      | published Sole trader                                         |
+      | published Charity                                             |
+      | published Partnership                                         |
+      | published Other UK business not registered in Companies House |
+
+    @wip
+    Examples: ISD business accounts
+      | trade                                                         |
+      | published ISD only                                            |
+      | published ISD & Trade                                         |
