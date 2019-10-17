@@ -55,10 +55,13 @@ def should_see_company(response: Response, company_title: str) -> bool:
     clean_title = escape_html(company_title.replace("  ", " ")).lower()
     contains_company_title = clean_title in content
     if not contains_company_title:
-        # try using raw company title
+        logging.debug(f"Try to find company using raw title: '{company_title.lower()}'")
         contains_company_title = company_title.lower() in content
     if not contains_company_title:
-        logging.debug(f"Could not find company: '{company_title}'")
+        logging.debug(
+            f"Could not find company: '{company_title}' using: '{clean_title}' or "
+            f"'{company_title.lower()}'"
+        )
     return contains_company_title and not no_match
 
 
