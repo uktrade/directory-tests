@@ -90,7 +90,7 @@ Feature: Trade Profile
   @captcha
   @dev-only
   @fake-sso-email-verification
-  Scenario Outline: Users with "<trade>" profile should not be able to view their business details but should be redirected to enrolment page
+  Scenario Outline: Users with an "<trade>" should not be able to view their business details instead they should be redirected to enrolment page
     Given "Annette" decided to create an "<trade>" profile
 
     When "Annette" goes to "Profile - Business Profile" page
@@ -144,28 +144,28 @@ Feature: Trade Profile
   @captcha
   @dev-only
   @fake-sso-email-verification
-  Scenario Outline: Users should see "<expected business classification>" for their "<trade>" profile on "Profile - Business Profile" page
+  Scenario Outline: Users should see "<an option to publish profile>" for their "<trade>" profile on "Profile - Business Profile" page
     Given "Annette" created an "<trade>" profile for a random company "X"
 
     When "Annette" goes to "Profile - Business Profile" page
 
     Then "Annette" should see "<expected business classification>" on the page
-    And "Annette" should not see "<option to verify>" on the page
+    And "Annette" should see "<an option to publish profile>" on the page
 
     Examples: business types
-      | trade                                                                    | expected business classification              | option to verify      |
-      | unpublished verified LTD, PLC or Royal Charter                           | UK business registered in Companies House     | Confirm your identity |
-      | unpublished verified Sole trader                                         | UK business not registered in Companies House | Request to verify     |
-      | unpublished verified Charity                                             | UK business not registered in Companies House | Request to verify     |
-      | unpublished verified Partnership                                         | UK business not registered in Companies House | Request to verify     |
-      | unpublished verified Other UK business not registered in Companies House | UK business not registered in Companies House | Request to verify     |
+      | trade                                                                    | expected business classification              | an option to publish profile  |
+      | unpublished verified LTD, PLC or Royal Charter                           | UK business registered in Companies House     | Publish your business profile |
+      | unpublished verified Sole trader                                         | UK business not registered in Companies House | Publish your business profile |
+      | unpublished verified Charity                                             | UK business not registered in Companies House | Publish your business profile |
+      | unpublished verified Partnership                                         | UK business not registered in Companies House | Publish your business profile |
+      | unpublished verified Other UK business not registered in Companies House | UK business not registered in Companies House | Publish your business profile |
 
     @wip
     Examples: ISD business accounts
-      | trade                                                                      | expected business classification              |
-      | unpublished verified ISD only                                              | ISD Company                                   |
-      | unpublished verified ISD & Trade                                           | ISD Company                                   |
-      | unpublished ISD & published Trade                                          | ISD Company                                   |
+      | trade                                                                    | expected business classification              | an option to publish profile  |
+      | unpublished verified ISD only                                            | ISD Company                                   | Publish your business profile |
+      | unpublished verified ISD & Trade                                         | ISD Company                                   | Publish your business profile |
+      | unpublished ISD & published Trade                                        | ISD Company                                   | Publish your business profile |
 
 
   @published
