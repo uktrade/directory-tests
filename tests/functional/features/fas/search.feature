@@ -116,8 +116,10 @@ Feature: Find a Supplier
     And "Peter Alder" is an unauthenticated supplier
     And "Peter Alder" created a "published LTD, PLC or Royal Charter" profile for a random company "Y"
     And "Peter Alder" updates company's details
-      | detail         |
-      | other keywords |
+      | detail              |
+      | other keywords      |
+      | number of employees |
+      | sector of interest  |
     And "Peter Alder" gets the slug for company "Y"
 
     When "Annette Geissinger" searches for company "Y" on FAS using selected company's details
