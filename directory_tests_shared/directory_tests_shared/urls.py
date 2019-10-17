@@ -777,6 +777,9 @@ class URLs(Enum):
     # UNUSED DEFINITIONS
     # New Contact-Us UI - Domestic & International
     CONTACT_US_DOMESTIC = ContactUrl("triage/domestic/")
+    CONTACT_US_DOMESTIC_SUCCESS = ContactUrl(
+        "{page}/success/", template="{page}/success/"
+    )
     CONTACT_US_FEEDBACK = ContactUrl("feedback/")
     CONTACT_US_FEEDBACK_SUCCESS = ContactUrl("feedback/success/")
     CONTACT_US_EXPORT_OPPORTUNITIES = ContactUrl("triage/export-opportunities/")

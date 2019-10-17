@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 """Domestic - Short Domestic Contact us - Thank you for your enquiry."""
-from urllib.parse import urljoin
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -48,12 +46,12 @@ SELECTORS = {
         "report link": Selector(By.CSS_SELECTOR, "section.error-reporting a"),
     },
 }
-
+url_template = URLs.CONTACT_US_DOMESTIC_SUCCESS.absolute_template
 SubURLs = {
     "thank you for your enquiry": URL,
-    "thank you for your enquiry (events)": urljoin(URL, "events/success/"),
-    "thank you for your enquiry (defence and security organisation (dso))": urljoin(
-        URL, "defence-and-security-organisation/success/"
+    "thank you for your enquiry (events)": url_template.format(page="events"),
+    "thank you for your enquiry (defence and security organisation (dso))": url_template.format(
+        page="defence-and-security-organisation"
     ),
     "thank you for your enquiry (other)": URL,
     "thank you for your enquiry (i haven't had a response from the opportunity i applied for)": URL,
