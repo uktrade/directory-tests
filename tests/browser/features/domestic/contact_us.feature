@@ -445,8 +445,18 @@ Feature: Domestic - Contact us
       | Brexit enquiries             | International - Brexit help                             |
       | Other                        | International - Contact us                              |
 
-    @stage-only
-    @prod-only
+
+  @TT-758
+  @stage-only
+  @prod-only
+  @international
+  Scenario Outline: International Enquirers should be able to get to the "<expected>" form for "<selected>"
+    Given "Robert" got to the "Domestic - What would you like to know more about? (staging) - International Contact us" page via "Outside the UK"
+
+    When "Robert" chooses "<selected>" option
+
+    Then "Robert" should be on the "<expected>" page
+
     Examples:
       | selected                   | expected                                                |
       | Investing in the UK        | Invest - Contact us                                     |
