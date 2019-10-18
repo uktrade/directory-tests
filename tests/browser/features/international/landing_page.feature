@@ -12,14 +12,14 @@ Feature: INTL - Landing page
     Then "Robert" should see following sections
       | Sections              |
       | Header                |
-      | Service Cards         |
+      | Informative banner    |
+      | Service cards         |
+      | How DIT provides help |
+      | Tariffs               |
+      | Featured links        |
       | Error reporting       |
+      | Study or visit the UK |
       | Footer                |
-#      | Beta bar              |
-#      | EU Exit updates       |
-#      | News                  |
-#      | Tariffs               |
-#      | Study or visit the UK |
 
 
   @ED-3136
@@ -34,9 +34,9 @@ Feature: INTL - Landing page
     Then "Robert" should be on the "<expected_service>" page
 
     Examples:
-      | service            | expected_service       |
-      | Expand to the UK   | Invest - landing          |
-      | Find a UK supplier | Find a Supplier - Landing |
+      | service          | expected_service          |
+      | Expand to the UK | Invest - landing          |
+      | Buy from the UK  | Find a Supplier - Landing |
 
     @wip
     Examples: ATM there are no links to these services
