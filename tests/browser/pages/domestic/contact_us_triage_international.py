@@ -23,7 +23,6 @@ from pages.common_actions import (
 from pages.international import (
     international_contact_us,
     international_contact_us_capital_invest,
-    international_contact_us_exporting_to_the_uk,
     international_eu_exit_contact_us,
     trade_contact_us,
 )
@@ -36,7 +35,7 @@ URL = URLs.CONTACT_US_INTERNATIONAL.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
-    By.CSS_SELECTOR, "div.exred-triage-form button", type=ElementType.BUTTON
+    By.CSS_SELECTOR, "#content form button.button", type=ElementType.BUTTON
 )
 SELECTORS = {
     "form": {
@@ -57,17 +56,12 @@ SELECTORS = {
             By.ID, "id_choice_4", type=ElementType.RADIO, is_visible=False
         ),
         "submit": SUBMIT_BUTTON,
-        "back": Selector(
-            By.CSS_SELECTOR,
-            "form button[name='wizard_goto_step']",
-            type=ElementType.LINK,
-        ),
+        "back": Selector(By.PARTIAL_LINK_TEXT, "Back", type=ElementType.LINK),
     }
 }
 POs = {
-    "investing in the uk": invest_contact_us,
-    "capital investment in the uk": international_contact_us_capital_invest,
-    "exporting to the uk": international_contact_us_exporting_to_the_uk,
+    "expanding to the uk": invest_contact_us,
+    "investing capital in the uk": international_contact_us_capital_invest,
     "find a uk business partner": trade_contact_us,
     "brexit enquiries": international_eu_exit_contact_us,
     "other": international_contact_us,
