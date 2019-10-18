@@ -276,8 +276,8 @@ class URLs(Enum):
     FAS_CONTACT_SUPPLIER_SUCCESS = FASUrl(
         "suppliers/", template="suppliers/{ch_number}/contact/success/{query}"
     )
-    FAS_CONTACT_US = FASUrl("feedback/")
-    FAS_CONTACT_US_SUCCESS = FASUrl("feedback/success/")
+    FAS_CONTACT_US = FASUrl("contact/")
+    FAS_CONTACT_US_SUCCESS = FASUrl("contact/success/")
     FAS_FEEDBACK = FASUrl("feedback/")
     FAS_HEALTHCHECK = FASUrl("healthcheck/")
     FAS_INDUSTRIES = FASUrl("industries/", template="industries/{industry}/")
