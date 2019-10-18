@@ -41,41 +41,20 @@ SUBMIT_BUTTON = Selector(
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
-        "investing in the uk": Selector(
-            By.CSS_SELECTOR,
-            "input[value='investing']",
-            type=ElementType.RADIO,
-            is_visible=False,
+        "expanding to the uk": Selector(
+            By.ID, "id_choice_0", type=ElementType.RADIO, is_visible=False
         ),
-        "capital investment in the uk": Selector(
-            By.CSS_SELECTOR,
-            "input[value='capital-invest']",
-            type=ElementType.RADIO,
-            is_visible=False,
-        ),
-        "exporting to the uk": Selector(
-            By.CSS_SELECTOR,
-            "input[value='exporting-to-uk']",
-            type=ElementType.RADIO,
-            is_visible=False,
+        "investing capital in the uk": Selector(
+            By.ID, "id_choice_1", type=ElementType.RADIO, is_visible=False
         ),
         "find a uk business partner": Selector(
-            By.CSS_SELECTOR,
-            "input[value='buying']",
-            type=ElementType.RADIO,
-            is_visible=False,
+            By.ID, "id_choice_2", type=ElementType.RADIO, is_visible=False
         ),
         "brexit enquiries": Selector(
-            By.CSS_SELECTOR,
-            "input[value='euexit']",
-            type=ElementType.RADIO,
-            is_visible=False,
+            By.ID, "id_choice_3", type=ElementType.RADIO, is_visible=False
         ),
         "other": Selector(
-            By.CSS_SELECTOR,
-            "input[value='other']",
-            type=ElementType.RADIO,
-            is_visible=False,
+            By.ID, "id_choice_4", type=ElementType.RADIO, is_visible=False
         ),
         "submit": SUBMIT_BUTTON,
         "back": Selector(
