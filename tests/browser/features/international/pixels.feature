@@ -24,25 +24,6 @@ Feature: INTL - Pixels
       | Contact Us                   |
 
     @dev-only
-    Examples: UK Setup Guides
-      | selected                                                          |
-      | UK visas and migration - UK setup guide                           |
-      | Establish a UK business base - UK setup guide                     |
-      | Hire skilled workers for your UK operations - UK setup guide      |
-      | Open a UK business bank account - UK setup guide                  |
-      | Register a company in the UK - UK setup guide                     |
-      | UK tax and incentives - UK setup guide                            |
-      | UK visas and migration - UK setup guide                           |
-      | Research and development (R&D) support in the UK - UK setup guide |
-
-    @stage-only
-    Examples: UK Setup Guides
-      | selected                                                          |
-      | Open a UK business bank account - UK setup guide                  |
-      | UK tax and incentives - UK setup guide                            |
-      | Access finance in the UK - UK setup guide                         |
-
-    @dev-only
     Examples: Industry pages
       | selected                                 |
       | Aerospace - industry                     |
@@ -55,10 +36,3 @@ Feature: INTL - Pixels
       | Legal services - industry                |
       | Space - industry                         |
       | Technology - industry                    |
-
-    @stage-only
-    Examples: Industry pages
-      | selected                                       |
-      | Creative industries - industry                 |
-      | Engineering and manufacturing - industry       |
-      | Financial and professional services - industry |
