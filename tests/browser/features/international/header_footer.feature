@@ -12,11 +12,11 @@ Feature: INTL - Header-Footer
     Given "Robert" visits the "<selected>" page
 
     Then "Robert" should be on the "<expected>" page
-    And "Robert" should see correct "Great - header" logo
+    And "Robert" should see correct "<header>" logo
     And "Robert" should see correct "Great - footer" logo
     And "Robert" should see the correct favicon
 
     Examples:
-      | selected                   | expected                   |
-      | International - Landing    | International - Landing    |
-      | International - Contact Us | International - Contact Us |
+      | selected                   | expected                   | header         |
+      | International - Landing    | International - Landing    | Great - header |
+      | International - Contact Us | International - Contact Us | EIG            |
