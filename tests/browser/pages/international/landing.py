@@ -28,29 +28,63 @@ URL = URLs.INTERNATIONAL_LANDING.absolute
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
 SELECTORS = {
+    "informative banner": {
+        "banner": Selector(By.CSS_SELECTOR, "div.informative-banner"),
+        "understand how the uk leaving the eu may affect your business": Selector(
+            By.CSS_SELECTOR, "div.informative-banner a"
+        ),
+    },
     "service cards": {
-        "itself": Selector(By.ID, "featured-cards-section"),
+        "service cards section": Selector(By.ID, "featured-cards-section"),
         "cards": Selector(By.CSS_SELECTOR, "#content div.card"),
         "expand to the uk": Selector(
-            By.CSS_SELECTOR, "#content > section > div > div > div:nth-child(1) a"
+            By.CSS_SELECTOR,
+            "#featured-cards-section > div > div > div:nth-child(1) p:nth-child(2) > a:nth-child(1)",
         ),
-        "find a uk supplier": Selector(
-            By.CSS_SELECTOR, "#content > section > div > div > div:nth-child(2) a"
+        "capital investment in the uk": Selector(
+            By.CSS_SELECTOR,
+            "#featured-cards-section > div > div > div:nth-child(1) p:nth-child(2) > a:nth-child(2)",
+        ),
+        "how we help you buy from the uk": Selector(
+            By.CSS_SELECTOR,
+            "#featured-cards-section > div > div > div:nth-child(2) p:nth-child(2) > a:nth-child(1)",
         ),
     },
-    "tariffs": {"itself": Selector(By.ID, "tariffs-section")},
-    "news": {
-        "itself": Selector(By.ID, "news-events-section"),
-        "cards": Selector(By.CSS_SELECTOR, "#news-events-section .card"),
+    "how dit provides help": {
+        "how dit provides help section": Selector(
+            By.CSS_SELECTOR, "#content > section:nth-child(4)"
+        ),
+        "help links": Selector(By.CSS_SELECTOR, "#content > section:nth-child(4) a"),
+    },
+    "tariffs": {
+        "tariffs section": Selector(By.ID, "tariffs-section"),
+        "continue with trade tariffs": Selector(
+            By.CSS_SELECTOR, "#tariffs-section form button"
+        ),
+    },
+    "featured links": {
+        "featured links section": Selector(By.ID, "featured-links-section"),
+        "featured links": Selector(By.CSS_SELECTOR, "#featured-links-section a"),
+        "discover uk industries": Selector(
+            By.CSS_SELECTOR,
+            "#featured-links-section div.column-third-xl:nth-child(1) a",
+        ),
+        "how to set up in the uk": Selector(
+            By.CSS_SELECTOR,
+            "#featured-links-section div.column-third-xl:nth-child(2) a",
+        ),
+        "tell us what help you need": Selector(
+            By.CSS_SELECTOR,
+            "#featured-links-section div.column-third-xl:nth-child(3) a",
+        ),
     },
     "study or visit the uk": {
-        "itself": Selector(By.ID, "study-visit-cta-section"),
+        "study or visit the uk section": Selector(By.ID, "study-visit-cta-section"),
         "study in the uk": Selector(By.LINK_TEXT, "Study in the UK"),
         "visit the uk": Selector(By.LINK_TEXT, "Visit the UK"),
     },
 }
 SELECTORS.update(common_selectors.INTERNATIONAL_HEADER)
-SELECTORS.update(common_selectors.BETA_BAR)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
 SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
