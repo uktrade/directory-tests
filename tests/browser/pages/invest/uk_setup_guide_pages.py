@@ -33,6 +33,7 @@ NAMES = [
     "Open a UK business bank account (Staging)",
     "Register a company in the UK",
     "UK Income Tax",
+    "UK innovation",
     "UK infrastructure",
     "UK talent and labour",
     "UK tax and incentives",
@@ -66,9 +67,11 @@ SubURLs = {
     "dit's guide to uk venture capital schemes": URLs.INVEST_UK_SETUP_GUIDE_DIT_VENTURE_CAPITAL.absolute,
     "establish a uk business base": URLs.INVEST_UK_SETUP_GUIDE_ESTABLISH_A_BASE.absolute,
     "register a company in the uk": URLs.INVEST_UK_SETUP_GUIDE_REGISTER_A_COMPANY.absolute,
-    "uk income tax": URLs.INVEST_UK_SETUP_GUIDE_UK_INCOME_TAX.absolute,
+    "uk innovation": URLs.INVEST_UK_SETUP_GUIDE_UK_INNOVATION.absolute,
     "uk infrastructure": URLs.INVEST_UK_SETUP_GUIDE_UK_INFRASTRUCTURE.absolute,
     "uk talent and labour": URLs.INVEST_UK_SETUP_GUIDE_HIRE_SKILLED_WORKERS.absolute,
+    # Not in use
+    "uk income tax": URLs.INVEST_UK_SETUP_GUIDE_UK_INCOME_TAX.absolute,
     "uk tax and incentives": URLs.INVEST_UK_SETUP_GUIDE_UK_TAX.absolute,
     # Staging
     "access finance in the uk (staging)": urljoin(

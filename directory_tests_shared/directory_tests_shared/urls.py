@@ -535,6 +535,9 @@ class URLs(Enum):
     INVEST_UK_SETUP_GUIDE_UK_INFRASTRUCTURE = InternationalUrl(
         "content/invest/how-to-setup-in-the-uk/uk-infrastructure/"
     )
+    INVEST_UK_SETUP_GUIDE_UK_INNOVATION = InternationalUrl(
+        "content/invest/how-to-setup-in-the-uk/research-and-development-rd-support-in-the-uk/"
+    )
 
     INVEST_LEGACY_REGIONS_MIDLANDS = LegacyInvestUrl("uk-regions/midlands/")
     INVEST_LEGACY_REGIONS_NORTHERN_IRELAND = LegacyInvestUrl(
