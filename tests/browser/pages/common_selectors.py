@@ -141,13 +141,14 @@ INTERNATIONAL_HEADER = {
         "for international businesses": Selector(
             By.ID, "great-global-header-international-link"
         ),
+        # Logo
+        "invest in great logo": Selector(By.ID, "great-header-logo"),
         # language selector
         "language selector": Selector(
             By.ID, "great-header-language-select", type=ElementType.SELECT
         ),
-        # header menu
+        # main menu
         "header menu": Selector(By.CSS_SELECTOR, "div.menu"),
-        "invest in great logo": Selector(By.ID, "great-header-logo"),
         "about the uk": Selector(By.LINK_TEXT, "About the UK", type=ElementType.LINK),
         "expand to the uk": Selector(
             By.LINK_TEXT, "Expand to the UK", type=ElementType.LINK
@@ -185,47 +186,37 @@ INTERNATIONAL_HERO = {
 
 INVEST_HEADER = {
     "header": {
-        # cookie notice
-        "itself": Selector(By.ID, "header-cookie-notice", is_visible=False),
-        "find out more about cookies": Selector(
-            By.CSS_SELECTOR, "#header-cookie-notice a", is_visible=False
-        ),
-        "dismiss cookie notice": Selector(
-            By.ID, "dismiss-cookie-notice", is_visible=False
-        ),
-        # global header
-        "global header": Selector(By.ID, "great-global-header"),
-        "great global logo": Selector(By.ID, "great-global-header-logo"),
-        "for uk businesses": Selector(By.ID, "great-global-header-domestic-link"),
-        "for international businesses": Selector(
-            By.ID, "great-global-header-international-link"
-        ),
-        # header menu
-        "header menu": Selector(By.ID, "great-header-menu"),
-        "invest in great logo": Selector(By.ID, "great-header-logo"),
-        "language selector": Selector(By.ID, "great-header-language-select"),
-        "invest": Selector(
+        # sub menu
+        "header sub menu": Selector(By.CSS_SELECTOR, "nav.sub-nav"),
+        "overview": Selector(
             By.CSS_SELECTOR,
-            "nav.main-nav.desktop ul li:nth-child(1) a",
+            "nav.sub-nav > ul > li.menu-item:nth-child(1) > a",
             type=ElementType.LINK,
         ),
-        "uk setup guide": Selector(
+        "how to expand to the uk": Selector(
             By.CSS_SELECTOR,
-            "nav.main-nav.desktop ul li:nth-child(2) a",
+            "nav.sub-nav > ul > li.menu-item:nth-child(2) > a",
             type=ElementType.LINK,
         ),
         "find a uk supplier": Selector(
             By.CSS_SELECTOR,
-            "nav.main-nav.desktop ul li:nth-child(3) a",
+            "nav.sub-nav > ul > li.menu-item:nth-child(3) > a",
             type=ElementType.LINK,
         ),
-        "industries": Selector(
+        "how we help": Selector(
             By.CSS_SELECTOR,
-            "nav.main-nav.desktop ul li:nth-child(4) a",
+            "nav.sub-nav > ul > li.menu-item:nth-child(4) > a",
+            type=ElementType.LINK,
+        ),
+        "contact us": Selector(
+            By.CSS_SELECTOR,
+            "nav.sub-nav > ul > li.menu-item:nth-child(5) > a",
             type=ElementType.LINK,
         ),
     }
 }
+# merge Invest header sub-menu with main International header
+INVEST_HEADER["header"] = {**INVEST_HEADER["header"], **INTERNATIONAL_HEADER["header"]}
 
 INVEST_HERO = {
     "hero": {
