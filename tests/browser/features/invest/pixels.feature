@@ -28,3 +28,16 @@ Feature: Invest - Pixels
       | High productivity food production - HPO|
       | Lightweight structures - HPO           |
       | Rail infrastructure - HPO              |
+
+    @dev-only
+    Examples: UK Setup Guides
+      | selected                                          |
+      | DIT's Guide to UK Venture Capital Schemes - guide |
+      | DIT's guide to UK Capital Gains Tax - guide       |
+      | UK infrastructure - guide                         |
+      | DIT's guide to UK Corporation Tax - guide         |
+      | Access finance in the UK - guide                  |
+      | Register a company in the UK - guide              |
+      | UK talent and labour - guide                      |
+      | Establish a UK business base - guide              |
+      | UK innovation - guide                             |
