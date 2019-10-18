@@ -348,7 +348,7 @@ Feature: Domestic - Contact us
   @eu-exit
   @feature-flagged
   Scenario: Exporters should be able to get to the "Domestic Brexit help short contact-us form"
-    Given "Robert" got to the "Domestic - What can we help you with? - Contact us" page via "The UK"
+    Given "Robert" got to the "Domestic - What can we help you with? - Domestic Contact us" page via "The UK"
 
     When "Robert" chooses "Brexit enquiries" option
 
@@ -418,7 +418,7 @@ Feature: Domestic - Contact us
 
     When "Robert" says that his business is "Outside the UK"
 
-    Then "Robert" should be on the "Domestic - What would you like to know more about? - International Contact us" page
+    Then "Robert" should be on the "Domestic - What would you like to know more about? (staging) - International Contact us" page
     And "Robert" should see following form choices
       | radio elements               |
       | Investing in the UK          |
@@ -439,9 +439,8 @@ Feature: Domestic - Contact us
     @dev-only
     Examples:
       | selected                     | expected                                                |
-      | Investing in the UK          | Invest - Contact us                                     |
-      | Capital investment in the UK | International - Contact the Capital Investment team     |
-      | Exporting to the UK          | International - Exporting to the UK                     |
+      | Expanding to the UK          | Invest - Contact us                                     |
+      | Investing capital in the UK  | International - Contact the Capital Investment team     |
       | Find a UK business partner   | International - Find a UK business partner - Contact us |
       | Brexit enquiries             | International - Brexit help                             |
       | Other                        | International - Contact us                              |
