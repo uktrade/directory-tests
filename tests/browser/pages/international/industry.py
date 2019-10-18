@@ -64,6 +64,7 @@ SubURLs = {
     "financial services": URLs.INTERNATIONAL_INDUSTRY_FINANCIAL_SERVICES.absolute,
     "food and drink": URLs.INTERNATIONAL_INDUSTRY_FOOD_AND_DRINK.absolute,
     "health and life sciences": URLs.INTERNATIONAL_INDUSTRY_HEALTH_AND_LIFE_SCIENCES.absolute,
+    "healthcare and life sciences": URLs.INTERNATIONAL_INDUSTRY_HEALTH_AND_LIFE_SCIENCES.absolute,
     "legal services": URLs.INTERNATIONAL_INDUSTRY_LEGAL_SERVICES.absolute,
     "maritime": URLs.INTERNATIONAL_INDUSTRY_MARITIME.absolute,
     "nuclear energy": URLs.INTERNATIONAL_INDUSTRY_NUCLEAR_ENERGY.absolute,
