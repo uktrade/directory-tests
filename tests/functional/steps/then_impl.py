@@ -36,6 +36,7 @@ from tests.functional.pages import (
     profile,
     sso,
 )
+from tests.functional.steps.common import can_find_supplier_by_term
 from tests.functional.utils.context_utils import (
     get_actor,
     get_company,
@@ -50,7 +51,6 @@ from tests.functional.utils.generic import (
     extract_csrf_middleware_token,
     extract_logo_url,
     extract_page_contents,
-    get_number_of_search_result_pages,
     surround,
 )
 
@@ -412,45 +412,20 @@ def fas_find_supplier_using_case_study_details(
     )
 
     search_results = defaultdict()
-    for term_name in search_terms:
-        term = search_terms[term_name]
-        logging.debug(f"Looking for '{company.title}' using '{term_name}': '{term}'")
-        context.response = fas.search.go_to(session, term=term)
-        fas.search.should_be_here(context.response)
-        found = fas.search.should_see_company(context.response, company.title)
-        if not found:
-            logging.debug(
-                f"Could not find company '{company.title}' on the 1st page of search "
-                f"results using '{term_name}': '{term}'"
-            )
-        count = 1
-        number_of_pages = get_number_of_search_result_pages(context.response)
-        while not found and number_of_pages > 1 and count < max_pages:
-            for page_number in range(2, number_of_pages + 1):
-                logging.debug(
-                    f"found={found} number_of_pages={number_of_pages} count={count}"
-                )
-                logging.debug(f"Checking search result page number: {page_number}")
-                context.response = fas.search.go_to(
-                    session, term=term, page=page_number
-                )
-                fas.search.should_be_here(context.response)
-                found = fas.search.should_see_company(context.response, company.title)
-                if found:
-                    logging.debug(
-                        f"Breaking out of vicious search loop as company "
-                        f"'{company.title}' was found using '{term_name}': '{term}' on"
-                        f" {context.response.url}"
-                    )
-                    break
-                count += 1
-        search_results[term_name] = {"term": term, "found": found}
+    for term_type in search_terms:
+        term = search_terms[term_type]
+        logging.debug(f"Looking for '{company.title}' using '{term_type}': '{term}'")
+        profile_link, context.response = can_find_supplier_by_term(
+            session, company.title, term, term_type
+        )
+        found = profile_link != ""
+        search_results[term_type] = {"term": term, "found": found}
 
     logging.debug(f"Search results: {search_results}")
     not_found_by = {
-        term_name: search
-        for term_name, search in search_results.items()
-        if not search["found"]
+        term_type: search_results
+        for term_type, search_results in search_results.items()
+        if not search_results["found"]
     }
     not_found_by_str = "; ".join(
         [f"{k} → {v['term']}" for k, v in not_found_by.items()]

@@ -41,6 +41,7 @@ from tests.functional.pages import (
     profile,
     sso,
 )
+from tests.functional.steps.common import can_find_supplier_by_term
 from tests.functional.steps.then_impl import (
     profile_should_get_request_for_becoming_owner,
     reg_should_get_verification_email,
@@ -184,21 +185,17 @@ def fas_find_company_by_name(context: Context, buyer_alias: str, company_alias: 
     buyer = get_actor(context, buyer_alias)
     session = buyer.session
     company = get_company(context, company_alias)
-    found, context.response, profile_endpoint = can_find_supplier_by_term(
+    profile_link, context.response = can_find_supplier_by_term(
         session=session,
-        name=company.title,
+        company_title=company.title,
         term=company.title,
         term_type="company title",
     )
     with assertion_msg(
-        "%s could not find company '%s' of FAS using company's title",
-        buyer_alias,
-        company.title,
+        f"{buyer_alias} could not find FAS company '{company.title}' using its title"
     ):
-        assert found
-    with assertion_msg("Could not extract URL to '%s' profile page", company.title):
-        assert profile_endpoint
-    update_company(context, company_alias, fas_profile_endpoint=profile_endpoint)
+        assert profile_link
+    update_company(context, company_alias, fas_profile_endpoint=profile_link)
 
 
 @retry(wait_fixed=3000, stop_max_attempt_number=5)
@@ -913,62 +910,15 @@ def fas_search_using_company_details(
     )
     for term_name in search_terms:
         term = search_terms[term_name]
-        response = fas.search.go_to(session, term=term)
-        context.response = response
-        fas.search.should_be_here(response)
-        number_of_pages = get_number_of_search_result_pages(response)
-
-        if number_of_pages == 0:
-            found = fas.search.should_see_company(response, company.title)
-            search_results[term_name] = found
-            search_responses[term_name] = response
-            if found:
-                logging.debug(
-                    f"Found Supplier '{company.title}' on the first and"
-                    f" only FAS search result page. Search was done using "
-                    f"'{term_name}' : '{term}'"
-                )
-            else:
-                logging.debug(
-                    f"Couldn't find Supplier '{company.title}' on the first and"
-                    f" only FAS search result page. Search was done using "
-                    f"'{term_name}' : '{term}'"
-                )
+        profile_link, response = can_find_supplier_by_term(
+            session, company.title, term, term_name
+        )
+        found = profile_link != ""
+        search_results[term_name] = found
+        search_responses[term_name] = response
+        if found:
             continue
 
-        for page_number in range(1, number_of_pages + 1):
-            search_responses[term_name] = response
-            found = fas.search.should_see_company(response, company.title)
-            search_results[term_name] = found
-            if found:
-                logging.debug(
-                    "Found Supplier '%s' on FAS using '%s' : '%s' on %d page "
-                    "out of %d",
-                    company.title,
-                    term_name,
-                    term,
-                    page_number,
-                    number_of_pages,
-                )
-                break
-            else:
-                logging.debug(
-                    "Couldn't find Supplier '%s' on the %d page out of %d of "
-                    "FAS search results. Search was done using '%s' : '%s'",
-                    company.title,
-                    page_number,
-                    number_of_pages,
-                    term_name,
-                    term,
-                )
-                next_page = page_number + 1
-                if next_page <= number_of_pages:
-                    response = fas.search.go_to(session, term=term, page=next_page)
-                else:
-                    logging.debug(
-                        "Couldn't find the Supplier even on the last"
-                        " page of the search results"
-                    )
     context.search_results = search_results
     context.search_responses = search_responses
 
@@ -1069,55 +1019,6 @@ def fas_get_company_profile_url(response: Response, name: str) -> str:
     return profile_url
 
 
-def can_find_supplier_by_term(
-    session: Session, name: str, term: str, term_type: str, max_pages: int = 10
-) -> (bool, Response, str):
-    """
-
-    :param session: Buyer's session object
-    :param name: sought Supplier name
-    :param term: a text used to find the Supplier
-    :param term_type: type of the term, e.g.: product, service, keyword etc.
-    :param max_pages: maximum number of search results pages to go through
-    :return: a tuple with search result (True/False), last search Response and
-             an endpoint to company's profile
-    """
-    endpoint = None
-    response = fas.search.go_to(session, term=term)
-    fas.search.should_be_here(response)
-    found = fas.search.should_see_company(response, name)
-    if found:
-        endpoint = fas_get_company_profile_url(response, name)
-        return found, response, endpoint
-    else:
-        number_of_pages = get_number_of_search_result_pages(response)
-        page_counter = 1
-        for page_number in range(1, number_of_pages + 1):
-            found = fas.search.should_see_company(response, name)
-            if found:
-                endpoint = fas_get_company_profile_url(response, name)
-                break
-            else:
-                logging.debug(
-                    f"Couldn't find Supplier '{name}' on the {page_number} page out of "
-                    f"{number_of_pages} of FAS search results. Search was done using "
-                    f"'{term_type}' : '{term}'"
-                )
-                next_page = page_number + 1
-                if next_page <= number_of_pages:
-                    response = fas.search.go_to(session, term=term, page=next_page)
-                    fas.search.should_be_here(response)
-                else:
-                    logging.debug(
-                        "Couldn't find the Supplier even on the last page of the "
-                        "search results"
-                    )
-            if page_counter >= max_pages:
-                logging.debug(f"Got to the {max_pages}th/st search results page")
-                break
-    return found, response, endpoint
-
-
 def fas_search_with_product_service_keyword(
     context: Context, buyer_alias: str, search_table: Table
 ):
@@ -1153,9 +1054,10 @@ def fas_search_with_product_service_keyword(
                 term_type,
                 term,
             )
-            found, response, _ = can_find_supplier_by_term(
+            profile_link, response = can_find_supplier_by_term(
                 session, company, term, term_type
             )
+            found = profile_link != ""
             search_term["found"] = found
             search_term["response"] = response
 
@@ -1492,7 +1394,8 @@ def fas_browse_suppliers_by_company_sectors(
     context.response = response
     fas.search.should_be_here(response)
 
-    found = fas.search.should_see_company(response, company.title)
+    profile_link = fas.search.find_profile_link(response, company.title)
+    found = profile_link != ""
 
     results[1] = {
         "url": response.request.url,
@@ -1509,7 +1412,8 @@ def fas_browse_suppliers_by_company_sectors(
         for page_number in range(2, last_page):
             logging.debug("Going to search result page no.: %d", page_number)
             response = fas.search.go_to(session, page=page_number, sectors=sectors)
-            found = fas.search.should_see_company(response, company.title)
+            profile_link = fas.search.find_profile_link(response, company.title)
+            found = profile_link != ""
             results[page_number] = {
                 "url": response.request.url,
                 "sectors": sectors,
