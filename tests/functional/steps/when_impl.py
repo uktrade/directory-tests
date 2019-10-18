@@ -2144,7 +2144,7 @@ def find_ch_company(alias: str, *, term: str = None, active: bool = True):
     logging.debug(f"Found {len(by_type)} CH companies filtered by status & type")
 
     ch_company_details = random.choice(by_type)
-    logging.debug(f"Selected CH company: {ch_company_details}")
+    logging.debug(f"SEARCH: Selected CH company: {ch_company_details}")
 
     details_mapping = {
         "alias": alias,
