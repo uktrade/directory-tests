@@ -2053,7 +2053,6 @@ def find_ch_company(alias: str, *, term: str = None, active: bool = True):
         "food",
         "sell",
         "office",
-        "ltd",
         "fruits",
         "music",
         "group",
@@ -2074,7 +2073,6 @@ def find_ch_company(alias: str, *, term: str = None, active: bool = True):
         "impact",
         "solutions",
         "market",
-        "limited",
         "green",
         "price",
         "social",
@@ -2102,7 +2100,19 @@ def find_ch_company(alias: str, *, term: str = None, active: bool = True):
 
     unfiltered = response.json()
 
-    ch_companies = [company for company in unfiltered if company["company_number"]]
+    ch_companies = [
+        company
+        for company in unfiltered
+        if company["company_number"]
+        and len(
+            company["company_name"]
+            .lower()
+            .replace("ltd", "")
+            .replace("limited", "")
+            .split()
+        )
+        > 2
+    ]
 
     active_statuses = ["active", "voluntary-arrangement"]
     if active:
