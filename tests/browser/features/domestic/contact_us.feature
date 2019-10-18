@@ -402,9 +402,8 @@ Feature: Domestic - Contact us
     Then "Robert" should be on the "Domestic - What would you like to know more about? - International Contact us" page
     And "Robert" should see following form choices
       | radio elements               |
-      | Investing in the UK          |
-      | Capital investment in the UK |
-      | Exporting to the UK          |
+      | Expanding to the UK          |
+      | Investing capital in the UK |
       | Find a UK business partner   |
       | Brexit enquiries             |
       | Other                        |
