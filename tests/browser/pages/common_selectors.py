@@ -148,14 +148,17 @@ INTERNATIONAL_HEADER = {
         # header menu
         "header menu": Selector(By.CSS_SELECTOR, "div.menu"),
         "invest in great logo": Selector(By.ID, "great-header-logo"),
-        "invest": Selector(By.LINK_TEXT, "Invest", type=ElementType.LINK),
-        "uk setup guide": Selector(
-            By.LINK_TEXT, "UK setup guide", type=ElementType.LINK
+        "about the uk": Selector(By.LINK_TEXT, "About the UK", type=ElementType.LINK),
+        "expand to the uk": Selector(
+            By.LINK_TEXT, "Expand to the UK", type=ElementType.LINK
         ),
-        "find a uk supplier": Selector(
-            By.LINK_TEXT, "Find a UK supplier", type=ElementType.LINK
+        "invest capital in the uk": Selector(
+            By.LINK_TEXT, "Invest capital in the UK", type=ElementType.LINK
         ),
-        "industries": Selector(By.LINK_TEXT, "Industries", type=ElementType.LINK),
+        "buy from the uk": Selector(
+            By.LINK_TEXT, "Buy from the UK", type=ElementType.LINK
+        ),
+        "about us": Selector(By.LINK_TEXT, "About us", type=ElementType.LINK),
     }
 }
 INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR = copy.deepcopy(INTERNATIONAL_HEADER)
