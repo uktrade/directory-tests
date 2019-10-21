@@ -22,6 +22,7 @@ setup(
         "directory-sso-api-client>=6.1.0",
         "notifications-python-client>=5.3.0",
         "pdfminer2>=20151206",
+        "retrying>=1.3.3",
     ],
     extras_require={},
     classifiers=[

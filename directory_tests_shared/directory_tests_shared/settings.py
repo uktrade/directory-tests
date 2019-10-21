@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from urllib.parse import urljoin
-from envparse import env
 
 from django.conf import settings
+from envparse import env
 
 #####################################################################
 # Directory Service URLs & Credentials
 #####################################################################
 CMS_API_KEY = env.str("CMS_API_KEY")
 CMS_API_URL = env.str("CMS_API_URL")
-CMS_API_CACHE_EXPIRE_SECONDS = env.int("CMS_API_CACHE_EXPIRE_SECONDS", default=60 * 60 * 24 * 30)  # 30 days
+CMS_API_CACHE_EXPIRE_SECONDS = env.int(
+    "CMS_API_CACHE_EXPIRE_SECONDS", default=60 * 60 * 24 * 30
+)  # 30 days
 CMS_API_DEFAULT_TIMEOUT = env.int("CMS_API_DEFAULT_TIMEOUT", default=30)
 CMS_API_SENDER_ID = env.str("CMS_API_SENDER_ID", default="directory")
 CONTACT_US_URL = env.str("CONTACT_US_URL")
@@ -20,6 +22,7 @@ DIRECTORY_API_SENDER_ID = env.str("DIRECTORY_API_SENDER_ID", default="directory"
 DIRECTORY_API_HEALTH_CHECK_TOKEN = env.str("DIRECTORY_API_HEALTH_CHECK_TOKEN")
 DIRECTORY_API_URL = env.str("DIRECTORY_API_URL")
 DOMESTIC_URL = env.str("DOMESTIC_URL")
+ERP_URL = env.str("ERP_URL")
 EVENTS_URL = env.str("EVENTS_URL")
 EXPORT_OPPORTUNITIES_URL = env.str("EXPORT_OPPORTUNITIES_URL")
 FIND_A_BUYER_URL = env.str("FIND_A_BUYER_URL")
@@ -30,7 +33,9 @@ FORMS_API_URL = env.str("FORMS_API_URL")
 GOV_NOTIFY_API_KEY = env.str("GOV_NOTIFY_API_KEY")
 INTERNATIONAL_URL = env.str("INTERNATIONAL_URL")
 INVEST_URL = env.str("INVEST_URL")
-ISD_URL = env.str("ISD_URL", default=urljoin(INTERNATIONAL_URL, "investment-support-directory/"))
+ISD_URL = env.str(
+    "ISD_URL", default=urljoin(INTERNATIONAL_URL, "investment-support-directory/")
+)
 LEGACY_CONTACT_US_URL = env.str("LEGACY_CONTACT_US_URL")
 LEGACY_INVEST_URL = env.str("LEGACY_INVEST_URL")
 PROFILE_URL = env.str("PROFILE_URL")
@@ -104,7 +109,7 @@ HUB_URL = env.str("HUB_URL", default=None)
 TAKE_SCREENSHOTS = env.bool("TAKE_SCREENSHOTS", default=False)
 
 if BROWSER_ENVIRONMENT.lower() == "remote" and (
-        BROWSERSTACK_USER and BROWSERSTACK_PASS
+    BROWSERSTACK_USER and BROWSERSTACK_PASS
 ):
     HUB_URL = BROWSERSTACK_EXECUTOR_URL
 
@@ -136,6 +141,6 @@ settings.configure(
         "api_fallback": {
             "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
             "LOCATION": "unique-snowflake",
-        }
+        },
     },
 )
