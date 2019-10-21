@@ -13,7 +13,7 @@ from contextlib import contextmanager
 from datetime import datetime
 from os import path
 from types import ModuleType
-from typing import Dict, List
+from typing import Dict, List, Union
 from urllib.parse import urlparse
 
 import requests
@@ -682,6 +682,18 @@ def fill_out_textarea_fields(
         textarea.send_keys(value_to_type)
 
 
+def check_form_choices(
+    driver: WebDriver, form_selectors: Dict[str, Selector], names: List[str]
+):
+    radio_selectors = get_selectors(form_selectors, ElementType.RADIO)
+    for name in names:
+        radio_selector = radio_selectors[name.lower()]
+        find_element(driver, radio_selector, element_name=name, wait_for_it=False)
+    logging.debug(
+        f"All expected form choices: '{names}' are visible on " f"{driver.current_url}"
+    )
+
+
 def pick_option(
     driver: WebDriver, form_selectors: Dict[str, Selector], form_details: dict
 ):
@@ -793,6 +805,26 @@ def choose_one_form_option_except(
     logging.debug(f"Form details (with ignored: {ignored}): {form_details}")
     check_radio(driver, radio_selectors, form_details)
     return selected
+
+
+def pick_one_option_and_submit(
+    driver: WebDriver,
+    form_selectors: Dict[str, Selector],
+    name: str,
+    *,
+    submit_button_name: str = "submit",
+) -> Union[ModuleType, None]:
+    radio_selectors = get_selectors(form_selectors, ElementType.RADIO)
+    selector = radio_selectors[name.lower()]
+    choose_one_form_option(driver, radio_selectors, name)
+    take_screenshot(driver, "Before submitting the form")
+    submit_button_selector = form_selectors[submit_button_name]
+    button = find_element(
+        driver, submit_button_selector, element_name="Submit button", wait_for_it=False
+    )
+    button.click()
+    take_screenshot(driver, "After submitting the form")
+    return selector.next_page
 
 
 def tick_checkboxes(
