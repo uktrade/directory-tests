@@ -141,3 +141,53 @@ TAGS="--tags=ED-2366" BROWSER=firefox make browser_tests_locally
 * tutorial on using [behave with browserstack](https://www.browserstack.com/automate/behave)
 * example [browserstack behave project](https://github.com/browserstack/behave-browserstack)
 * [browser capabilities]()https://www.browserstack.com/automate/capabilities)
+
+
+## Discover unused step definitions
+
+Find steps used in all feature files and replace parameters with "VAR":
+```bash
+grep -R --no-filename -i "given\|and\|when\|then" features/ |\
+ grep -v "Scenario\|Examples\|Feature\||\|@\|#" |\
+ sed "s/  //g" |\
+ sed 's/"[^"]*"/"VAR"/g' |\
+ sed "s/^Given //g" |\
+ sed "s/^And //g" |\
+ sed "s/^Then //g" |\
+ sed "s/^When //g" |\
+ sort -u
+```
+
+List all step definitions known to `behave` and replace parameters with "VAR":
+```bash
+behave --steps-catalog |\
+ grep -v "Trying base directory\|Using default path" |\
+ sed 's/"[^"]*"/"VAR"/g' |\
+ sed "s/^Given //g" |\
+ sed "s/^And //g" |\
+ sed "s/^Then //g" |\
+ sed "s/^When //g" |\
+ sort -u
+```
+
+List unused step definitions:
+```bash
+diff -C0 <(grep -R --no-filename -i "given\|and\|when\|then" features/ |\
+           grep -v "Scenario\|Examples\|Feature\||\|@\|#" |\
+           sed "s/  //g" |\
+           sed 's/"[^"]*"/"VAR"/g' |\
+           sed "s/^Given //g" |\
+           sed "s/^And //g" |\
+           sed "s/^Then //g" |\
+           sed "s/^When //g" |\
+           sort -u) <(behave --steps-catalog |\
+                      grep -v "Trying base directory\|Using default path" |\
+                      sed 's/"[^"]*"/"VAR"/g' |\
+                      sed "s/^Given //g" |\
+                      sed "s/^And //g" |\
+                      sed "s/^Then //g" |\
+                      sed "s/^When //g" |\
+                      sort -u) |\
+          grep -e "^\+" |\
+          sed "s/+ //g"
+```
