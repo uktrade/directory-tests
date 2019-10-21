@@ -88,7 +88,7 @@ class ERPTasks(TaskSet):
         url = random.choice(self.erp_generic_get_urls)
         headers = {"erp_session_id": "invalid_cookie"}
         headers.update(LOAD_TESTS_USER_AGENT)
-        self.client.get(url, headers=headers, name=f"GET generic", auth=basic_auth())
+        self.client.get(url, headers=headers, name=f"generic", auth=basic_auth())
 
     @task
     def generic_post_pages(self):
@@ -103,7 +103,7 @@ class ERPTasks(TaskSet):
             url,
             headers=LOAD_TESTS_USER_AGENT,
             files=data,
-            name="POST generic",
+            name="generic",
             auth=basic_auth(),
         )
 
@@ -111,14 +111,14 @@ class ERPTasks(TaskSet):
     def business_forms(self):
         url = random.choice(self.erp_business_urls)
         self.client.get(
-            url, headers=LOAD_TESTS_USER_AGENT, name="GET /business", auth=basic_auth()
+            url, headers=LOAD_TESTS_USER_AGENT, name="/business", auth=basic_auth()
         )
 
     @task
     def consumer_forms(self):
         url = random.choice(self.erp_consumer_urls)
         self.client.get(
-            url, headers=LOAD_TESTS_USER_AGENT, name="GET /consumer", auth=basic_auth()
+            url, headers=LOAD_TESTS_USER_AGENT, name="/consumer", auth=basic_auth()
         )
 
     @task
@@ -136,7 +136,7 @@ class ERPTasks(TaskSet):
     def importer_forms(self):
         url = random.choice(self.erp_importer_urls)
         self.client.get(
-            url, headers=LOAD_TESTS_USER_AGENT, name="GET /importer", auth=basic_auth()
+            url, headers=LOAD_TESTS_USER_AGENT, name="/importer", auth=basic_auth()
         )
 
 
