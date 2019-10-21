@@ -5,10 +5,10 @@ load_hatch_rate: &load_hatch_rate
     HATCH_RATE: 5
 
 load_num_clients: &load_num_clients
-    NUM_CLIENTS: 20
+    NUM_CLIENTS: 30
 
 load_run_time: &load_run_time
-    RUN_TIME: 300
+    RUN_TIME: 900
 
 # Machines configs
 machine_python3: &machine_python3
