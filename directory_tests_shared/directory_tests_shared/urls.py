@@ -9,6 +9,7 @@ from .settings import (
     CONTACT_US_URL,
     DIRECTORY_API_URL,
     DOMESTIC_URL,
+    ERP_URL,
     EVENTS_URL,
     EXPORT_OPPORTUNITIES_URL,
     FIND_A_BUYER_URL,
@@ -62,6 +63,11 @@ class DomesticUrl(Url):
 class ExOppsUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
         super().__init__(EXPORT_OPPORTUNITIES_URL, endpoint, template=template)
+
+
+class ERPUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(ERP_URL, endpoint, template=template)
 
 
 class FABUrl(Url):
@@ -381,6 +387,193 @@ class URLs(Enum):
     )
     DOMESTIC_TERMS = DomesticUrl("terms-and-conditions/")
     DOMESTIC_PRIVACY = DomesticUrl("privacy-and-cookies/")
+
+    # Exceptional Review Procedure Service
+    ERP_LANDING = ERPUrl("")
+    ERP_TRIAGE_USER_TYPE = ERPUrl("triage/user-type/")
+    ERP_TRIAGE_IMPORT_FROM_OVERSEAS = ERPUrl("triage/import-from-overseas/")
+    ERP_SAVE_FOR_LATER = ERPUrl(
+        "save-for-later/", template="save-for-later/?return_url={return_url}"
+    )
+    ERP_BUSINESS_PRODUCT_SEARCH = ERPUrl("business/product-search/")
+    ERP_BUSINESS_PRODUCT_DETAIL = ERPUrl(
+        "business/product-detail/", template="business/product-detail/#{chapter}"
+    )
+    ERP_BUSINESS_SALES_VOLUME_BEFORE_BREXIT = ERPUrl(
+        "business/sales-volume-before-brexit/",
+        template="business/sales-volume-before-brexit/#{chapter}",
+    )
+    ERP_BUSINESS_SALES_REVENUE_BEFORE_BREXIT = ERPUrl(
+        "business/sales-revenue-before-brexit/",
+        template="business/sales-revenue-before-brexit/#{chapter}",
+    )
+    ERP_BUSINESS_SALES_AFTER_BREXIT = ERPUrl(
+        "business/sales-after-brexit/",
+        template="business/sales-after-brexit/#{chapter}",
+    )
+    ERP_BUSINESS_MARKET_SIZE_AFTER_BREXIT = ERPUrl(
+        "business/market-size-after-brexit/",
+        template="business/market-size-after-brexit/#{chapter}",
+    )
+    ERP_BUSINESS_OTHER_CHANGES_AFTER_BREXIT = ERPUrl(
+        "business/other-changes-after-brexit/",
+        template="business/other-changes-after-brexit/#{chapter}",
+    )
+    ERP_BUSINESS_MARKET_SIZE = ERPUrl(
+        "business/market-size/", template="business/market-size/#{chapter}"
+    )
+    ERP_BUSINESS_OTHER_INFORMATION = ERPUrl(
+        "business/other-information/", template="business/other-information/#{chapter}"
+    )
+    ERP_BUSINESS_OUTCOME = ERPUrl(
+        "business/outcome/", template="business/outcome/#{chapter}"
+    )
+    ERP_BUSINESS_BUSINESS_DETAILS = ERPUrl(
+        "business/business/", template="business/business/#{chapter}"
+    )
+    ERP_BUSINESS_PERSONAL_DETAILS = ERPUrl(
+        "business/personal/", template="business/personal/#{chapter}"
+    )
+    ERP_BUSINESS_SUMMARY = ERPUrl(
+        "business/summary/", template="business/summary/#{chapter}"
+    )
+    ERP_BUSINESS_FINISHED = ERPUrl(
+        "business/finished/", template="business/finished/#{chapter}"
+    )
+    ERP_CONSUMER_PRODUCT_SEARCH = ERPUrl("consumer/product-search/")
+    ERP_CONSUMER_PRODUCT_DETAIL = ERPUrl(
+        "consumer/product-detail/", template="consumer/product-detail/#{chapter}"
+    )
+    ERP_CONSUMER_CHANGE = ERPUrl(
+        "consumer/consumer-change/", template="consumer/consumer-change/#{chapter}"
+    )
+    ERP_CONSUMER_OTHER_INFORMATION = ERPUrl(
+        "consumer/other-information/", template="consumer/other-information/#{chapter}"
+    )
+    ERP_CONSUMER_OUTCOME = ERPUrl(
+        "consumer/outcome/", template="consumer/outcome/#{chapter}"
+    )
+    ERP_CONSUMER_PERSONAL = ERPUrl(
+        "consumer/personal/", template="consumer/personal/#{chapter}"
+    )
+    ERP_CONSUMER_SUMMARY = ERPUrl(
+        "consumer/summary/", template="consumer/summary/#{chapter}"
+    )
+    ERP_CONSUMER_FINISHED = ERPUrl(
+        "consumer/finished/", template="consumer/finished/#{chapter}"
+    )
+    ERP_DEVELOPING_COUNTRY = ERPUrl("developing-country-business/country/")
+    ERP_DEVELOPING_COUNTRY_PRODUCT_SEARCH = ERPUrl(
+        "developing-country-business/product-search/"
+    )
+    ERP_DEVELOPING_COUNTRY_PRODUCT_DETAIL = ERPUrl(
+        "developing-country-business/product-detail/",
+        template="developing-country-business/product-detail/#{chapter}",
+    )
+    ERP_DEVELOPING_COUNTRY_SALES_VOLUME_BEFORE_BREXIT = ERPUrl(
+        "developing-country-business/sales-volume-before-brexit/",
+        template="developing-country-business/sales-volume-before-brexit/#{chapter}",
+    )
+    ERP_DEVELOPING_COUNTRY_SALES_REVENUE_BEFORE_BREXIT = ERPUrl(
+        "developing-country-business/sales-revenue-before-brexit/",
+        template="developing-country-business/sales-revenue-before-brexit/#{chapter}",
+    )
+    ERP_DEVELOPING_COUNTRY_SALES_AFTER_BREXIT = ERPUrl(
+        "developing-country-business/sales-after-brexit/",
+        template="developing-country-business/sales-after-brexit/#{chapter}",
+    )
+    ERP_DEVELOPING_COUNTRY_MARKET_SIZE_AFTER_BREXIT = ERPUrl(
+        "developing-country-business/market-size-after-brexit/",
+        template="developing-country-business/market-size-after-brexit/#{chapter}",
+    )
+    ERP_DEVELOPING_COUNTRY_OTHER_CHANGES_AFTER_BREXIT = ERPUrl(
+        "developing-country-business/other-changes-after-brexit/",
+        template="developing-country-business/other-changes-after-brexit/#{chapter}",
+    )
+    ERP_DEVELOPING_COUNTRY_OUTCOME = ERPUrl(
+        "developing-country-business/outcome/",
+        template="developing-country-business/outcome/#{chapter}",
+    )
+    ERP_DEVELOPING_COUNTRY_BUSINESS_DETAILS = ERPUrl(
+        "developing-country-business/business/",
+        template="developing-country-business/business/#{chapter}",
+    )
+    ERP_DEVELOPING_COUNTRY_PERSONAL_DETAILS = ERPUrl(
+        "developing-country-business/personal/",
+        template="developing-country-business/personal/#{chapter}",
+    )
+    ERP_DEVELOPING_COUNTRY_SUMMARY = ERPUrl(
+        "developing-country-business/summary/",
+        template="developing-country-business/summary/#{chapter}",
+    )
+    ERP_DEVELOPING_COUNTRY_FINISHED = ERPUrl(
+        "developing-country-business/finished/",
+        template="developing-country-business/finished/#{chapter}",
+    )
+    ERP_IMPORTER_IMPORTED_PRODUCT_USAGE = ERPUrl(
+        "importer/imported-products-usage/",
+        template="importer/imported-products-usage/#{sub_heading}",
+    )
+    ERP_IMPORTER_PRODUCT_SEARCH = ERPUrl(
+        "importer/product-search/",
+        template="importer/product-search?product-search-term={term}#search-results-title",
+    )
+    ERP_IMPORTER_PRODUCT_DETAIL = ERPUrl(
+        "importer/product-detail/", template="importer/product-detail/#{sub_heading}"
+    )
+    ERP_IMPORTER_SALES_VOLUME_BEFORE_BREXIT = ERPUrl(
+        "importer/sales-volume-before-brexit/",
+        template="importer/sales-volume-before-brexit/#{sub_heading}",
+    )
+    ERP_IMPORTER_SALES_REVENUE_BEFORE_BREXIT = ERPUrl(
+        "importer/sales-revenue-before-brexit/",
+        template="importer/sales-revenue-before-brexit/#{sub_heading}",
+    )
+    ERP_IMPORTER_SALES_AFTER_BREXIT = ERPUrl(
+        "importer/sales-after-brexit/",
+        template="importer/sales-after-brexit/#{sub_heading}",
+    )
+    ERP_IMPORTER_MARKET_SIZE_AFTER_BREXIT = ERPUrl(
+        "importer/market-size-after-brexit/",
+        template="importer/market-size-after-brexit/#{sub_heading}",
+    )
+    ERP_IMPORTER_OTHER_CHANGES_AFTER_BREXIT = ERPUrl(
+        "importer/other-changes-after-brexit/",
+        template="importer/other-changes-after-brexit/#{sub_heading}",
+    )
+    ERP_IMPORTER_PRODUCTION_PERCENTAGE = ERPUrl(
+        "importer/production-percentage/",
+        template="importer/production-percentage/#{sub_heading}",
+    )
+    ERP_IMPORTER_WHICH_COUNTRIES = ERPUrl(
+        "importer/which-countries/", template="importer/which-countries/#{sub_heading}"
+    )
+    ERP_IMPORTER_EQUIVALENT_UK_GOODS = ERPUrl(
+        "importer/equivalent-uk-goods/",
+        template="importer/equivalent-uk-goods/#{sub_heading}",
+    )
+    ERP_IMPORTER_MARKET_SIZE = ERPUrl(
+        "importer/market-size/", template="importer/market-size/#{sub_heading}"
+    )
+    ERP_IMPORTER_OTHER_INFORMATION = ERPUrl(
+        "importer/other-information/",
+        template="importer/other-information/#{sub_heading}",
+    )
+    ERP_IMPORTER_OUTCOME = ERPUrl(
+        "importer/outcome/", template="importer/outcome/#{sub_heading}"
+    )
+    ERP_IMPORTER_BUSINESS_DETAILS = ERPUrl(
+        "importer/business/", template="importer/business/#{sub_heading}"
+    )
+    ERP_IMPORTER_PERSONAL_DETAILS = ERPUrl(
+        "importer/personal/", template="importer/personal/#{sub_heading}"
+    )
+    ERP_IMPORTER_SUMMARY = ERPUrl(
+        "importer/summary/", template="importer/summary/#{sub_heading}"
+    )
+    ERP_IMPORTER_FINISHED = ERPUrl(
+        "importer/finished/", template="importer/finished/#{sub_heading}"
+    )
 
     # Events service
     EVENTS_LANDING = Url(EVENTS_URL, "")
