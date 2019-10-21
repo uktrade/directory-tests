@@ -242,3 +242,9 @@ INVEST_FOOTER = {
         "copyright notice": Selector(By.ID, "great-footer-copyright"),
     }
 }
+
+ERP_HEADER = {"header": {}}
+ERP_BACK = {"go back": {}}
+ERP_BETA = {"beta bar": {}}
+ERP_BREADCRUMBS = {"breadcrumbs": {}}
+ERP_FOOTER = {"footer": {}}
