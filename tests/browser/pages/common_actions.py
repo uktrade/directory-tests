@@ -68,6 +68,7 @@ Selector = namedtuple(
         "group_id",
         "autocomplete_callback",
         "wait_after_click",
+        "next_page",
     ],
 )
 
@@ -84,6 +85,7 @@ Selector.__new__.__defaults__ = (
     None,
     None,
     True,
+    None,
 )
 
 
