@@ -220,6 +220,7 @@ def then_should_see_message(context: Context, actor_alias: str, *, message: str 
 
 
 @then('"{actor_alias}" should see following form choices')
+@then('"{actor_alias}" should see following options')
 def then_should_see_form_choices(context: Context, actor_alias: str):
     generic_should_see_form_choices(context, actor_alias, context.table)
 

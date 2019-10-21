@@ -150,6 +150,8 @@ def fas_when_actor_fills_out_and_submits_contact_us_form_wo_captcha(
 
 @when('"{actor_alias}" says that his business is in "{option}"')
 @when('"{actor_alias}" says that his business is "{option}"')
+@when('"{actor_alias}" says that he represents an "{option}"')
+@when('"{actor_alias}" says that he represents a "{option}"')
 @when('"{actor_alias}" chooses "{option}" option')
 def when_actor_chooses_form_option_and_submits_form(
         context: Context, actor_alias: str, option: str):
