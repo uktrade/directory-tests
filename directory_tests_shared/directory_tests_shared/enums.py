@@ -122,6 +122,7 @@ class Service(Enum):
     EORI = "EORI"
     EVENTS = "Events"
     EXPORT_OPPORTUNITIES = "Export Opportunities"
+    ERP = "ERP"
     FAB = "Find a Buyer"
     FACEBOOK = "Facebook"
     FAS = "Find a Supplier"
