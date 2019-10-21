@@ -684,6 +684,21 @@ jobs:
     *steps_run_load_tests,
     ]
 
+  load_erp_tests_stage:
+    working_directory: ~/directory-tests
+    environment:
+      SERVICE: "erp"
+      TEST_ENV: "stage"
+      <<: [
+      *load_hatch_rate,
+      *load_num_clients,
+      *load_run_time,
+      ]
+    <<: [
+    *machine_python3,
+    *steps_run_load_tests,
+    ]
+
 
 workflows:
   version: 2
@@ -870,6 +885,19 @@ workflows:
     jobs:
       - setup_env_for_load_tests
       - load_search_tests_stage:
+          requires:
+            - setup_env_for_load_tests
+
+  run_erp_load_tests_on_stage:
+    triggers:
+      - schedule:
+          cron: "29 4 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_load_tests
+      - load_erp_tests_stage:
           requires:
             - setup_env_for_load_tests
 
