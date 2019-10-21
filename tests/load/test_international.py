@@ -37,7 +37,7 @@ class InternationalTasks(TaskSet):
             URLs.INVEST_UK_SETUP_GUIDE_UK_TAX.relative,
         ]
         self.client.get(
-            choice(endpoints),
+            choice(endpoints).replace("/invest/", "/"),
             headers=LOAD_TESTS_USER_AGENT,
             name=URLs.INVEST_UK_SETUP_GUIDE.template,
             auth=basic_auth(),
@@ -45,17 +45,24 @@ class InternationalTasks(TaskSet):
 
     @task
     def industry_pages(self):
+        industries = [
+            "creative-industries/",
+            "engineering-and-manufacturing/",
+            "financial-and-professional-services/",
+            "financial-services/",
+            "legal-services/",
+            "technology/",
+        ]
         urls = [
-            URLs.INTERNATIONAL_INDUSTRIES.relative,
-            URLs.INTERNATIONAL_INDUSTRY_CREATIVE_INDUSTRIES.relative,
-            URLs.INTERNATIONAL_INDUSTRY_ENGINEERING_AND_MANUFACTURING.relative,
-            URLs.INTERNATIONAL_INDUSTRY_FINANCIAL_SERVICES.relative,
-            URLs.INTERNATIONAL_INDUSTRY_TECHNOLOGY.relative,
+            URLs.INTERNATIONAL_INDUSTRIES_STAGING.relative,
+            URLs.INTERNATIONAL_INDUSTRIES_STAGING.template.format(
+                industry=choice(industries)
+            ),
         ]
         self.client.get(
             choice(urls),
             headers=LOAD_TESTS_USER_AGENT,
-            name=URLs.INTERNATIONAL_INDUSTRIES.template,
+            name=URLs.INTERNATIONAL_INDUSTRIES_STAGING.template,
             auth=basic_auth(),
         )
 
