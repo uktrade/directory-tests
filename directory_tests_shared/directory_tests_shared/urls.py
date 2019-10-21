@@ -160,6 +160,101 @@ class URLs(Enum):
     def absolute_template(self) -> Union[str, None]:
         return self.value.absolute_template
 
+    # CMS API endpoints
+    CMS_API_HEALTHCHECK = CMSApiUrl("healthcheck/")
+    CMS_API_HEALTHCHECK_PING = CMSApiUrl("healthcheck/ping/")
+    CMS_API_PAGES = CMSApiUrl("api/pages/")
+    CMS_API_PAGE_BY_ID = CMSApiUrl(
+        "api/pages/{page_id}/", template="api/pages/{page_id}/"
+    )
+    CMS_API_PAGE_BY_PATH = CMSApiUrl(
+        "api/pages/lookup-by-path/{site_id}/{path}",
+        template="api/pages/lookup-by-path/{site_id}/{path}",
+    )
+    CMS_API_PAGE_TYPES = CMSApiUrl("api/pages/types/")
+    CMS_API_IMAGES = CMSApiUrl("api/images/")
+    CMS_API_DOCUMENTS = CMSApiUrl("api/documents/")
+
+    # UNUSED DEFINITIONS
+    # New Contact-Us UI - Domestic & International
+    CONTACT_US_DOMESTIC = ContactUrl("triage/domestic/")
+    CONTACT_US_DOMESTIC_SUCCESS = ContactUrl(
+        "{page}/success/", template="{page}/success/"
+    )
+    CONTACT_US_FEEDBACK = ContactUrl("feedback/")
+    CONTACT_US_FEEDBACK_SUCCESS = ContactUrl("feedback/success/")
+    CONTACT_US_EXPORT_OPPORTUNITIES = ContactUrl("triage/export-opportunities/")
+    CONTACT_US_EXPORT_OPPORTUNITIES_NO_RESPONSE = ContactUrl(
+        "triage/export-opportunities/opportunity-no-response/"
+    )
+    CONTACT_US_EXPORT_OPPORTUNITIES_NOT_RELEVANT = ContactUrl(
+        "triage/export-opportunities/alerts-not-relevant/"
+    )
+    CONTACT_US_FORM_DOMESTIC = ContactUrl("domestic/")
+    CONTACT_US_FORM_DOMESTIC_SUCCESS = ContactUrl("domestic/success/")
+    CONTACT_US_EXPORT_ADVICE_BUSINESS = ContactUrl("export-advice/business/")
+    CONTACT_US_EXPORT_ADVICE_COMMENT = ContactUrl("export-advice/comment/")
+    CONTACT_US_EXPORT_ADVICE_PERSONAL = ContactUrl("export-advice/personal/")
+    CONTACT_US_OFFICE_FINDER = ContactUrl("office-finder/")
+    CONTACT_US_FORM_DSO = ContactUrl("defence-and-security-organisation/")
+    CONTACT_US_FORM_GET_FINANCE_COMPANY_DETAILS = DomesticUrl(
+        "get-finance/company-details/"
+    )
+    CONTACT_US_DOMESTIC_BREXIT_CONTACT = DomesticUrl("brexit/contact/")
+    CONTACT_US_DOMESTIC_BREXIT_CONTACT_SUCCESS = DomesticUrl("brexit/contact/success/")
+    CONTACT_US_FORM_EVENTS = ContactUrl("events/")
+    CONTACT_US_FORM_DOMESTIC_ENQUIRES = ContactUrl("domestic/enquiries/")
+    CONTACT_US_FORM_EXPORT_ADVICE = ContactUrl("export-advice/comment/")
+    CONTACT_US_FORM_INTERNATIONAL = ContactUrl("international/")
+    CONTACT_US_GREAT_ACCOUNT = ContactUrl("triage/great-account/")
+    CONTACT_US_GREAT_ACCOUNT_CH_LOGIN = ContactUrl(
+        "triage/great-account/companies-house-login/"
+    )
+    CONTACT_US_GREAT_ACCOUNT_NO_VERIFICATION_EMAIL = ContactUrl(
+        "triage/great-account/no-verification-email/"
+    )
+    CONTACT_US_GREAT_ACCOUNT_NO_VERIFICATION_LETTER = ContactUrl(
+        "triage/great-account/no-verification-letter/"
+    )
+    CONTACT_US_GREAT_ACCOUNT_PASSWORD_RESET = ContactUrl(
+        "triage/great-account/password-reset/"
+    )
+    CONTACT_US_GREAT_ACCOUNT_VERIFICATION_LETTER_CODE = ContactUrl(
+        "triage/great-account/verification-letter-code/"
+    )
+    CONTACT_US_GREAT_ACCOUNT_VERIFICATION_MISSING = ContactUrl(
+        "triage/great-account/verification-missing/"
+    )
+    CONTACT_US_GREAT_SERVICES = ContactUrl("triage/great-services/")
+    CONTACT_US_INTERNATIONAL = InternationalUrl("contact/")
+    CONTACT_US_INTERNATIONAL_STAGING = ContactUrl("triage/international/")
+    CONTACT_US_INTERNATIONAL_EXPORTING_TO_THE_UK = ContactUrl(
+        "triage/international/exporting-to-the-uk/"
+    )
+    CONTACT_US_INTERNATIONAL_BREXIT_CONTACT = InternationalUrl("brexit/contact/")
+    CONTACT_US_INTERNATIONAL_BREXIT_CONTACT_SUCCESS = InternationalUrl(
+        "brexit/contact/success/"
+    )
+    CONTACT_US_LANDING = ContactUrl("triage/location/")
+    CONTACT_US_OTHER_DOMESTIC_EU_EXIT = ContactUrl("eu-exit-news/contact/")
+    CONTACT_US_OTHER_GET_FINANCE = ContactUrl("get-finance/contact/")
+    CONTACT_US_OTHER_INTERNATIONAL_EU_EXIT = ContactUrl(
+        "international/eu-exit-news/contact/"
+    )
+
+    # SOO Contact-Us pages
+    CONTACT_US_SOO_ORGANISATION = ContactUrl("selling-online-overseas/organisation/")
+    CONTACT_US_SOO_ORGANISATION_DETAILS = ContactUrl(
+        "selling-online-overseas/organisation-details/"
+    )
+    CONTACT_US_SOO_ORGANISATION_YOUR_EXPERIENCE = ContactUrl(
+        "selling-online-overseas/your-experience/"
+    )
+    CONTACT_US_SOO_ORGANISATION_CONTACT_DETAILS = ContactUrl(
+        "selling-online-overseas/contact-details/"
+    )
+    CONTACT_US_SOO_ORGANISATION_SUCCESS = ContactUrl("selling-online-overseas/success/")
+
     # Directory API
     DIR_API_HEALTHCHECK = DirectoryApiUrl("healthcheck/")
     DIR_API_HEALTHCHECK_PING = DirectoryApiUrl("healthcheck/ping/")
@@ -235,22 +330,69 @@ class URLs(Enum):
         template="/testapi/company/{ch_id_or_name}/",
     )
 
-    # SSO UI
-    SSO_LANDING = SSOUrl("")
-    SSO_EMAIL_CONFIRM = SSOUrl("accounts/confirm-email/")
-    SSO_INACTIVE = SSOUrl("accounts/inactive/")
-    SSO_LOGIN = SSOUrl("accounts/login/", template="accounts/login/?next={next}")
-    SSO_LOGOUT = SSOUrl("accounts/logout/")
-    SSO_PASSWORD_CHANGE = SSOUrl("accounts/password/change/")
-    SSO_PASSWORD_RESET = SSOUrl("accounts/password/reset/")
-    SSO_PASSWORD_SET = SSOUrl("accounts/password/set/")
-    SSO_SIGNUP = SSOUrl("accounts/signup/")
+    # Domestic site
+    DOMESTIC_ADVICE = DomesticUrl("advice/")
+    DOMESTIC_API_COMPANY_HOUSE_SEARCH = DomesticUrl(
+        "api/internal/companies-house-search/"
+    )
+    DOMESTIC_COMMUNITY = DomesticUrl("community/")
+    DOMESTIC_COMMUNITY_JOIN = DomesticUrl("community/join/")
+    DOMESTIC_HEALTHCHECK = DomesticUrl("healthcheck/")
+    DOMESTIC_HEALTHCHECK_PING = DomesticUrl("healthcheck/ping/")
+    DOMESTIC_SEARCH = DomesticUrl("search/")
+    DOMESTIC_SERVICES = DomesticUrl("services/")
+    DOMESTIC_SITEMAP = DomesticUrl("sitemap.xml")
+    DOMESTIC_LANDING = DomesticUrl("")
+    DOMESTIC_LANDING_UK = DomesticUrl("?lang=en-gb")
+    DOMESTIC_MARKETS = DomesticUrl("markets/")
+    DOMESTIC_TRADE_FINANCE = DomesticUrl("trade-finance/?lang=en-gb")
+    DOMESTIC_INTERNATIONAL = DomesticUrl("international/")
+    DOMESTIC_INTERNATIONAL_UK = DomesticUrl("international/?lang=en-gb")
+    DOMESTIC_INTERNATIONAL_ZH = DomesticUrl("international/?lang=zh-hans")
+    DOMESTIC_INTERNATIONAL_DE = DomesticUrl("international/?lang=de")
+    DOMESTIC_INTERNATIONAL_JA = DomesticUrl("international/?lang=ja")
+    DOMESTIC_INTERNATIONAL_ES = DomesticUrl("international/?lang=es")
+    DOMESTIC_INTERNATIONAL_PT = DomesticUrl("international/?lang=pt")
+    DOMESTIC_INTERNATIONAL_AR = DomesticUrl("international/?lang=ar")
+    DOMESTIC_TRIAGE_SECTOR = DomesticUrl("triage/sector/")
+    DOMESTIC_TRIAGE_EXPORTED_BEFORE = DomesticUrl("triage/exported-before/")
+    DOMESTIC_TRIAGE_REGULAR_EXPORTER = DomesticUrl("triage/regular-exporter/")
+    DOMESTIC_TRIAGE_ONLINE_MARKETPLACE = DomesticUrl("triage/online-marketplace/")
+    DOMESTIC_TRIAGE_COMPANIES_HOUSE = DomesticUrl("triage/companies-house/")
+    DOMESTIC_TRIAGE_COMPANY = DomesticUrl("triage/company/")
+    DOMESTIC_TRIAGE_SUMMARY = DomesticUrl("triage/summary/")
+    DOMESTIC_CUSTOM = DomesticUrl("custom/")
+    DOMESTIC_NEW = DomesticUrl("new/")
+    DOMESTIC_OCCASIONAL = DomesticUrl("occasional/")
+    DOMESTIC_REGULAR = DomesticUrl("regular/")
+    DOMESTIC_MARKET_RESEARCH = DomesticUrl("market-research/")
+    DOMESTIC_CUSTOMER_INSIGHT = DomesticUrl("customer-insight/")
+    DOMESTIC_FINANCE = DomesticUrl("finance/")
+    DOMESTIC_BUSINESS_PLANNING = DomesticUrl("business-planning/")
+    DOMESTIC_GETTING_PAID = DomesticUrl("getting-paid/")
+    DOMESTIC_OPERATIONS_AND_COMPLIANCE = DomesticUrl("operations-and-compliance/")
+    DOMESTIC_GET_FINANCE = DomesticUrl("get-finance/?lang=en-gb")
+    DOMESTIC_GET_FINANCE_YOUR_DETAILS = DomesticUrl("get-finance/your-details/")
+    DOMESTIC_GET_FINANCE_SUCCESS = DomesticUrl("get-finance/contact/thanks/")
+    DOMESTIC_GET_FINANCE_HELP = DomesticUrl("get-finance/help/")
+    DOMESTIC_STORY_FIRST = DomesticUrl("story/hello-babys-rapid-online-growth/")
+    DOMESTIC_STORY_SECOND = DomesticUrl(
+        "story/york-bag-retailer-goes-global-via-e-commerce/"
+    )
+    DOMESTIC_TERMS = DomesticUrl("terms-and-conditions/")
+    DOMESTIC_PRIVACY = DomesticUrl("privacy-and-cookies/")
 
-    # SSO API
-    SSO_API_LANDING = SSOApiUrl("")
-    SSO_API_HEALTHCECK = SSOApiUrl("api/v1/healthcheck/")
-    SSO_API_HEALTHCHECK_PING = SSOApiUrl("api/v1/healthcheck/ping/")
-    SSO_API_USER = SSOApiUrl("api/v1/session-user/")
+    # Events service
+    EVENTS_LANDING = Url(EVENTS_URL, "")
+    EVENTS_EVENT = Url(
+        EVENTS_URL,
+        "ehome/index.php?eventid=",
+        template="ehome/index.php?eventid={eventid}&",
+    )
+
+    # ExOpps UI - Export Opportunities
+    EXOPPS_LANDING = ExOppsUrl("")
+    EXOPPS_SITEMAP = ExOppsUrl("sitemap.xml")
 
     # Find a Buyer
     FAB_LANDING = FABUrl("")
@@ -298,6 +440,13 @@ class URLs(Enum):
     FAS_INDUSTRIES_HEALTH = LegacyFASUrl("industries/health/")
     FAS_INDUSTRIES_TECH = LegacyFASUrl("industries/tech/")
     FAS_INDUSTRIES_CREATIVE = LegacyFASUrl("industries/creative/")
+
+    # Forms API endpoints
+    FORMS_API_HEALTHCHECK = FormsApiUrl("api/healthcheck/")
+    FORMS_API_HEALTHCHECK_PING = FormsApiUrl("api/healthcheck/ping/")
+    FORMS_API_SUBMISSION = FormsApiUrl("api/submission/")
+    FORMS_API_ADMIN = FormsApiUrl("admin/")
+    FORMS_API_TESTAPI = FormsApiUrl("testapi/submissions-by-email/{email}/")
 
     # New International site
     INTERNATIONAL_LANDING = InternationalUrl("")
@@ -611,8 +760,17 @@ class URLs(Enum):
     INVEST_INDUSTRIES_RETAIL = LegacyInvestUrl("industries/retail/")
     INVEST_INDUSTRIES_TECHNOLOGY = LegacyInvestUrl("industries/technology/")
 
+    # ISD -
     ISD_LANDING = ISDUrl("")
     ISD_SEARCH = ISDUrl("search/")
+
+    # Legacy Contact-Us UI
+    LEGACY_CONTACT_US_LANDING = LegacyContactUrl("")
+    LEGACY_CONTACT_US_HELP = LegacyContactUrl("help/")
+    LEGACY_CONTACT_US_FEEDBACK_FORM = LegacyContactUrl("help/FeedbackForm/")
+    LEGACY_CONTACT_US_DIRECTORY_FEEDBACK_FORM = LegacyContactUrl(
+        "directory/FeedbackForm"
+    )
 
     # FAS/ISD Profile
     PROFILE_API_COMPANIES_HOUSE_SEARCH = ProfileUrl(
@@ -725,150 +883,6 @@ class URLs(Enum):
     PROFILE_UPLOAD_LOGO = ProfileUrl("business-profile/logo/")
     PROFILE_COMPANY_EDIT_SOCIAL_MEDIA = ProfileUrl("business-profile/social-links/")
 
-    # Domestic site
-    DOMESTIC_ADVICE = DomesticUrl("advice/")
-    DOMESTIC_API_COMPANY_HOUSE_SEARCH = DomesticUrl(
-        "api/internal/companies-house-search/"
-    )
-    DOMESTIC_COMMUNITY = DomesticUrl("community/")
-    DOMESTIC_COMMUNITY_JOIN = DomesticUrl("community/join/")
-    DOMESTIC_HEALTHCHECK = DomesticUrl("healthcheck/")
-    DOMESTIC_HEALTHCHECK_PING = DomesticUrl("healthcheck/ping/")
-    DOMESTIC_SEARCH = DomesticUrl("search/")
-    DOMESTIC_SERVICES = DomesticUrl("services/")
-    DOMESTIC_SITEMAP = DomesticUrl("sitemap.xml")
-    DOMESTIC_LANDING = DomesticUrl("")
-    DOMESTIC_LANDING_UK = DomesticUrl("?lang=en-gb")
-    DOMESTIC_MARKETS = DomesticUrl("markets/")
-    DOMESTIC_TRADE_FINANCE = DomesticUrl("trade-finance/?lang=en-gb")
-    DOMESTIC_INTERNATIONAL = DomesticUrl("international/")
-    DOMESTIC_INTERNATIONAL_UK = DomesticUrl("international/?lang=en-gb")
-    DOMESTIC_INTERNATIONAL_ZH = DomesticUrl("international/?lang=zh-hans")
-    DOMESTIC_INTERNATIONAL_DE = DomesticUrl("international/?lang=de")
-    DOMESTIC_INTERNATIONAL_JA = DomesticUrl("international/?lang=ja")
-    DOMESTIC_INTERNATIONAL_ES = DomesticUrl("international/?lang=es")
-    DOMESTIC_INTERNATIONAL_PT = DomesticUrl("international/?lang=pt")
-    DOMESTIC_INTERNATIONAL_AR = DomesticUrl("international/?lang=ar")
-    DOMESTIC_TRIAGE_SECTOR = DomesticUrl("triage/sector/")
-    DOMESTIC_TRIAGE_EXPORTED_BEFORE = DomesticUrl("triage/exported-before/")
-    DOMESTIC_TRIAGE_REGULAR_EXPORTER = DomesticUrl("triage/regular-exporter/")
-    DOMESTIC_TRIAGE_ONLINE_MARKETPLACE = DomesticUrl("triage/online-marketplace/")
-    DOMESTIC_TRIAGE_COMPANIES_HOUSE = DomesticUrl("triage/companies-house/")
-    DOMESTIC_TRIAGE_COMPANY = DomesticUrl("triage/company/")
-    DOMESTIC_TRIAGE_SUMMARY = DomesticUrl("triage/summary/")
-    DOMESTIC_CUSTOM = DomesticUrl("custom/")
-    DOMESTIC_NEW = DomesticUrl("new/")
-    DOMESTIC_OCCASIONAL = DomesticUrl("occasional/")
-    DOMESTIC_REGULAR = DomesticUrl("regular/")
-    DOMESTIC_MARKET_RESEARCH = DomesticUrl("market-research/")
-    DOMESTIC_CUSTOMER_INSIGHT = DomesticUrl("customer-insight/")
-    DOMESTIC_FINANCE = DomesticUrl("finance/")
-    DOMESTIC_BUSINESS_PLANNING = DomesticUrl("business-planning/")
-    DOMESTIC_GETTING_PAID = DomesticUrl("getting-paid/")
-    DOMESTIC_OPERATIONS_AND_COMPLIANCE = DomesticUrl("operations-and-compliance/")
-    DOMESTIC_GET_FINANCE = DomesticUrl("get-finance/?lang=en-gb")
-    DOMESTIC_GET_FINANCE_YOUR_DETAILS = DomesticUrl("get-finance/your-details/")
-    DOMESTIC_GET_FINANCE_SUCCESS = DomesticUrl("get-finance/contact/thanks/")
-    DOMESTIC_GET_FINANCE_HELP = DomesticUrl("get-finance/help/")
-    DOMESTIC_STORY_FIRST = DomesticUrl("story/hello-babys-rapid-online-growth/")
-    DOMESTIC_STORY_SECOND = DomesticUrl(
-        "story/york-bag-retailer-goes-global-via-e-commerce/"
-    )
-    DOMESTIC_TERMS = DomesticUrl("terms-and-conditions/")
-    DOMESTIC_PRIVACY = DomesticUrl("privacy-and-cookies/")
-
-    # UNUSED DEFINITIONS
-    # New Contact-Us UI - Domestic & International
-    CONTACT_US_DOMESTIC = ContactUrl("triage/domestic/")
-    CONTACT_US_DOMESTIC_SUCCESS = ContactUrl(
-        "{page}/success/", template="{page}/success/"
-    )
-    CONTACT_US_FEEDBACK = ContactUrl("feedback/")
-    CONTACT_US_FEEDBACK_SUCCESS = ContactUrl("feedback/success/")
-    CONTACT_US_EXPORT_OPPORTUNITIES = ContactUrl("triage/export-opportunities/")
-    CONTACT_US_EXPORT_OPPORTUNITIES_NO_RESPONSE = ContactUrl(
-        "triage/export-opportunities/opportunity-no-response/"
-    )
-    CONTACT_US_EXPORT_OPPORTUNITIES_NOT_RELEVANT = ContactUrl(
-        "triage/export-opportunities/alerts-not-relevant/"
-    )
-    CONTACT_US_FORM_DOMESTIC = ContactUrl("domestic/")
-    CONTACT_US_FORM_DOMESTIC_SUCCESS = ContactUrl("domestic/success/")
-    CONTACT_US_EXPORT_ADVICE_BUSINESS = ContactUrl("export-advice/business/")
-    CONTACT_US_EXPORT_ADVICE_COMMENT = ContactUrl("export-advice/comment/")
-    CONTACT_US_EXPORT_ADVICE_PERSONAL = ContactUrl("export-advice/personal/")
-    CONTACT_US_OFFICE_FINDER = ContactUrl("office-finder/")
-    CONTACT_US_FORM_DSO = ContactUrl("defence-and-security-organisation/")
-    CONTACT_US_FORM_GET_FINANCE_COMPANY_DETAILS = DomesticUrl(
-        "get-finance/company-details/"
-    )
-    CONTACT_US_DOMESTIC_BREXIT_CONTACT = DomesticUrl("brexit/contact/")
-    CONTACT_US_DOMESTIC_BREXIT_CONTACT_SUCCESS = DomesticUrl("brexit/contact/success/")
-    CONTACT_US_FORM_EVENTS = ContactUrl("events/")
-    CONTACT_US_FORM_DOMESTIC_ENQUIRES = ContactUrl("domestic/enquiries/")
-    CONTACT_US_FORM_EXPORT_ADVICE = ContactUrl("export-advice/comment/")
-    CONTACT_US_FORM_INTERNATIONAL = ContactUrl("international/")
-    CONTACT_US_GREAT_ACCOUNT = ContactUrl("triage/great-account/")
-    CONTACT_US_GREAT_ACCOUNT_CH_LOGIN = ContactUrl(
-        "triage/great-account/companies-house-login/"
-    )
-    CONTACT_US_GREAT_ACCOUNT_NO_VERIFICATION_EMAIL = ContactUrl(
-        "triage/great-account/no-verification-email/"
-    )
-    CONTACT_US_GREAT_ACCOUNT_NO_VERIFICATION_LETTER = ContactUrl(
-        "triage/great-account/no-verification-letter/"
-    )
-    CONTACT_US_GREAT_ACCOUNT_PASSWORD_RESET = ContactUrl(
-        "triage/great-account/password-reset/"
-    )
-    CONTACT_US_GREAT_ACCOUNT_VERIFICATION_LETTER_CODE = ContactUrl(
-        "triage/great-account/verification-letter-code/"
-    )
-    CONTACT_US_GREAT_ACCOUNT_VERIFICATION_MISSING = ContactUrl(
-        "triage/great-account/verification-missing/"
-    )
-    CONTACT_US_GREAT_SERVICES = ContactUrl("triage/great-services/")
-    CONTACT_US_INTERNATIONAL = InternationalUrl("contact/")
-    CONTACT_US_INTERNATIONAL_STAGING = ContactUrl("triage/international/")
-    CONTACT_US_INTERNATIONAL_EXPORTING_TO_THE_UK = ContactUrl(
-        "triage/international/exporting-to-the-uk/"
-    )
-    CONTACT_US_INTERNATIONAL_BREXIT_CONTACT = InternationalUrl("brexit/contact/")
-    CONTACT_US_INTERNATIONAL_BREXIT_CONTACT_SUCCESS = InternationalUrl(
-        "brexit/contact/success/"
-    )
-    CONTACT_US_LANDING = ContactUrl("triage/location/")
-    CONTACT_US_OTHER_DOMESTIC_EU_EXIT = ContactUrl("eu-exit-news/contact/")
-    CONTACT_US_OTHER_GET_FINANCE = ContactUrl("get-finance/contact/")
-    CONTACT_US_OTHER_INTERNATIONAL_EU_EXIT = ContactUrl(
-        "international/eu-exit-news/contact/"
-    )
-
-    # SOO Contact-Us pages
-    CONTACT_US_SOO_ORGANISATION = ContactUrl("selling-online-overseas/organisation/")
-    CONTACT_US_SOO_ORGANISATION_DETAILS = ContactUrl(
-        "selling-online-overseas/organisation-details/"
-    )
-    CONTACT_US_SOO_ORGANISATION_YOUR_EXPERIENCE = ContactUrl(
-        "selling-online-overseas/your-experience/"
-    )
-    CONTACT_US_SOO_ORGANISATION_CONTACT_DETAILS = ContactUrl(
-        "selling-online-overseas/contact-details/"
-    )
-    CONTACT_US_SOO_ORGANISATION_SUCCESS = ContactUrl("selling-online-overseas/success/")
-
-    # Legacy Contact-Us UI
-    LEGACY_CONTACT_US_LANDING = LegacyContactUrl("")
-    LEGACY_CONTACT_US_HELP = LegacyContactUrl("help/")
-    LEGACY_CONTACT_US_FEEDBACK_FORM = LegacyContactUrl("help/FeedbackForm/")
-    LEGACY_CONTACT_US_DIRECTORY_FEEDBACK_FORM = LegacyContactUrl(
-        "directory/FeedbackForm"
-    )
-
-    # ExOpps UI - Export Opportunities
-    EXOPPS_LANDING = ExOppsUrl("")
-    EXOPPS_SITEMAP = ExOppsUrl("sitemap.xml")
-
     # SOO UI Selling Online Overseas
     SOO_LANDING = SOOUrl("")
     SOO_SITEMAP = SOOUrl("sitemap.xml")
@@ -877,27 +891,22 @@ class URLs(Enum):
         "markets/details/", template="markets/details/{market}/"
     )
 
-    # CMS API endpoints
-    CMS_API_HEALTHCHECK = CMSApiUrl("healthcheck/")
-    CMS_API_HEALTHCHECK_PING = CMSApiUrl("healthcheck/ping/")
-    CMS_API_PAGES = CMSApiUrl("api/pages/")
-    CMS_API_PAGE_BY_ID = CMSApiUrl(
-        "api/pages/{page_id}/", template="api/pages/{page_id}/"
-    )
-    CMS_API_PAGE_BY_PATH = CMSApiUrl(
-        "api/pages/lookup-by-path/{site_id}/{path}",
-        template="api/pages/lookup-by-path/{site_id}/{path}",
-    )
-    CMS_API_PAGE_TYPES = CMSApiUrl("api/pages/types/")
-    CMS_API_IMAGES = CMSApiUrl("api/images/")
-    CMS_API_DOCUMENTS = CMSApiUrl("api/documents/")
+    # SSO UI
+    SSO_LANDING = SSOUrl("")
+    SSO_EMAIL_CONFIRM = SSOUrl("accounts/confirm-email/")
+    SSO_INACTIVE = SSOUrl("accounts/inactive/")
+    SSO_LOGIN = SSOUrl("accounts/login/", template="accounts/login/?next={next}")
+    SSO_LOGOUT = SSOUrl("accounts/logout/")
+    SSO_PASSWORD_CHANGE = SSOUrl("accounts/password/change/")
+    SSO_PASSWORD_RESET = SSOUrl("accounts/password/reset/")
+    SSO_PASSWORD_SET = SSOUrl("accounts/password/set/")
+    SSO_SIGNUP = SSOUrl("accounts/signup/")
 
-    # Forms API endpoints
-    FORMS_API_HEALTHCHECK = FormsApiUrl("api/healthcheck/")
-    FORMS_API_HEALTHCHECK_PING = FormsApiUrl("api/healthcheck/ping/")
-    FORMS_API_SUBMISSION = FormsApiUrl("api/submission/")
-    FORMS_API_ADMIN = FormsApiUrl("admin/")
-    FORMS_API_TESTAPI = FormsApiUrl("testapi/submissions-by-email/{email}/")
+    # SSO API
+    SSO_API_LANDING = SSOApiUrl("")
+    SSO_API_HEALTHCECK = SSOApiUrl("api/v1/healthcheck/")
+    SSO_API_HEALTHCHECK_PING = SSOApiUrl("api/v1/healthcheck/ping/")
+    SSO_API_USER = SSOApiUrl("api/v1/session-user/")
 
     # Trade Barriers
     TRADE_BARRIERS_LANDING = DomesticUrl("report-trade-barrier/")
@@ -913,11 +922,4 @@ class URLs(Enum):
     )
     TRADE_BARRIERS_REPORT_FORM_SUCCESS = DomesticUrl(
         "report-trade-barrier/report/success/"
-    )
-
-    EVENTS_LANDING = Url(EVENTS_URL, "")
-    EVENTS_EVENT = Url(
-        EVENTS_URL,
-        "ehome/index.php?eventid=",
-        template="ehome/index.php?eventid={eventid}&",
     )
