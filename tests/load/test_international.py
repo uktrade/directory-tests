@@ -9,14 +9,22 @@ from directory_tests_shared.utils import basic_auth
 
 
 class InternationalTasks(TaskSet):
-
     @task
     def home_page(self):
         url = URLs.INTERNATIONAL_LANDING.relative
+        self.client.get(url, headers=LOAD_TESTS_USER_AGENT, name="/", auth=basic_auth())
+
+    @task
+    def misc_pages(self):
+        urls = [
+            URLs.INTERNATIONAL_CAPITAL_INVEST.relative,
+            URLs.INTERNATIONAL_CONTACT_US.relative,
+            URLs.CONTACT_US_INTERNATIONAL_BREXIT_CONTACT.relative,
+        ]
         self.client.get(
-            url,
+            choice(urls),
             headers=LOAD_TESTS_USER_AGENT,
-            name="/",
+            name="misc pages",
             auth=basic_auth(),
         )
 

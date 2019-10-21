@@ -450,10 +450,14 @@ class URLs(Enum):
 
     # New International site
     INTERNATIONAL_LANDING = InternationalUrl("")
+    INTERNATIONAL_CONTACT_US = InternationalUrl("contact/")
     INTERNATIONAL_SITEMAP = InternationalUrl("sitemap.xml")
     INTERNATIONAL_INDUSTRIES = InternationalUrl(
         "content/about-uk/industries/",
         template="content/about-uk/industries/{industry}/",
+    )
+    INTERNATIONAL_INDUSTRIES_STAGING = InternationalUrl(
+        "content/industries/", template="content/industries/{industry}/"
     )
     INTERNATIONAL_BREXIT_NEWS = InternationalUrl("eu-exit-news/?lang=en")
     INTERNATIONAL_CAPITAL_INVEST = InternationalUrl("content/capital-invest/")
