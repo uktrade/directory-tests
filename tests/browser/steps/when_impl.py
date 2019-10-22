@@ -916,3 +916,9 @@ def click_on_header_menu_button(context: Context):
     except NoSuchElementException:
         button = context.driver.find_element(by=By.ID, value="mobile-menu-button")
     button.click()
+
+
+def erp_drill_down_hierarchy_tree(context: Context, actor_alias: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "drill_down_hierarchy_tree")
+    page.drill_down_hierarchy_tree(context.driver)

@@ -20,6 +20,7 @@ from steps.when_impl import (
     domestic_find_more_about_search_result_type,
     domestic_search_for_phrase,
     domestic_submit_soo_contact_us_form,
+    erp_drill_down_hierarchy_tree,
     fas_fill_out_and_submit_contact_us_form,
     fas_search_for_companies,
     fas_view_article,
@@ -352,3 +353,8 @@ def when_actor_opens_up_language_selector_with_keyboard(context, actor_alias):
 @when('"{actor_alias}" decides to see related news articles by using one of the tags')
 def when_actor_open_tag(context: Context, actor_alias: str):
     generic_open_any_tag(context, actor_alias)
+
+
+@when('"{actor_alias}" selects a random product code from the hierarchy of product codes')
+def when_actor_selects_random_product_code(context: Context, actor_alias: str):
+    erp_drill_down_hierarchy_tree(context, actor_alias)
