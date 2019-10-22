@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """ERP - Product Search - UK consumer"""
+import logging
+from random import choice
 from types import ModuleType
 from typing import List
 
@@ -14,9 +16,12 @@ from pages.common_actions import (
     check_for_sections,
     check_form_choices,
     check_url,
+    find_elements,
     go_to_url,
+    is_element_present,
     pick_one_option_and_submit,
     take_screenshot,
+    wait_for_page_load_after_action,
 )
 
 NAME = "Product search (UK consumer)"
@@ -87,3 +92,54 @@ def should_see_form_choices(driver: WebDriver, names: List[str]):
 
 def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
     return pick_one_option_and_submit(driver, SELECTORS["form"], name)
+
+
+def drill_down_hierarchy_tree(driver: WebDriver):
+    first_level_selector = Selector(
+        By.CSS_SELECTOR, "ul.app-hierarchy-tree li.app-hierarchy-tree__section"
+    )
+    first_level = find_elements(driver, first_level_selector)
+    first = choice(first_level)
+    first_id = first.get_property("id")
+
+    with wait_for_page_load_after_action(driver):
+        logging.debug(f"First level: {first_id} -> {first.text}")
+        first.click()
+
+    select_code_selector = Selector(By.CSS_SELECTOR, "div.app-hierarchy-button")
+    select_product_codes_present = is_element_present(driver, select_code_selector)
+    logging.debug(
+        f"Is Select product code button present: {select_product_codes_present}"
+    )
+
+    current_parent_id = first_id
+    while not select_product_codes_present:
+        child_level_selector = Selector(
+            By.CSS_SELECTOR, f"#{current_parent_id} ul li.app-hierarchy-tree__chapter"
+        )
+        child_level = find_elements(driver, child_level_selector)
+        if not child_level:
+            logging.debug("No more child level elements")
+            break
+        logging.debug(f"Child elements of '{current_parent_id}' are: {child_level}")
+        child = choice(child_level)
+        current_parent_id = child.get_property("id")
+
+        with wait_for_page_load_after_action(driver, timeout=5):
+            logging.debug(f"Selected child: {current_parent_id}")
+            child.click()
+
+        logging.debug(
+            f"Is Select product code button present: {select_product_codes_present}"
+        )
+        select_product_codes_present = is_element_present(driver, select_code_selector)
+
+    if select_product_codes_present:
+        select_codes = find_elements(driver, select_code_selector)
+        select = choice(select_codes)
+        select_id = select.get_property("id")
+        logging.debug(f"Selected product code: {select_id}")
+        with wait_for_page_load_after_action(driver, timeout=5):
+            select.click()
+    else:
+        logging.error("Strange! Could not find 'Select' product codes button")
