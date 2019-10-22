@@ -186,4 +186,3 @@ There are also optional environment variables which will use default values if u
 * `DIRECTORY_CMS_API_CLIENT_SENDER_ID=directory`
 * `LOCUST_MAX_WAIT=6000`
 * `LOCUST_MIN_WAIT=500`
-* `LOCUST_TIMEOUT=150`

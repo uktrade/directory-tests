@@ -9,16 +9,10 @@ from directory_tests_shared.utils import basic_auth
 
 
 class InvestTasks(TaskSet):
-
     @task
     def home_page(self):
         url = URLs.INVEST_LANDING.relative
-        self.client.get(
-            url,
-            headers=LOAD_TESTS_USER_AGENT,
-            name="/",
-            auth=basic_auth(),
-        )
+        self.client.get(url, headers=LOAD_TESTS_USER_AGENT, name="/", auth=basic_auth())
 
     @task
     def contact(self):
@@ -48,6 +42,5 @@ class InvestTasks(TaskSet):
 class Invest(HttpLocust):
     host = settings.INVEST_URL
     task_set = InvestTasks
-    stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT

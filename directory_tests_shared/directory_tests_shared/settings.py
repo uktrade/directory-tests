@@ -75,7 +75,6 @@ BROWSERSTACK_EXECUTOR_URL = (
 #####################################################################
 # Load test (locust.io) settings
 #####################################################################
-LOCUST_TIMEOUT = env.int("LOCUST_TIMEOUT", default=150)
 LOCUST_MAX_WAIT = env.int("LOCUST_MAX_WAIT", default=6000)
 LOCUST_MIN_WAIT = env.int("LOCUST_MIN_WAIT", default=500)
 

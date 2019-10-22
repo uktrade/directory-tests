@@ -70,6 +70,5 @@ class ISDTasks(TaskSet):
 class ISD(HttpLocust):
     host = settings.ISD_URL
     task_set = ISDTasks
-    stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT

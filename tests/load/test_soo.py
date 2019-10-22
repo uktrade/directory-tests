@@ -16,11 +16,7 @@ class SOOTasks(TaskSet):
     @task
     def home_page(self):
         url = URLs.SOO_LANDING.relative
-        self.client.get(
-            url,
-            headers=LOAD_TESTS_USER_AGENT,
-            auth=basic_auth()
-        )
+        self.client.get(url, headers=LOAD_TESTS_USER_AGENT, auth=basic_auth())
 
     @task
     def search(self):
@@ -37,7 +33,7 @@ class SOOTasks(TaskSet):
             params=params,
             headers=LOAD_TESTS_USER_AGENT,
             name="/?category_id=[...]&country_id=[...]",
-            auth=basic_auth()
+            auth=basic_auth(),
         )
 
     @task
@@ -90,13 +86,12 @@ class SOOTasks(TaskSet):
             random.choice(urls),
             headers=LOAD_TESTS_USER_AGENT,
             name="/markets/details/[marketplace]",
-            auth=basic_auth()
+            auth=basic_auth(),
         )
 
 
 class SOO(HttpLocust):
     host = settings.SOO_URL
     task_set = SOOTasks
-    stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT

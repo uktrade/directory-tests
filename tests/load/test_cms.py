@@ -2,21 +2,17 @@
 from collections import namedtuple
 from random import choice, randint
 
-from directory_constants.cms import EXPORT_READINESS, FIND_A_SUPPLIER, INVEST
 from locust import TaskSet, task
 
-from directory_tests_shared import settings, URLs
+from directory_constants.cms import EXPORT_READINESS, FIND_A_SUPPLIER, INVEST
+from directory_tests_shared import URLs, settings
 from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
 from tests.load.cms_helpers import CMSAPIAuthClientMixin
 
 UA = namedtuple("UA", "headers")
 LOAD_TESTS_USER_AGENT = UA(headers=LOAD_TESTS_USER_AGENT)
 
-SERVICES = [
-    INVEST,
-    FIND_A_SUPPLIER,
-    EXPORT_READINESS,
-]
+SERVICES = [INVEST, FIND_A_SUPPLIER, EXPORT_READINESS]
 
 INTERNATIONAL_PAGE_PATHS = [
     "",
@@ -48,7 +44,6 @@ INTERNATIONAL_PAGE_PATHS = [
 
 
 class CMSTasks(TaskSet):
-
     @task
     def get_by_id(self):
         self.client.get(
@@ -61,7 +56,9 @@ class CMSTasks(TaskSet):
     @task
     def get_international_page_by_path(self):
         self.client.get(
-            URLs.CMS_API_PAGE_BY_PATH.template.format(site_id=2, path=choice(INTERNATIONAL_PAGE_PATHS)),
+            URLs.CMS_API_PAGE_BY_PATH.template.format(
+                site_id=2, path=choice(INTERNATIONAL_PAGE_PATHS)
+            ),
             authenticator=LOAD_TESTS_USER_AGENT,
             name="/api/pages/lookup-by-path/[site_id]/[path]",
             expected_codes=[200, 404],
@@ -71,6 +68,5 @@ class CMSTasks(TaskSet):
 class CMS(CMSAPIAuthClientMixin):
     host = settings.CMS_API_URL
     task_set = CMSTasks
-    stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
