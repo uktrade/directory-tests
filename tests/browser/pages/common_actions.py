@@ -498,8 +498,9 @@ class wait_for_page_load_after_action(object):
     https://www.develves.net/blogs/asd/2017-03-04-selenium-waiting-for-page-load/
     """
 
-    def __init__(self, driver: WebDriver):
+    def __init__(self, driver: WebDriver, *, timeout: int = 3):
         self.driver = driver
+        self.timeout = timeout
 
     def __enter__(self):
         self.old_page = self.driver.find_element_by_tag_name("html")
@@ -515,12 +516,14 @@ class wait_for_page_load_after_action(object):
         import time
 
         start_time = time.time()
-        while time.time() < start_time + 3:
+        while time.time() < start_time + self.timeout:
             if condition_function():
                 return True
             else:
                 time.sleep(0.1)
-        raise Exception(f"Timeout waiting for {condition_function.__name__}")
+        raise Exception(
+            f"Timed out after {self.timeout}s of waiting for the new page to load"
+        )
 
 
 def scroll_to(driver: WebDriver, element: WebElement):
