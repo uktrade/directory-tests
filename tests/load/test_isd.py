@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import random
 
+from locust import HttpLocust, TaskSet, task
+
 from directory_constants.expertise import (
     BUSINESS_SUPPORT,
     FINANCIAL,
@@ -9,29 +11,21 @@ from directory_constants.expertise import (
     MANAGEMENT_CONSULTING,
     PUBLICITY,
 )
-from locust import HttpLocust, TaskSet, task
-
 from directory_tests_shared import URLs, settings
-from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT, rare_word
-from directory_tests_shared.utils import basic_auth
+from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
+from directory_tests_shared.utils import basic_auth, rare_word
 
 
 class ISDTasks(TaskSet):
     @task
     def home_page(self):
         url = URLs.ISD_LANDING.relative
-        self.client.get(
-            url,
-            headers=LOAD_TESTS_USER_AGENT,
-            auth=basic_auth(),
-        )
+        self.client.get(url, headers=LOAD_TESTS_USER_AGENT, auth=basic_auth())
 
     @task
     def search_by_term(self):
         url = URLs.ISD_SEARCH.relative
-        params = {
-            "q": rare_word(),
-        }
+        params = {"q": rare_word()}
         self.client.get(
             url,
             params=params,
@@ -46,30 +40,23 @@ class ISDTasks(TaskSet):
             "expertise_products_services_financial": FINANCIAL,
             "expertise_products_services_management": MANAGEMENT_CONSULTING,
             "expertise_products_services_human_resources": [
-                item.replace(" ", "-")
-                for item in HUMAN_RESOURCES
+                item.replace(" ", "-") for item in HUMAN_RESOURCES
             ],
             "expertise_products_services_legal": LEGAL,
             "expertise_products_services_publicity": PUBLICITY,
             "expertise_products_services_business_support": BUSINESS_SUPPORT,
         }
         keys = random.choices(
-            list(filters.keys()),
-            k=random.randint(1, len(list(filters.keys())))
+            list(filters.keys()), k=random.randint(1, len(list(filters.keys())))
         )
         random_filters = {
             key: set(
-                random.choices(
-                    filters[key],
-                    k=random.randint(1, len(filters[key]))
-                )
+                random.choices(filters[key], k=random.randint(1, len(filters[key])))
             )
             for key in keys
         }
         query = "&".join(
-            f"{key}={value}"
-            for key in random_filters
-            for value in random_filters[key]
+            f"{key}={value}" for key in random_filters for value in random_filters[key]
         )
         url = f"{URLs.ISD_SEARCH.absolute}?{query}"
         self.client.get(
