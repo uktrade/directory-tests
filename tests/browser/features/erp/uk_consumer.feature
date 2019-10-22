@@ -10,9 +10,27 @@ Feature: ERP - UK consumer
 
     Then "Robert" should be on the "ERP - Product search (UK consumer)" page
     And "Robert" should see following sections
-      | Sections |
-      | Header   |
-      | Beta bar |
-      | Go back  |
-      | Form     |
-      | Footer   |
+      | Sections        |
+      | Header          |
+      | Beta bar        |
+      | Go back         |
+      | Form            |
+      | Hierarchy codes |
+      | Footer          |
+
+
+  @drill
+  Scenario: A UK customer should be able to select goods affected by Brexit
+    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
+
+    When "Robert" selects a random product code from the hierarchy of product codes
+
+    Then "Robert" should be on the "ERP - Product detail (UK consumer)" page
+    And "Robert" should see following sections
+      | Sections        |
+      | Header          |
+      | Beta bar        |
+      | Go back         |
+      | Form            |
+      | Save for later  |
+      | Footer          |
