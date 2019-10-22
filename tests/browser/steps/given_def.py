@@ -92,6 +92,12 @@ def given_min_number_of_articles(
     generic_at_least_n_news_articles(context, no_articles, visitor_type, service)
 
 
+@given('"{actor_alias}" got from "{start_page}" to "{final_page}" via "{via}"')
+def given_actor_gets_to_a_page_via(
+        context: Context, actor_alias: str, start_page: str, final_page: str, via: str):
+    contact_us_get_to_page_via(context, actor_alias, final_page, via, start_page=start_page)
+
+
 @given('"{actor_alias}" got to the "{final_page}" page via "{via}"')
 def given_actor_gets_to_a_page_via(
         context: Context, actor_alias: str, final_page: str, via: str):

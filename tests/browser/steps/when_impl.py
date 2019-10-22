@@ -656,11 +656,17 @@ def generic_pick_random_radio_option_and_submit(
 
 
 def contact_us_get_to_page_via(
-    context: Context, actor_alias: str, final_page: str, via: str
+    context: Context,
+    actor_alias: str,
+    final_page: str,
+    via: str,
+    *,
+    start_page: str = None,
 ):
+    start_page = start_page or "Domestic - Contact us"
     intermediate = [name.strip() for name in via.split("->")]
     # 1) start at the Contact us "choose location" page
-    visit_page(context, actor_alias, "Domestic - Contact us")
+    visit_page(context, actor_alias, start_page)
     # 2) click through every listed option
     for option in intermediate:
         generic_pick_radio_option_and_submit(context, actor_alias, option)
