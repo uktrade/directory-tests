@@ -757,6 +757,37 @@ workflows:
           requires:
             - setup_env_for_browser_tests
 
+  run_load_tests_on_stage_ad_hoc:
+    jobs:
+      - setup_env_for_load_tests
+      - load_cms_tests_stage:
+          requires:
+          - setup_env_for_load_tests
+      - load_fab_tests_stage:
+          requires:
+          - setup_env_for_load_tests
+      - load_fas_tests_stage:
+          requires:
+          - setup_env_for_load_tests
+      - load_isd_tests_stage:
+          requires:
+          - setup_env_for_load_tests
+      - load_soo_tests_stage:
+          requires:
+          - setup_env_for_load_tests
+      - load_international_tests_stage:
+          requires:
+          - setup_env_for_load_tests
+      - load_invest_tests_stage:
+          requires:
+          - setup_env_for_load_tests
+      - load_search_tests_stage:
+          requires:
+          - setup_env_for_load_tests
+      - load_erp_tests_stage:
+          requires:
+          - setup_env_for_load_tests
+
   run_smoke_all_functional_and_selected_browser_tests_on_uat:
     jobs:
       - setup_env_for_smoke_tests
