@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file=requirements_load.txt requirements_load.in
 #
--e file:///home/jk/git/dit/directory-tests/directory_tests_shared
+-e ./directory_tests_shared
 certifi==2019.9.11        # via requests
 chardet==3.0.4            # via requests
 click==7.0                # via flask
