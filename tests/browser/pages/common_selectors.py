@@ -243,8 +243,60 @@ INVEST_FOOTER = {
     }
 }
 
-ERP_HEADER = {"header": {}}
-ERP_BACK = {"go back": {}}
-ERP_BETA = {"beta bar": {}}
-ERP_BREADCRUMBS = {"breadcrumbs": {}}
-ERP_FOOTER = {"footer": {}}
+ERP_HEADER = {
+    "header": {
+        "header itself": Selector(By.CSS_SELECTOR, "header.govuk-header"),
+        "skip-link": Selector(
+            By.ID, "skip-link", type=ElementType.LINK, is_visible=False
+        ),
+        "home link": Selector(By.CSS_SELECTOR, "header.govuk-header a"),
+        "gov uk logo": Selector(By.CSS_SELECTOR, "header.govuk-header a svg"),
+    }
+}
+ERP_BACK = {
+    "go back": {
+        "go back": Selector(
+            By.CSS_SELECTOR,
+            "#content form[method=post] a.govuk-back-link",
+            type=ElementType.LINK,
+        )
+    }
+}
+ERP_BETA = {
+    "beta bar": {
+        "beta bar itself": Selector(By.CSS_SELECTOR, "#content div.govuk-phase-banner"),
+        "beta": Selector(By.CSS_SELECTOR, "#content div.govuk-phase-banner p strong"),
+        "text": Selector(By.CSS_SELECTOR, "#content div.govuk-phase-banner p span"),
+        "feedback": Selector(By.CSS_SELECTOR, "#content div.govuk-phase-banner p a"),
+    }
+}
+ERP_BREADCRUMBS = {
+    "breadcrumbs": {
+        "breadcrumbs bar": Selector(By.CSS_SELECTOR, "#content nav.breadcrumbs"),
+        "first": Selector(
+            By.CSS_SELECTOR, "#content nav.breadcrumbs ol li:nth-child(1) a"
+        ),
+        "second": Selector(
+            By.CSS_SELECTOR, "#content nav.breadcrumbs ol li:nth-child(2)"
+        ),
+    }
+}
+ERP_SAVE_FOR_LATER = {
+    "save for later": {
+        "save for later": Selector(
+            By.CSS_SELECTOR,
+            "button[name=wizard_save_for_later]",
+            type=ElementType.BUTTON,
+        )
+    }
+}
+ERP_FOOTER = {
+    "footer": {
+        "footer itself": Selector(By.CSS_SELECTOR, "footer.govuk-footer"),
+        "ogl logo": Selector(By.CSS_SELECTOR, "footer.govuk-footer svg"),
+        "licence note": Selector(By.CSS_SELECTOR, "footer.govuk-footer span"),
+        "crown logo": Selector(
+            By.CSS_SELECTOR, "footer.govuk-footer a.govuk-footer__copyright-logo"
+        ),
+    }
+}
