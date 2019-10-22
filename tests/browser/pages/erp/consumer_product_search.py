@@ -31,8 +31,35 @@ SUBMIT_BUTTON = Selector(
 SELECTORS = {
     "form": {
         "form itself": Selector(By.CSS_SELECTOR, "#content form[method='post']"),
+        "step counter": Selector(
+            By.CSS_SELECTOR, "form[method=post] span.govuk-caption-l"
+        ),
+        "heading": Selector(By.CSS_SELECTOR, "form[method=post] h1"),
+        "find a commodity code information page": Selector(
+            By.CSS_SELECTOR, "form[method=post] div.govuk-inset-text a"
+        ),
+        "search": Selector(By.ID, "id_product-search-term", type=ElementType.INPUT),
+        "search button": Selector(
+            By.CSS_SELECTOR,
+            "#id_product-search-term ~ button[form=search-form]",
+            type=ElementType.BUTTON,
+        ),
         "submit": SUBMIT_BUTTON,
-    }
+    },
+    "hierarchy codes": {
+        "hierarchy codes heading": Selector(By.ID, "hierarchy-browser"),
+        "first level": Selector(
+            By.CSS_SELECTOR, "ul.app-hierarchy-tree li.app-hierarchy-tree__section"
+        ),
+    },
+    "search results": {
+        "expand to select": Selector(
+            By.CSS_SELECTOR, "h2#search-results-title ~ section a"
+        ),
+        "select product code": Selector(
+            By.CSS_SELECTOR, "h2#search-results-title ~ section button"
+        ),
+    },
 }
 SELECTORS.update(common_selectors.ERP_HEADER)
 SELECTORS.update(common_selectors.ERP_BETA)
