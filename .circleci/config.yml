@@ -787,7 +787,7 @@ workflows:
   run_cms_load_tests_on_stage:
     triggers:
     - schedule:
-        cron: "3 4 * * 1-5"
+        cron: "3 13 * * 1-5"
         filters:
           branches:
             only: master
@@ -800,7 +800,7 @@ workflows:
   run_fas_load_tests_on_stage:
     triggers:
     - schedule:
-        cron: "8 4 * * 1-5"
+        cron: "8 13 * * 1-5"
         filters:
           branches:
             only: master
@@ -813,7 +813,7 @@ workflows:
   run_isd_load_tests_on_stage:
     triggers:
       - schedule:
-          cron: "13 4 * * 1-5"
+          cron: "13 13 * * 1-5"
           filters:
             branches:
               only: master
@@ -826,7 +826,7 @@ workflows:
   run_international_load_tests_on_stage:
     triggers:
       - schedule:
-          cron: "18 4 * * 1-5"
+          cron: "18 13 * * 1-5"
           filters:
             branches:
               only: master
@@ -839,7 +839,7 @@ workflows:
   run_invest_load_tests_on_stage:
     triggers:
     - schedule:
-        cron: "24 4 * * 1-5"
+        cron: "24 13 * * 1-5"
         filters:
           branches:
             only: master
@@ -852,7 +852,7 @@ workflows:
   run_fab_load_tests_on_stage:
     triggers:
     - schedule:
-        cron: "29 4 * * 1-5"
+        cron: "29 13 * * 1-5"
         filters:
           branches:
             only: master
@@ -865,7 +865,7 @@ workflows:
   run_soo_load_tests_on_stage:
     triggers:
       - schedule:
-          cron: "34 4 * * 1-5"
+          cron: "34 13 * * 1-5"
           filters:
             branches:
               only: master
@@ -878,7 +878,7 @@ workflows:
   run_search_load_tests_on_stage:
     triggers:
       - schedule:
-          cron: "39 4 * * 1-5"
+          cron: "39 13 * * 1-5"
           filters:
             branches:
               only: master
@@ -891,7 +891,7 @@ workflows:
   run_erp_load_tests_on_stage:
     triggers:
       - schedule:
-          cron: "29 4 * * 1-5"
+          cron: "29 13 * * 1-5"
           filters:
             branches:
               only: master
