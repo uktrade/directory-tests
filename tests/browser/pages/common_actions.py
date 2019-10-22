@@ -369,6 +369,20 @@ def check_if_element_is_not_present(
         assert not found
 
 
+def is_element_present(driver: WebDriver, selector: Selector) -> bool:
+    """Check if sought element is present"""
+    try:
+        elements = driver.find_elements(by=selector.by, value=selector.value)
+        if elements:
+            logging.debug(f"Found following elements: {elements}")
+            found = True
+        else:
+            found = False
+    except NoSuchElementException:
+        found = False
+    return found
+
+
 def check_if_element_is_visible(web_element: WebElement, element_name: str):
     """Check if provided web element is visible."""
     with assertion_msg(
