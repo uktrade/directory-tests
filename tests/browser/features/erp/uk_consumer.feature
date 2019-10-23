@@ -1,5 +1,6 @@
 @erp
 @uk_consumer
+@TT-2047
 Feature: ERP - UK consumer
 
 
@@ -142,3 +143,24 @@ Feature: ERP - UK consumer
       | specific group of consumers | expected                             |
       | consumer group              | Consumer group details (UK consumer) |
       | individual consumer         | Personal details (UK consumer)       |
+
+  @wip
+  @search
+  @drill
+  Scenario: A UK customer should be able to search for affected goods by commodity code or part of their name
+    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
+
+  @wip
+  @print
+  Scenario: UK customers should be able to print a copy of their submitted form
+    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
+
+  @wip
+  @save-for-later
+  Scenario: A UK customer should be able to save their progress for later at any point in time
+    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
+
+  @wip
+  @save-for-later
+  Scenario: A UK customer should be able to restore their progress using link from the email
+    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
