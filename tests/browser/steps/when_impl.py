@@ -921,4 +921,5 @@ def click_on_header_menu_button(context: Context):
 def erp_drill_down_hierarchy_tree(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "drill_down_hierarchy_tree")
-    page.drill_down_hierarchy_tree(context.driver)
+    next_page = page.drill_down_hierarchy_tree(context.driver)
+    update_actor(context, actor_alias, visited_page=next_page)

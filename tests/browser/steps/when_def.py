@@ -296,6 +296,11 @@ def when_actor_triggers_all_gtm_events(
     )
 
 
+@when('"{actor_alias}" selects a random product code from the hierarchy of product codes')
+def when_actor_selects_random_product_code(context: Context, actor_alias: str):
+    erp_drill_down_hierarchy_tree(context, actor_alias)
+
+
 ###############################################################################
 # Currently unused but useful steps
 ###############################################################################
@@ -353,8 +358,3 @@ def when_actor_opens_up_language_selector_with_keyboard(context, actor_alias):
 @when('"{actor_alias}" decides to see related news articles by using one of the tags')
 def when_actor_open_tag(context: Context, actor_alias: str):
     generic_open_any_tag(context, actor_alias)
-
-
-@when('"{actor_alias}" selects a random product code from the hierarchy of product codes')
-def when_actor_selects_random_product_code(context: Context, actor_alias: str):
-    erp_drill_down_hierarchy_tree(context, actor_alias)
