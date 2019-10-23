@@ -21,6 +21,7 @@ class ElementType(Enum):
     LINK = "a"
     RADIO = "radio"
     SELECT = "select"
+    SUBMIT = "submit"
     TEXTAREA = "textarea"
 
     def __str__(self):

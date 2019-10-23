@@ -824,6 +824,31 @@ def choose_one_form_option_except(
     return selected
 
 
+def submit_form(
+    driver: WebDriver, form_selectors: Dict[str, Selector]
+) -> Union[ModuleType, None]:
+    submit_selectors = get_selectors(form_selectors, ElementType.SUBMIT)
+
+    error = (
+        f"Expected to find exactly 1 submit element in form on {driver.current_url} "
+        f"instead we got {len(submit_selectors)}"
+    )
+    with assertion_msg(error):
+        assert len(submit_selectors) == 1
+
+    submit_button_selector = list(submit_selectors.values())[0]
+
+    submit_button = find_element(
+        driver, submit_button_selector, element_name="submit button", wait_for_it=False
+    )
+    take_screenshot(driver, "Before submitting the form")
+    with wait_for_page_load_after_action(driver):
+        submit_button.click()
+    take_screenshot(driver, "After submitting the form")
+
+    return submit_button_selector.next_page
+
+
 def pick_one_option_and_submit(
     driver: WebDriver,
     form_selectors: Dict[str, Selector],
