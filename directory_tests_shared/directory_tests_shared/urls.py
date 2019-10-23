@@ -447,12 +447,15 @@ class URLs(Enum):
     ERP_CONSUMER_CHANGE = ERPUrl(
         "consumer/consumer-change/", template="consumer/consumer-change/#{chapter}"
     )
-    ERP_CONSUMER_OTHER_INFORMATION = ERPUrl(
-        "consumer/other-information/", template="consumer/other-information/#{chapter}"
+    ERP_CONSUMER_OTHER_CHANGES_AFTER_BREXIT = ERPUrl(
+        "consumer/other-changes-after-brexit/",
+        template="consumer/other-changes-after-brexit/#{chapter}",
     )
     ERP_CONSUMER_OUTCOME = ERPUrl(
         "consumer/outcome/", template="consumer/outcome/#{chapter}"
     )
+    ERP_CONSUMER_TYPE = ERPUrl("consumer/consumer-type/")
+    ERP_CONSUMER_GROUP_DETAILS = ERPUrl("consumer/consumer-group/")
     ERP_CONSUMER_PERSONAL = ERPUrl(
         "consumer/personal/", template="consumer/personal/#{chapter}"
     )
