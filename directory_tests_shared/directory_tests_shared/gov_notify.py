@@ -57,7 +57,7 @@ def extract_password_reset_link(payload: str) -> str:
 
 
 def filter_by_subject(notifications: list, subject: str) -> list:
-    return list(filter(lambda x: x["subject"] == subject, notifications))
+    return list(filter(lambda x: subject in x["subject"], notifications))
 
 
 def filter_by_recipient(notifications: list, email: str) -> list:
