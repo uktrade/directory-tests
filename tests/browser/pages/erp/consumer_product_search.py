@@ -14,15 +14,14 @@ from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
-    check_form_choices,
     check_url,
     find_elements,
     go_to_url,
     is_element_present,
-    pick_one_option_and_submit,
     take_screenshot,
     wait_for_page_load_after_action,
 )
+from pages.erp import consumer_product_detail
 
 NAME = "Product search (UK consumer)"
 SERVICE = Service.ERP
@@ -86,15 +85,7 @@ def should_see_sections(driver: WebDriver, names: List[str]):
     check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
-def should_see_form_choices(driver: WebDriver, names: List[str]):
-    check_form_choices(driver, SELECTORS["form"], names)
-
-
-def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
-    return pick_one_option_and_submit(driver, SELECTORS["form"], name)
-
-
-def drill_down_hierarchy_tree(driver: WebDriver):
+def drill_down_hierarchy_tree(driver: WebDriver) -> ModuleType:
     first_level_selector = Selector(
         By.CSS_SELECTOR, "ul.app-hierarchy-tree li.app-hierarchy-tree__section"
     )
@@ -143,3 +134,5 @@ def drill_down_hierarchy_tree(driver: WebDriver):
             select.click()
     else:
         logging.error("Strange! Could not find 'Select' product codes button")
+
+    return consumer_product_detail
