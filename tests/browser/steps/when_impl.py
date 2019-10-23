@@ -25,6 +25,7 @@ from directory_tests_shared.utils import check_for_errors
 from pages import (
     common_language_selector,
     domestic,
+    erp,
     fas,
     get_page_object,
     international,
@@ -38,6 +39,7 @@ from pages.common_actions import (
     avoid_browser_stack_idle_timeout_exception,
     barred_actor,
     get_actor,
+    get_full_page_name,
     get_last_visited_page,
     selenium_action,
     unauthenticated_actor,
@@ -923,3 +925,12 @@ def erp_drill_down_hierarchy_tree(context: Context, actor_alias: str):
     has_action(page, "drill_down_hierarchy_tree")
     next_page = page.drill_down_hierarchy_tree(context.driver)
     update_actor(context, actor_alias, visited_page=next_page)
+
+
+def erp_save_for_later(context: Context, actor_alias: str):
+    click_on_page_element(context, actor_alias, "save for later")
+    should_be_on_page(context, actor_alias, get_full_page_name(erp.save_for_later))
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context, actor_alias, get_full_page_name(erp.save_for_later_progress_saved)
+    )

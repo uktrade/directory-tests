@@ -21,6 +21,7 @@ from steps.when_impl import (
     domestic_search_for_phrase,
     domestic_submit_soo_contact_us_form,
     erp_drill_down_hierarchy_tree,
+    erp_save_for_later,
     fas_fill_out_and_submit_contact_us_form,
     fas_search_for_companies,
     fas_view_article,
@@ -299,6 +300,11 @@ def when_actor_triggers_all_gtm_events(
 @when('"{actor_alias}" selects a random product code from the hierarchy of product codes')
 def when_actor_selects_random_product_code(context: Context, actor_alias: str):
     erp_drill_down_hierarchy_tree(context, actor_alias)
+
+
+@when('"{actor_alias}" saves progress for later')
+def when_actor_saves_progress_for_later(context: Context, actor_alias: str):
+    erp_save_for_later(context, actor_alias)
 
 
 ###############################################################################
