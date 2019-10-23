@@ -696,8 +696,9 @@ def fill_out_textarea_fields(
 ):
     textarea_selectors = get_selectors(form_selectors, ElementType.TEXTAREA)
     for key, selector in textarea_selectors.items():
-        value_to_type = form_details[key]
+        value_to_type = form_details.get(key)
         if not value_to_type:
+            logging.debug(f"Skipping '{key}' as there no value for it")
             continue
         logging.debug(f"Filling out textarea: {key} with '{value_to_type}'")
         textarea = find_element(driver, selector, element_name=key, wait_for_it=False)
@@ -881,8 +882,12 @@ def tick_checkboxes(
 ):
     checkbox_selectors = get_selectors(form_selectors, ElementType.CHECKBOX)
     for key, selector in checkbox_selectors.items():
+        checkbox_value = form_details.get(key)
+        if checkbox_value is None:
+            logging.debug(f"Skipping '{key}' as there no value for it")
+            continue
         logging.debug(f"Ticking {key} checkbox (if necessary)")
-        if form_details[key]:
+        if checkbox_value:
             checkbox = find_element(
                 driver, selector, element_name=key, wait_for_it=False
             )
