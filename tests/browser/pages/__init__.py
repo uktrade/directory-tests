@@ -62,7 +62,7 @@ class PageObjects(Enum):
 
     @property
     def type(self) -> str:
-        return self.value.TYPE
+        return self.value.TYPE.value
 
     @property
     def url(self) -> str:
