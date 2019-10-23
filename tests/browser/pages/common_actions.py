@@ -231,6 +231,10 @@ def get_last_visited_page(context: Context, actor_alias: str) -> ModuleType:
     return actor.visited_page
 
 
+def get_full_page_name(page: ModuleType) -> str:
+    return f"{page.SERVICE.value} - {page.NAME} - {page.TYPE.value}"
+
+
 def update_actor(context: Context, alias: str, **kwargs):
     """Update Actor's details stored in context.scenario_data"""
     actors = context.scenario_data.actors
