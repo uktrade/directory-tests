@@ -34,3 +34,17 @@ Feature: ERP - UK consumer
       | Form            |
       | Save for later  |
       | Footer          |
+
+
+  @drill
+  Scenario: A UK customer should be able to change the goods previously selected
+    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
+
+    When "Robert" selects a random product code from the hierarchy of product codes
+    Then "Robert" should be on the "ERP - Product detail (UK consumer)" page
+
+    When "Robert" decides to "change goods"
+    Then "Robert" should be on the "ERP - Product search (UK consumer)" page
+
+    When "Robert" selects a random product code from the hierarchy of product codes
+    Then "Robert" should be on the "ERP - Product detail (UK consumer)" page
