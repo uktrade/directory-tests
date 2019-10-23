@@ -22,9 +22,6 @@ TYPE = PageType.FORM
 URL = URLs.ERP_CONSUMER_PRODUCT_DETAIL.absolute
 PAGE_TITLE = ""
 
-SUBMIT_BUTTON = Selector(
-    By.CSS_SELECTOR, "#content > form button.govuk-button", type=ElementType.BUTTON
-)
 SELECTORS = {
     "form": {
         "selection form": Selector(By.CSS_SELECTOR, "#content form[method='post']"),
@@ -35,7 +32,11 @@ SELECTORS = {
         "change goods": Selector(
             By.CSS_SELECTOR, "#selected-values-container a", type=ElementType.LINK
         ),
-        "submit": SUBMIT_BUTTON,
+        "continue": Selector(
+            By.CSS_SELECTOR,
+            "#content > form button.govuk-button",
+            type=ElementType.SUBMIT,
+        ),
     }
 }
 SELECTORS.update(common_selectors.ERP_HEADER)

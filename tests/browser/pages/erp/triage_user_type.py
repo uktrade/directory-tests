@@ -30,9 +30,6 @@ TYPE = PageType.FORM
 URL = URLs.ERP_TRIAGE_USER_TYPE.absolute
 PAGE_TITLE = ""
 
-SUBMIT_BUTTON = Selector(
-    By.CSS_SELECTOR, "#content > form button.govuk-button", type=ElementType.BUTTON
-)
 SELECTORS = {
     "form": {
         "form itself": Selector(By.CSS_SELECTOR, "#content form[method='post']"),
@@ -57,7 +54,11 @@ SELECTORS = {
             is_visible=False,
             next_page=developing_country_select,
         ),
-        "submit": SUBMIT_BUTTON,
+        "continue": Selector(
+            By.CSS_SELECTOR,
+            "#content > form button.govuk-button",
+            type=ElementType.BUTTON,
+        ),
     }
 }
 SELECTORS.update(common_selectors.ERP_HEADER)
@@ -85,4 +86,6 @@ def should_see_form_choices(driver: WebDriver, names: List[str]):
 
 
 def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
-    return pick_one_option_and_submit(driver, SELECTORS["form"], name)
+    return pick_one_option_and_submit(
+        driver, SELECTORS["form"], name, submit_button_name="continue"
+    )
