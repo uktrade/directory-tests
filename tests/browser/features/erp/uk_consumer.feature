@@ -48,3 +48,18 @@ Feature: ERP - UK consumer
 
     When "Robert" selects a random product code from the hierarchy of product codes
     Then "Robert" should be on the "ERP - Product detail (UK consumer)" page
+
+
+  @save-for-later
+  Scenario: A UK customer should be able to save their goods selection for later
+    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
+
+    When "Robert" selects a random product code from the hierarchy of product codes
+    Then "Robert" should be on the "ERP - Product detail (UK consumer)" page
+
+    When "Robert" decides to "save for later"
+    Then "Robert" should be on the "ERP - Save for later" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "ERP - Progress saved" page
+    And "Robert" should receive "We’ve saved your progress until" confirmation email
