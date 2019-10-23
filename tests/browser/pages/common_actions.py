@@ -566,7 +566,7 @@ def check_for_sections(
             selectors = get_horizontal_selectors(all_sections[name.lower()])
         else:
             raise KeyError(
-                "Please choose from desktop, mobile or horizontal (mobile) " "selectors"
+                "Please choose from desktop, mobile or horizontal (mobile) selectors"
             )
         for key, selector in selectors.items():
             with selenium_action(
@@ -671,21 +671,24 @@ def fill_out_input_fields(
 ):
     input_selectors = get_selectors(form_selectors, ElementType.INPUT)
     for key, selector in input_selectors.items():
-        value_to_type = form_details[key]
-        if not value_to_type:
-            continue
-        logging.debug(
-            f"Filling out input field '{key}' with '{value_to_type}' on '{driver.current_url}"
-        )
-        input_field = find_element(
-            driver, selector, element_name=key, wait_for_it=False
-        )
-        if input_field.is_displayed():
-            input_field.clear()
-        input_field.send_keys(value_to_type)
-        if selector.autocomplete_callback:
-            logging.debug(f"Calling autocomplete_callback()")
-            selector.autocomplete_callback(driver, value=value_to_type)
+        value_to_type = form_details.get(key, None)
+        if isinstance(value_to_type, bool):
+            if selector.autocomplete_callback:
+                logging.debug(f"Calling autocomplete_callback() for '{key}'")
+                selector.autocomplete_callback(driver, value=value_to_type)
+        else:
+            if not value_to_type:
+                logging.debug(f"Skipping '{key}' as there no value for it")
+                continue
+            logging.debug(
+                f"Filling out input field '{key}' with '{value_to_type}' on '{driver.current_url}"
+            )
+            input_field = find_element(
+                driver, selector, element_name=key, wait_for_it=False
+            )
+            if input_field.is_displayed():
+                input_field.clear()
+            input_field.send_keys(value_to_type)
 
 
 def fill_out_textarea_fields(
