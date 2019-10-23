@@ -86,7 +86,7 @@ Feature: ERP - UK consumer
 
 
   @changes
-  Scenario: UK customers should be able to tell whether they're aware of price & choice changes since Brexit
+  Scenario: UK customers should be able to provide us with other information regarding price & choice changes since Brexit
     Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
 
     When "Robert" selects a random product code from the hierarchy of product codes
@@ -108,7 +108,7 @@ Feature: ERP - UK consumer
 
 
   @changes
-  Scenario Outline: UK customers should be able to submit their form
+  Scenario Outline: UK customers representing a "<specific group of consumers>" should be able to complete and submit their form
     Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
 
     When "Robert" selects a random product code from the hierarchy of product codes
