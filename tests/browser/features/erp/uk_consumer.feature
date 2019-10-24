@@ -51,17 +51,6 @@ Feature: ERP - UK consumer
     Then "Robert" should be on the "ERP - Product detail (UK consumer)" page
 
 
-  @save-for-later
-  Scenario: A UK customer should be able to save their goods selection for later
-    Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
-
-    When "Robert" selects a random product code from the hierarchy of product codes
-    Then "Robert" should be on the "ERP - Product detail (UK consumer)" page
-
-    When "Robert" saves progress for later
-    Then "Robert" should receive "We’ve saved your progress until" confirmation email
-
-
   @changes
   Scenario: UK customers should be able to tell whether they're aware of price & choice changes since Brexit
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
