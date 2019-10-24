@@ -891,7 +891,7 @@ workflows:
   run_erp_load_tests_on_stage:
     triggers:
       - schedule:
-          cron: "44 13 * * 1-5"
+          cron: "44 4 * * 1-5"
           filters:
             branches:
               only: master
