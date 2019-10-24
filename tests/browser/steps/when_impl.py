@@ -1016,8 +1016,86 @@ def erp_user_flow_individual_customer(
     )
 
 
+def erp_user_flow_consumer_group(context: Context, actor_alias, *, end_at: str = None):
+    if end_at:
+        allowed_page_names = [
+            erp.consumer_product_detail.NAME,
+            erp.consumer_aware_of_changes.NAME,
+            erp.consumer_other_changes_after_brexit.NAME,
+            erp.consumer_type.NAME,
+            erp.consumer_group_details.NAME,
+            erp.consumer_summary.NAME,
+        ]
+        assert end_at in allowed_page_names
+
+    visit_page(context, actor_alias, get_full_page_name(erp.triage_user_type))
+
+    generic_pick_radio_option_and_submit(context, actor_alias, option="UK consumer")
+
+    erp_drill_down_hierarchy_tree(context, actor_alias)
+    should_be_on_page(
+        context, actor_alias, page_name=get_full_page_name(erp.consumer_product_detail)
+    )
+    if end_at == erp.consumer_product_detail.NAME:
+        logging.debug(f"Stopping Individual customer flow @ {end_at}")
+        return
+
+    click_on_page_element(context, actor_alias, element_name="continue")
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.consumer_aware_of_changes),
+    )
+    if end_at == erp.consumer_aware_of_changes.NAME:
+        logging.debug(f"Stopping Individual customer flow @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.consumer_other_changes_after_brexit),
+    )
+    if end_at == erp.consumer_other_changes_after_brexit.NAME:
+        logging.debug(f"Stopping Individual customer flow @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context, actor_alias, page_name=get_full_page_name(erp.consumer_type)
+    )
+    if end_at == erp.consumer_type.NAME:
+        logging.debug(f"Stopping Individual customer flow @ {end_at}")
+        return
+
+    generic_pick_radio_option_and_submit(context, actor_alias, option="consumer group")
+    should_be_on_page(
+        context, actor_alias, page_name=get_full_page_name(erp.consumer_group_details)
+    )
+    if end_at == erp.consumer_group_details.NAME:
+        logging.debug(f"Stopping Individual customer flow @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context, actor_alias, page_name=get_full_page_name(erp.consumer_summary)
+    )
+    if end_at == erp.consumer_summary.NAME:
+        logging.debug(f"Stopping Individual customer flow @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context, actor_alias, page_name=get_full_page_name(erp.consumer_finished)
+    )
+
+
 def erp_follow_user_flow(
     context: Context, actor_alias: str, user_type, *, end_at: str = None
 ):
     if user_type == "individual consumer":
         erp_user_flow_individual_customer(context, actor_alias, end_at=end_at)
+    elif user_type == "consumer group":
+        erp_user_flow_consumer_group(context, actor_alias, end_at=end_at)
+    else:
+        raise KeyError(f"Unknown user type: {user_type}")
