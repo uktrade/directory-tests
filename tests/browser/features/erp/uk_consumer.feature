@@ -22,7 +22,7 @@ Feature: ERP - UK consumer
 
   @drill
   Scenario: A UK customer should be able to select goods affected by Brexit
-    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
+    Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" selects a random product code from the hierarchy of product codes
 
@@ -39,7 +39,7 @@ Feature: ERP - UK consumer
 
   @drill
   Scenario: A UK customer should be able to change the goods previously selected
-    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
+    Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" selects a random product code from the hierarchy of product codes
     Then "Robert" should be on the "ERP - Product detail (UK consumer)" page
@@ -53,7 +53,7 @@ Feature: ERP - UK consumer
 
   @save-for-later
   Scenario: A UK customer should be able to save their goods selection for later
-    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
+    Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" selects a random product code from the hierarchy of product codes
     Then "Robert" should be on the "ERP - Product detail (UK consumer)" page
@@ -64,7 +64,7 @@ Feature: ERP - UK consumer
 
   @changes
   Scenario: UK customers should be able to tell whether they're aware of price & choice changes since Brexit
-    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
+    Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" selects a random product code from the hierarchy of product codes
     Then "Robert" should be on the "ERP - Product detail (UK consumer)" page
@@ -88,7 +88,7 @@ Feature: ERP - UK consumer
 
   @changes
   Scenario: UK customers should be able to provide us with other information regarding price & choice changes since Brexit
-    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
+    Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" selects a random product code from the hierarchy of product codes
     Then "Robert" should be on the "ERP - Product detail (UK consumer)" page
@@ -110,7 +110,7 @@ Feature: ERP - UK consumer
 
   @changes
   Scenario Outline: UK customers representing a "<specific group of consumers>" should be able to complete and submit their form
-    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
+    Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" selects a random product code from the hierarchy of product codes
     Then "Robert" should be on the "ERP - Product detail (UK consumer)" page
@@ -148,19 +148,19 @@ Feature: ERP - UK consumer
   @search
   @drill
   Scenario: A UK customer should be able to search for affected goods by commodity code or part of their name
-    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
+    Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
   @wip
   @print
   Scenario: UK customers should be able to print a copy of their submitted form
-    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
+    Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
   @wip
   @save-for-later
-  Scenario: A UK customer should be able to save their progress for later at any point in time
-    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
+  Scenario Outline: A UK customer should be able to save their progress for later at any point in time
+    Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
   @wip
   @save-for-later
   Scenario: A UK customer should be able to restore their progress using link from the email
-    Given "Robert" got from "ERP - User type" to "ERP - Product search (UK consumer)" via "UK consumer"
+    Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
