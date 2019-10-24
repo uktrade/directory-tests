@@ -50,6 +50,7 @@ MD5_CHECKSUM_DIT_FAVICON = env.str(
 )
 EMAIL_VERIFICATION_CODE_SUBJECT = "Your confirmation code for great.gov.uk"
 EMAIL_VERIFICATION_MSG_SUBJECT = "Confirm your email address"
+EMAIL_ERP_PROGRESS_SAVED_MSG_SUBJECT = "We’ve saved your progress until"
 FAS_MESSAGE_FROM_BUYER_SUBJECT = (
     "New message through your great.gov.uk business profile"
 )

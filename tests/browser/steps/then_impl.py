@@ -14,6 +14,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 
 from directory_tests_shared.constants import (
+    EMAIL_ERP_PROGRESS_SAVED_MSG_SUBJECT,
     FORMS_API_MAILBOXES,
     HPO_AGENT_EMAIL_ADDRESS,
     HPO_AGENT_EMAIL_SUBJECT,
@@ -23,6 +24,7 @@ from directory_tests_shared.constants import (
 from directory_tests_shared.gov_notify import (
     get_email_confirmation_notification,
     get_email_confirmations_with_matching_string,
+    get_verification_link,
 )
 from directory_tests_shared.pdf import extract_text_from_pdf
 from directory_tests_shared.utils import check_for_errors
@@ -383,7 +385,7 @@ def generic_should_see_message(context: Context, actor_alias: str, message: str 
 
 # BrowserStack times out after 60 seconds of inactivity
 # https://www.browserstack.com/automate/timeouts
-@retry(wait_fixed=10000, stop_max_attempt_number=5, wrap_exception=False)
+@retry(wait_fixed=5000, stop_max_attempt_number=7, wrap_exception=False)
 def generic_contact_us_should_receive_confirmation_email(
     context: Context, actor_alias: str, subject: str
 ):
@@ -393,6 +395,20 @@ def generic_contact_us_should_receive_confirmation_email(
         email=actor.email, subject=subject
     )
     assert confirmation
+
+
+def erp_should_receive_email_with_link_to_restore_saved_progress(
+    context: Context, actor_alias: str
+):
+    avoid_browser_stack_idle_timeout_exception(context.driver)
+    actor = get_actor(context, actor_alias)
+
+    link = get_verification_link(
+        actor.email, subject=EMAIL_ERP_PROGRESS_SAVED_MSG_SUBJECT
+    )
+    with assertion_msg(f"Could not find an email with link to restore saved progress"):
+        assert link
+    update_actor(context, actor_alias, saved_progress_link=link)
 
 
 def generic_contact_us_should_receive_confirmation_email_containing_message(

@@ -9,6 +9,7 @@ from steps.then_impl import (
     articles_should_be_on_share_page,
     case_studies_should_see_case_study,
     domestic_search_finder_should_see_page_number,
+    erp_should_receive_email_with_link_to_restore_saved_progress,
     fas_search_results_filtered_by_industries,
     form_check_state_of_element,
     forms_confirmation_email_should_not_be_sent,
@@ -310,3 +311,10 @@ def then_notification_should_be_sent_to_specific_dit_office(
     generic_a_notification_should_not_be_sent_to_specific_dit_office(
         context, actor_alias, mailbox_name
     )
+
+
+@then('"{actor_alias}" should receive an email with a link to restore saved ERP session')
+def then_should_receive_email_from_govnotify_with_link_to_restore_saved_erp_session(
+        context: Context, actor_alias: str
+):
+    erp_should_receive_email_with_link_to_restore_saved_progress(context, actor_alias)

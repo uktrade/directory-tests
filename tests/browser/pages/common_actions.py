@@ -53,6 +53,7 @@ Actor = namedtuple(
         "last_tag",
         "element_details",
         "forms_data",
+        "saved_progress_link",
     ],
 )
 Selector = namedtuple(
