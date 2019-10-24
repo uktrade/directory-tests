@@ -41,6 +41,7 @@ from pages.common_actions import (
     get_actor,
     get_full_page_name,
     get_last_visited_page,
+    go_to_url,
     selenium_action,
     unauthenticated_actor,
     update_actor,
@@ -1099,3 +1100,9 @@ def erp_follow_user_flow(
         erp_user_flow_consumer_group(context, actor_alias, end_at=end_at)
     else:
         raise KeyError(f"Unknown user type: {user_type}")
+
+
+def erp_open_restore_session_link(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    assert actor.saved_progress_link
+    go_to_url(context.driver, actor.saved_progress_link, "Restore saved ERP progress")

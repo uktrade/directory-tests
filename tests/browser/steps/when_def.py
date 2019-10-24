@@ -21,6 +21,7 @@ from steps.when_impl import (
     domestic_search_for_phrase,
     domestic_submit_soo_contact_us_form,
     erp_drill_down_hierarchy_tree,
+    erp_open_restore_session_link,
     erp_save_for_later,
     fas_fill_out_and_submit_contact_us_form,
     fas_search_for_companies,
@@ -305,6 +306,12 @@ def when_actor_selects_random_product_code(context: Context, actor_alias: str):
 @when('"{actor_alias}" saves progress for later')
 def when_actor_saves_progress_for_later(context: Context, actor_alias: str):
     erp_save_for_later(context, actor_alias)
+
+
+@when('"{actor_alias}" decides to restore saved ERP progress using the link she received')
+@when('"{actor_alias}" decides to restore saved ERP progress using the link he received')
+def when_actor_restores_erp_progress(context, actor_alias):
+    erp_open_restore_session_link(context, actor_alias)
 
 
 ###############################################################################
