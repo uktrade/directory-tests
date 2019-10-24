@@ -42,7 +42,6 @@ SELECTORS = {
 SELECTORS.update(common_selectors.ERP_HEADER)
 SELECTORS.update(common_selectors.ERP_BETA)
 SELECTORS.update(common_selectors.ERP_BACK)
-SELECTORS.update(common_selectors.ERP_BREADCRUMBS)
 SELECTORS.update(common_selectors.ERP_SAVE_FOR_LATER)
 SELECTORS.update(common_selectors.ERP_FOOTER)
 
