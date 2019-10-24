@@ -155,10 +155,27 @@ Feature: ERP - UK consumer
   Scenario: UK customers should be able to print a copy of their submitted form
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
-  @wip
+  @e2e
+  @TT-2055
   @save-for-later
-  Scenario Outline: A UK customer should be able to save their progress for later at any point in time
-    Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
+  Scenario Outline: A "<uk consumer>" should be able to save their progress for later at "<expected>" page
+    Given "Robert" got to "<expected>" ERP page as "<uk consumer>"
+
+    When "Robert" saves progress for later
+
+    Then "Robert" should receive "We’ve saved your progress until" confirmation email
+
+    Examples: stages at which user can save progress
+      | expected                               | uk consumer         |
+      | Product detail (UK consumer)           | individual consumer |
+      | Are you aware of changes (UK consumer) | individual consumer |
+      | Other information (UK customer)        | individual consumer |
+      | Consumer type (UK consumer)            | individual consumer |
+      | Personal details (UK consumer)         | individual consumer |
+      | Summary (UK consumer)                  | individual consumer |
+      | Consumer type (UK consumer)            | consumer group      |
+      | Consumer group details (UK consumer)   | consumer group      |
+      | Summary (UK consumer)                  | consumer group      |
 
   @wip
   @save-for-later
