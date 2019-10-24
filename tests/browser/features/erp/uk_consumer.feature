@@ -163,7 +163,7 @@ Feature: ERP - UK consumer
 
     When "Robert" saves progress for later
 
-    Then "Robert" should receive "We’ve saved your progress until" confirmation email
+    Then "Robert" should receive an email with a link to restore saved ERP session
 
     Examples: stages at which user can save progress
       | expected                               | uk consumer         |
