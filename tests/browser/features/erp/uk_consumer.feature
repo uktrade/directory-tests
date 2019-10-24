@@ -144,15 +144,20 @@ Feature: ERP - UK consumer
   Scenario: UK customers should be able to print a copy of their submitted form
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
-  @e2e
-  @TT-2055
+
+  @TT-2056
   @save-for-later
-  Scenario Outline: A "<uk consumer>" should be able to save their progress for later at "<expected>" page
+  @restore-session
+  Scenario Outline: A "<uk consumer>" should be able to get back to "<expected>" page using the link to restore their progress
     Given "Robert" got to "<expected>" ERP page as "<uk consumer>"
 
     When "Robert" saves progress for later
-
     Then "Robert" should receive an email with a link to restore saved ERP session
+
+    When "Robert" clears the cookies
+    And "Robert" decides to restore saved ERP progress using the link he received
+
+    Then "Robert" should be on the "ERP - <expected>" page
 
     Examples: stages at which user can save progress
       | expected                               | uk consumer         |
@@ -165,8 +170,3 @@ Feature: ERP - UK consumer
       | Consumer type (UK consumer)            | consumer group      |
       | Consumer group details (UK consumer)   | consumer group      |
       | Summary (UK consumer)                  | consumer group      |
-
-  @wip
-  @save-for-later
-  Scenario: A UK customer should be able to restore their progress using link from the email
-    Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
