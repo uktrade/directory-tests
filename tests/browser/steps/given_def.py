@@ -217,8 +217,12 @@ def when_actor_clears_the_cookies(context, actor_alias):
     clear_the_cookies(context, actor_alias)
 
 
+@given('"{actor_alias}" submitted her ERP form as "{user_type}"')
+@given('"{actor_alias}" submitted his ERP form as "{user_type}"')
 @given('"{actor_alias}" got to "{end_at}" ERP page as "{user_type}"')
-def given_actor_got_to_expected_erp_page(context: Context, actor_alias: str, end_at: str, user_type: str):
+def given_actor_got_to_expected_erp_page(
+        context: Context, actor_alias: str, user_type: str, *, end_at: str = None
+):
     erp_follow_user_flow(context, actor_alias, user_type, end_at=end_at)
 
 
