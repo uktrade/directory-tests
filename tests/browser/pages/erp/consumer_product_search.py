@@ -15,7 +15,9 @@ from pages.common_actions import (
     Selector,
     check_for_sections,
     check_url,
+    find_element,
     find_elements,
+    find_selector_by_name,
     go_to_url,
     is_element_present,
     take_screenshot,
@@ -135,3 +137,13 @@ def drill_down_hierarchy_tree(driver: WebDriver) -> ModuleType:
         logging.error("Strange! Could not find 'Select' product codes button")
 
     return consumer_product_detail
+
+
+def search(driver: WebDriver, phrase: str):
+    search_input = find_element(driver, find_selector_by_name(SELECTORS, "search"))
+    search_button = find_element(
+        driver, find_selector_by_name(SELECTORS, "search button")
+    )
+    search_input.clear()
+    search_input.send_keys(phrase)
+    search_button.click()
