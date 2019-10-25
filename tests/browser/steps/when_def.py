@@ -22,6 +22,7 @@ from steps.when_impl import (
     erp_drill_down_hierarchy_tree,
     erp_open_restore_session_link,
     erp_save_for_later,
+    erp_select_random_search_result,
     fas_fill_out_and_submit_contact_us_form,
     fas_search_for_companies,
     fas_view_article,
@@ -313,6 +314,12 @@ def when_actor_saves_progress_for_later(context: Context, actor_alias: str):
 def when_actor_restores_erp_progress(context, actor_alias):
     erp_open_restore_session_link(context, actor_alias)
 
+
+@when('"{actor_alias}" selects a random product "{result_type}" from search results')
+def when_actor_selects_one_of_search_results(
+        context: Context, actor_alias: str, result_type: str
+):
+    erp_select_random_search_result(context, actor_alias, result_type)
 
 ###############################################################################
 # Currently unused but useful steps

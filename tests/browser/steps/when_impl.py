@@ -1106,3 +1106,11 @@ def erp_open_restore_session_link(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     assert actor.saved_progress_link
     go_to_url(context.driver, actor.saved_progress_link, "Restore saved ERP progress")
+
+
+def erp_select_random_search_result(
+    context: Context, actor_alias: str, result_type: str
+):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "click_on_random_search_result")
+    page.click_on_random_search_result(context.driver, result_type)
