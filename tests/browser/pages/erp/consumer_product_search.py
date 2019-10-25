@@ -80,7 +80,7 @@ def visit(driver: WebDriver):
 
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
-    check_url(driver, URL)
+    check_url(driver, URL, exact_match=False)
 
 
 def should_see_sections(driver: WebDriver, names: List[str]):
