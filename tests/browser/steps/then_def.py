@@ -20,6 +20,7 @@ from steps.then_impl import (
     generic_check_gtm_events,
     generic_contact_us_should_receive_confirmation_email,
     generic_contact_us_should_receive_confirmation_email_containing_message,
+    generic_should_be_able_to_print,
     generic_should_be_on_one_of_the_pages,
     generic_should_see_expected_page_content,
     generic_should_see_form_choices,
@@ -318,3 +319,8 @@ def then_should_receive_email_from_govnotify_with_link_to_restore_saved_erp_sess
         context: Context, actor_alias: str
 ):
     erp_should_receive_email_with_link_to_restore_saved_progress(context, actor_alias)
+
+
+@then('"{actor_alias}" should be able to print out a copy of submitted form')
+def then_actor_should_be_able_to_print(context: Context, actor_alias: str):
+    generic_should_be_able_to_print(context, actor_alias)

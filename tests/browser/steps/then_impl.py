@@ -683,3 +683,12 @@ def menu_items_should_be_visible(context: Context):
         raise
 
     assert element.is_displayed()
+
+
+def generic_should_be_able_to_print(context: Context, actor_alias: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "should_be_able_to_print")
+    page.should_be_able_to_print(context.driver)
+    logging.debug(
+        f"{actor_alias} is able to print out contents of: {context.driver.current_url}"
+    )
