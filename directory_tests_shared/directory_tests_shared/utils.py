@@ -5,6 +5,7 @@ import traceback
 import uuid
 from contextlib import contextmanager
 from random import choice, randint
+from typing import Union
 
 from .constants import OPERATING_COUNTRIES, PRODUCT_CATEGORIES, RARE_WORDS, SECTORS
 from .settings import BASICAUTH_PASS, BASICAUTH_USER
@@ -122,3 +123,23 @@ def assertion_msg(message: str, *args):
                     break
         traceback.print_tb(tb)
         raise
+
+
+def extract_by_css(
+    content: str, selector: str, *, first: bool = True
+) -> Union[str, list]:
+    """Extract values from HTML content using CSS selector.
+
+    :param content: HTML content
+    :param selector: CSS selector
+    :param first: (optional) return first found element or all of them
+    :return: value of the 1st found element or emtpy string if not found; or a list of all found elements
+    """
+    from scrapy.selector import Selector
+
+    extracted = Selector(text=content).css(selector).extract()
+    if first:
+        result = extracted[0] if len(extracted) > 0 else ""
+    else:
+        result = extracted
+    return result

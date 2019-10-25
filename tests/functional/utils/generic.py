@@ -14,7 +14,7 @@ from contextlib import contextmanager
 from pprint import pprint
 from random import choice
 from string import ascii_uppercase
-from typing import DefaultDict, List, Union
+from typing import DefaultDict, List
 
 import lxml
 import requests
@@ -22,7 +22,6 @@ from behave.runner import Context
 from bs4 import BeautifulSoup
 from langdetect import DetectorFactory, detect_langs
 from requests import Response
-from scrapy.selector import Selector
 from termcolor import cprint
 
 from directory_constants import choices
@@ -33,7 +32,7 @@ from directory_tests_shared.clients import (
 )
 from directory_tests_shared.constants import SECTORS, TEST_IMAGES_DIR, JPEGs, PNGs
 from directory_tests_shared.settings import STANNP_LETTER_TEMPLATE_ID
-from directory_tests_shared.utils import rare_word, sentence
+from directory_tests_shared.utils import extract_by_css, rare_word, sentence
 from tests.functional.utils.context_utils import (
     CaseStudy,
     Company,
@@ -354,7 +353,7 @@ def extract_csrf_middleware_token(response: Response) -> str:
     with assertion_msg("Can't extract CSRF token as response has no content"):
         assert response.content
     css_selector = "input[type=hidden][name=csrfmiddlewaretoken]::attr(value)"
-    token = extract_by_css(response, css_selector)
+    token = extract_by_css(response.content.decode("UTF-8"), css_selector)
     with assertion_msg(f"Couldn't find csrfmiddlewaretoken on {response.url}"):
         assert token
     logging.debug("Found CSRF token: %s", token)
@@ -372,7 +371,7 @@ def extract_form_action(response: Response) -> str:
     with assertion_msg("Can't extract form action from an empty response!"):
         assert response.content
     css_selector = "#content form::attr(action)"
-    action = extract_by_css(response, css_selector)
+    action = extract_by_css(response.content.decode("UTF-8"), css_selector)
     logging.debug("Found confirm email form action value=%s", action)
     return action
 
@@ -408,23 +407,6 @@ def get_md5_hash_of_file(absolute_path):
     return hashlib.md5(open(absolute_path, "rb").read()).hexdigest()
 
 
-def extract_by_css(response, selector, *, first: bool = True) -> Union[str, list]:
-    """Extract values from HTML response content using CSS selector.
-
-    :param response: response containing HTML content
-    :param selector: CSS selector
-    :param first: (optional) return first found element or all of them
-    :return: value of the 1st found element or emtpy string if not found; or a list of all found elements
-    """
-    content = response.content.decode("utf-8")
-    extracted = Selector(text=content).css(selector).extract()
-    if first:
-        result = extracted[0] if len(extracted) > 0 else ""
-    else:
-        result = extracted
-    return result
-
-
 def extract_logo_url(response: Response):
     """Extract URL of the Company's logo picture from the Directory
     edit profile page content.
@@ -434,7 +416,7 @@ def extract_logo_url(response: Response):
     :return: a URL to the company's logo image
     """
     css_selector = "#logo-container img::attr(src)"
-    logo_url = extract_by_css(response, css_selector)
+    logo_url = extract_by_css(response.content.decode("UTF-8"), css_selector)
     with assertion_msg("Could not find Company's logo URL in the response"):
         assert logo_url
     return logo_url
@@ -835,7 +817,9 @@ def get_number_of_search_result_pages(response: Response) -> int:
              information about number of pages
     """
     last_page_css_selector = "#paginator ol li.active-blue-text ~ li a::text"
-    last_page = extract_by_css(response, last_page_css_selector).strip()
+    last_page = extract_by_css(
+        response.content.decode("UTF-8"), last_page_css_selector
+    ).strip()
     last_page = int(last_page) if last_page.isdigit() else 0
     logging.debug(f"Number of search result pages: {last_page}")
     return last_page
