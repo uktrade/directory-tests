@@ -139,10 +139,19 @@ Feature: ERP - UK consumer
   Scenario: A UK customer should be able to search for affected goods by commodity code or part of their name
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
-  @wip
+
+  @TT-2054
   @print
-  Scenario: UK customers should be able to print a copy of their submitted form
-    Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
+  Scenario Outline: A "<uk consumer>" should be able to print a copy of their submitted form
+    Given "Robert" submitted his ERP form as "<uk consumer>"
+
+    Then "Robert" should be on the "ERP - Finished (UK consumer)" page
+    And "Robert" should be able to print out a copy of submitted form
+
+    Examples: types of UK consumers
+      | uk consumer         |
+      | individual consumer |
+      | consumer group      |
 
 
   @TT-2056
