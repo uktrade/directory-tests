@@ -299,6 +299,11 @@ def when_actor_triggers_all_gtm_events(
     )
 
 
+@when('"{actor_alias}" selects a random product code from an expanded hierarchy of product codes')
+def when_actor_selects_random_product_code(context: Context, actor_alias: str):
+    erp_drill_down_hierarchy_tree(context, actor_alias, use_expanded_category=True)
+
+
 @when('"{actor_alias}" selects a random product code from the hierarchy of product codes')
 def when_actor_selects_random_product_code(context: Context, actor_alias: str):
     erp_drill_down_hierarchy_tree(context, actor_alias)

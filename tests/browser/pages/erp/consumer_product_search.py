@@ -91,17 +91,28 @@ def should_see_sections(driver: WebDriver, names: List[str]):
     check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
-def drill_down_hierarchy_tree(driver: WebDriver) -> ModuleType:
-    first_level_selector = Selector(
-        By.CSS_SELECTOR, "ul.app-hierarchy-tree li.app-hierarchy-tree__section"
-    )
-    first_level = find_elements(driver, first_level_selector)
-    first = choice(first_level)
-    first_id = first.get_property("id")
+def drill_down_hierarchy_tree(
+    driver: WebDriver, *, use_expanded_category: bool = False
+) -> ModuleType:
+    if use_expanded_category:
+        last_expanded_level = Selector(
+            By.CSS_SELECTOR, "li.app-hierarchy-tree__parent--open:last-of-type"
+        )
+        last_opened_levels = find_elements(driver, last_expanded_level)
+        opened_first_level = last_opened_levels[-1]
+        first_id = opened_first_level.get_property("id")
+        logging.debug(f"Commencing from: {first_id} -> {opened_first_level.text}")
+    else:
+        first_level_selector = Selector(
+            By.CSS_SELECTOR, "ul.app-hierarchy-tree li.app-hierarchy-tree__section"
+        )
+        first_level = find_elements(driver, first_level_selector)
+        first = choice(first_level)
+        first_id = first.get_property("id")
 
-    with wait_for_page_load_after_action(driver):
-        logging.debug(f"First level: {first_id} -> {first.text}")
-        first.click()
+        with wait_for_page_load_after_action(driver):
+            logging.debug(f"First level: {first_id} -> {first.text}")
+            first.click()
 
     select_code_selector = Selector(By.CSS_SELECTOR, "div.app-hierarchy-button")
     select_product_codes_present = is_element_present(driver, select_code_selector)
