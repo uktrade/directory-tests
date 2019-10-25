@@ -170,3 +170,17 @@ def should_see_number_of_product_categories_to_expand(
     evaluate_comparison(
         "number of product categories to be", len(found_elements), comparison_details
     )
+
+
+def click_on_random_search_result(driver: WebDriver, result_type: str):
+    result_type_selectors = {
+        "code": PRODUCT_CODES_SELECTOR,
+        "category": PRODUCT_CATEGORIES_SELECTOR,
+    }
+    found_elements = find_elements(driver, result_type_selectors[result_type.lower()])
+    search_result = choice(found_elements)
+    value = search_result.get_property("value")
+    href = search_result.get_attribute("href")
+    logging.debug(f"Will click on {result_type}: {value or href}")
+    with wait_for_page_load_after_action(driver, timeout=5):
+        search_result.click()
