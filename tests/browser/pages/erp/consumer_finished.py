@@ -7,12 +7,14 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
+from directory_tests_shared.utils import extract_by_css
 from pages import common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
     check_url,
     find_and_click_on_page_element,
+    find_element,
     take_screenshot,
 )
 
@@ -47,3 +49,28 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 def click_on_page_element(driver: WebDriver, element_name: str):
     find_and_click_on_page_element(driver, SELECTORS, element_name)
     take_screenshot(driver, NAME + " after clicking on " + element_name)
+
+
+def should_be_able_to_print(driver: WebDriver):
+    print_link_selector = Selector(By.PARTIAL_LINK_TEXT, "print a copy now")
+    print_link = find_element(driver, print_link_selector)
+    onclick = print_link.get_attribute("onclick")
+    href = print_link.get_attribute("href")
+    error = f"Expected 'window.print()' got '{onclick}' on {driver.current_url}"
+    assert onclick == "window.print()", error
+    error = f"Expected '{URL}#' got '{href}' on {driver.current_url}"
+    assert href == f"{URL}#", error
+
+    print_only_selector = "div.print-only *::text"
+    raw_to_print = extract_by_css(driver.page_source, print_only_selector, first=False)
+    clean_to_print = [
+        text
+        for text in raw_to_print
+        if "\n" not in text and "Change" not in text and "answer" not in text
+    ]
+    to_print = "\n".join(clean_to_print)
+    error = (
+        f"Could not find expected values in content to print: {to_print} on "
+        f"{driver.current_url}"
+    )
+    assert "Feedback form details" in to_print, error
