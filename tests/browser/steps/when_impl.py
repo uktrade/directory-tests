@@ -859,7 +859,7 @@ def domestic_submit_soo_contact_us_form(
     domestic.contact_us_soo_long_thank_you.should_be_here(context.driver)
 
 
-def domestic_search_for_phrase(context: Context, actor_alias: str, phrase: str):
+def generic_search_for_phrase(context: Context, actor_alias: str, phrase: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "search")
     page.search(context.driver, phrase)

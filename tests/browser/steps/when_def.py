@@ -18,7 +18,6 @@ from steps.when_impl import (
     click_on_page_element,
     contact_us_navigate_through_options,
     domestic_find_more_about_search_result_type,
-    domestic_search_for_phrase,
     domestic_submit_soo_contact_us_form,
     erp_drill_down_hierarchy_tree,
     erp_open_restore_session_link,
@@ -39,6 +38,7 @@ from steps.when_impl import (
     generic_pick_radio_option_and_submit,
     generic_pick_random_radio_option_and_submit,
     generic_report_problem_with_page,
+    generic_search_for_phrase,
     generic_select_dropdown_option,
     generic_submit_form,
     generic_trigger_all_gtm_events,
@@ -267,7 +267,7 @@ def when_actor_submits_soo_contact_us_form(
 @when('"{actor_alias}" searches using "{phrase}"')
 def when_actor_search_for_phrase(
         context: Context, actor_alias: str, phrase: str):
-    domestic_search_for_phrase(context, actor_alias, phrase)
+    generic_search_for_phrase(context, actor_alias, phrase)
 
 
 @when('"{actor_alias}" decides to find out more about random "{type_of}" result')
