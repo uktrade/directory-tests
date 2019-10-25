@@ -133,11 +133,31 @@ Feature: ERP - UK consumer
       | consumer group              | Consumer group details (UK consumer) |
       | individual consumer         | Personal details (UK consumer)       |
 
-  @wip
+
+  @TT-2060
   @search
-  @drill
-  Scenario: A UK customer should be able to search for affected goods by commodity code or part of their name
+  Scenario Outline: A UK customer should be able to search for affected goods by commodity code or part of their name
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
+
+    When "Robert" searches using "<phrase>"
+
+    Then "Robert" should see "<an expected number of>" product code(s) to select
+    And "Robert" should see "<a number of>" product category(ies) to expand
+
+    Examples: search phrases
+      | phrase           | an expected number of | a number of |
+      | food             | at least 1            | at least 1  |
+      | mineral products | at least 1            | at least 1  |
+
+    Examples: specific product codes
+      | phrase     | an expected number of | a number of |
+      | 3904400091 | at least 1            | at least 1  |
+      | 2309904151 | at least 1            | at least 1  |
+
+    Examples: parent product code category
+      | phrase   | an expected number of | a number of |
+      | 21069055 | no                    | at least 1  |
+      | 05100000 | no                    | at least 1  |
 
 
   @TT-2054
