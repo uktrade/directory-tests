@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 import logging
+import operator
 import sys
 import traceback
 import uuid
 from contextlib import contextmanager
 from random import choice, randint
-from typing import Union
+from types import BuiltinFunctionType
+from typing import Tuple, Union
 
 from .constants import OPERATING_COUNTRIES, PRODUCT_CATEGORIES, RARE_WORDS, SECTORS
 from .settings import BASICAUTH_PASS, BASICAUTH_USER
@@ -143,3 +145,57 @@ def extract_by_css(
     else:
         result = extracted
     return result
+
+
+def get_operator_from_operation(comparison_function):
+    """Get arithmetic representation of a comparison function"""
+    return {
+        operator.lt: "<",
+        operator.le: "<=",
+        operator.eq: "==",
+        operator.ne: "!=",
+        operator.ge: ">=",
+        operator.gt: ">",
+    }[comparison_function]
+
+
+def evaluate_comparison(
+    value_name: str, value_to_compare: int, comparison: Tuple[BuiltinFunctionType, int]
+):
+    """Will evaluate comparison operator on value_to_compare & compared_value"""
+    comparison_operation = comparison[0]
+    compared_value = comparison[1]
+    operator_function = get_operator_from_operation(comparison_operation)
+    error = (
+        f"Expected {value_name} {operator_function} {compared_value} but got "
+        f"{value_to_compare} instead"
+    )
+    with assertion_msg(error):
+        assert comparison_operation(value_to_compare, compared_value)
+
+
+def get_comparison_details(description: str) -> Tuple[BuiltinFunctionType, int]:
+    """Get comparison function & value from its text description"""
+    last_word = description.split()[-1]
+    number = -1
+    if last_word.isnumeric():
+        number = int(last_word)
+
+    parsed = {
+        "less than": (operator.lt, number),
+        "less or equal to": (operator.le, number),
+        "exactly": (operator.eq, number),
+        "no": (operator.eq, 0),
+        "anything but": (operator.ne, 0),
+        "at least": (operator.ge, number),
+        "more than": (operator.gt, number),
+    }
+    matching_comparison_details = [
+        parsed[key] for key in parsed.keys() if key in description
+    ]
+    error = (
+        f"Expected to find only 1 matching comparison for: '{description}' but found "
+        f"{len(matching_comparison_details)} instead: {matching_comparison_details}"
+    )
+    assert len(matching_comparison_details) == 1, error
+    return matching_comparison_details[0]
