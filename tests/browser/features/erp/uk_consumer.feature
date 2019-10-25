@@ -160,6 +160,51 @@ Feature: ERP - UK consumer
       | 05100000 | no                    | at least 1  |
 
 
+  @TT-2060
+  @search
+  Scenario Outline: A UK customer should be able to search for affected goods by commodity code or part of their name
+    Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
+
+    When "Robert" searches using "<phrase>"
+    And "Robert" selects a random product "code" from search results
+
+    Then "Robert" should be on the "ERP - Product detail (UK consumer)" page
+
+    Examples: search phrases
+      | phrase           |
+      | food             |
+      | mineral products |
+
+    Examples: specific product codes
+      | phrase     |
+      | 3904400091 |
+      | 2309904151 |
+      | 9305200010 |
+
+
+  @TT-2060
+  @search
+  Scenario Outline: A UK customer should be able to search for affected goods by commodity code or part of their name
+    Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
+
+    When "Robert" searches using "<phrase>"
+    And "Robert" selects a random product "category" from search results
+    Then "Robert" should be on the "ERP - Product search (UK consumer)" page
+
+    When "Robert" selects a random product code from an expanded hierarchy of product codes
+    Then "Robert" should be on the "ERP - Product detail (UK consumer)" page
+
+    Examples: parent product code category
+      | phrase     |
+      | 21069055   |
+      | 05100000   |
+      | 9305200000 |
+      | 988        |
+      | 9880000000 |
+      | 67         |
+      | 6700000000 |
+
+
   @TT-2054
   @print
   Scenario Outline: A "<uk consumer>" should be able to print a copy of their submitted form
