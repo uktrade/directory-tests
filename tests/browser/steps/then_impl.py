@@ -27,7 +27,7 @@ from directory_tests_shared.gov_notify import (
     get_verification_link,
 )
 from directory_tests_shared.pdf import extract_text_from_pdf
-from directory_tests_shared.utils import check_for_errors
+from directory_tests_shared.utils import check_for_errors, get_comparison_details
 from pages import (
     common_language_selector,
     domestic,
@@ -691,4 +691,34 @@ def generic_should_be_able_to_print(context: Context, actor_alias: str):
     page.should_be_able_to_print(context.driver)
     logging.debug(
         f"{actor_alias} is able to print out contents of: {context.driver.current_url}"
+    )
+
+
+def erp_should_see_number_of_product_codes_to_select(
+    context: Context, actor_alias: str, comparison_description: str
+):
+    comparison_details = get_comparison_details(comparison_description)
+
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "should_see_number_of_product_codes_to_select")
+    page.should_see_number_of_product_codes_to_select(
+        context.driver, comparison_details
+    )
+    logging.debug(
+        f"{actor_alias} saw: {comparison_description} product code(s) to select"
+    )
+
+
+def erp_should_see_number_of_product_categories_to_expand(
+    context: Context, actor_alias: str, comparison_description: str
+):
+    comparison_details = get_comparison_details(comparison_description)
+
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "should_see_number_of_product_categories_to_expand")
+    page.should_see_number_of_product_categories_to_expand(
+        context.driver, comparison_details
+    )
+    logging.debug(
+        f"{actor_alias} saw: {comparison_description} product categories(s) to expand"
     )

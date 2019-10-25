@@ -2,14 +2,15 @@
 """ERP - Product Search - UK consumer"""
 import logging
 from random import choice
-from types import ModuleType
-from typing import List
+from types import BuiltinFunctionType, ModuleType
+from typing import List, Tuple
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
+from directory_tests_shared.utils import evaluate_comparison
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
@@ -147,3 +148,27 @@ def search(driver: WebDriver, phrase: str):
     search_input.clear()
     search_input.send_keys(phrase)
     search_button.click()
+
+
+def should_see_number_of_product_codes_to_select(
+    driver: WebDriver, comparison_details: Tuple[BuiltinFunctionType, int]
+):
+    product_codes_selector = Selector(
+        By.CSS_SELECTOR, "button.search-product-select-button"
+    )
+    found_elements = find_elements(driver, product_codes_selector)
+    evaluate_comparison(
+        "number of product codes to be", len(found_elements), comparison_details
+    )
+
+
+def should_see_number_of_product_categories_to_expand(
+    driver: WebDriver, comparison_details: Tuple[BuiltinFunctionType, int]
+):
+    product_categories_selector = Selector(
+        By.CSS_SELECTOR, "#content form a.govuk-link"
+    )
+    found_elements = find_elements(driver, product_categories_selector)
+    evaluate_comparison(
+        "number of product categories to be", len(found_elements), comparison_details
+    )

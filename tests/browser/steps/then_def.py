@@ -10,6 +10,8 @@ from steps.then_impl import (
     case_studies_should_see_case_study,
     domestic_search_finder_should_see_page_number,
     erp_should_receive_email_with_link_to_restore_saved_progress,
+    erp_should_see_number_of_product_categories_to_expand,
+    erp_should_see_number_of_product_codes_to_select,
     fas_search_results_filtered_by_industries,
     form_check_state_of_element,
     forms_confirmation_email_should_not_be_sent,
@@ -324,3 +326,21 @@ def then_should_receive_email_from_govnotify_with_link_to_restore_saved_erp_sess
 @then('"{actor_alias}" should be able to print out a copy of submitted form')
 def then_actor_should_be_able_to_print(context: Context, actor_alias: str):
     generic_should_be_able_to_print(context, actor_alias)
+
+
+@then('"{actor_alias}" should see "{number_of_product_codes}" product code(s) to select')
+def then_erp_user_should_see_expected_number_of_product_codes_to_select(
+        context: Context, actor_alias: str, number_of_product_codes: str
+):
+    erp_should_see_number_of_product_codes_to_select(
+        context, actor_alias, number_of_product_codes
+    )
+
+
+@then('"{actor_alias}" should see "{number_of_product_codes}" product category(ies) to expand')
+def then_erp_user_should_see_expected_number_of_product_categories_to_compare(
+        context: Context, actor_alias: str, number_of_product_codes: str
+):
+    erp_should_see_number_of_product_categories_to_expand(
+        context, actor_alias, number_of_product_codes
+    )
