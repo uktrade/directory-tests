@@ -35,6 +35,10 @@ PAGE_TITLE = ""
 SUBMIT_BUTTON = Selector(
     By.CSS_SELECTOR, "#content > form button.govuk-button", type=ElementType.BUTTON
 )
+PRODUCT_CATEGORIES_SELECTOR = Selector(By.CSS_SELECTOR, "#content form a.govuk-link")
+PRODUCT_CODES_SELECTOR = Selector(
+    By.CSS_SELECTOR, "button.search-product-select-button"
+)
 SELECTORS = {
     "form": {
         "form itself": Selector(By.CSS_SELECTOR, "#content form[method='post']"),
@@ -153,10 +157,7 @@ def search(driver: WebDriver, phrase: str):
 def should_see_number_of_product_codes_to_select(
     driver: WebDriver, comparison_details: Tuple[BuiltinFunctionType, int]
 ):
-    product_codes_selector = Selector(
-        By.CSS_SELECTOR, "button.search-product-select-button"
-    )
-    found_elements = find_elements(driver, product_codes_selector)
+    found_elements = find_elements(driver, PRODUCT_CODES_SELECTOR)
     evaluate_comparison(
         "number of product codes to be", len(found_elements), comparison_details
     )
@@ -165,10 +166,7 @@ def should_see_number_of_product_codes_to_select(
 def should_see_number_of_product_categories_to_expand(
     driver: WebDriver, comparison_details: Tuple[BuiltinFunctionType, int]
 ):
-    product_categories_selector = Selector(
-        By.CSS_SELECTOR, "#content form a.govuk-link"
-    )
-    found_elements = find_elements(driver, product_categories_selector)
+    found_elements = find_elements(driver, PRODUCT_CATEGORIES_SELECTOR)
     evaluate_comparison(
         "number of product categories to be", len(found_elements), comparison_details
     )
