@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 __all__ = [
     "autocomplete_callbacks",
+    "aware_of_market_size_changes",
+    "aware_of_other_changes_after_brexit",
+    "aware_of_sales_changes",
     "consumer_aware_of_changes",
     "consumer_finished",
     "consumer_group_details",
@@ -10,6 +13,7 @@ __all__ = [
     "consumer_type",
     "developing_country_select",
     "landing",
+    "market_size",
     "product_detail",
     "product_search",
     "sales_volumes",
