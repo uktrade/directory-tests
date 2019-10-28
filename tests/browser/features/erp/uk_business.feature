@@ -3,6 +3,7 @@
 Feature: ERP - UK business
 
 
+  @TT-2073
   Scenario: A UK business should be able to tell whether they're importing from overseas or not
     Given "Robert" visits the "ERP - User type" page
 
@@ -22,6 +23,7 @@ Feature: ERP - UK business
       | Footer   |
 
 
+  @TT-2074
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should see a list of product codes which might be affected by Brexit
     Given "Robert" got to "ERP - Import from overseas (UK business)" from "ERP - User type" via "UK business"
 
@@ -43,6 +45,7 @@ Feature: ERP - UK business
       | not imported    | Product search (UK business) |
 
 
+  @TT-2075
   @drill
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to select goods affected by Brexit
     Given "Robert" got to "ERP - Product search (<business type>)" from "ERP - User type" via "UK business -> <imported or not>"
@@ -65,6 +68,7 @@ Feature: ERP - UK business
       | not imported    | UK business   |
 
 
+  @TT-2076
   @drill
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to change the goods previously selected
     Given "Robert" got to "ERP - Product search (<business type>)" from "ERP - User type" via "UK business -> <imported or not>"
