@@ -82,3 +82,56 @@ Feature: ERP - UK business
       | imported or not | business type |
       | imported        | UK importer   |
       | not imported    | UK business   |
+
+
+  @TT-2077
+  Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell where do they import goods from
+    Given "Robert" got to "ERP - Product search (<business type>)" from "ERP - User type" via "UK business -> <imported or not>"
+
+    When "Robert" selects a random product code from the hierarchy of product codes
+    Then "Robert" should be on the "ERP - Product detail (<business type>)" page
+
+    When "Robert" decides to "continue"
+    Then "Robert" should be on the "ERP - <expected>" page
+    And "Robert" should see following sections
+      | Sections        |
+      | Header          |
+      | Beta bar        |
+      | Go back         |
+      | Form            |
+      | Save for later  |
+      | Footer          |
+
+    Examples:
+      | imported or not | business type | expected                               |
+      | imported        | UK importer   | Where do you import from (UK importer) |
+
+
+  @TT-2078
+  Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to specify what were UK sales volumes for these goods before Brexit
+    Given "Robert" got to "ERP - Product search (<business type>)" from "ERP - User type" via "UK business -> <imported or not>"
+
+    When "Robert" selects a random product code from the hierarchy of product codes
+    Then "Robert" should be on the "ERP - Product detail (<business type>)" page
+
+    When "Robert" decides to "continue"
+    Then "Robert" should be on the "ERP - <expected>" page
+    Then "Robert" should see following options
+      | options                     |
+      | kilograms (kg)              |
+      | litres                      |
+      | meters                      |
+      | units (number of items)     |
+      | Other                       |
+    And "Robert" should see following sections
+      | Sections        |
+      | Header          |
+      | Beta bar        |
+      | Go back         |
+      | Form            |
+      | Save for later  |
+      | Footer          |
+
+    Examples:
+      | imported or not | business type | expected                    |
+      | not imported    | UK business   | Sales volumes (UK business) |
