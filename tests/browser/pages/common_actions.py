@@ -579,8 +579,8 @@ def check_for_sections(
             ):
                 element = driver.find_element(by=selector.by, value=selector.value)
             logging.debug(f"Scrolling/Moving focus to '{name}→{key}' element")
-            scroll_to(driver, element)
             if selector.is_visible:
+                scroll_to(driver, element)
                 with assertion_msg(
                     f"It looks like '{key}' element identified by '{selector}' "
                     f"selector is not visible on {driver.current_url}"
