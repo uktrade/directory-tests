@@ -102,6 +102,7 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
 
     if know_market_value:
         result.update({"financial year": None, "market value": randrange(0, 99999)})
+
     if custom_details:
         result.update(custom_details)
     return result
@@ -109,8 +110,9 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
 
 def fill_out(driver: WebDriver, details: dict):
     check_radio(driver, SELECTORS["form"], details)
-    pick_option(driver, SELECTORS["form"], details)
-    fill_out_input_fields(driver, SELECTORS["form"], details)
+    if details["yes"]:
+        pick_option(driver, SELECTORS["form"], details)
+        fill_out_input_fields(driver, SELECTORS["form"], details)
     take_screenshot(driver, "After filling out the form")
 
 
