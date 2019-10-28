@@ -4,6 +4,7 @@ Feature: ERP - UK business
 
 
   @TT-2073
+  @UK_business
   Scenario: A UK business should be able to tell whether they're importing from overseas or not
     Given "Robert" visits the "ERP - User type" page
 
@@ -24,12 +25,13 @@ Feature: ERP - UK business
 
 
   @TT-2074
+  @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should see a list of product codes which might be affected by Brexit
     Given "Robert" got to "ERP - Import from overseas (UK business)" from "ERP - User type" via "UK business"
 
     When "Robert" says that affected goods are "<imported or not>" from overseas
 
-    Then "Robert" should be on the "ERP - <expected>" page
+    Then "Robert" should be on the "ERP - Product search (<business_type>)" page
     And "Robert" should see following sections
       | Sections        |
       | Header          |
@@ -40,19 +42,20 @@ Feature: ERP - UK business
       | Footer          |
 
     Examples:
-      | imported or not | expected                     |
-      | imported        | Product search (UK importer) |
-      | not imported    | Product search (UK business) |
+      | imported or not | business_type |
+      | imported        | UK importer   |
+      | not imported    | UK business   |
 
 
   @TT-2075
   @drill
+  @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to select goods affected by Brexit
-    Given "Robert" got to "ERP - Product search (<business type>)" from "ERP - User type" via "UK business -> <imported or not>"
+    Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
 
     When "Robert" selects a random product code from the hierarchy of product codes
 
-    Then "Robert" should be on the "ERP - Product detail (<business type>)" page
+    Then "Robert" should be on the "ERP - Product detail (<business_type>)" page
     And "Robert" should see following sections
       | Sections        |
       | Header          |
@@ -63,37 +66,39 @@ Feature: ERP - UK business
       | Footer          |
 
     Examples:
-      | imported or not | business type |
+      | imported or not | business_type |
       | imported        | UK importer   |
       | not imported    | UK business   |
 
 
   @TT-2076
+  @<business_type>
   @drill
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to change the goods previously selected
-    Given "Robert" got to "ERP - Product search (<business type>)" from "ERP - User type" via "UK business -> <imported or not>"
+    Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
 
     When "Robert" selects a random product code from the hierarchy of product codes
-    Then "Robert" should be on the "ERP - Product detail (<business type>)" page
+    Then "Robert" should be on the "ERP - Product detail (<business_type>)" page
 
     When "Robert" decides to "change goods"
-    Then "Robert" should be on the "ERP - Product search (<business type>)" page
+    Then "Robert" should be on the "ERP - Product search (<business_type>)" page
 
     When "Robert" selects a random product code from the hierarchy of product codes
-    Then "Robert" should be on the "ERP - Product detail (<business type>)" page
+    Then "Robert" should be on the "ERP - Product detail (<business_type>)" page
 
     Examples:
-      | imported or not | business type |
+      | imported or not | business_type |
       | imported        | UK importer   |
       | not imported    | UK business   |
 
 
   @TT-2077
+  @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell where do they import goods from
-    Given "Robert" got to "ERP - Product search (<business type>)" from "ERP - User type" via "UK business -> <imported or not>"
+    Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
 
     When "Robert" selects a random product code from the hierarchy of product codes
-    Then "Robert" should be on the "ERP - Product detail (<business type>)" page
+    Then "Robert" should be on the "ERP - Product detail (<business_type>)" page
 
     When "Robert" decides to "continue"
     Then "Robert" should be on the "ERP - <expected>" page
@@ -107,16 +112,17 @@ Feature: ERP - UK business
       | Footer          |
 
     Examples:
-      | imported or not | business type | expected                               |
+      | imported or not | business_type | expected                               |
       | imported        | UK importer   | Where do you import from (UK importer) |
 
 
   @TT-2078
+  @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to specify what were UK sales volumes for these goods before Brexit
-    Given "Robert" got to "ERP - Product search (<business type>)" from "ERP - User type" via "UK business -> <imported or not>"
+    Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
 
     When "Robert" selects a random product code from the hierarchy of product codes
-    Then "Robert" should be on the "ERP - Product detail (<business type>)" page
+    Then "Robert" should be on the "ERP - Product detail (<business_type>)" page
 
     When "Robert" decides to "continue"
     Then "Robert" should be on the "ERP - <expected>" page
@@ -137,5 +143,5 @@ Feature: ERP - UK business
       | Footer          |
 
     Examples:
-      | imported or not | business type | expected                    |
+      | imported or not | business_type | expected                    |
       | not imported    | UK business   | Sales volumes (UK business) |
