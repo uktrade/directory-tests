@@ -148,3 +148,161 @@ Feature: ERP - UK business
     Examples:
       | imported or not | business_type | expected                    |
       | not imported    | UK business   | Sales volumes (UK business) |
+
+
+  @TT-2080
+  @<business_type>
+  Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us if they're aware of sales changes
+    Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
+
+    When "Robert" selects a random product code from the hierarchy of product codes
+    Then "Robert" should be on the "ERP - Product detail (<business_type>)" page
+
+    When "Robert" decides to "continue"
+    Then "Robert" should be on the "ERP - Sales volumes (<business_type>)" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "ERP - Sales revenue (<business_type>)" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "ERP - Are you aware of sales changes (<business_type>)" page
+    Then "Robert" should see following options
+      | options                     |
+      | aware of volume changes     |
+      | not aware of volume changes |
+      | aware of price changes      |
+      | not aware of price changes  |
+    And "Robert" should see following sections
+      | Sections        |
+      | Header          |
+      | Beta bar        |
+      | Go back         |
+      | Form            |
+      | Save for later  |
+      | Footer          |
+
+    Examples:
+      | imported or not | business_type |
+      | not imported    | UK business   |
+
+
+  @TT-2081
+  @<business_type>
+  Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us if they're aware of market size changes
+    Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
+
+    When "Robert" selects a random product code from the hierarchy of product codes
+    Then "Robert" should be on the "ERP - Product detail (<business_type>)" page
+
+    When "Robert" decides to "continue"
+    Then "Robert" should be on the "ERP - Sales volumes (<business_type>)" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "ERP - Sales revenue (<business_type>)" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "ERP - Are you aware of sales changes (<business_type>)" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "ERP - Are you aware of market size changes (<business_type>)" page
+    Then "Robert" should see following options
+      | options                          |
+      | aware of market size changes     |
+      | not aware of market size changes |
+      | aware of price changes           |
+      | not aware of price changes       |
+    And "Robert" should see following sections
+      | Sections        |
+      | Header          |
+      | Beta bar        |
+      | Go back         |
+      | Form            |
+      | Save for later  |
+      | Footer          |
+
+    Examples:
+      | imported or not | business_type |
+      | not imported    | UK business   |
+
+
+  @TT-2082
+  @<business_type>
+  Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us if they're aware of other changes
+    Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
+
+    When "Robert" selects a random product code from the hierarchy of product codes
+    Then "Robert" should be on the "ERP - Product detail (<business_type>)" page
+
+    When "Robert" decides to "continue"
+    Then "Robert" should be on the "ERP - Sales volumes (<business_type>)" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "ERP - Sales revenue (<business_type>)" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "ERP - Are you aware of sales changes (<business_type>)" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "ERP - Are you aware of market size changes (<business_type>)" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "ERP - Are you aware of other changes (<business_type>)" page
+    Then "Robert" should see following options
+      | options                    |
+      | aware of other changes     |
+      | not aware of other changes |
+    And "Robert" should see following sections
+      | Sections        |
+      | Header          |
+      | Beta bar        |
+      | Go back         |
+      | Form            |
+      | Save for later  |
+      | Footer          |
+
+    Examples:
+      | imported or not | business_type |
+      | not imported    | UK business   |
+
+
+  @TT-2083
+  @<business_type>
+  Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us about total UK market value of affected goods
+    Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
+
+    When "Robert" selects a random product code from the hierarchy of product codes
+    Then "Robert" should be on the "ERP - Product detail (<business_type>)" page
+
+    When "Robert" decides to "continue"
+    Then "Robert" should be on the "ERP - Sales volumes (<business_type>)" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "ERP - Sales revenue (<business_type>)" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "ERP - Are you aware of sales changes (<business_type>)" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "ERP - Are you aware of market size changes (<business_type>)" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "ERP - Are you aware of other changes (<business_type>)" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "ERP - Market size (<business_type>)" page
+    Then "Robert" should see following options
+      | options |
+      | yes     |
+      | no      |
+    And "Robert" should see following sections
+      | Sections        |
+      | Header          |
+      | Beta bar        |
+      | Go back         |
+      | Form            |
+      | Save for later  |
+      | Footer          |
+
+    Examples:
+      | imported or not | business_type |
+      | not imported    | UK business   |
