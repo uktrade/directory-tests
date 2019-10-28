@@ -70,6 +70,7 @@ Selector = namedtuple(
         "autocomplete_callback",
         "wait_after_click",
         "next_page",
+        "alternative_visibility_check",
     ],
 )
 
@@ -86,6 +87,7 @@ Selector.__new__.__defaults__ = (
     None,
     None,
     True,
+    None,
     None,
 )
 
@@ -584,11 +586,32 @@ def check_for_sections(
                     f"selector is not visible on {driver.current_url}"
                 ):
                     assert element.is_displayed()
+                logging.debug(f"'{key} -> {selector}' is visible")
             else:
-                logging.debug(
-                    f"Skipping visibility check for '{key} -> {selector}' as "
-                    f"its selector is flagged as not visible"
-                )
+                if selector.alternative_visibility_check:
+                    location = element.location
+                    size = element.size
+                    with assertion_msg(
+                        f"It looks like '{key}' element identified by '{selector}' "
+                        f"selector is not visible on {driver.current_url} as it's "
+                        f"location is outside the viewport: {location}"
+                    ):
+                        assert all(location.values())
+                    with assertion_msg(
+                        f"It looks like '{key}' element identified by '{selector}' "
+                        f"selector is not visible on {driver.current_url} is it's "
+                        f"size dimensions are zeroed: {size}"
+                    ):
+                        assert all(size.values())
+                    logging.debug(
+                        f"Visibility of '{key} -> {selector}' was confirmed with an "
+                        f"alternative check"
+                    )
+                else:
+                    logging.debug(
+                        f"Skipping visibility check for '{key} -> {selector}' as "
+                        f"its selector is flagged as not visible"
+                    )
 
 
 def get_desktop_selectors(section: dict) -> Dict[str, Selector]:
