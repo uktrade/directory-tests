@@ -40,6 +40,18 @@ SELECTORS = {
             type=ElementType.RADIO,
             is_visible=False,
         ),
+        "imported": Selector(
+            By.CSS_SELECTOR,
+            "input[value='True']",
+            type=ElementType.RADIO,
+            is_visible=False,
+        ),
+        "not imported": Selector(
+            By.CSS_SELECTOR,
+            "input[value='False']",
+            type=ElementType.RADIO,
+            is_visible=False,
+        ),
         "continue": Selector(
             By.CSS_SELECTOR,
             "#content > form button.govuk-button",
