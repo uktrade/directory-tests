@@ -18,11 +18,7 @@ def autocomplete_uk_region(driver: WebDriver, *, value):
         logging.debug(f"Will select random region to type")
         options = find_elements(
             driver,
-            Selector(
-                By.CSS_SELECTOR,
-                "#id_consumer-group-consumer_regions option",
-                is_visible=False,
-            ),
+            Selector(By.CSS_SELECTOR, "select[id$=regions] option", is_visible=False),
         )
         options_texts = [
             option.get_attribute("text")
@@ -39,7 +35,7 @@ def autocomplete_uk_region(driver: WebDriver, *, value):
 
     # enter text value into the input field with autocomplete
     input_selector = Selector(
-        By.ID, "id_consumer-group-consumer_regions_autocomplete", is_visible=True
+        By.CSS_SELECTOR, "[id$=_regions_autocomplete]", is_visible=True
     )
     input = find_element(
         driver, input_selector, element_name="region input", wait_for_it=True
@@ -51,9 +47,7 @@ def autocomplete_uk_region(driver: WebDriver, *, value):
     autocomplete_list = find_element(
         driver,
         Selector(
-            By.ID,
-            "id_consumer-group-consumer_regions_autocomplete__listbox",
-            is_visible=False,
+            By.CSS_SELECTOR, "[id$=regions_autocomplete__listbox]", is_visible=False
         ),
         wait_for_it=True,
     )
