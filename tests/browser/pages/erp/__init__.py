@@ -12,8 +12,10 @@ __all__ = [
     "landing",
     "product_detail",
     "product_search",
+    "sales_volumes",
     "save_for_later",
     "save_for_later_progress_saved",
     "triage_import_from_overseas",
     "triage_user_type",
+    "uk_importer_where_do_you_import_from",
 ]
