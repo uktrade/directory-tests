@@ -152,6 +152,7 @@ def fas_when_actor_fills_out_and_submits_contact_us_form_wo_captcha(
     fas_fill_out_and_submit_contact_us_form(context, actor_alias, captcha=False)
 
 
+@when('"{actor_alias}" says that affected goods are "{option}" from overseas')
 @when('"{actor_alias}" says that his business is in "{option}"')
 @when('"{actor_alias}" says that his business is "{option}"')
 @when('"{actor_alias}" says that he represents an "{option}"')
