@@ -90,25 +90,21 @@ SELECTORS = {
             By.ID,
             "id_sales-volume-before-brexit-quarter_three_2019_sales_volume",
             type=ElementType.INPUT,
-            is_visible=False,
         ),
         "q2 2019": Selector(
             By.ID,
             "id_sales-volume-before-brexit-quarter_two_2019_sales_volume",
             type=ElementType.INPUT,
-            is_visible=False,
         ),
         "q1 2019": Selector(
             By.ID,
             "id_sales-volume-before-brexit-quarter_one_2019_sales_volume",
             type=ElementType.INPUT,
-            is_visible=False,
         ),
         "q4 2018": Selector(
             By.ID,
             "id_sales-volume-before-brexit-quarter_four_2018_sales_volume",
             type=ElementType.INPUT,
-            is_visible=False,
         ),
         "continue": Selector(
             By.CSS_SELECTOR,
