@@ -290,6 +290,64 @@ ERP_SAVE_FOR_LATER = {
         )
     }
 }
+ERP_HIERARCHY_CODES = {
+    "hierarchy codes": {
+        "hierarchy codes heading": Selector(By.ID, "hierarchy-browser"),
+        "first level": Selector(
+            By.CSS_SELECTOR, "ul.app-hierarchy-tree li.app-hierarchy-tree__section"
+        ),
+    }
+}
+ERP_SEARCH_FORM = {
+    "form": {
+        "form itself": Selector(By.CSS_SELECTOR, "#content form[method='post']"),
+        "step counter": Selector(
+            By.CSS_SELECTOR, "form[method=post] span.govuk-caption-l"
+        ),
+        "heading": Selector(By.CSS_SELECTOR, "form[method=post] h1"),
+        "find a commodity code information page": Selector(
+            By.CSS_SELECTOR, "form[method=post] div.govuk-inset-text a"
+        ),
+        "search": Selector(By.ID, "id_product-search-term", type=ElementType.INPUT),
+        "search button": Selector(
+            By.CSS_SELECTOR,
+            "#id_product-search-term ~ button[form=search-form]",
+            type=ElementType.BUTTON,
+        ),
+        "submit": Selector(
+            By.CSS_SELECTOR,
+            "#content > form button.govuk-button",
+            type=ElementType.BUTTON,
+        ),
+    }
+}
+ERP_SEARCH_RESULTS = {
+    "search results": {
+        "expand to select": Selector(
+            By.CSS_SELECTOR, "h2#search-results-title ~ section a"
+        ),
+        "select product code": Selector(
+            By.CSS_SELECTOR, "h2#search-results-title ~ section button"
+        ),
+    }
+}
+ERP_PRODUCT_DETAIL_FORM = {
+    "form": {
+        "selection form": Selector(By.CSS_SELECTOR, "#content form[method='post']"),
+        "step counter": Selector(
+            By.CSS_SELECTOR, "form[method=post] span.govuk-caption-l"
+        ),
+        "heading": Selector(By.CSS_SELECTOR, "form[method=post] h1"),
+        "change goods": Selector(
+            By.CSS_SELECTOR, "#selected-values-container a", type=ElementType.LINK
+        ),
+        "continue": Selector(
+            By.CSS_SELECTOR,
+            "#content > form button.govuk-button",
+            type=ElementType.SUBMIT,
+        ),
+    }
+}
 ERP_FOOTER = {
     "footer": {
         "footer itself": Selector(By.CSS_SELECTOR, "footer.govuk-footer"),
