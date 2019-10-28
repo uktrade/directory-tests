@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ERP - Product Search - UK consumer"""
+"""ERP - Product Search"""
 import logging
 from random import choice
 from types import BuiltinFunctionType, ModuleType
@@ -11,7 +11,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
 from directory_tests_shared.utils import evaluate_comparison
-from pages import ElementType, common_selectors
+from pages import common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -24,67 +24,45 @@ from pages.common_actions import (
     take_screenshot,
     wait_for_page_load_after_action,
 )
-from pages.erp import consumer_product_detail
+from pages.erp import product_detail
 
-NAME = "Product search (UK consumer)"
+NAME = "Product search"
 SERVICE = Service.ERP
 TYPE = PageType.FORM
-URL = URLs.ERP_CONSUMER_PRODUCT_SEARCH.absolute
+URL = None
 PAGE_TITLE = ""
+SubURLs = {
+    "Product search (Developing country)": URLs.ERP_DEVELOPING_COUNTRY_PRODUCT_SEARCH.absolute,
+    "Product search (UK business)": URLs.ERP_BUSINESS_PRODUCT_SEARCH.absolute,
+    "Product search (UK consumer)": URLs.ERP_CONSUMER_PRODUCT_SEARCH.absolute,
+    "Product search (UK importer)": URLs.ERP_IMPORTER_PRODUCT_SEARCH.absolute,
+}
+NAMES = list(SubURLs.keys())
 
-SUBMIT_BUTTON = Selector(
-    By.CSS_SELECTOR, "#content > form button.govuk-button", type=ElementType.BUTTON
-)
 PRODUCT_CATEGORIES_SELECTOR = Selector(By.CSS_SELECTOR, "#content form a.govuk-link")
 PRODUCT_CODES_SELECTOR = Selector(
     By.CSS_SELECTOR, "button.search-product-select-button"
 )
-SELECTORS = {
-    "form": {
-        "form itself": Selector(By.CSS_SELECTOR, "#content form[method='post']"),
-        "step counter": Selector(
-            By.CSS_SELECTOR, "form[method=post] span.govuk-caption-l"
-        ),
-        "heading": Selector(By.CSS_SELECTOR, "form[method=post] h1"),
-        "find a commodity code information page": Selector(
-            By.CSS_SELECTOR, "form[method=post] div.govuk-inset-text a"
-        ),
-        "search": Selector(By.ID, "id_product-search-term", type=ElementType.INPUT),
-        "search button": Selector(
-            By.CSS_SELECTOR,
-            "#id_product-search-term ~ button[form=search-form]",
-            type=ElementType.BUTTON,
-        ),
-        "submit": SUBMIT_BUTTON,
-    },
-    "hierarchy codes": {
-        "hierarchy codes heading": Selector(By.ID, "hierarchy-browser"),
-        "first level": Selector(
-            By.CSS_SELECTOR, "ul.app-hierarchy-tree li.app-hierarchy-tree__section"
-        ),
-    },
-    "search results": {
-        "expand to select": Selector(
-            By.CSS_SELECTOR, "h2#search-results-title ~ section a"
-        ),
-        "select product code": Selector(
-            By.CSS_SELECTOR, "h2#search-results-title ~ section button"
-        ),
-    },
-}
+SELECTORS = {}
 SELECTORS.update(common_selectors.ERP_HEADER)
 SELECTORS.update(common_selectors.ERP_BETA)
 SELECTORS.update(common_selectors.ERP_BACK)
+SELECTORS.update(common_selectors.ERP_SEARCH_FORM)
+SELECTORS.update(common_selectors.ERP_SEARCH_RESULTS)
+SELECTORS.update(common_selectors.ERP_HIERARCHY_CODES)
 SELECTORS.update(common_selectors.ERP_FOOTER)
 
 
-def visit(driver: WebDriver):
-    go_to_url(driver, URL, NAME)
+def visit(driver: WebDriver, *, page_name: str = None):
+    take_screenshot(driver, page_name or NAME)
+    url = SubURLs[page_name]
+    go_to_url(driver, url, page_name or NAME)
 
 
-def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
-    check_url(driver, URL, exact_match=False)
+def should_be_here(driver: WebDriver, *, page_name: str = None):
+    take_screenshot(driver, page_name or NAME)
+    url = SubURLs[page_name]
+    check_url(driver, url, exact_match=False)
 
 
 def should_see_sections(driver: WebDriver, names: List[str]):
@@ -152,7 +130,7 @@ def drill_down_hierarchy_tree(
     else:
         logging.error("Strange! Could not find 'Select' product codes button")
 
-    return consumer_product_detail
+    return product_detail
 
 
 def search(driver: WebDriver, phrase: str):
