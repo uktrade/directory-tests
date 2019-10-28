@@ -121,3 +121,30 @@ Feature: ERP - UK business
     Examples:
       | imported or not | business_type | expected                    |
       | not imported    | UK business   | Sales volumes (UK business) |
+
+
+  @TT-2079
+  @<business_type>
+  Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to specify what were UK export volumes before Brexit
+    Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
+
+    When "Robert" selects a random product code from the hierarchy of product codes
+    Then "Robert" should be on the "ERP - Product detail (<business_type>)" page
+
+    When "Robert" decides to "continue"
+    Then "Robert" should be on the "ERP - <expected>" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "ERP - Sales revenue (<business_type>)" page
+    And "Robert" should see following sections
+      | Sections        |
+      | Header          |
+      | Beta bar        |
+      | Go back         |
+      | Form            |
+      | Save for later  |
+      | Footer          |
+
+    Examples:
+      | imported or not | business_type | expected                    |
+      | not imported    | UK business   | Sales volumes (UK business) |
