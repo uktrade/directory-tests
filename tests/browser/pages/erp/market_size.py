@@ -65,7 +65,7 @@ SELECTORS = {
         "continue": Selector(
             By.CSS_SELECTOR,
             "#content > form button.govuk-button",
-            type=ElementType.BUTTON,
+            type=ElementType.SUBMIT,
         ),
     }
 }
