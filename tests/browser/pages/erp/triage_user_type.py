@@ -19,8 +19,8 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.erp import (
-    consumer_product_search,
     developing_country_select,
+    product_search,
     triage_import_from_overseas,
 )
 
@@ -45,7 +45,7 @@ SELECTORS = {
             "input[value='UK_CONSUMER']",
             type=ElementType.RADIO,
             is_visible=False,
-            next_page=consumer_product_search,
+            next_page=product_search,
         ),
         "exporter from developing country": Selector(
             By.CSS_SELECTOR,
