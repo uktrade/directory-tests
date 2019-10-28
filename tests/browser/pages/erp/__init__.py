@@ -14,6 +14,7 @@ __all__ = [
     "developing_country_select",
     "landing",
     "market_size",
+    "outocome",
     "product_detail",
     "product_search",
     "sales_volumes",
