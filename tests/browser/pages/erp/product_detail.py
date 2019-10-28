@@ -19,10 +19,9 @@ SERVICE = Service.ERP
 TYPE = PageType.FORM
 URL = None
 SubURLs = {
-    "Product detail (Developing country)": URLs.ERP_DEVELOPING_COUNTRY_PRODUCT_DETAIL.absolute,
-    "Product detail (UK business)": URLs.ERP_BUSINESS_PRODUCT_DETAIL.absolute,
-    "Product detail (UK consumer)": URLs.ERP_CONSUMER_PRODUCT_DETAIL.absolute,
-    "Product detail (UK importer)": URLs.ERP_IMPORTER_PRODUCT_DETAIL.absolute,
+    f"{NAME} (Developing country)": URLs.ERP_DEVELOPING_COUNTRY_PRODUCT_DETAIL.absolute,
+    f"{NAME} (UK business)": URLs.ERP_BUSINESS_PRODUCT_DETAIL.absolute,
+    f"{NAME} (UK importer)": URLs.ERP_IMPORTER_PRODUCT_DETAIL.absolute,
 }
 NAMES = list(SubURLs.keys())
 PAGE_TITLE = ""
