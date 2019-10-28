@@ -83,7 +83,7 @@ SELECTORS = {
         "metric name": Selector(
             By.ID,
             "id_sales-volume-before-brexit-other_metric_name",
-            type=ElementType.RADIO,
+            type=ElementType.INPUT,
             is_visible=False,
         ),
         "q3 2019": Selector(
