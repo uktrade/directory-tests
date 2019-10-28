@@ -574,43 +574,45 @@ def check_for_sections(
         for key, selector in selectors.items():
             with selenium_action(
                 driver,
-                f"Could not find element: '{key}' identified by '{selector.value}'"
-                f" selector on {driver.current_url}",
+                f"Could not find element: '{key} → {selector.by} → {selector.value}'"
+                f" on {driver.current_url}",
             ):
                 element = driver.find_element(by=selector.by, value=selector.value)
-            logging.debug(f"Scrolling/Moving focus to '{name}→{key}' element")
             if selector.is_visible:
+                logging.debug(f"Scrolling/Moving focus to '{name} → {key}' element")
                 scroll_to(driver, element)
                 with assertion_msg(
-                    f"It looks like '{key}' element identified by '{selector}' "
-                    f"selector is not visible on {driver.current_url}"
+                    f"It looks like '{key}' element identified by '{selector.by} → "
+                    f"{selector.value}' selector is not visible on {driver.current_url}"
                 ):
                     assert element.is_displayed()
-                logging.debug(f"'{key} -> {selector}' is visible")
+                logging.debug(f"'{key} → {selector.by} → {selector.value}' is visible")
             else:
                 if selector.alternative_visibility_check:
                     location = element.location
                     size = element.size
                     with assertion_msg(
-                        f"It looks like '{key}' element identified by '{selector}' "
-                        f"selector is not visible on {driver.current_url} as it's "
-                        f"location is outside the viewport: {location}"
+                        f"It looks like '{key}' element identified by '{selector.by} →"
+                        f" {selector.value}' selector is not visible on "
+                        f"{driver.current_url} as it's location is outside viewport: "
+                        f"{location}"
                     ):
                         assert all(location.values())
                     with assertion_msg(
-                        f"It looks like '{key}' element identified by '{selector}' "
-                        f"selector is not visible on {driver.current_url} is it's "
-                        f"size dimensions are zeroed: {size}"
+                        f"It looks like '{key}' element identified by '{selector.by} →"
+                        f" {selector.value}' selector is not visible on "
+                        f"{driver.current_url} is it's size dimensions are zeroed: "
+                        f"{size}"
                     ):
                         assert all(size.values())
                     logging.debug(
-                        f"Visibility of '{key} -> {selector}' was confirmed with an "
-                        f"alternative check"
+                        f"Visibility of '{key} → {selector.by} → {selector.value}' "
+                        f"was confirmed with an alternative check"
                     )
                 else:
                     logging.debug(
-                        f"Skipping visibility check for '{key} -> {selector}' as "
-                        f"its selector is flagged as not visible"
+                        f"Skipping visibility check for '{key} → {selector.by} → "
+                        f"{selector.value}' as its selector is flagged as not visible"
                     )
 
 
