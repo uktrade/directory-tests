@@ -419,6 +419,36 @@ def check_if_element_is_not_visible(
         pass
 
 
+def run_alternative_visibility_check(
+    driver: WebDriver,
+    element_name: str,
+    selector: Selector,
+    *,
+    element: WebElement = None,
+):
+    element = element or find_element(driver, selector)
+    location = element.location
+    size = element.size
+    with assertion_msg(
+        f"It looks like '{element_name}' element identified by '{selector.by} →"
+        f" {selector.value}' selector is not visible on "
+        f"{driver.current_url} as it's location is outside viewport: "
+        f"{location}"
+    ):
+        assert all(location.values())
+    with assertion_msg(
+        f"It looks like '{element_name}' element identified by '{selector.by} →"
+        f" {selector.value}' selector is not visible on "
+        f"{driver.current_url} is it's size dimensions are zeroed: "
+        f"{size}"
+    ):
+        assert all(size.values())
+    logging.debug(
+        f"Visibility of '{element_name} → {selector.by} → {selector.value}' "
+        f"was confirmed with an alternative check"
+    )
+
+
 def find_element(
     driver: WebDriver,
     selector: Selector,
@@ -429,11 +459,17 @@ def find_element(
     """Find element by CSS selector or it's ID."""
     with selenium_action(
         driver,
-        f"Couldn't find element called '{element_name}' using selector '{selector.value}' on {driver.current_url}",
+        f"Could not find element called '{element_name}' using selector "
+        f"'{selector.value}' on {driver.current_url}",
     ):
         element = driver.find_element(by=selector.by, value=selector.value)
     if wait_for_it and selector.is_visible:
         wait_for_visibility(driver, selector)
+    elif selector.alternative_visibility_check:
+        run_alternative_visibility_check(
+            driver, element_name, selector, element=element
+        )
+
     return element
 
 
@@ -589,25 +625,8 @@ def check_for_sections(
                 logging.debug(f"'{key} → {selector.by} → {selector.value}' is visible")
             else:
                 if selector.alternative_visibility_check:
-                    location = element.location
-                    size = element.size
-                    with assertion_msg(
-                        f"It looks like '{key}' element identified by '{selector.by} →"
-                        f" {selector.value}' selector is not visible on "
-                        f"{driver.current_url} as it's location is outside viewport: "
-                        f"{location}"
-                    ):
-                        assert all(location.values())
-                    with assertion_msg(
-                        f"It looks like '{key}' element identified by '{selector.by} →"
-                        f" {selector.value}' selector is not visible on "
-                        f"{driver.current_url} is it's size dimensions are zeroed: "
-                        f"{size}"
-                    ):
-                        assert all(size.values())
-                    logging.debug(
-                        f"Visibility of '{key} → {selector.by} → {selector.value}' "
-                        f"was confirmed with an alternative check"
+                    run_alternative_visibility_check(
+                        driver, key, selector, element=element
                     )
                 else:
                     logging.debug(
