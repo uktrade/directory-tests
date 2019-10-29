@@ -148,6 +148,8 @@ class PageType(Enum):
     CONFIRMATION = "confirmation"
     CONTACT_US = "contact us"
     CONTENT = "content"
+    DEDICATED_SUPPORT_CONTENT = "Dedicated Support Content"
+    DOMESTIC_CONTACT_US = "Domestic Contact us"
     ERROR = "error"
     EVENT = "event"
     FORM = "form"
@@ -155,6 +157,7 @@ class PageType(Enum):
     HOME = "home"
     HPO = "HPO"
     INDUSTRY = "industry"
+    INTERNATIONAL_CONTACT_US = "International Contact us"
     LANDING = "landing"
     LISTING = "listing"
     OPTION = "option"
@@ -163,6 +166,8 @@ class PageType(Enum):
     SEARCH = "search"
     SEARCH_RESULTS = "search results"
     SHARE = "share"
+    SHORT_DOMESTIC_CONTACT_US = "Short Domestic Contact us"
+    UKEF_CONTACT_US = "UKEF Contact us"
     THANK_YOU = "thank you"
 
     def __str__(self):
