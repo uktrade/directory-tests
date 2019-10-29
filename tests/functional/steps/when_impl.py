@@ -404,6 +404,7 @@ def profile_verify_company_profile(context: Context, supplier_alias: str):
 
     # STEP 0 - get the verification code from DB
     verification_code = get_verification_code(context, company.number)
+    update_company(context, company.alias, verification_code=verification_code)
 
     # STEP 1 - go to the "Verify your company" page
     response = fab.verify_company.go_to(session)
