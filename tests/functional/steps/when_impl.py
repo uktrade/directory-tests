@@ -407,26 +407,23 @@ def profile_verify_company_profile(context: Context, supplier_alias: str):
     update_company(context, company.alias, verification_code=verification_code)
 
     # STEP 1 - go to the "Verify your company" page
-    response = fab.verify_company.go_to(session)
-    context.response = response
+    context.response = fab.verify_company.go_to(session)
 
     # STEP 2 - extract CSRF token
-    token = extract_csrf_middleware_token(response)
+    token = extract_csrf_middleware_token(context.response)
     update_actor(context, supplier_alias, csrfmiddlewaretoken=token)
 
     # STEP 3 - Submit the verification code
-    response = fab.verify_company.submit(session, token, verification_code)
-    context.response = response
+    context.response = fab.verify_company.submit(session, token, verification_code)
 
     # STEP 4 - check if code was accepted
-    fab.verify_company.should_see_company_is_verified(response)
+    fab.verify_company.should_see_company_is_verified(context.response)
 
     # STEP 5 - click on the "View or amend your company profile" link
-    response = profile.edit_company_profile.go_to(session)
-    context.response = response
+    context.response = profile.edit_company_profile.go_to(session)
 
     # STEP 6 - check if Supplier is on Verified Profile Page
-    profile.edit_company_profile.should_see_profile_is_verified(response)
+    profile.edit_company_profile.should_see_profile_is_verified(context.response)
 
 
 def profile_publish_profile_to_fas(context: Context, supplier_alias: str):
