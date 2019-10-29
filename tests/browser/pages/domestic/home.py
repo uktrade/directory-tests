@@ -45,69 +45,70 @@ VIDEO_MODAL_WINDOW = Selector(
 ARTICLES = Selector(By.CSS_SELECTOR, "#eu-exit-news-section .article a")
 ADVICE_ARTICLE_LINKS = Selector(By.CSS_SELECTOR, "#resource-advice a")
 SELECTORS = {
-    "eu exit enquiries banner": {
-        "itself": Selector(By.CSS_SELECTOR, ".eu-exit-banner"),
-        "guidance on how to prepare for eu exit": Selector(
-            By.CSS_SELECTOR, ".eu-exit-banner a:nth-child(1)", type=ElementType.LINK
+    "prepare your business for brexit": {
+        "prepare for brexit banner": Selector(
+            By.CSS_SELECTOR, "section.prepare-for-brexit-section"
         ),
-        "eu exit enquiry form": Selector(
-            By.CSS_SELECTOR, ".eu-exit-banner a:nth-child(2)", type=ElementType.LINK
+        "prepare your business for brexit": Selector(
+            By.CSS_SELECTOR,
+            "section.prepare-for-brexit-section a.chevron-banner__link",
+            type=ElementType.LINK,
         ),
-    },
-    "export community": {
-        "itself": Selector(By.ID, "community"),
-        "heading": Selector(By.ID, "export-community-title"),
-        "description": Selector(By.ID, "export-community-description"),
-        "become an export advocate": Selector(By.ID, "export-community-link"),
-    },
-    "advice": {
-        "itself": Selector(By.ID, "resource-advice"),
-        "title": Selector(By.ID, "advice-section-title"),
-        "description": Selector(By.ID, "advice-section-description"),
-        "groups": Selector(By.CSS_SELECTOR, "#resource-advice .card"),
-        "cards": Selector(
-            By.CSS_SELECTOR, "#resource-advice .card-link", type=ElementType.LINK
-        ),
-        "create an export plan": Selector(By.LINK_TEXT, "Create an export plan"),
-        "find an export market": Selector(By.LINK_TEXT, "Find an export market"),
-        "define route to market": Selector(By.LINK_TEXT, "Define route to market"),
-        "get export finance and funding": Selector(
-            By.LINK_TEXT, "Get export finance and funding"
-        ),
-        "manage payment for export orders": Selector(
-            By.LINK_TEXT, "Manage payment for export orders"
-        ),
-        "prepare to do business in a foreign country": Selector(
-            By.LINK_TEXT, "Prepare to do business in a foreign country"
-        ),
-        "manage legal and ethical compliance": Selector(
-            By.LINK_TEXT, "Manage legal and ethical compliance"
-        ),
-        "prepare for export procedures and logistics": Selector(
-            By.LINK_TEXT, "Prepare for export procedures and logistics"
+        "brexit related links to gov.uk": Selector(
+            By.CSS_SELECTOR,
+            "section.prepare-for-brexit-section a.card-link",
+            type=ElementType.LINK,
         ),
     },
-    "services": {
-        "itself": Selector(By.ID, "services"),
-        "title": Selector(By.ID, "services-section-title"),
-        "description": Selector(By.ID, "services-section-description"),
-        "fab": Selector(By.ID, "services-section-find-a-buyer"),
-        "soo": Selector(By.ID, "services-section-selling-online-overseas"),
-        "exops": Selector(By.ID, "services-section-export-opportunities"),
-        "find a buyer": (Selector(By.CSS_SELECTOR, "#services-section-find-a-buyer a")),
-        "selling online overseas": (
-            Selector(By.CSS_SELECTOR, "#services-section-selling-online-overseas a")
+    "how dit helps": {
+        "how dit helps section": Selector(
+            By.CSS_SELECTOR, "#content section:nth-child(3)"
         ),
-        "export opportunities": (
-            Selector(By.CSS_SELECTOR, "#services-section-export-opportunities a")
+        "how dit helps links": Selector(
+            By.CSS_SELECTOR, "#content section:nth-child(3) a"
+        ),
+        "how dit helps link images": Selector(
+            By.CSS_SELECTOR, "#content section:nth-child(3) a img"
         ),
     },
-    "business is great": {
-        "itself": Selector(By.ID, "beis"),
-        "title": Selector(By.ID, "business-is-great-title"),
-        # "image": Selector(By.ID, "business-is-great-image"),
-        "description": Selector(By.ID, "business-is-great-description"),
-        "link": Selector(By.ID, "business-is-great-link"),
+    "find new markets": {
+        "find new markets section": Selector(
+            By.CSS_SELECTOR, "section.sector-potential-section"
+        ),
+        "select your sector": Selector(By.ID, "id_sector", type=ElementType.SELECT),
+        "show markets": Selector(By.ID, "sector-submit", type=ElementType.SUBMIT),
+        "sector selector quick links": Selector(
+            By.CSS_SELECTOR,
+            "section.sector-potential-section div.sector-selector-quick-links ul li a",
+        ),
+        "view all market guides": Selector(
+            By.CSS_SELECTOR, "section.sector-potential-section a.view-markets"
+        ),
+    },
+    "export goods from the uk": {
+        "export goods from the uk section": Selector(
+            By.CSS_SELECTOR, "section.export-goods-from-uk"
+        ),
+        "find out more": Selector(By.CSS_SELECTOR, "section.export-goods-from-uk a"),
+    },
+    "what's new": {
+        "what's new section": Selector(
+            By.CSS_SELECTOR, "#content section:nth-child(6)"
+        ),
+        "what's new section heading": Selector(
+            By.CSS_SELECTOR, "#content section:nth-child(6) h2"
+        ),
+        "what's new image heading": Selector(
+            By.CSS_SELECTOR, "#content section:nth-child(6) h3.campaign-heading"
+        ),
+        "watch video": Selector(
+            By.ID, "hero-campaign-section-watch-video-button", type=ElementType.LINK
+        ),
+        "card links": Selector(
+            By.CSS_SELECTOR,
+            "#content section:nth-child(6) a.card-link",
+            type=ElementType.LINK,
+        ),
     },
 }
 SELECTORS.update(common_selectors.DOMESTIC_HEADER)
@@ -148,7 +149,7 @@ def open(driver: WebDriver, group: str, element: str):
 
 
 def play_video(driver: WebDriver, *, play_time: int = 5):
-    open(driver, group="hero", element="watch video")
+    open(driver, group="what's new", element="watch video")
     video_load_delay = 2
     play_js = 'document.querySelector("{}").play()'.format(PROMO_VIDEO.value)
     pause = 'document.querySelector("{}").pause()'.format(PROMO_VIDEO.value)
