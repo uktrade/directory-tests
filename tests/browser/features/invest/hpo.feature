@@ -67,7 +67,7 @@ Feature: Invest - High Potential Opportunities
 
     When "Annette Geissinger" decides to "Get in touch"
 
-    Then "Annette Geissinger" should be on the "Invest - Contact us - HPO Contact us" page
+    Then "Annette Geissinger" should be on the "Invest - Contact us - Contact us" page
     And "Annette Geissinger" should see that "<selected> checkbox" in the form is "selected"
     And "Annette Geissinger" should see following sections
       | sections         |
@@ -91,7 +91,7 @@ Feature: Invest - High Potential Opportunities
   @fixme
   @TT-442
   Scenario Outline: Investors should not see breadcrumbs on "HPO - <selected>" page
-    Given "Annette Geissinger" visits the "Invest - <selected> - HPO Contact Us" page
+    Given "Annette Geissinger" visits the "Invest - <selected> - Contact us" page
 
     Then "Annette Geissinger" should not see following section
       | section          |
@@ -139,11 +139,11 @@ Feature: Invest - High Potential Opportunities
   @captcha
   @contact-us
   Scenario Outline: Investors should be able to contact us via "<selected>" HPO page
-    Given "Annette Geissinger" visits the "Invest - <selected> - HPO Contact Us" page
+    Given "Annette Geissinger" visits the "Invest - <selected> - Contact us" page
 
     When "Annette Geissinger" fills out and submits the form
 
-    Then "Annette Geissinger" should be on the "Invest - Thank you for your enquiry - HPO Contact us" page
+    Then "Annette Geissinger" should be on the "Invest - Thank you for your enquiry - Contact us" page
     And "Annette Geissinger" should see following sections
       | Sections         |
 #      | Beta bar         |
@@ -178,11 +178,11 @@ Feature: Invest - High Potential Opportunities
   @dev-only
   @captcha
   Scenario Outline: Investors should not see breadcrumbs on the "Thank you for your enquiry" page
-    Given "Annette Geissinger" visits the "Invest - <selected> - HPO Contact Us" page
+    Given "Annette Geissinger" visits the "Invest - <selected> - Contact us" page
 
     When "Annette Geissinger" fills out and submits the form
 
-    Then "Annette Geissinger" should be on the "Invest - Thank you for your enquiry - HPO Contact us" page
+    Then "Annette Geissinger" should be on the "Invest - Thank you for your enquiry - Contact us" page
     Then "Annette Geissinger" should not see following section
       | section          |
       | Breadcrumbs      |

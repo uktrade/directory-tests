@@ -11,12 +11,12 @@ Feature: Invest - HPO PDFs sent after
   @dev-only
   @captcha
   Scenario Outline: Check PDFs listed on "Thank you for your enquiry" page for "<selected>" HPO
-    Given "Peter Alder" got in touch with us via "Invest - <selected> - HPO Contact Us" page
+    Given "Peter Alder" got in touch with us via "Invest - <selected> - Contact us" page
       | field                             | value     |
       | High productivity food production | checked   |
       | Lightweight structures            | unchecked |
       | Rail infrastructure               | unchecked |
-    And "Peter Alder" is on the "Invest - Thank you for your enquiry - HPO Contact us" page
+    And "Peter Alder" is on the "Invest - Thank you for your enquiry - Contact us" page
 
     When "Peter Alder" downloads all visible PDFs
 
@@ -34,12 +34,12 @@ Feature: Invest - HPO PDFs sent after
   @dev-only
   @captcha
   Scenario Outline: Check PDFs listed on "Thank you for your enquiry" page for "<selected>" HPO
-    Given "Peter Alder" got in touch with us via "Invest - <selected> - HPO Contact Us" page
+    Given "Peter Alder" got in touch with us via "Invest - <selected> - Contact us" page
       | field                             | value     |
       | High productivity food production | unchecked |
       | Lightweight structures            | checked   |
       | Rail infrastructure               | unchecked |
-    And "Peter Alder" is on the "Invest - Thank you for your enquiry - HPO Contact us" page
+    And "Peter Alder" is on the "Invest - Thank you for your enquiry - Contact us" page
 
     When "Peter Alder" downloads all visible PDFs
 
@@ -57,12 +57,12 @@ Feature: Invest - HPO PDFs sent after
   @dev-only
   @captcha
   Scenario Outline: Check PDFs listed on "Thank you for your enquiry" page for "<selected>" HPO
-    Given "Peter Alder" got in touch with us via "Invest - <selected> - HPO Contact Us" page
+    Given "Peter Alder" got in touch with us via "Invest - <selected> - Contact us" page
       | field                             | value     |
       | High productivity food production | unchecked |
       | Lightweight structures            | unchecked |
       | Rail infrastructure               | checked   |
-    And "Peter Alder" is on the "Invest - Thank you for your enquiry - HPO Contact us" page
+    And "Peter Alder" is on the "Invest - Thank you for your enquiry - Contact us" page
 
     When "Peter Alder" downloads all visible PDFs
 

@@ -145,7 +145,7 @@ Feature: Domestic - Google Analytics 360 Events
 
     Examples:
       | specific               |
-      | Brazil - Country guide |
+      | Brazil - guide |
 
 
   @CMS-1672
@@ -172,7 +172,7 @@ Feature: Domestic - Google Analytics 360 Events
 
     Examples:
       | specific               |
-      | Brazil - Country guide |
+      | Brazil - guide |
 
 
   @CMS-1672
@@ -195,7 +195,7 @@ Feature: Domestic - Google Analytics 360 Events
 
     Examples:
       | specific                |
-      | Germany - Country guide |
+      | Germany - guide |
 
 
   @CMS-1672
@@ -217,7 +217,7 @@ Feature: Domestic - Google Analytics 360 Events
 
     Examples:
       | specific              |
-      | Italy - Country guide |
+      | Italy - guide |
 
 
   @CMS-1672
@@ -241,7 +241,7 @@ Feature: Domestic - Google Analytics 360 Events
 
     Examples:
       | specific                    |
-      | South Korea - Country guide |
+      | South Korea - guide |
 
 
   @CMS-1672
@@ -265,7 +265,7 @@ Feature: Domestic - Google Analytics 360 Events
 
     Examples:
       | specific                        |
-      | The Netherlands - Country guide |
+      | The Netherlands - guide |
 
 
   @CMS-1672
@@ -289,4 +289,4 @@ Feature: Domestic - Google Analytics 360 Events
 
     Examples:
       | specific               |
-      | Turkey - Country guide |
+      | Turkey - guide |

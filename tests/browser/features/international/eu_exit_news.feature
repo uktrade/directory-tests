@@ -114,7 +114,7 @@ Feature: INTL - Updates for non-UK companies on EU Exit
     And "1" published "international" news articles on "Domestic"
 
     When "Sarah" unpublish an article visible on the "International - Landing" page
-    And "Henry" goes to the "International - Updates for non UK companies on EU Exit - International" page
+    And "Henry" goes to the "International - Updates for non UK companies on EU Exit - Content" page
 
     Then "Henry" should see "0" most recently published "international" news articles
 
@@ -129,7 +129,7 @@ Feature: INTL - Updates for non-UK companies on EU Exit
     And "Henry" is a visitor
     And at least "1" published "international" news articles on "Domestic"
 
-    When "Sarah" updates an article visible on the "Domestic - Updates for non UK companies on EU Exit - International" page
-    And "Henry" goes to the "International - Updates for non UK companies on EU Exit - International" page
+    When "Sarah" updates an article visible on the "Domestic - Updates for non UK companies on EU Exit - Content" page
+    And "Henry" goes to the "International - Updates for non UK companies on EU Exit - Content" page
 
     Then "Henry" should see that updated news article has a correct "Last updated" date
