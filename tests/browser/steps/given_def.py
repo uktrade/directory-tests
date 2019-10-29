@@ -12,7 +12,6 @@ from steps.then_impl import (
 )
 from steps.when_impl import (
     articles_open_any,
-    case_studies_go_to_random,
     clear_the_cookies,
     click_on_page_element,
     contact_us_get_to_page_via,
@@ -65,11 +64,6 @@ def given_actor_is_on_page(context, actor_alias, page_name):
 def given_can_see_sections(context, actor_alias, sections, page_name):
     should_see_sections(
         context, actor_alias, page_name, sections_list=sections.split(", "))
-
-
-@given('"{actor_alias}" is on the Case Study page accessed via "{page_name}" page')
-def given_actor_is_on_random_case_study_page(context, actor_alias, page_name):
-    case_studies_go_to_random(context, actor_alias, page_name)
 
 
 @given('"{actor_alias}" decided to use "{element_name}" button')

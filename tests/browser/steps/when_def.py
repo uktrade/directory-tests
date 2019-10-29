@@ -12,7 +12,6 @@ from steps.then_impl import (
 from steps.when_impl import (
     articles_open_any,
     articles_share_on_social_media,
-    case_studies_go_to,
     clear_the_cookies,
     click_on_header_menu_button,
     click_on_page_element,
@@ -62,11 +61,6 @@ from steps.when_impl import (
 @when('"{actor_alias}" opens any article on the list')
 def given_actor_opens_any_article(context, actor_alias):
     articles_open_any(context, actor_alias)
-
-
-@when('"{actor_alias}" goes to the "{case_number}" Case Study')
-def when_actor_goes_to_case_study(context, actor_alias, case_number):
-    case_studies_go_to(context, actor_alias, case_number)
 
 
 @when('"{actor_alias}" goes to the "{page_name}" page')

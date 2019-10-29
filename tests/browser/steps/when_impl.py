@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """When step implementations."""
 import logging
-import random
 from collections import defaultdict
 from urllib.parse import urljoin, urlparse
 
@@ -164,25 +163,6 @@ def articles_open_any(context: Context, actor_alias: str):
     element_details = page.open_any_article(context.driver)
     update_actor(context, actor_alias, element_details=element_details)
     logging.info(f"{actor_alias} opened article: {element_details}")
-
-
-def case_studies_go_to(context: Context, actor_alias: str, case_number: str):
-    case_study_title = domestic.home.get_case_study_title(context.driver, case_number)
-    domestic.home.open_case_study(context.driver, case_number)
-    update_actor(context, actor_alias, case_study_title=case_study_title)
-    logging.debug(
-        "%s opened %s case study, entitled: %s",
-        actor_alias,
-        case_number,
-        case_study_title,
-    )
-
-
-def case_studies_go_to_random(context: Context, actor_alias: str, page_name: str):
-    assert page_name.lower() in ["domestic - home"]
-    visit_page(context, actor_alias, page_name)
-    case_number = random.choice(["first", "second"])
-    case_studies_go_to(context, actor_alias, case_number)
 
 
 def registration_should_get_verification_email(context: Context, actor_alias: str):

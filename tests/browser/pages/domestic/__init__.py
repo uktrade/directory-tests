@@ -5,7 +5,6 @@ __all__ = [
     "advice_article_list",
     "advice_landing",
     "autocomplete_callbacks",
-    "case_studies_common",
     "contact_us_long_export_advice_business",
     "contact_us_long_export_advice_comment",
     "contact_us_long_export_advice_personal",

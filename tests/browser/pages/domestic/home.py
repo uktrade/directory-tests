@@ -42,9 +42,6 @@ CLOSE_VIDEO = Selector(
 VIDEO_MODAL_WINDOW = Selector(
     By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open"
 )
-CASE_STUDY_LINK = Selector(
-    By.CSS_SELECTOR, "section.casestudy-section > div > div > div:nth-child({}) a"
-)
 ARTICLES = Selector(By.CSS_SELECTOR, "#eu-exit-news-section .article a")
 ADVICE_ARTICLE_LINKS = Selector(By.CSS_SELECTOR, "#resource-advice a")
 SELECTORS = {
@@ -105,11 +102,6 @@ SELECTORS = {
             Selector(By.CSS_SELECTOR, "#services-section-export-opportunities a")
         ),
     },
-    "case studies": {
-        "itself": Selector(By.CSS_SELECTOR, "section.casestudy-section"),
-        "title": Selector(By.ID, "case-studies-section-title"),
-        "description": Selector(By.ID, "case-studies-section-description"),
-    },
     "business is great": {
         "itself": Selector(By.ID, "beis"),
         "title": Selector(By.ID, "business-is-great-title"),
@@ -145,26 +137,6 @@ def should_see_link_to(driver: WebDriver, section: str, item_name: str):
         "It looks like '%s' in '%s' section is not visible", item_name, section
     ):
         assert menu_item.is_displayed()
-
-
-def open_case_study(driver: WebDriver, case_number: str):
-    case_study_numbers = {"first": 1, "second": 2, "third": 3}
-    case_study_number = case_study_numbers[case_number.lower()]
-
-    selector = Selector(
-        CASE_STUDY_LINK.by, CASE_STUDY_LINK.value.format(case_study_number)
-    )
-    case_study_link = find_element(driver, selector)
-    with wait_for_page_load_after_action(driver):
-        case_study_link.click()
-
-
-def get_case_study_title(driver: WebDriver, case_number: str) -> str:
-    case_study_numbers = {"first": 1, "second": 2, "third": 3}
-    case_number = case_study_numbers[case_number.lower()]
-    selector = Selector(CASE_STUDY_LINK.by, CASE_STUDY_LINK.value.format(case_number))
-    case_study_link = find_element(driver, selector, wait_for_it=False)
-    return case_study_link.text.strip()
 
 
 def open(driver: WebDriver, group: str, element: str):

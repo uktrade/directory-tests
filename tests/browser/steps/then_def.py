@@ -7,7 +7,6 @@ from behave.runner import Context
 
 from steps.then_impl import (
     articles_should_be_on_share_page,
-    case_studies_should_see_case_study,
     domestic_search_finder_should_see_page_number,
     erp_should_receive_email_with_link_to_restore_saved_progress,
     erp_should_see_number_of_product_categories_to_expand,
@@ -47,7 +46,6 @@ from steps.then_impl import (
     should_see_links_in_specific_location,
     should_see_page_in_preferred_language,
     should_see_sections,
-    should_see_share_widget,
     soo_contact_form_should_be_prepopulated,
     stats_and_tracking_elements_should_be_present,
     stats_and_tracking_elements_should_not_be_present,
@@ -77,16 +75,6 @@ def then_should_not_see_sections(context, actor_alias):
 @then('"{actor_alias}" should see following sections')
 def then_should_see_sections(context, actor_alias):
     should_see_sections(context, actor_alias, sections_table=context.table)
-
-
-@then('"{actor_alias}" should see "{case_study_number}" case study')
-def then_actor_should_see_case_study(context, actor_alias, case_study_number):
-    case_studies_should_see_case_study(context, actor_alias, case_study_number)
-
-
-@then('"{actor_alias}" should see the Share Widget')
-def then_actor_should_see_share_widget(context, actor_alias):
-    should_see_share_widget(context, actor_alias)
 
 
 @then('"{actor_alias}" should see links to following "{section}" categories in "{location}"')
