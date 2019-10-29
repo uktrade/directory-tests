@@ -866,6 +866,7 @@ def get_verification_code(context: Context, company_number: str):
     context.response = response
     check_response(response, 200)
     verification_code = response.json()["letter_verification_code"]
+    logging.debug(f"GET verification code: {response.json()}")
     return verification_code
 
 
