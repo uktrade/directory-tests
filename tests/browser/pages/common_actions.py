@@ -663,7 +663,7 @@ def find_elements_of_type(
     selectors = get_selectors(section, element_type)
     result = defaultdict()
     for key, selector in selectors.items():
-        element = find_element(driver, selector, element_name=key)
+        element = find_element(driver, selector, element_name=key, wait_for_it=False)
         result[key] = element
     return result
 
@@ -734,6 +734,9 @@ def fill_out_input_fields(
             if input_field.is_displayed():
                 input_field.clear()
             input_field.send_keys(value_to_type)
+            if selector.autocomplete_callback:
+                logging.debug(f"Calling autocomplete_callback() for '{key}'")
+                selector.autocomplete_callback(driver, value=value_to_type)
 
 
 def fill_out_textarea_fields(
