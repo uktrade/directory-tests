@@ -100,19 +100,3 @@ Feature: Domestic - Advice articles
       | great.gov.uk | Home                  |
       | Advice       | Advice Landing        |
       | Article list | Advice - article list |
-
-
-  @CMS-686
-  Scenario: Any Exporter visiting the home page should be able to see links to all Advice categories in "Domestic - <link_location>"
-    Given "Robert" visits the "Domestic - Home" page
-
-    Then "Robert" should see links to following "Advice" categories in "Domestic - home"
-      | categories                                  |
-      | Create an export plan                       |
-      | Find an export market                       |
-      | Define route to market                      |
-      | Get export finance and funding              |
-      | Manage payment for export orders            |
-      | Prepare to do business in a foreign country |
-      | Manage legal and ethical compliance         |
-      | Prepare for export procedures and logistics |
