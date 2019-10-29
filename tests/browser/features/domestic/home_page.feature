@@ -9,19 +9,16 @@ Feature: Domestic - Home Page
   Scenario: Any Exporter should see the "Beta bar, Hero, EU Exit enquiries banner, Advice, Services, Case Studies, Business is Great, Error Reporting" sections on the home page
       Given "Robert" visits the "Domestic - Home" page
       Then "Robert" should see following sections
-        | Sections                 |
-        | Header                   |
-        | SSO links - logged out   |
-        | Beta bar                 |
-        | Hero                     |
-        | EU Exit enquiries banner |
-        | Export Community         |
-        | Advice                   |
-        | Services                 |
-        | Case Studies             |
-        | Business is Great        |
-        | Error Reporting          |
-        | Footer                   |
+        | Sections                         |
+        | Header                           |
+        | SSO links - logged out           |
+        | Hero                             |
+        | Prepare your business for Brexit |
+        | Find new markets                 |
+        | Export goods from the UK         |
+        | What's new                       |
+        | Error Reporting                  |
+        | Footer                           |
 
 
   @ED-3014
