@@ -26,7 +26,7 @@ SELECTORS = {
     "hero": {
         "hero": Selector(By.CSS_SELECTOR, "#content > section.great-hero-with-cta"),
         "start now": Selector(
-            By.CSS_SELECTOR, "#content > section.great-hero-with-cta a"
+            By.CSS_SELECTOR, "#content > section[class$=hero-with-cta] a"
         ),
     }
 }
