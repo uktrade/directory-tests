@@ -43,10 +43,10 @@ SELECTORS = {
     },
     "create a great.gov.uk account": {"create account": REGISTER_BUTTON},
 }
-SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.DOMESTIC_HEADER)
 SELECTORS.update(common_selectors.BREADCRUMBS)
 SELECTORS.update(common_selectors.SSO_LOGGED_OUT)
-SELECTORS.update(common_selectors.FOOTER)
+SELECTORS.update(common_selectors.DOMESTIC_FOOTER)
 
 
 def visit(driver: WebDriver):

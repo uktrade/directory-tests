@@ -44,10 +44,10 @@ SELECTORS = {
         "sign up button": SEND_BUTTON,
     }
 }
-SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.DOMESTIC_HEADER)
 SELECTORS.update(common_selectors.BREADCRUMBS)
 SELECTORS.update(common_selectors.SSO_LOGGED_OUT)
-SELECTORS.update(common_selectors.FOOTER)
+SELECTORS.update(common_selectors.DOMESTIC_FOOTER)
 
 
 def visit(driver: WebDriver):

@@ -30,9 +30,6 @@ URL = URLs.DOMESTIC_ADVICE.absolute
 
 ARTICLE_NAME = Selector(By.CSS_SELECTOR, "article h1")
 ARTICLE_TEXT = Selector(By.CSS_SELECTOR, ".article-content")
-IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK = Selector(
-    By.CSS_SELECTOR, "section.error-reporting a"
-)
 SHARE_MENU = Selector(By.CSS_SELECTOR, "ul.sharing-links")
 FACEBOOK_BUTTON = Selector(By.ID, "share-facebook")
 LINKEDIN_BUTTON = Selector(By.ID, "share-linkedin")
@@ -61,12 +58,10 @@ SELECTORS = {
         ),
     },
     "article": {"article name": ARTICLE_NAME, "article text": ARTICLE_TEXT},
-    "error reporting": {
-        "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
-        "report page link": IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK,
-    },
 }
-SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.DOMESTIC_HEADER)
+SELECTORS.update(common_selectors.ERROR_REPORTING)
+SELECTORS.update(common_selectors.DOMESTIC_FOOTER)
 
 
 def visit(driver: WebDriver):
@@ -154,7 +149,7 @@ def share_via(driver: WebDriver, social_media: str):
 
 def report_problem(driver: WebDriver):
     find_and_click_on_page_element(
-        driver, SELECTORS, "report page link", wait_for_it=False
+        driver, SELECTORS, "report a problem with the page", wait_for_it=False
     )
 
 

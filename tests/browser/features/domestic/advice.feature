@@ -12,10 +12,12 @@ Feature: Domestic - Advice articles
 
     Then "Robert" should see following sections
       | sections                 |
+      | Header                   |
       | Hero                     |
       | Breadcrumbs              |
       | Advice & Guidance tiles  |
       | Error reporting          |
+      | Footer                   |
 
 
   @CMS-686
@@ -29,10 +31,12 @@ Feature: Domestic - Advice articles
     Then "Robert" should be on the "Domestic - Advice - article list" page
     And "Robert" should see following sections
       | sections                 |
+      | Header                   |
       | Hero                     |
       | Breadcrumbs              |
       | List of articles         |
       | Error reporting          |
+      | Footer                   |
 
 
   @CMS-686
@@ -46,10 +50,12 @@ Feature: Domestic - Advice articles
     Then "Robert" should be on the "Domestic - Advice - Article" page
     And "Robert" should see following sections
       | sections        |
+      | Header          |
       | Breadcrumbs     |
       | Share buttons   |
       | Article         |
       | Error reporting |
+      | Footer          |
 
     Examples:
       | advice                                      |

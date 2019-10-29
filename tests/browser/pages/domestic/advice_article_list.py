@@ -10,7 +10,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
-from pages import ElementType
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -23,8 +23,8 @@ from pages.common_actions import (
 )
 
 NAME = "Advice"
-TYPE = PageType.ARTICLE_LIST
 SERVICE = Service.DOMESTIC
+TYPE = PageType.ARTICLE_LIST
 URL = URLs.DOMESTIC_ADVICE.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 NAMES = [
@@ -60,10 +60,6 @@ ARTICLE_LINKS = Selector(
     By.CSS_SELECTOR, "#article-list-page li.article a", type=ElementType.LINK
 )
 SELECTORS = {
-    "hero": {
-        "itself": Selector(By.ID, "hero"),
-        "heading": Selector(By.ID, "hero-heading"),
-    },
     "breadcrumbs": {
         "itself": Selector(By.CSS_SELECTOR, "nav.breadcrumbs"),
         "links": Selector(By.CSS_SELECTOR, "nav.breadcrumbs a"),
@@ -77,6 +73,9 @@ SELECTORS = {
         "link": Selector(By.ID, "error-reporting-section-contact-us"),
     },
 }
+SELECTORS.update(common_selectors.DOMESTIC_HEADER)
+SELECTORS.update(common_selectors.DOMESTIC_HERO_WO_LINK)
+SELECTORS.update(common_selectors.DOMESTIC_FOOTER)
 
 
 def clean_name(name: str) -> str:

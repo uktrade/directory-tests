@@ -28,7 +28,7 @@ SELECTORS = {
     },
     "no results": {"itself": Selector(By.ID, "search-results-list")},
 }
-SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.DOMESTIC_HEADER)
 
 
 def visit(driver: WebDriver):

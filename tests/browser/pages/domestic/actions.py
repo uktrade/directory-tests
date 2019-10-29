@@ -12,19 +12,25 @@ from pages.common_actions import (
     find_selector_by_name,
     wait_for_page_load_after_action,
 )
-from pages.common_selectors import EXOPPS_FAVICON, FAVICON, HEADER, LOGOS
+from pages.common_selectors import DOMESTIC_HEADER, EXOPPS_FAVICON, FAVICON, LOGOS
 
 
 def search(driver: WebDriver, phrase: str):
-    search_input = find_element(driver, find_selector_by_name(HEADER, "search box"))
-    search_button = find_element(driver, find_selector_by_name(HEADER, "search button"))
+    search_input = find_element(
+        driver, find_selector_by_name(DOMESTIC_HEADER, "search box")
+    )
+    search_button = find_element(
+        driver, find_selector_by_name(DOMESTIC_HEADER, "search button")
+    )
     search_input.clear()
     search_input.send_keys(phrase)
     search_button.click()
 
 
 def go_to_sign_out(driver: WebDriver):
-    sign_out_link = find_element(driver, find_selector_by_name(HEADER, "sign out"))
+    sign_out_link = find_element(
+        driver, find_selector_by_name(DOMESTIC_HEADER, "sign out")
+    )
     with wait_for_page_load_after_action(driver):
         sign_out_link.click()
 

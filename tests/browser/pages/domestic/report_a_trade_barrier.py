@@ -34,10 +34,10 @@ SELECTORS = {
         "report steps": Selector(By.CSS_SELECTOR, "ol.list.big-number-list"),
     }
 }
-SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.DOMESTIC_HEADER)
 SELECTORS.update(common_selectors.BREADCRUMBS)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
-SELECTORS.update(common_selectors.FOOTER)
+SELECTORS.update(common_selectors.DOMESTIC_FOOTER)
 
 
 def visit(driver: WebDriver):

@@ -48,15 +48,6 @@ CASE_STUDY_LINK = Selector(
 ARTICLES = Selector(By.CSS_SELECTOR, "#eu-exit-news-section .article a")
 ADVICE_ARTICLE_LINKS = Selector(By.CSS_SELECTOR, "#resource-advice a")
 SELECTORS = {
-    "hero": {
-        "itself": Selector(By.ID, "hero-campaign-section"),
-        "title": Selector(By.ID, "hero-campaign-section-title"),
-        "description": Selector(By.CSS_SELECTOR, "#hero-campaign-section p"),
-        "become an export advocate": Selector(
-            By.CSS_SELECTOR, "#hero-campaign-section a", type=ElementType.LINK
-        ),
-        "watch video": Selector(By.ID, "hero-campaign-section-watch-video-button"),
-    },
     "eu exit enquiries banner": {
         "itself": Selector(By.CSS_SELECTOR, ".eu-exit-banner"),
         "guidance on how to prepare for eu exit": Selector(
@@ -127,11 +118,11 @@ SELECTORS = {
         "link": Selector(By.ID, "business-is-great-link"),
     },
 }
-SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.DOMESTIC_HEADER)
+SELECTORS.update(common_selectors.DOMESTIC_HERO_WITH_LINK)
 SELECTORS.update(common_selectors.SSO_LOGGED_OUT)
-SELECTORS.update(common_selectors.BETA_BAR)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
-SELECTORS.update(common_selectors.FOOTER)
+SELECTORS.update(common_selectors.DOMESTIC_FOOTER)
 
 
 def visit(driver: WebDriver):

@@ -37,9 +37,11 @@ SELECTORS = {
         "article images": Selector(By.CSS_SELECTOR, "#advice-list-section .card-image"),
     }
 }
+SELECTORS.update(common_selectors.DOMESTIC_HEADER)
 SELECTORS.update(common_selectors.BREADCRUMBS)
-SELECTORS.update(common_selectors.INTERNATIONAL_HERO)
+SELECTORS.update(common_selectors.DOMESTIC_HERO_WO_LINK)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
+SELECTORS.update(common_selectors.DOMESTIC_FOOTER)
 
 
 def visit(driver: WebDriver):

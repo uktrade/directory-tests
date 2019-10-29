@@ -39,9 +39,9 @@ SELECTORS = {
         ),
     }
 }
-SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.DOMESTIC_HEADER)
 SELECTORS.update(common_selectors.BREADCRUMBS)
-SELECTORS.update(common_selectors.FOOTER)
+SELECTORS.update(common_selectors.DOMESTIC_FOOTER)
 
 
 def visit(driver: WebDriver):

@@ -12,7 +12,23 @@ from directory_tests_shared.constants import (
 from pages import ElementType
 from pages.common_actions import By, Selector
 
-HEADER = {
+DOMESTIC_HERO_WITH_LINK = {
+    "hero": {
+        "hero banner": Selector(By.ID, "hero"),
+        "title": Selector(By.CSS_SELECTOR, "#hero h1"),
+        "view export market guides": Selector(
+            By.CSS_SELECTOR, "#hero a", type=ElementType.LINK
+        ),
+    }
+}
+DOMESTIC_HERO_WO_LINK = {
+    "hero": {
+        "hero banner": Selector(By.ID, "hero"),
+        "title": Selector(By.CSS_SELECTOR, "#hero h1"),
+    }
+}
+
+DOMESTIC_HEADER = {
     "header": {
         # cookie notice
         "itself": Selector(By.ID, "header-cookie-notice", is_visible=False),
@@ -79,7 +95,7 @@ ERROR_REPORTING = {
     }
 }
 
-FOOTER = {
+DOMESTIC_FOOTER = {
     "footer": {
         "great footer logo": Selector(By.ID, "great-footer-great-logo"),
         "contact us": Selector(By.ID, "footer-contact"),

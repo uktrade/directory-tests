@@ -57,9 +57,9 @@ SELECTORS = {
     "doing business in": {"self": Selector(By.ID, "country-guide-section-three")},
     "next steps": {"self": Selector(By.ID, "country-guide-need-help-section")},
 }
-SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.DOMESTIC_HEADER)
 SELECTORS.update(common_selectors.BREADCRUMBS)
-SELECTORS.update(common_selectors.FOOTER)
+SELECTORS.update(common_selectors.DOMESTIC_FOOTER)
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
