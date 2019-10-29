@@ -3,8 +3,6 @@ __all__ = [
     "contact_us",
     "contact_us_thank_you",
     "feedback",
-    "footer",
-    "header",
     "landing",
     "how_to_set_up_in_the_uk",
     "hpo",
