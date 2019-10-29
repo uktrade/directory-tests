@@ -484,22 +484,28 @@ def check_for_errors_or_non_trading_companies(
     """Throws an AssertionError if error message is visible."""
     try:
         content = driver.page_source
-        assert "industry" in content, f"Missing Industry field"
-        assert "website" in content, f"Missing Website field"
+        is_500 = f"Got 500 ISE on {driver.current_url}"
+        assert "there is a problem with the service" not in content, is_500
+        already_exists = "A Business Profile already exists for this company"
+        assert "already exists for this company" not in content, already_exists
+        no_industry = f"Missing Industry field. Maybe company already has a profile"
+        assert "industry" in content, no_industry
+        no_website = f"Missing Website field. Maybe company already has a profile"
+        assert "website" in content, no_website
         # fail when a non-trading company is selected (SIC=74990)
-        assert "74990" not in content, f"Found a non-trading company"
+        assert "74990" not in content, f"Found a non-trading company: SIC=74990"
         error = driver.find_element(by=By.CSS_SELECTOR, value=".error-message")
         assert not error.is_displayed(), f"Found error on form page"
     except NoSuchElementException:
         # skip if no error was found
         pass
-    except AssertionError:
-        logging.debug(f"Found a non-trading company")
+    except AssertionError as e:
+        logging.debug(f"Picked wrong company: {e}")
         if go_back:
-            logging.debug(f"Going back 1 page because assertion failed")
+            logging.debug(f"Going back 1 page because assertion failed: {e}")
             with wait_for_page_load_after_action(driver):
                 driver.back()
-        raise
+        raise e
 
 
 def update_actor_forms_data(context: Context, actor: Actor, form_data: dict):
