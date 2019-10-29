@@ -354,11 +354,10 @@ def fab_decide_to_verify_profile_with_letter(context: Context, supplier_alias: s
     update_actor(context, supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 2 - Choose to verify with a letter
-    response = fab.confirm_identity_letter.submit(actor)
-    context.response = response
+    context.response = fab.confirm_identity_letter.submit(actor)
 
     # Step 2 - check if Supplier is on the We've sent you a verification letter
-    fab.confirm_identity_letter.should_be_here(response)
+    fab.confirm_identity_letter.should_be_here(context.response)
     logging.debug("Supplier is on the 'Your company address' letter verification page")
 
 
