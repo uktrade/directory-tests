@@ -61,9 +61,9 @@ SELECTORS = {
         "submit an enquiry": Selector(
             By.CSS_SELECTOR, "#further-help-link > a", type=ElementType.LINK
         ),
-        "resend your code": Selector(
+        "resend my code": Selector(
             By.PARTIAL_LINK_TEXT,
-            "resend your code",
+            "Resend my code",
             type=ElementType.LINK,
             is_visible=False,
         ),

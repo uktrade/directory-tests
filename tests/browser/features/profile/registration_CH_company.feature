@@ -179,7 +179,7 @@ Feature: Profile - CH enrolment flows
     When "Natalia" decides to use "Resend my code" link
     Then "Natalia" should be on the "Domestic - I have not received a verification code - Dedicated Support Content" page
 
-    When "Natalia" decides to use "Resend your code" link
+    When "Natalia" decides to use "Resend my code" link
     Then "Natalia" should be on the "Profile - Resend your verification code" page
 
     When "Natalia" fills out and submits the form
