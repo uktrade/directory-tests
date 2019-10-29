@@ -116,6 +116,7 @@ def get_form_details(driver: WebDriver) -> dict:
     result = defaultdict()
     for key, element in elements.items():
         value = element.get_attribute("value")
-        result[key] = value
+        text = element.get_attribute("text")
+        result[key] = value or text
 
     return dict(result)
