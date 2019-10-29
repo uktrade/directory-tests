@@ -37,7 +37,7 @@ def submit(actor: Actor):
         "personal-details-given_name": "AUTOMATED",
         "personal-details-family_name": "TESTS",
         "personal-details-job_title": "AUTOMATED TESTS",
-        "personal-details-phone_number:": "0987654321",
+        "personal-details-phone_number": "0987654321",
         "personal-details-confirmed_is_company_representative": "on",
     }
 
