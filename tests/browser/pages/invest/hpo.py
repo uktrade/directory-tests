@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages import common_selectors
 from pages.common_actions import (
     Selector,
@@ -27,7 +27,7 @@ NAMES = [
     "Rail infrastructure",
 ]
 SERVICE = Service.INVEST
-TYPE = "HPO"
+TYPE = PageType.HPO
 URL = URLs.INVEST_HPO.absolute
 PAGE_TITLE = "high potential"
 

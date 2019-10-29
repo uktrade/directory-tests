@@ -10,7 +10,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages import ElementType
 from pages.common_actions import (
     Actor,
@@ -28,7 +28,7 @@ from pages.profile.autocomplete_callbacks import enrol_autocomplete_company_name
 
 NAME = "Enter your business details (LTD, PLC or Royal Charter)"
 SERVICE = Service.PROFILE
-TYPE = "Enrol"
+TYPE = PageType.FORM
 URL = URLs.PROFILE_ENROL_COMPANIES_HOUSE_SEARCH.absolute
 PAGE_TITLE = ""
 

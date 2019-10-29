@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
@@ -19,7 +19,7 @@ from pages.domestic import actions as domestic_actions
 
 NAME = "Join our export community"
 SERVICE = Service.DOMESTIC
-TYPE = "landing"
+TYPE = PageType.LANDING
 URL = URLs.DOMESTIC_COMMUNITY.absolute
 
 SELECTORS = {

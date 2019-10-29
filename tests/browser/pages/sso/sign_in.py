@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
@@ -20,7 +20,7 @@ from pages.common_actions import (
 
 NAME = "Sign in"
 SERVICE = Service.SSO
-TYPE = "log in"
+TYPE = PageType.FORM
 URL = URLs.SSO_LOGIN.absolute
 PAGE_TITLE = "Sign in - great.gov.uk"
 

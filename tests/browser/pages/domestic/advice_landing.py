@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
@@ -21,7 +21,7 @@ from pages.common_actions import (
 )
 
 NAME = "Advice landing"
-TYPE = "landing"
+TYPE = PageType.LANDING
 SERVICE = Service.DOMESTIC
 URL = URLs.DOMESTIC_ADVICE.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"

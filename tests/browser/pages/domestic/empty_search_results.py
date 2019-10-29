@@ -6,13 +6,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages import ElementType
 from pages.common_actions import Selector, check_url, take_screenshot
 
 NAME = "Empty Search results"
 SERVICE = Service.DOMESTIC
-TYPE = "Search"
+TYPE = PageType.SEARCH
 URL = URLs.DOMESTIC_SEARCH.absolute
 
 SELECTORS = {

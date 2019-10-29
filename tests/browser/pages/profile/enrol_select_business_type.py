@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
@@ -30,7 +30,7 @@ from pages.profile import (
 
 NAME = "Select your business type"
 SERVICE = Service.PROFILE
-TYPE = "Enrol"
+TYPE = PageType.FORM
 URL = URLs.PROFILE_ENROL_SELECT_BUSINESS_TYPE.absolute
 PAGE_TITLE = ""
 

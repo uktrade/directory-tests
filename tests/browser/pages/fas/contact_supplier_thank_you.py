@@ -7,13 +7,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages import common_selectors
 from pages.common_actions import Selector, check_for_sections, take_screenshot
 
 NAME = "Thank you for contacting supplier"
 SERVICE = Service.FAS
-TYPE = "contact"
+TYPE = PageType.CONTACT_US
 URL = URLs.FAS_CONTACT_SUPPLIER_SUCCESS.absolute_template
 PAGE_TITLE = "Find a Buyer - GREAT.gov.uk"
 

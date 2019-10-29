@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages import common_selectors
 from pages.common_actions import (
     Selector,
@@ -19,7 +19,7 @@ from pages.common_actions import (
 
 NAME = "Empty Search Results"
 SERVICE = Service.FAS
-TYPE = "search"
+TYPE = PageType.SEARCH
 URL = URLs.FAS_SEARCH.absolute
 PAGE_TITLE = "Search the database of UK suppliers' trade profiles - trade.great.gov.uk"
 

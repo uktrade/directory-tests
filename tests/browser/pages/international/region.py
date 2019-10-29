@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages import common_selectors
 from pages.common_actions import (
     Selector,
@@ -30,7 +30,7 @@ NAMES = [
     "Wales",
 ]
 SERVICE = Service.INTERNATIONAL
-TYPE = "region"
+TYPE = PageType.REGION
 URL = URLs.INTERNATIONAL_REGIONS.absolute
 PAGE_TITLE = "Invest in Great Britain - "
 

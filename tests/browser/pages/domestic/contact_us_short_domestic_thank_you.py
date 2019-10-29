@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages.common_actions import Selector, check_url, take_screenshot
 
 NAME = "Thank you for your enquiry"
@@ -23,7 +23,7 @@ NAMES = [
     "Thank you for your enquiry (I have not received a verification code)",
 ]
 SERVICE = Service.DOMESTIC
-TYPE = "Short Domestic Contact us"
+TYPE = PageType.SHORT_DOMESTIC_CONTACT_US
 URL = URLs.CONTACT_US_FORM_DOMESTIC_SUCCESS.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 

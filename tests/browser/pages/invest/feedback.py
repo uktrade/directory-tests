@@ -5,12 +5,12 @@ import logging
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages.common_actions import check_url, take_screenshot, visit_url
 
 NAME = "Feedback"
 SERVICE = Service.INVEST
-TYPE = "contact"
+TYPE = PageType.CONTACT_US
 URL = URLs.CONTACT_US_FEEDBACK.absolute
 PAGE_TITLE = "Contact us - great.gov.uk"
 SELECTORS = {}

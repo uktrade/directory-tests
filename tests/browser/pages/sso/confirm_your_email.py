@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages.common_actions import (
     Selector,
     check_url,
@@ -15,7 +15,7 @@ from pages.common_actions import (
 
 NAME = "Confirm your email address"
 SERVICE = Service.SSO
-TYPE = "confirmation"
+TYPE = PageType.CONFIRMATION
 URL = URLs.SSO_EMAIL_CONFIRM.absolute
 PAGE_TITLE = "Confirm email Address"
 

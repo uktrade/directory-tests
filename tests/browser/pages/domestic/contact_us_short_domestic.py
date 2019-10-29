@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages import ElementType
 from pages.common_actions import (
     Actor,
@@ -36,7 +36,7 @@ NAMES = [
     "Short contact form (Office Finder)",
 ]
 SERVICE = Service.DOMESTIC
-TYPE = "Contact us"
+TYPE = PageType.CONTACT_US
 URL = URLs.CONTACT_US_FORM_DOMESTIC.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 

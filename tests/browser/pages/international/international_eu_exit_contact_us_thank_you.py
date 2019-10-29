@@ -4,12 +4,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages.common_actions import Selector, check_url, go_to_url, take_screenshot
 
 NAME = "Brexit help"
 SERVICE = Service.INTERNATIONAL
-TYPE = "Thank you for contacting us"
+TYPE = PageType.THANK_YOU
 URL = URLs.CONTACT_US_INTERNATIONAL_BREXIT_CONTACT_SUCCESS.absolute
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 

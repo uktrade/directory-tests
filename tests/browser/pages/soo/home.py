@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
@@ -25,7 +25,7 @@ from pages.soo import search_criteria
 NAME = "Home"
 URL = URLs.SOO_LANDING.absolute
 SERVICE = Service.SOO
-TYPE = "home"
+TYPE = PageType.HOME
 PAGE_TITLE = "Welcome to Selling online overseas"
 
 SEARCH_BUTTON = Selector(

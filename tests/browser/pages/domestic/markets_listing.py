@@ -7,14 +7,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages import ElementType, common_selectors
 from pages.common_actions import Selector, check_url, go_to_url, take_screenshot
 from pages.domestic import actions as domestic_actions
 
 NAME = "Markets"
 SERVICE = Service.DOMESTIC
-TYPE = "listing"
+TYPE = PageType.LISTING
 URL = URLs.DOMESTIC_MARKETS.absolute
 
 SELECTORS = {

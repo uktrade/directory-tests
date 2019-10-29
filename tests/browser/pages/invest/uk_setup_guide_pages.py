@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from directory_tests_shared.settings import INTERNATIONAL_URL
 from pages import common_selectors
 from pages.common_actions import (
@@ -40,7 +40,7 @@ NAMES = [
     "UK tax and incentives (Staging)",
 ]
 SERVICE = Service.INVEST
-TYPE = "guide"
+TYPE = PageType.GUIDE
 URL = URLs.INVEST_UK_SETUP_GUIDE.absolute
 URL_STAGING = urljoin(INTERNATIONAL_URL, "content/how-to-setup-in-the-uk/")
 PAGE_TITLE = "Invest in Great Britain -"

@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
+from directory_tests_shared.enums import PageType, Service
 from pages import ElementType
 from pages.common_actions import (
     Actor,
@@ -27,7 +27,7 @@ from pages.domestic import contact_us_short_domestic_thank_you
 
 NAME = "Long (Business details)"
 SERVICE = Service.DOMESTIC
-TYPE = "Contact us"
+TYPE = PageType.CONTACT_US
 URL = URLs.CONTACT_US_EXPORT_ADVICE_BUSINESS.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
