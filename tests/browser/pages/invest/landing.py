@@ -98,7 +98,7 @@ SELECTORS = {
         ),
     },
 }
-SELECTORS.update(common_selectors.INTERNATIONAL_HEADER)
+SELECTORS.update(common_selectors.INVEST_HEADER)
 SELECTORS.update(common_selectors.INVEST_HERO)
 SELECTORS.update(common_selectors.BREADCRUMBS)
 SELECTORS.update(common_selectors.ERROR_REPORTING)

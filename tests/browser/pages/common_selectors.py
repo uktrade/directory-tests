@@ -214,7 +214,7 @@ INVEST_HEADER = {
             "nav.sub-nav > ul > li.menu-item:nth-child(2) > a",
             type=ElementType.LINK,
         ),
-        "find a uk supplier": Selector(
+        "find a uk specialist": Selector(
             By.CSS_SELECTOR,
             "nav.sub-nav > ul > li.menu-item:nth-child(3) > a",
             type=ElementType.LINK,
