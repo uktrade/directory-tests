@@ -5,6 +5,7 @@ __all__ = [
     "feedback",
     "landing",
     "how_to_set_up_in_the_uk",
+    "how_we_help_you_expand",
     "hpo",
     "hpo_contact_us",
     "hpo_contact_us_thank_you",

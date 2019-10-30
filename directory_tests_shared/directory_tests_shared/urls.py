@@ -803,6 +803,9 @@ class URLs(Enum):
     INVEST_HEALTHCHECK = InvestUrl("healthcheck/")
     INVEST_CONTACT = InvestUrl("contact/")
     INVEST_CONTACT_SUCCESS = InvestUrl("contact/success/")
+    INVEST_HOW_WE_HELP_EXPAND = InternationalUrl(
+        "content/invest/how-we-help-you-expand/"
+    )
     INVEST_SITEMAP = InvestUrl("sitemap.xml")
     INVEST_PIR = InvestUrl("perfectfit/")
     INVEST_HPO = InvestUrl("#high-potential-opportunities")
