@@ -27,7 +27,7 @@ from pages.common_actions import (
     visit_url,
 )
 
-NAME = "Contact us"
+NAME = "HPO Contact us"
 NAMES = [
     "High productivity food production",
     "Lightweight structures",

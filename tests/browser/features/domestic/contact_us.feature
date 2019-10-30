@@ -367,7 +367,7 @@ Feature: Domestic - Contact us
 
     When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "Domestic - Brexit help - Thank you for your enquiry" page
+    Then "Robert" should be on the "Domestic - Brexit help - Thank you" page
     And a "zendesk" notification entitled "Brexit contact form" should be sent to "Robert"
 
 
