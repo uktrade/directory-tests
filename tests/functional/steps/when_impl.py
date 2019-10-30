@@ -2211,7 +2211,13 @@ def profile_enrol_companies_house_registered_company(
     profile.enter_your_personal_details.should_be_here(context.response)
 
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
-    context.response = profile.enter_your_personal_details.submit(actor)
+    if "Tick this box to accept" in context.response.content.decode("UTF-8"):
+        logging.warning(f"User was asked to accept T&Cs on: {context.response.url}")
+        context.response = profile.enter_your_personal_details.submit(
+            actor, tick_t_and_c=True
+        )
+    else:
+        context.response = profile.enter_your_personal_details.submit(actor)
     profile.enrolment_finished.should_be_here(context.response)
 
     if not account.verify:

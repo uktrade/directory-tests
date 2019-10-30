@@ -28,7 +28,7 @@ def should_be_here(response: Response):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
 
 
-def submit(actor: Actor):
+def submit(actor: Actor, *, tick_t_and_c: bool = False):
     session = actor.session
     headers = {"Referer": URL}
     data = {
@@ -40,6 +40,8 @@ def submit(actor: Actor):
         "personal-details-phone_number": "0987654321",
         "personal-details-confirmed_is_company_representative": "on",
     }
+    if tick_t_and_c:
+        data.update({"personal-details-terms_agreed": "on"})
 
     return make_request(
         Method.POST,
