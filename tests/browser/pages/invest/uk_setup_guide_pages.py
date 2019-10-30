@@ -25,10 +25,13 @@ NAME = "How to set up in the UK"
 NAMES = [
     "Access finance in the UK",
     "Access finance in the UK (Staging)",
+    "Brexit webinars for EU businesses (UAT)",
     "DIT's guide to UK Capital Gains Tax",
     "DIT's guide to UK Corporation Tax",
     "DIT's Guide to UK Venture Capital Schemes",
     "Establish a UK business base",
+    "Get support to move your tech business to the UK (UAT)",
+    "Hire skilled workers for your UK operations (UAT)",
     "Open a UK business bank account",
     "Open a UK business bank account (Staging)",
     "Register a company in the UK",
@@ -38,6 +41,7 @@ NAMES = [
     "UK talent and labour",
     "UK tax and incentives",
     "UK tax and incentives (Staging)",
+    "UK visas and migration (UAT)",
 ]
 SERVICE = Service.INVEST
 TYPE = PageType.GUIDE
@@ -81,6 +85,17 @@ SubURLs = {
         URL_STAGING, "open-a-uk-business-bank-account/"
     ),
     "uk tax and incentives (staging)": urljoin(URL_STAGING, "uk-tax-and-incentives/"),
+    # UAT
+    "Brexit webinars for EU businesses (UAT)": urljoin(
+        URL_STAGING, "brexit-readiness-webinars-for-eu-businesses/"
+    ),
+    "Get support to move your tech business to the UK (UAT)": urljoin(
+        URL_STAGING, "global-entrepreneur-program/"
+    ),
+    "Hire skilled workers for your UK operations (UAT)": urljoin(
+        URL_STAGING, "hire-skilled-workers-for-your-uk-operations/"
+    ),
+    "UK visas and migration (UAT)": urljoin(URL_STAGING, "uk-visas-and-migration/"),
 }
 
 
