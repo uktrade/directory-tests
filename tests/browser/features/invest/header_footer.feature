@@ -32,10 +32,9 @@ Feature: Invest - Header-Footer
       | DIT's Guide to UK Venture Capital Schemes - guide |
       | Establish a UK business base - guide              |
       | Register a company in the UK - guide              |
-      | UK Income Tax - guide                             |
       | UK infrastructure - guide                         |
+      | UK innovation - guide                             |
       | UK talent and labour - guide                      |
-      | UK tax and incentives - guide                     |
 
 
   @stage-only
@@ -71,11 +70,12 @@ Feature: Invest - Header-Footer
     Then "Robert" should be on the "<expected>" page
 
     Examples:
-      | specific topic     | expected                         |
-      | Invest             | Invest - landing                 |
-      | Industries         | International - Industries       |
-      | UK setup guide     | Invest - How to set up in the UK |
-      | Find a UK Supplier | Find a Supplier - Landing        |
+      | specific topic          | expected                         |
+      | Overview                | Invest - landing                 |
+      | How to expand to the UK | Invest - How to set up in the UK |
+      | Find a UK specialist    | ISD - Landing                    |
+      | How we help             | Invest - How we help you expand  |
+      | Contact us              | Invest - Contact us              |
 
 
   @CMS-158
@@ -104,10 +104,9 @@ Feature: Invest - Header-Footer
       | DIT's Guide to UK Venture Capital Schemes - guide |
       | Establish a UK business base - guide              |
       | Register a company in the UK - guide              |
-      | UK Income Tax - guide                             |
       | UK infrastructure - guide                         |
+      | UK innovation - guide                             |
       | UK talent and labour - guide                      |
-      | UK tax and incentives - guide                     |
 
     @stage-only
     Examples: Legacy UK setup guides
@@ -118,14 +117,13 @@ Feature: Invest - Header-Footer
 
     @uat-only
     Examples: UK setup guides
-      | selected                                          |
-      | Access finance in the UK - guide                  |
-      | DIT's guide to UK Capital Gains Tax - guide       |
-      | DIT's guide to UK Corporation Tax - guide         |
-      | DIT's Guide to UK Venture Capital Schemes - guide |
-      | Establish a UK business base - guide              |
-      | Register a company in the UK - guide              |
-      | UK Income Tax - guide                             |
-      | UK infrastructure - guide                         |
-      | UK talent and labour - guide                      |
-      | UK tax and incentives - guide                     |
+      | selected                                                 |
+      | Access finance in the UK - guide                         |
+      | Brexit webinars for EU businesses - guide                |
+      | Establish a UK business base - guide                     |
+      | Get support to move your tech business to the UK - guide |
+      | Hire skilled workers for your UK operations - guide      |
+      | Open a UK business bank account - guide                  |
+      | Register a company in the UK - guide                     |
+      | UK tax and incentives - guide                            |
+      | UK visas and migration - guide                           |
