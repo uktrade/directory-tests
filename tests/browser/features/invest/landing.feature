@@ -5,7 +5,6 @@ Feature: Invest - landing page
   Background:
     Given basic authentication is done for "International - Landing" page
 
-  @dev-only
   @CMS-157
   Scenario: Visitors should be able to view "Invest - Landing" page
     Given "Robert" visits the "Invest - landing" page
@@ -17,24 +16,7 @@ Feature: Invest - landing page
       | Breadcrumbs                  |
       | Benefits                     |
       | Sectors                      |
-      | How we help                  |
-      | Contact us                   |
-      | Error reporting              |
-      | Footer                       |
-
-  @stage-only
-  @CMS-157
-  Scenario: Visitors should be able to view "Invest - Landing" page
-    Given "Robert" visits the "Invest - landing" page
-
-    Then "Robert" should see following sections
-      | Sections                     |
-      | Header                       |
-      | Hero                         |
-      | Breadcrumbs                  |
-      | Benefits                     |
-      | Sectors                      |
-      | High-Potential Opportunities |
+      | High-potential opportunities |
       | How we help                  |
       | Contact us                   |
       | Error reporting              |
@@ -77,9 +59,29 @@ Feature: Invest - landing page
   Scenario: Overseas businesses should be able to learn how to set up in the UK
     Given "Robert" visits the "Invest - landing" page
 
-    When "Robert" decides to find out more about "UK setup guide"
+    When "Robert" decides to find out more about "How to expand to the UK"
 
     Then "Robert" should be on the "Invest - How to set up in the UK" page
+
+
+  @HPO
+  @dev-only
+  Scenario Outline: Overseas businesses should be able to learn about "<selected>" High-Potential Opportunities
+    Given "Robert" visits the "Invest - landing" page
+
+    When "Robert" decides to find out more about "<selected>"
+
+    Then "Robert" should be on the "Invest - <selected> - hpo" page
+
+    Examples: HPO pages
+      | selected                          |
+      | Aquaculture                       |
+      | High productivity food production (Dev) |
+      | Lightweight structures            |
+      | Photonics and microelectronics    |
+      | Rail infrastructure               |
+      | Space                             |
+      | Sustainable packaging             |
 
 
   @HPO
@@ -90,10 +92,9 @@ Feature: Invest - landing page
     When "Robert" decides to find out more about "<selected>"
 
     Then "Robert" should be on the "Invest - <selected> - hpo" page
-    And "Robert" should see content specific to "Invest - <selected> - hpo" page
 
     Examples: HPO pages
       | selected                          |
-      | High productivity food production |
+      | High productivity food production (Staging) |
       | Lightweight structures            |
       | Rail infrastructure               |

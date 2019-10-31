@@ -23,12 +23,20 @@ Feature: Invest - Google Tag Manager
       | How to set up in the UK | Invest       | False       | en-gb        | Guide       | ListingPage    | None   |
 
     @hpo
+    @dev-only
+    Examples: High-potential opportunities in Dev
+      | selected                                      | businessUnit | loginStatus | siteLanguage | siteSection                | siteSubsection | userId |
+      | High productivity food production (Dev) - HPO | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
+      | Lightweight structures - HPO                  | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
+      | Rail infrastructure - HPO                     | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
+
+    @hpo
     @stage-only
-    Examples: High-potential opportunities
-      | selected                                | businessUnit | loginStatus | siteLanguage | siteSection                | siteSubsection | userId |
-      | High productivity food production - HPO | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
-      | Lightweight structures - HPO            | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
-      | Rail infrastructure - HPO               | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
+    Examples: High-potential opportunities in Staging
+      | selected                                          | businessUnit | loginStatus | siteLanguage | siteSection                | siteSubsection | userId |
+      | High productivity food production (Staging) - HPO | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
+      | Lightweight structures - HPO                      | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
+      | Rail infrastructure - HPO                         | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
 
 
   @bug
