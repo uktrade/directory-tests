@@ -47,7 +47,7 @@ Feature: FAS - Contact us
 
     When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "International - Find a UK business partner - Thank you for your message" page
+    Then "Robert" should be on the "International - Find a UK business partner - Thank you" page
     And "Robert" should see following sections
       | Sections          |
       | Header            |
@@ -185,7 +185,7 @@ Feature: FAS - Contact us
 
     When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "International - Find a UK business partner - Thank you for your message" page
+    Then "Robert" should be on the "International - Find a UK business partner - Thank you" page
     And "Robert" should not receive a confirmation email
     And an email notification about "Robert"'s enquiry should NOT be send to "Trade mailbox"
 
