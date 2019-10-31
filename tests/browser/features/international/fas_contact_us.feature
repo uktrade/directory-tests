@@ -156,24 +156,6 @@ Feature: FAS - Contact us
 
   @bug
   @TT-1777
-  @TT-942
-  @captcha
-  @dev-only
-  @contact-us
-  Scenario: Contact requests from certain senders should not be forwarded to us
-    Given "Robert" was barred from contacting us
-    And "Robert" visits the "International - Find a UK business partner - Contact us" page
-
-    When "Robert" fills out and submits the form
-
-    Then "Robert" should be on the "International - Find a UK business partner - Thank you for your message" page
-    And "Robert" should not receive a confirmation email
-# Please uncomment this step and delete next scenario once TT-1777 is fixed
-#    And an email notification about "Robert"'s enquiry should NOT be send to "Trade mailbox"
-
-
-  @bug
-  @TT-1777
   @fixme
   @TT-942
   @captcha
