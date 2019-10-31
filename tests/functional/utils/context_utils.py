@@ -2,7 +2,11 @@
 """Helpers added to the behave's `context` object."""
 import logging
 from collections import namedtuple
-from typing import Union
+from dataclasses import dataclass, field
+from random import choice
+from string import ascii_letters, digits
+from typing import List, Union
+from uuid import uuid4
 
 from behave.runner import Context
 from requests import Session
@@ -288,3 +292,40 @@ def update_case_study(
     logging.debug(
         "Successfully updated Case Study '%s' for Company %s", case_alias, company_alias
     )
+
+
+def random_password(*, length: int = 30):
+    alphanumerics = digits + ascii_letters
+    return "".join(choice(alphanumerics) for _ in range(length))
+
+
+def random_email(alias: str) -> str:
+    return (
+        f"test+{alias}{uuid4()}@directory.uktrade.io".replace("-", "")
+        .replace(" ", "")
+        .lower()
+    )
+
+
+@dataclass()
+class NewActor:
+    alias: str
+    type: str
+    email: str = None
+    password: str = field(default_factory=random_password)
+    session: Session = field(default_factory=Session)
+    csrfmiddlewaretoken: str = None
+    email_confirmation_link: str = None
+    email_confirmation_code: str = None
+    company_alias: str = None
+    has_sso_account: bool = None
+    password_reset_link: str = None
+    invitation_for_collaboration_link: str = None
+    ex_owner: bool = None
+    ownership_request_link: str = None
+    verification_letter: str = None
+    notifications: List[dict] = field(default_factory=list)
+
+    def __post_init__(self):
+        if not self.email:
+            self.email = random_email(self.alias)
