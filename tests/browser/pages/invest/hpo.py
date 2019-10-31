@@ -164,7 +164,8 @@ def visit(driver: WebDriver, *, page_name: str = None):
 
 def should_be_here(driver: WebDriver, *, page_name: str):
     take_screenshot(driver, PAGE_TITLE)
-    check_url(driver, URL, exact_match=False)
+    url = SubURLs[page_name] if page_name else URL
+    check_url(driver, url)
     logging.debug("All expected elements are visible on '%s' page", PAGE_TITLE)
 
 
