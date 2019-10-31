@@ -2187,6 +2187,7 @@ def profile_enrol_companies_house_registered_company(
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
     enrol_get_email_verification_code(context, actor.alias)
     actor = get_actor(context, actor.alias)
+    assert actor.session
     context.response = profile.enter_email_verification_code.submit(actor)
     profile.enter_your_business_details.should_be_here(context.response)
 
@@ -2260,6 +2261,7 @@ def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account):
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
     enrol_get_email_verification_code(context, actor.alias)
     actor = get_actor(context, actor.alias)
+    assert actor.session
     context.response = profile.non_ch_company_enter_email_verification_code.submit(
         actor
     )
@@ -2322,6 +2324,7 @@ def profile_enrol_individual(context: Context, actor: Actor, account: Account):
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
     enrol_get_email_verification_code(context, actor.alias)
     actor = get_actor(context, actor.alias)
+    assert actor.session
     context.response = profile.individual_enter_email_verification_code.submit(actor)
     profile.individual_enter_your_personal_details.should_be_here(context.response)
 

@@ -134,7 +134,7 @@ def make_request(
         assert url is not None
 
     if not session:
-        logging.debug("Session object not provided. Will default to Requests")
+        logging.warning("Session object not provided. Will default to Requests")
     req = session or requests
 
     if no_filename_in_multipart_form_data:
