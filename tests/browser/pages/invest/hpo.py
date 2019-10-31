@@ -22,9 +22,14 @@ from pages.common_actions import (
 
 NAME = "HPO"
 NAMES = [
-    "High productivity food production",
+    "Aquaculture",
+    "High productivity food production (Dev)",
+    "High productivity food production (Staging)",
     "Lightweight structures",
+    "Photonics and microelectronics",
     "Rail infrastructure",
+    "Space",
+    "Sustainable packaging",
 ]
 SERVICE = Service.INVEST
 TYPE = PageType.HPO
@@ -33,9 +38,14 @@ PAGE_TITLE = "high potential"
 
 
 SubURLs = {
-    "high productivity food production": URLs.INVEST_HPO_FOOD.absolute,
-    "lightweight structures": URLs.INVEST_HPO_LIGHTWEIGHT.absolute,
-    "rail infrastructure": URLs.INVEST_HPO_RAIL.absolute,
+    "Aquaculture": URLs.INVEST_HPO_AQUACULTURE.absolute,
+    "High productivity food production (Dev)": URLs.INVEST_HPO_FOOD_DEV.absolute,
+    "High productivity food production (Staging)": URLs.INVEST_HPO_FOOD_STAGING.absolute,
+    "Lightweight structures": URLs.INVEST_HPO_LIGHTWEIGHT.absolute,
+    "Photonics and microelectronics": URLs.INVEST_HPO_PHOTONICS.absolute,
+    "Rail infrastructure": URLs.INVEST_HPO_RAIL.absolute,
+    "Space": URLs.INVEST_HPO_SPACE.absolute,
+    "Sustainable packaging": URLs.INVEST_HPO_SUSTAINABLE_PACKAGING.absolute,
 }
 
 

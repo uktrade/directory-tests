@@ -818,11 +818,26 @@ class URLs(Enum):
     INVEST_HPO_RAIL = InternationalUrl(
         "content/invest/high-potential-opportunities/rail-infrastructure/"
     )
-    INVEST_HPO_FOOD = InternationalUrl(
+    INVEST_HPO_FOOD_DEV = InternationalUrl(
+        "content/invest/high-potential-opportunities/high-productivity-food-production/"
+    )
+    INVEST_HPO_FOOD_STAGING = InternationalUrl(
         "content/invest/high-potential-opportunities/food-production/"
     )
     INVEST_HPO_LIGHTWEIGHT = InternationalUrl(
         "content/invest/high-potential-opportunities/lightweight-structures/"
+    )
+    INVEST_HPO_AQUACULTURE = InternationalUrl(
+        "content/invest/high-potential-opportunities/aquaculture/"
+    )
+    INVEST_HPO_PHOTONICS = InternationalUrl(
+        "content/invest/high-potential-opportunities/photonics-and-microelectronics/"
+    )
+    INVEST_HPO_SPACE = InternationalUrl(
+        "content/invest/high-potential-opportunities/space/"
+    )
+    INVEST_HPO_SUSTAINABLE_PACKAGING = InternationalUrl(
+        "content/invest/high-potential-opportunities/sustainable-packaging/"
     )
 
     INVEST_INDUSTRIES = LegacyInvestUrl("industries/")
