@@ -43,50 +43,39 @@ SELECTORS = {
         "see more industries": Selector(By.ID, "see-more-industries"),
     },
     "high-potential opportunities": {
-        "self": Selector(By.ID, "high-potential-opportunities"),
-        "heading": Selector(By.CSS_SELECTOR, "#high-potential-opportunities h2"),
-        "text": Selector(By.CSS_SELECTOR, "#high-potential-opportunities h2 ~ div > p"),
+        "hpo - section": Selector(By.ID, "high-potential-opportunities"),
+        "hpo - headings": Selector(By.CSS_SELECTOR, "#high-potential-opportunities h2"),
+        "hpo - texts": Selector(
+            By.CSS_SELECTOR, "#high-potential-opportunities h2 ~ div > p"
+        ),
+        "aquaculture": Selector(By.PARTIAL_LINK_TEXT, "Aquaculture"),
         "high productivity food production": Selector(
-            By.CSS_SELECTOR, "#high-potential-opportunities div:nth-child(1) > div > a"
+            By.PARTIAL_LINK_TEXT, "High productivity food production"
+        ),
+        "high productivity food production (dev)": Selector(
+            By.PARTIAL_LINK_TEXT, "High productivity food production"
+        ),
+        "high productivity food production (staging)": Selector(
+            By.PARTIAL_LINK_TEXT, "High productivity food production"
         ),
         "lightweight structures": Selector(
-            By.CSS_SELECTOR, "#high-potential-opportunities div:nth-child(2) > div > a"
+            By.PARTIAL_LINK_TEXT, "Lightweight structures"
         ),
-        "rail infrastructure": Selector(
-            By.CSS_SELECTOR, "#high-potential-opportunities div:nth-child(2) > div > a"
+        "photonics and microelectronics": Selector(
+            By.PARTIAL_LINK_TEXT, "Photonics and Microelectronics"
+        ),
+        "rail infrastructure": Selector(By.PARTIAL_LINK_TEXT, "Rail infrastructure"),
+        "space": Selector(By.PARTIAL_LINK_TEXT, "Space"),
+        "sustainable packaging": Selector(
+            By.PARTIAL_LINK_TEXT, "Sustainable packaging"
         ),
     },
     "how we help": {
-        "self": Selector(By.ID, "how-we-help"),
-        "build connections - icon": Selector(
-            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(1) > div > img"
-        ),
-        "build connections - text": Selector(
-            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(1) > div > p"
-        ),
-        "apply for visas - icon": Selector(
-            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(2) > div > img"
-        ),
-        "apply for visas - text": Selector(
-            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(2) > div > p"
-        ),
-        "find grants - icon": Selector(
-            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(3) > div > img"
-        ),
-        "find grants - text": Selector(
-            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(3) > div > p"
-        ),
-        "get insights - icon": Selector(
-            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(4) > div > img"
-        ),
-        "get insights - text": Selector(
-            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(4) > div > p"
-        ),
-        "grow workforce - icon": Selector(
-            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(5) > div > img"
-        ),
-        "grow workforce - text": Selector(
-            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(5) > div > p"
+        "how we help - section": Selector(By.ID, "how-we-help"),
+        "how we help - icons": Selector(By.CSS_SELECTOR, "#how-we-help ul li img"),
+        "how we help - texts": Selector(By.CSS_SELECTOR, "#how-we-help ul li p"),
+        "find out more": Selector(
+            By.CSS_SELECTOR, "#how-we-help a", type=ElementType.LINK
         ),
     },
     "contact us": {

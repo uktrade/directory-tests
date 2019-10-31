@@ -236,12 +236,10 @@ INVEST_HEADER["header"] = {**INVEST_HEADER["header"], **INTERNATIONAL_HEADER["he
 
 INVEST_HERO = {
     "hero": {
-        "self": Selector(By.CSS_SELECTOR, "section[data-ga-section='hero']"),
-        "heading": Selector(By.CSS_SELECTOR, "section[data-ga-section='hero'] h1"),
+        "self": Selector(By.ID, "hero"),
+        "heading": Selector(By.CSS_SELECTOR, "#hero h1"),
         "get in touch": Selector(
-            By.CSS_SELECTOR,
-            "section[data-ga-section='hero'] a.button",
-            type=ElementType.LINK,
+            By.CSS_SELECTOR, "#hero a.button", type=ElementType.LINK
         ),
     }
 }
