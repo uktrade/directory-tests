@@ -2039,9 +2039,11 @@ def stannp_download_verification_letter_and_extract_text(
 
 def enrol_get_email_verification_code(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
-    logging.debug("# 3) get email verification code")
+    logging.debug("Get email verification code")
     code = get_email_verification_code(actor.email)
     assert code, f"Could not find email verification code for {actor.email}"
+    if code.startswith("0"):
+        logging.warning(f"TT-2089 Got a code that starts with 0: {code}")
     update_actor(context, actor.alias, email_confirmation_code=code)
 
 
