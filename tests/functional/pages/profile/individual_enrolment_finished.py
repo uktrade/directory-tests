@@ -12,10 +12,9 @@ TYPE = PageType.CONFIRMATION
 URL = URLs.PROFILE_ENROL_INDIVIDUAL_FINISHED.absolute
 EXPECTED_STRINGS = [
     "Your account has been created",
-    "You can now",
-    "find export opportunities",
-    "sell online overseas",
-    "find events and visits",
+    "What you can do next",
+    "find the right digital marketplace",
+    "apply to take part in events",
 ]
 
 
