@@ -241,8 +241,14 @@ Feature: ERP - UK consumer
       | Are you aware of changes (UK consumer) | individual consumer |
       | Other information (UK customer)        | individual consumer |
       | Consumer type (UK consumer)            | individual consumer |
-      | Personal details (UK consumer)         | individual consumer |
       | Summary (UK consumer)                  | individual consumer |
       | Consumer type (UK consumer)            | consumer group      |
-      | Consumer group details (UK consumer)   | consumer group      |
       | Summary (UK consumer)                  | consumer group      |
+
+    @bug
+    @TT-2098
+    @fixme
+    Examples: stages at which user can save progress
+      | expected                               | uk consumer         |
+      | Consumer group details (UK consumer)   | consumer group      |
+      | Personal details (UK consumer)         | individual consumer |
