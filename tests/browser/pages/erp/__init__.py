@@ -27,5 +27,8 @@ __all__ = [
     "summary",
     "triage_import_from_overseas",
     "triage_user_type",
+    "uk_importer_are_goods_used_to_make_something_else",
+    "uk_importer_equivalent_uk_goods",
+    "uk_importer_production_percentage",
     "uk_importer_where_do_you_import_from",
 ]
