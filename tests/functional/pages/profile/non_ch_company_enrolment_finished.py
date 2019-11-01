@@ -13,10 +13,11 @@ URL = URLs.PROFILE_ENROL_NON_CH_COMPANY_FINISHED.absolute
 EXPECTED_STRINGS = [
     "Account created",
     "Your account has been created",
-    "Next steps",
     "What you can do next",
-    "find the right digital marketplace",
-    "apply to take part in events",
+    "Now you are registered you can",
+    "publish your company profile",
+    "explore export opportunities",
+    "find the right digital marketplace for your products",
 ]
 
 
