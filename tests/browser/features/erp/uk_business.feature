@@ -556,3 +556,33 @@ Feature: ERP - UK business
     Examples:
       | imported or not | business_type |
       | not imported    | UK business   |
+
+
+  @wip
+  @TT-2116
+  @save-for-later
+  @restore-session
+  Scenario Outline: A UK business should be able to get back to "<expected>" page using the link to restore their progress
+    Given "Robert" got to "<expected>" ERP page as "UK importer"
+
+    When "Robert" saves progress for later
+    Then "Robert" should receive an email with a link to restore saved ERP session
+
+    When "Robert" clears the cookies
+    And "Robert" decides to restore saved ERP progress using the link he received
+
+    Then "Robert" should be on the "ERP - <expected>" page
+
+    Examples: stages at which user can save progress
+      | expected                                                                |
+      | Product detail (UK business)                                            |
+      | Sales volumes (UK business)                                             |
+      | Sales revenue (UK business)                                             |
+      | Are you aware of sales changes (UK business)                            |
+      | Are you aware of market size changes (UK business)                      |
+      | Are you aware of other changes (UK business)                            |
+      | Market size (UK business)                                               |
+      | What outcome are you seeking for (UK business)                          |
+      | Business details (UK business)                                          |
+      | Personal details (UK business)                                          |
+      | Summary (UK business)                                                   |

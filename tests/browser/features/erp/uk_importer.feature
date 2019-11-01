@@ -752,3 +752,37 @@ Feature: ERP - UK business
     Examples:
       | imported or not | business_type |
       | imported        | UK importer   |
+
+
+  @wip
+  @TT-2115
+  @save-for-later
+  @restore-session
+  Scenario Outline: A UK importer should be able to get back to "<expected>" page using the link to restore their progress
+    Given "Robert" got to "<expected>" ERP page as "UK importer"
+
+    When "Robert" saves progress for later
+    Then "Robert" should receive an email with a link to restore saved ERP session
+
+    When "Robert" clears the cookies
+    And "Robert" decides to restore saved ERP progress using the link he received
+
+    Then "Robert" should be on the "ERP - <expected>" page
+
+    Examples: stages at which user can save progress
+      | expected                                                                |
+      | Product detail (UK importer)                                            |
+      | Where do you import from (UK importer)                                  |
+      | Are there goods used to make something else (UK importer)               |
+      | Sales volumes (UK importer)                                             |
+      | Sales revenue (UK importer)                                             |
+      | Are you aware of sales changes (UK importer)                            |
+      | Are you aware of market size changes (UK importer)                      |
+      | Are you aware of other changes (UK importer)                            |
+      | What percentage of your production do these goods make up (UK importer) |
+      | Are there equivalent goods made in the UK (UK importer)                 |
+      | Market size (UK importer)                                               |
+      | What outcome are you seeking for (UK importer)                          |
+      | Business details (UK importer)                                          |
+      | Personal details (UK importer)                                          |
+      | Summary (UK importer)                                                   |
