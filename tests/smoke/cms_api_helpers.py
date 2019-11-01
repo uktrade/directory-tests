@@ -7,8 +7,6 @@ from typing import List, Tuple
 from urllib.parse import urlparse
 
 import requests
-from directory_cms_client import DirectoryCMSClient
-from directory_constants import cms as SERVICE_NAMES
 from requests import Response
 from rest_framework.status import (
     HTTP_200_OK,
@@ -19,13 +17,11 @@ from rest_framework.status import (
 )
 from retrying import retry
 
+from directory_cms_client import DirectoryCMSClient
+from directory_constants import cms as SERVICE_NAMES
 from directory_tests_shared import URLs
 from directory_tests_shared.clients import CMS_API_CLIENT
-from directory_tests_shared.settings import (
-    CMS_API_KEY,
-    CMS_API_URL,
-    CMS_API_SENDER_ID,
-)
+from directory_tests_shared.settings import CMS_API_KEY, CMS_API_SENDER_ID, CMS_API_URL
 
 
 class AsyncDirectoryCMSClient(DirectoryCMSClient):
@@ -73,7 +69,10 @@ def check_for_special_urls_cases(url: str) -> str:
     if "high-potential-opportunity-submit-success" in url:
         url = url.replace("high-potential-opportunity-submit-success", "success")
     if "high-potential-opportunitiesrailcontact" in url:
-        url = url.replace("high-potential-opportunitiesrailcontact", "high-potential-opportunities/rail/contact")
+        url = url.replace(
+            "high-potential-opportunitiesrailcontact",
+            "high-potential-opportunities/rail/contact",
+        )
     if "industriescontact/" in url:
         url = url.replace("industriescontact/", "industries/contact/")
     if "industry-contact/" in url:
@@ -81,12 +80,12 @@ def check_for_special_urls_cases(url: str) -> str:
     # International pages which are not handled by UI are available via
     # "/content/" infix
     if (
-            "/international/" in url
-            and not url.endswith("/international/")
-            and "/international/content/" not in url
-            and "/content/how-to-setup-in-the-uk/" not in url
-            and "/campaigns/" not in url
-            and "/international-eu-exit-news/" not in url
+        "/international/" in url
+        and not url.endswith("/international/")
+        and "/international/content/" not in url
+        and "/content/how-to-setup-in-the-uk/" not in url
+        and "/campaigns/" not in url
+        and "/international-eu-exit-news/" not in url
     ):
         url = url.replace("/international/", "/international/content/")
     # ATM International pages with "Tree Based Routing" enabled are served
@@ -144,9 +143,7 @@ def check_for_special_page_cases(page: dict) -> str:
 
 def should_skip_never_published_page(response: Response) -> bool:
     if response.status_code == HTTP_404_NOT_FOUND:
-        print(
-            f"GET {response.request.url} → 404. Maybe this page was never published"
-        )
+        print(f"GET {response.request.url} → 404. Maybe this page was never published")
         return True
     return False
 
@@ -174,7 +171,7 @@ def should_skip_url(url: str) -> bool:
     return False
 
 
-def status_error(expected_status_code: int, response:  Response):
+def status_error(expected_status_code: int, response: Response):
     if isinstance(response, Response):
         return (
             f"{response.request.method} {response.url} "
