@@ -78,16 +78,3 @@ workon functional
 dev
 AUTO_RETRY=false behave -k --format pretty --no-skipped features/fas/search.feature --tags=~@wip --tags=~@skip --tags=~@fixme --stop
 ```
-
-
-## Updating list of pre-selected companies
-
-Some functional tests use pre-defined data of randomly selected companies.
-This data is stored in [files/companies.json](files/companies.json).
-Data in Companies House change quite frequently and because of this some discrepancies
-arise once in a while making those tests fail more frequently than usual.
-In such situation, updating the list of pre-defined companies might help with following
-command might help:
-```
-make functional_update_companies
-```

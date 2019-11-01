@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Various utils used across the project."""
 import hashlib
-import json
 import logging
 import os
 import random
@@ -636,28 +635,6 @@ def random_message_data(
     )
 
     return message
-
-
-def load_companies() -> CompaniesList:
-    """Load stored list of Companies from a JSON file.
-
-    :return: a list of named tuples with basic Company details
-    """
-    path = os.path.join(TEST_IMAGES_DIR, "companies.json")
-    with open(path, "r", encoding="utf8") as f:
-        companies = json.load(f)
-    return [Company(**company) for company in companies]
-
-
-def get_random_company(alias: str) -> Company:
-    """Randomly select one of predefined companies and set it alias.
-
-    :param alias: alias of the company used withing the scope of the scenario
-    :return: a Company named tuple with all basic company details
-    """
-    company = random.choice(load_companies())._replace(alias=alias)
-    logging.debug("Selected company: %s", company)
-    return company
 
 
 def escape_html(text: str, *, upper: bool = False) -> str:
