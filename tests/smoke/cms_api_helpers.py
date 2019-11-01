@@ -4,7 +4,6 @@ import logging
 from collections import defaultdict
 from pprint import pformat
 from typing import List, Tuple
-from urllib.parse import urlparse
 
 import requests
 from requests import Response
@@ -106,13 +105,6 @@ def check_for_special_page_cases(page: dict) -> str:
         "CountryGuidePage",
     ]:
         url = check_for_special_urls_cases(page["full_url"])
-    elif page["page_type"] in ["ContactSuccessPage", "ContactUsGuidancePage"]:
-        # contact-us success page URLs are broken
-        # we need to remove last part of the URL path
-        url = page["meta"]["url"]
-        p = urlparse(page["meta"]["url"])
-        short_path = p.path[: p.path.rfind("/", 0, p.path.rfind("/", 0)) + 1]
-        url = url.replace(p.path, short_path)
     elif page["page_type"] in [
         "InvestHomePage",
         "LandingPage",
