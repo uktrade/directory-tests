@@ -505,6 +505,8 @@ Feature: ERP - UK business
 
 
   @TT-2088
+  @dev-only
+  @captcha
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to submit the complete form
     Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"

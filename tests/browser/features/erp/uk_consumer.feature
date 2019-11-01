@@ -98,6 +98,8 @@ Feature: ERP - UK consumer
 
 
   @changes
+  @dev-only
+  @captcha
   Scenario Outline: UK customers representing a "<specific group of consumers>" should be able to complete and submit their form
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
