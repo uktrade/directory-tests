@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """When step implementations."""
 import logging
-import os
 import random
 import re
 import uuid
@@ -29,7 +28,6 @@ from directory_tests_shared import URLs
 from directory_tests_shared.constants import SECTORS, SEPARATORS, BMPs, JP2s, WEBPs
 from directory_tests_shared.enums import Account, BusinessType, Language
 from directory_tests_shared.gov_notify import get_email_verification_code
-from directory_tests_shared.pdf import extract_text_from_pdf
 from directory_tests_shared.utils import rare_word, sentence
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
@@ -75,17 +73,14 @@ from tests.functional.utils.generic import (
     get_company_by_id_or_title,
     get_md5_hash_of_file,
     get_number_of_search_result_pages,
-    get_pdf_from_stannp,
     get_published_companies,
     get_published_companies_with_n_sectors,
-    get_random_company,
     get_verification_code,
     is_verification_letter_sent,
     random_case_study_data,
     random_chars,
     random_feedback_data,
     random_message_data,
-    send_verification_letter,
     verify_non_ch_company,
 )
 from tests.functional.utils.request import Method, check_response, make_request
@@ -2002,39 +1997,6 @@ def fab_remove_collaborators(
     collaborators = company.collaborators
     collaborators = [alias for alias in collaborators if alias not in aliases]
     update_company(context, company.alias, collaborators=collaborators)
-
-
-def stannp_send_verification_letter(context: Context, actor_alias: str):
-    company_alias = "Test"
-    company = get_random_company(alias=company_alias)
-    verification_code = str(random.randint(1000000, 9999999))
-    updated_details = {"verification_code": verification_code, "owner": actor_alias}
-    company = company._replace(**updated_details)
-    add_company(context, company)
-
-    actor = unauthenticated_supplier(actor_alias)
-    actor = actor._replace(**{"company_alias": company_alias})
-    add_actor(context, actor)
-
-    context.response = send_verification_letter(context, company)
-    logging.debug("Successfully sent letter in test mode via StanNP")
-
-
-def stannp_download_verification_letter_and_extract_text(
-    context: Context, actor_alias: str
-):
-    with assertion_msg("context.response does not contain response from StanNP!"):
-        assert "data" in context.response
-
-    pdf_link = context.response["data"]["pdf"]
-    pdf_path = get_pdf_from_stannp(pdf_link)
-    pdf_text = extract_text_from_pdf(pdf_path=pdf_path)
-
-    try:
-        os.remove(pdf_path)
-    except OSError:
-        logging.error("Something went wrong when trying to delete: %s", pdf_path)
-    update_actor(context, actor_alias, verification_letter=pdf_text)
 
 
 def enrol_get_email_verification_code(context: Context, actor_alias: str):

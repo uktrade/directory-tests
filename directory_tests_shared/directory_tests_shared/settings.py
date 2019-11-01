@@ -58,10 +58,6 @@ MAILGUN_DOMAIN = env.str("MAILGUN_DOMAIN")
 MAILGUN_API_KEY = env.str("MAILGUN_API_KEY")
 MAILGUN_EVENTS_URL = "https://api.eu.mailgun.net/v3/%s/events" % MAILGUN_DOMAIN
 
-# StanNP API
-STANNP_API_KEY = env.str("STANNP_API_KEY")
-STANNP_LETTER_TEMPLATE_ID = env.str("STANNP_LETTER_TEMPLATE_ID", default="5395")
-
 # BrowserStack
 BROWSERSTACK_USER = env.str("BROWSERSTACK_USER", default="")
 BROWSERSTACK_PASS = env.str("BROWSERSTACK_PASS", default="")

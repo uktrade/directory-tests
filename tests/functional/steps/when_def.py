@@ -58,7 +58,6 @@ from tests.functional.steps.when_impl import (
     sso_request_password_reset,
     sso_sign_in,
     sso_supplier_confirms_email_address,
-    stannp_download_verification_letter_and_extract_text,
 )
 
 
@@ -412,11 +411,6 @@ def when_supplier_removes_collaborators(
     fab_remove_collaborators(
         context, supplier_alias, collaborators_aliases, company_alias
     )
-
-
-@when('"{actor_alias}" downloads the pdf with the verification letter')
-def when_actor_downloads_pdf_with_verification_letter(context, actor_alias):
-    stannp_download_verification_letter_and_extract_text(context, actor_alias)
 
 
 @when('"{actor_alias}" creates an "{account_type}" profile')

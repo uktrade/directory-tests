@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """Various utils used across the project."""
-import datetime
 import hashlib
 import json
 import logging
@@ -31,7 +30,6 @@ from directory_tests_shared.clients import (
     SSO_TEST_API_CLIENT,
 )
 from directory_tests_shared.constants import SECTORS, TEST_IMAGES_DIR, JPEGs, PNGs
-from directory_tests_shared.settings import STANNP_LETTER_TEMPLATE_ID
 from directory_tests_shared.utils import extract_by_css, rare_word, sentence
 from tests.functional.utils.context_utils import (
     CaseStudy,
@@ -41,7 +39,6 @@ from tests.functional.utils.context_utils import (
     update_actor,
 )
 from tests.functional.utils.request import Method, check_response, make_request
-from tests.functional.utils.stannpclient import STANNP_CLIENT
 
 INDUSTRY_CHOICES = dict(choices.INDUSTRIES)
 
@@ -948,53 +945,6 @@ def filter_out_legacy_industries(company: dict) -> list:
     result = [sector for sector in sectors if sector in INDUSTRY_CHOICES]
     logging.error("Sectors after: %s", result)
     return result
-
-
-def send_verification_letter(
-    context: Context, company: Company, *, template: str = STANNP_LETTER_TEMPLATE_ID
-) -> str:
-    address = company.companies_house_details["address"]
-    address_line_1 = address.get("address_line_1", "Fake address line 1")
-    address_line_2 = address.get("address_line_2", "Fake address line 2")
-    locality = address.get("address_line_2", "Fake locality")
-    recipient = {
-        "postal_full_name": company.owner,
-        "address_line_1": address_line_1,
-        "address_line_2": address_line_2,
-        "locality": locality,
-        "country": "United Kingdom",
-        "postal_code": address["postal_code"],
-        "custom_fields": [
-            ("full_name", company.owner),
-            ("company_name", company.title),
-            ("verification_code", company.verification_code),
-            ("date", datetime.date.today().strftime("%d/%m/%Y")),
-            ("company", company.title),
-        ],
-    }
-    response = STANNP_CLIENT.send_letter(template=template, recipient=recipient)
-    context.response = response
-    with assertion_msg(
-        "Expected to get 200 OK from StanNP API, but got {}".format(
-            response.status_code
-        )
-    ):
-        assert response.status_code == 200
-    with assertion_msg(
-        "Expected to see 'success=True' in StanNP API response, but got {}".format(
-            response.json()["success"]
-        )
-    ):
-        assert response.json()["success"]
-    return response.json()
-
-
-def get_pdf_from_stannp(pdf_url: str):
-    response = STANNP_CLIENT.get(url=pdf_url)
-    target_path = os.path.join(TEST_IMAGES_DIR, "letter.pdf")
-    with open(target_path, "wb") as file:
-        file.write(response.content)
-    return target_path
 
 
 def create_test_isd_company(context: Context) -> dict:
