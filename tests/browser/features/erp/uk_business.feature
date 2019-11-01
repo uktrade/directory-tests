@@ -43,7 +43,6 @@ Feature: ERP - UK business
 
     Examples:
       | imported or not | business_type |
-      | imported        | UK importer   |
       | not imported    | UK business   |
 
 
@@ -67,7 +66,6 @@ Feature: ERP - UK business
 
     Examples:
       | imported or not | business_type |
-      | imported        | UK importer   |
       | not imported    | UK business   |
 
 
@@ -88,7 +86,6 @@ Feature: ERP - UK business
 
     Examples:
       | imported or not | business_type |
-      | imported        | UK importer   |
       | not imported    | UK business   |
 
 
