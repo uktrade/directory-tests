@@ -334,8 +334,8 @@ def then_erp_user_should_see_expected_number_of_product_categories_to_compare(
     )
 
 
-@then('"{actor_alias}" should be able to resume giving feedback "{resume_from}" page')
+@then('"{actor_alias}" should be able to resume giving feedback as "{user_type}" from "{resume_from}" page')
 def then_erp_resume_giving_feedback(
-        context: Context, actor_alias: str, resume_from: str
+        context: Context, actor_alias: str, user_type: str, resume_from: str
 ):
-    erp_follow_user_flow(context, actor_alias, resume_from=resume_from)
+    erp_follow_user_flow(context, actor_alias, user_type, resume_from=resume_from)
