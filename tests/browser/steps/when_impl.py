@@ -1478,7 +1478,164 @@ def erp_user_flow_uk_importer(
 def erp_user_flow_developing_country(
     context: Context, actor_alias: str, *, end_at: str = None
 ):
-    pass
+    user_type = "Developing country"
+    if end_at:
+        allowed_end_page_names = (
+            [erp.developing_country_business_details.NAME]
+            + erp.product_search.NAMES
+            + erp.product_detail.NAMES
+            + erp.sales_volumes.NAMES
+            + erp.sales_revenue.NAMES
+            + erp.aware_of_sales_changes.NAMES
+            + erp.aware_of_market_size_changes.NAMES
+            + erp.aware_of_other_changes_after_brexit.NAMES
+            + erp.outocome.NAMES
+            + erp.personal_details.NAMES
+            + erp.summary.NAMES
+        )
+        allowed_end_page_names = [
+            name for name in allowed_end_page_names if f"({user_type})" in name
+        ]
+        error = (
+            f"Provide page name: '{end_at}' is not recognised. Please use one the names"
+            f" from the following list: {allowed_end_page_names}"
+        )
+        assert end_at in allowed_end_page_names, error
+        logging.debug(f"Will stop ERP flow @: {end_at}")
+
+    visit_page(context, actor_alias, get_full_page_name(erp.triage_user_type))
+
+    generic_pick_radio_option_and_submit(
+        context, actor_alias, option="exporter from developing country"
+    )
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.developing_country_select),
+    )
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.product_search, page_sub_type=user_type),
+    )
+    if end_at in erp.product_search.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    erp_drill_down_hierarchy_tree(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.product_detail, page_sub_type=user_type),
+    )
+    if end_at in erp.product_detail.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    click_on_page_element(context, actor_alias, element_name="continue")
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.sales_volumes, page_sub_type=user_type),
+    )
+    if end_at in erp.sales_volumes.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.sales_revenue, page_sub_type=user_type),
+    )
+    if end_at in erp.sales_revenue.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(
+            erp.aware_of_sales_changes, page_sub_type=user_type
+        ),
+    )
+    if end_at in erp.aware_of_sales_changes.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(
+            erp.aware_of_market_size_changes, page_sub_type=user_type
+        ),
+    )
+    if end_at in erp.aware_of_market_size_changes.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(
+            erp.aware_of_other_changes_after_brexit, page_sub_type=user_type
+        ),
+    )
+    if end_at in erp.aware_of_other_changes_after_brexit.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.outocome, page_sub_type=user_type),
+    )
+    if end_at in erp.outocome.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.developing_country_business_details),
+    )
+    if end_at == erp.developing_country_business_details.NAME:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.personal_details, page_sub_type=user_type),
+    )
+    if end_at in erp.personal_details.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.summary, page_sub_type=user_type),
+    )
+    if end_at in erp.summary.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.finished, page_sub_type=user_type),
+    )
 
 
 def erp_follow_user_flow(
@@ -1492,6 +1649,8 @@ def erp_follow_user_flow(
         erp_user_flow_uk_business(context, actor_alias, end_at=end_at)
     elif user_type == "UK importer":
         erp_user_flow_uk_importer(context, actor_alias, end_at=end_at)
+    elif user_type == "exporter from developing country":
+        erp_user_flow_developing_country(context, actor_alias, end_at=end_at)
     else:
         raise KeyError(f"Unknown user type: {user_type}")
 
