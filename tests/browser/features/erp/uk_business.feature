@@ -573,17 +573,17 @@ Feature: ERP - UK business
     Then "Robert" should be on the "ERP - <expected>" page
 
     Examples: stages at which user can save progress
-      | expected                                                                |
-      | Product detail (UK business)                                            |
-      | Sales volumes (UK business)                                             |
-      | Sales revenue (UK business)                                             |
-      | Are you aware of sales changes (UK business)                            |
-      | Are you aware of market size changes (UK business)                      |
-      | Are you aware of other changes (UK business)                            |
-      | Market size (UK business)                                               |
-      | What outcome are you seeking for (UK business)                          |
-      | Business details (UK business)                                          |
-      | Personal details (UK business)                                          |
+      | expected                                           |
+      | Product detail (UK business)                       |
+      | Sales volumes (UK business)                        |
+      | Sales revenue (UK business)                        |
+      | Are you aware of sales changes (UK business)       |
+      | Are you aware of market size changes (UK business) |
+      | Are you aware of other changes (UK business)       |
+      | Market size (UK business)                          |
+      | What outcome are you seeking for (UK business)     |
+      | Business details (UK business)                     |
+      | Personal details (UK business)                     |
 
     @bug
     @TT-2098

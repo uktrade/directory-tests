@@ -789,5 +789,5 @@ Feature: ERP - UK business
     @TT-2098
     @fixme
     Examples: stages at which user can save progress
-      | expected              |
+      | expected                                                                |
       | Summary (UK importer)                                                   |
