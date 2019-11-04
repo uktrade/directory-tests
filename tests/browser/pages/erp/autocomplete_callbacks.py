@@ -135,7 +135,7 @@ def autocomplete_country(driver: WebDriver, *, value):
             for option in options
             if option.get_attribute("text") and option.get_attribute("value")
         ]
-        logging.debug(f"Available region options: {options_texts}")
+        logging.debug(f"Available country options: {options_texts}")
         with assertion_msg(
             f"Expected to find at least 1 country option to choose from"
         ):
@@ -147,7 +147,7 @@ def autocomplete_country(driver: WebDriver, *, value):
 
     # enter text value into the input field with autocomplete
     input_selector = Selector(
-        By.ID, "id_which-countries-import_countries_autocomplete", is_visible=True
+        By.CSS_SELECTOR, "input.autocomplete__input", is_visible=True
     )
     input = find_element(
         driver, input_selector, element_name="country input", wait_for_it=False
