@@ -396,3 +396,38 @@ Feature: ERP - An exporter from developing country
     Examples: business type
       | business_type      |
       | Developing country |
+
+
+  @TT-2135
+  @save-for-later
+  @restore-session
+  Scenario Outline: An exporter from developing country should be able to get back to "<expected>" page using the link to restore their progress
+    Given "Robert" got to "<expected>" ERP page as "exporter from developing country"
+
+    When "Robert" saves progress for later
+    Then "Robert" should receive an email with a link to restore saved ERP session
+
+    When "Robert" clears the cookies
+    And "Robert" decides to restore saved ERP progress using the link he received
+
+    Then "Robert" should be on the "ERP - <expected>" page
+
+    Examples: stages at which user can save progress
+      | expected                                                  |
+      | Product search (Developing country)                       |
+      | Product detail (Developing country)                       |
+      | Sales volumes (Developing country)                        |
+      | Sales revenue (Developing country)                        |
+      | Are you aware of sales changes (Developing country)       |
+      | Are you aware of market size changes (Developing country) |
+      | Are you aware of other changes (Developing country)       |
+      | What outcome are you seeking for (Developing country)     |
+      | Business details (Developing country)                     |
+      | Personal details (Developing country)                     |
+
+    @bug
+    @TT-2098
+    @fixme
+    Examples: stages at which user can save progress
+      | expected                                                  |
+      | Summary (Developing country)                              |
