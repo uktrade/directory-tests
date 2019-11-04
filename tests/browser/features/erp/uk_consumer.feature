@@ -21,6 +21,7 @@ Feature: ERP - UK consumer
 
 
   @drill
+  @full
   Scenario: A UK customer should be able to select goods affected by Brexit
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
@@ -52,6 +53,7 @@ Feature: ERP - UK consumer
 
 
   @changes
+  @full
   Scenario: UK customers should be able to tell whether they're aware of price & choice changes since Brexit
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
@@ -76,6 +78,7 @@ Feature: ERP - UK consumer
 
 
   @changes
+  @full
   Scenario: UK customers should be able to provide us with other information regarding price & choice changes since Brexit
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 

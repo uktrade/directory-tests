@@ -20,6 +20,7 @@ Feature: ERP - An exporter from developing country
 
 
   @TT-2122
+  @full
   @<business_type>
   Scenario Outline: An exporter from developing country should see a list of product codes which might be affected by Brexit
     Given "Robert" got to "ERP - Select country (<business_type>)" from "ERP - User type" via "exporter from developing country"
@@ -36,6 +37,7 @@ Feature: ERP - An exporter from developing country
 
 
   @TT-2123
+  @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to select goods affected by Brexit
     Given "Robert" got to "ERP - Select country (<business_type>)" from "ERP - User type" via "exporter from developing country"
@@ -74,6 +76,7 @@ Feature: ERP - An exporter from developing country
 
 
   @TT-2125
+  @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to specify what were UK sales volumes for these goods before Brexit
     Given "Robert" got to "ERP - Select country (<business_type>)" from "ERP - User type" via "exporter from developing country"
@@ -93,6 +96,7 @@ Feature: ERP - An exporter from developing country
 
 
   @TT-2126
+  @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to specify what were UK export volumes before Brexit
     Given "Robert" got to "ERP - Select country (<business_type>)" from "ERP - User type" via "exporter from developing country"
@@ -115,6 +119,7 @@ Feature: ERP - An exporter from developing country
 
 
   @TT-2127
+  @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to to tell us if they're aware of sales changes
     Given "Robert" got to "ERP - Select country (<business_type>)" from "ERP - User type" via "exporter from developing country"
@@ -140,6 +145,7 @@ Feature: ERP - An exporter from developing country
 
 
   @TT-2128
+  @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to tell us if they're aware of market size changes
     Given "Robert" got to "ERP - Select country (<business_type>)" from "ERP - User type" via "exporter from developing country"
@@ -168,6 +174,7 @@ Feature: ERP - An exporter from developing country
 
 
   @TT-2129
+  @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to tell us if they're aware of other changes
     Given "Robert" got to "ERP - Select country (<business_type>)" from "ERP - User type" via "exporter from developing country"
@@ -199,6 +206,7 @@ Feature: ERP - An exporter from developing country
 
 
   @TT-2130
+  @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to tell us what outcome (in terms of tariffs and quotas) they are seeking for affected goods
     Given "Robert" got to "ERP - Select country (<business_type>)" from "ERP - User type" via "exporter from developing country"
@@ -233,6 +241,7 @@ Feature: ERP - An exporter from developing country
 
 
   @TT-2131
+  @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to provide us with business details
     Given "Robert" got to "ERP - Select country (<business_type>)" from "ERP - User type" via "exporter from developing country"
@@ -270,6 +279,7 @@ Feature: ERP - An exporter from developing country
 
 
   @TT-2132
+  @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to provide us with personal details
     Given "Robert" got to "ERP - Select country (<business_type>)" from "ERP - User type" via "exporter from developing country"
@@ -310,6 +320,7 @@ Feature: ERP - An exporter from developing country
 
 
   @TT-2133
+  @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to see the form summary before submitting it
     Given "Robert" got to "ERP - Select country (<business_type>)" from "ERP - User type" via "exporter from developing country"

@@ -25,6 +25,7 @@ Feature: ERP - UK business
 
 
   @TT-2074
+  @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should see a list of product codes which might be affected by Brexit
     Given "Robert" got to "ERP - Import from overseas (UK business)" from "ERP - User type" via "UK business"
@@ -48,6 +49,7 @@ Feature: ERP - UK business
 
   @TT-2075
   @drill
+  @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to select goods affected by Brexit
     Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
@@ -90,6 +92,7 @@ Feature: ERP - UK business
 
 
   @TT-2078
+  @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to specify what were UK sales volumes for these goods before Brexit
     Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
@@ -121,6 +124,7 @@ Feature: ERP - UK business
 
 
   @TT-2079
+  @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to specify what were UK export volumes before Brexit
     Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
@@ -148,6 +152,7 @@ Feature: ERP - UK business
 
 
   @TT-2080
+  @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us if they're aware of sales changes
     Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
@@ -184,6 +189,7 @@ Feature: ERP - UK business
 
 
   @TT-2081
+  @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us if they're aware of market size changes
     Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
@@ -223,6 +229,7 @@ Feature: ERP - UK business
 
 
   @TT-2082
+  @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us if they're aware of other changes
     Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
@@ -263,6 +270,7 @@ Feature: ERP - UK business
 
 
   @TT-2083
+  @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us about total UK market value of affected goods
     Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
@@ -306,6 +314,7 @@ Feature: ERP - UK business
 
 
   @TT-2084
+  @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us what outcome (in terms of tariffs and quotas) they are seeking for affected goods
     Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
@@ -356,6 +365,7 @@ Feature: ERP - UK business
 
 
   @TT-2085
+  @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to provide us with business details
     Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
@@ -405,6 +415,7 @@ Feature: ERP - UK business
 
 
   @TT-2086
+  @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to provide us with personal details
     Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
@@ -453,6 +464,7 @@ Feature: ERP - UK business
 
 
   @TT-2087
+  @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to see the form summary before submitting it
     Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
