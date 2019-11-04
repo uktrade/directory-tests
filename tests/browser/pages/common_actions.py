@@ -234,8 +234,15 @@ def get_last_visited_page(context: Context, actor_alias: str) -> ModuleType:
     return actor.visited_page
 
 
-def get_full_page_name(page: ModuleType) -> str:
-    return f"{page.SERVICE.value} - {page.NAME} - {page.TYPE.value}"
+def get_full_page_name(page: ModuleType, *, page_sub_type: str = None) -> str:
+    if page_sub_type:
+        result = (
+            f"{page.SERVICE.value} - {page.NAME} ({page_sub_type}) - {page.TYPE.value}"
+        )
+    else:
+        result = f"{page.SERVICE.value} - {page.NAME} - {page.TYPE.value}"
+
+    return result
 
 
 def update_actor(context: Context, alias: str, **kwargs):
