@@ -79,7 +79,7 @@ def autocomplete_industry(driver: WebDriver, *, value):
         options_texts = [
             option.get_attribute("text")
             for option in options
-            if option.get_attribute("text")
+            if option.get_attribute("text") and option.get_attribute("value")
         ]
         logging.debug(f"Available region options: {options_texts}")
         with assertion_msg(f"Expected to find at least 1 region option to choose from"):
