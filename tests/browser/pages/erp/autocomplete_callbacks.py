@@ -81,13 +81,15 @@ def autocomplete_industry(driver: WebDriver, *, value):
             for option in options
             if option.get_attribute("text") and option.get_attribute("value")
         ]
-        logging.debug(f"Available region options: {options_texts}")
-        with assertion_msg(f"Expected to find at least 1 region option to choose from"):
+        logging.debug(f"Available industry options: {options_texts}")
+        with assertion_msg(
+            f"Expected to find at least 1 industry option to choose from"
+        ):
             assert options_texts
 
         value = random.choice(options_texts)
 
-    logging.debug(f"Will select '{value}' from Region Autocomplete list")
+    logging.debug(f"Will select '{value}' from Industry Autocomplete list")
 
     # enter text value into the input field with autocomplete
     input_selector = Selector(
