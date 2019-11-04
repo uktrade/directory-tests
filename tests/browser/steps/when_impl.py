@@ -1603,7 +1603,7 @@ def erp_user_flow_developing_country(
         "Sales volumes (Developing country)": sales_volume,
         "Sales revenue (Developing country)": sales_revenue,
         "Are you aware of sales changes (Developing country)": sales_changes,
-        "Are you aware of market size changes (Developing country": market_changes,
+        "Are you aware of market size changes (Developing country)": market_changes,
         "Are you aware of other changes (Developing country)": other_changes,
         "What outcome are you seeking for (Developing country)": outcome,
         "Business details (Developing country)": business_details,
