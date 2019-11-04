@@ -931,7 +931,7 @@ def erp_user_flow_individual_customer(
     context: Context, actor_alias, *, end_at: str = None
 ):
     if end_at:
-        allowed_page_names = [
+        allowed_end_page_names = [
             erp.consumer_product_detail.NAME,
             erp.consumer_aware_of_changes.NAME,
             erp.consumer_other_changes_after_brexit.NAME,
@@ -939,7 +939,12 @@ def erp_user_flow_individual_customer(
             erp.consumer_personal_details.NAME,
             erp.consumer_summary.NAME,
         ]
-        assert end_at in allowed_page_names
+        error = (
+            f"Provide page name: '{end_at}' is not recognised. Please use one the names"
+            f" from the following list: {allowed_end_page_names}"
+        )
+        assert end_at in allowed_end_page_names, error
+        logging.debug(f"Will stop ERP flow @: {end_at}")
 
     visit_page(context, actor_alias, get_full_page_name(erp.triage_user_type))
 
@@ -1009,7 +1014,7 @@ def erp_user_flow_individual_customer(
 
 def erp_user_flow_consumer_group(context: Context, actor_alias, *, end_at: str = None):
     if end_at:
-        allowed_page_names = [
+        allowed_end_page_names = [
             erp.consumer_product_detail.NAME,
             erp.consumer_aware_of_changes.NAME,
             erp.consumer_other_changes_after_brexit.NAME,
@@ -1017,7 +1022,12 @@ def erp_user_flow_consumer_group(context: Context, actor_alias, *, end_at: str =
             erp.consumer_group_details.NAME,
             erp.consumer_summary.NAME,
         ]
-        assert end_at in allowed_page_names
+        error = (
+            f"Provide page name: '{end_at}' is not recognised. Please use one the names"
+            f" from the following list: {allowed_end_page_names}"
+        )
+        assert end_at in allowed_end_page_names, error
+        logging.debug(f"Will stop ERP flow @: {end_at}")
 
     visit_page(context, actor_alias, get_full_page_name(erp.triage_user_type))
 
@@ -1107,6 +1117,7 @@ def erp_user_flow_uk_business(
             f" from the following list: {allowed_end_page_names}"
         )
         assert end_at in allowed_end_page_names, error
+        logging.debug(f"Will stop ERP flow @: {end_at}")
 
     visit_page(context, actor_alias, get_full_page_name(erp.triage_user_type))
 
@@ -1280,6 +1291,7 @@ def erp_user_flow_uk_importer(
             f" from the following list: {allowed_end_page_names}"
         )
         assert end_at in allowed_end_page_names, error
+        logging.debug(f"Will stop ERP flow @: {end_at}")
 
     visit_page(context, actor_alias, get_full_page_name(erp.triage_user_type))
 
