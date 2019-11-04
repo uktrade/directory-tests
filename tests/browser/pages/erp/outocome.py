@@ -17,6 +17,7 @@ from pages.common_actions import (
     check_form_choices,
     check_radio,
     check_url,
+    find_and_click_on_page_element,
     pick_one_option_and_submit,
     submit_form,
     take_screenshot,
@@ -101,6 +102,11 @@ def should_be_here(driver: WebDriver, *, page_name: str = None):
 
 def should_see_sections(driver: WebDriver, names: List[str]):
     check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
 def should_see_form_choices(driver: WebDriver, names: List[str]):

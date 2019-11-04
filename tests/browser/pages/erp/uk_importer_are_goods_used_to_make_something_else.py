@@ -19,6 +19,7 @@ from pages.common_actions import (
     check_url,
     fill_out_input_fields,
     fill_out_textarea_fields,
+    find_and_click_on_page_element,
     pick_one_option_and_submit,
     pick_option,
     submit_form,
@@ -87,6 +88,11 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 
 def should_see_form_choices(driver: WebDriver, names: List[str]):
     check_form_choices(driver, SELECTORS["form"], names)
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
 def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
