@@ -26,7 +26,9 @@ SELECTORS = {
     "confirmation": {
         "heading": Selector(By.CSS_SELECTOR, "#content h1"),
         "what happens next": Selector(By.CSS_SELECTOR, "#content h2"),
-        "continue": Selector(By.CSS_SELECTOR, "#content h2 ~ a", type=ElementType.LINK),
+        "continue": Selector(
+            By.CSS_SELECTOR, "#content h2 ~ a", type=ElementType.SUBMIT
+        ),
     }
 }
 SELECTORS.update(common_selectors.ERP_HEADER)
