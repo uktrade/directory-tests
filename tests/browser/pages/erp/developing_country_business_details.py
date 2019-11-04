@@ -24,18 +24,12 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.erp import consumer_summary
-from pages.erp.autocomplete_callbacks import autocomplete_uk_region
 
-NAME = "Business details"
+NAME = "Business details (Developing country)"
 SERVICE = Service.ERP
 TYPE = PageType.FORM
-URL = None
+URL = URLs.ERP_DEVELOPING_COUNTRY_BUSINESS_DETAILS.absolute
 PAGE_TITLE = ""
-SubURLs = {
-    f"{NAME} (UK business)": URLs.ERP_BUSINESS_BUSINESS_DETAILS.absolute,
-    f"{NAME} (UK importer)": URLs.ERP_IMPORTER_BUSINESS_DETAILS.absolute,
-}
-NAMES = list(SubURLs.keys())
 
 
 SELECTORS = {
@@ -45,20 +39,6 @@ SELECTORS = {
             By.CSS_SELECTOR, "form[method=post] span.govuk-caption-l"
         ),
         "heading": Selector(By.CSS_SELECTOR, "form[method=post] h1"),
-        "uk private or public limited company": Selector(
-            By.ID,
-            "id_business-company_type_0",
-            type=ElementType.RADIO,
-            is_visible=False,
-            alternative_visibility_check=True,
-        ),
-        "other type of uk organisation": Selector(
-            By.ID,
-            "id_business-company_type_1",
-            type=ElementType.RADIO,
-            is_visible=False,
-            alternative_visibility_check=True,
-        ),
         "company name": Selector(
             By.ID, "id_business-company_name", type=ElementType.INPUT
         ),
@@ -68,12 +48,6 @@ SELECTORS = {
         ),
         "annual turnover": Selector(
             By.ID, "id_business-turnover", type=ElementType.SELECT
-        ),
-        "regions": Selector(
-            By.ID,
-            "id_business-employment_regions_autocomplete",
-            type=ElementType.INPUT,
-            autocomplete_callback=autocomplete_uk_region,
         ),
         "continue": Selector(
             By.CSS_SELECTOR,
@@ -90,10 +64,9 @@ SELECTORS.update(common_selectors.ERP_SAVE_FOR_LATER)
 SELECTORS.update(common_selectors.ERP_FOOTER)
 
 
-def should_be_here(driver: WebDriver, *, page_name: str = None):
-    take_screenshot(driver, page_name or NAME)
-    url = SubURLs[page_name]
-    check_url(driver, url, exact_match=False)
+def should_be_here(driver: WebDriver):
+    take_screenshot(driver, NAME)
+    check_url(driver, URL, exact_match=False)
 
 
 def should_see_sections(driver: WebDriver, names: List[str]):
