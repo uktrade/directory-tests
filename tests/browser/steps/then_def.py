@@ -50,7 +50,7 @@ from steps.then_impl import (
     stats_and_tracking_elements_should_be_present,
     stats_and_tracking_elements_should_not_be_present,
 )
-from steps.when_impl import generic_get_verification_code
+from steps.when_impl import erp_follow_user_flow, generic_get_verification_code
 
 
 @then('"{actor_alias}" should be on the "{page_name}" page or be redirected to "{redirect_page}" page')
@@ -332,3 +332,10 @@ def then_erp_user_should_see_expected_number_of_product_categories_to_compare(
     erp_should_see_number_of_product_categories_to_expand(
         context, actor_alias, number_of_product_codes
     )
+
+
+@then('"{actor_alias}" should be able to resume giving feedback "{resume_from}" page')
+def then_erp_resume_giving_feedback(
+        context: Context, actor_alias: str, resume_from: str
+):
+    erp_follow_user_flow(context, actor_alias, resume_from=resume_from)
