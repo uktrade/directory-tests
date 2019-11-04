@@ -1610,33 +1610,33 @@ def erp_user_flow_developing_country(
         "Personal details (Developing country)": personal_details,
         "Summary (Developing country)": summary,
     }
-    step_names = list(flow_steps.keys())
+    flow_step_names = list(flow_steps.keys())
 
     stop_or_resume_page_name = stop_at or resume_from
     if stop_or_resume_page_name:
         error = (
-            f"Provide page name: '{resume_from}' is not recognised. Please use one the "
-            f"names from the following list: {step_names}"
+            f"Provide page name: '{stop_or_resume_page_name}' is not recognised. Please"
+            f" use one the names from the following list: {flow_step_names}"
         )
-        assert stop_or_resume_page_name in step_names, error
+        assert stop_or_resume_page_name in flow_step_names, error
         if stop_at:
             logging.debug(f"Will stop ERP flow at: '{stop_at}'")
         if resume_from:
             logging.debug(f"Will resume ERP flow from: '{resume_from}'")
 
     if stop_at:
-        index_of_last_page = step_names.index(stop_at)
+        index_of_last_page = flow_step_names.index(stop_at)
         remaining_steps = {
             key: value
             for key, value in flow_steps.items()
-            if key in step_names[:index_of_last_page]
+            if key in flow_step_names[:index_of_last_page]
         }
     elif resume_from:
-        index_of_first_page = step_names.index(resume_from)
+        index_of_first_page = flow_step_names.index(resume_from)
         remaining_steps = {
             key: value
             for key, value in flow_steps.items()
-            if key in step_names[index_of_first_page:]
+            if key in flow_step_names[index_of_first_page:]
         }
     else:
         remaining_steps = flow_steps
