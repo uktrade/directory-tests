@@ -1081,6 +1081,106 @@ def erp_user_flow_consumer_group(context: Context, actor_alias, *, end_at: str =
     )
 
 
+def erp_user_flow_uk_business(
+    context: Context, actor_alias: str, *, end_at: str = None
+):
+    user_type = "UK business"
+    if end_at:
+        allowed_end_page_names = (
+            erp.product_detail.NAMES
+            + erp.sales_volumes.NAMES
+            + erp.sales_revenue.NAMES
+            + erp.aware_of_sales_changes.NAMES
+            + erp.aware_of_market_size_changes.NAMES
+            + erp.aware_of_other_changes_after_brexit.NAMES
+            + erp.market_size.NAMES
+            + erp.outocome.NAMES
+            + erp.business_details.NAMES
+            + erp.personal_details.NAMES
+            + erp.summary.NAMES
+        )
+        allowed_end_page_names = [
+            name for name in allowed_end_page_names if f"({user_type})" in name
+        ]
+        error = (
+            f"Provide page name: '{end_at}' is not recognised. Please use one the names"
+            f" from the following list: {allowed_end_page_names}"
+        )
+        assert end_at in allowed_end_page_names, error
+
+    visit_page(context, actor_alias, get_full_page_name(erp.triage_user_type))
+
+    generic_pick_radio_option_and_submit(context, actor_alias, option=user_type)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.triage_import_from_overseas),
+    )
+
+    generic_pick_radio_option_and_submit(context, actor_alias, option="not imported")
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.product_search, page_sub_type=user_type),
+    )
+
+
+def erp_user_flow_uk_importer(
+    context: Context, actor_alias: str, *, end_at: str = None
+):
+    user_type = "UK importer"
+    if end_at:
+        allowed_end_page_names = (
+            [
+                erp.uk_importer_where_do_you_import_from.NAME,
+                erp.uk_importer_are_goods_used_to_make_something_else.NAME,
+                erp.uk_importer_production_percentage.NAME,
+                erp.uk_importer_equivalent_uk_goods.NAME,
+            ]
+            + erp.product_detail.NAMES
+            + erp.sales_volumes.NAMES
+            + erp.sales_revenue.NAMES
+            + erp.aware_of_sales_changes.NAMES
+            + erp.aware_of_market_size_changes.NAMES
+            + erp.aware_of_other_changes_after_brexit.NAMES
+            + erp.market_size.NAMES
+            + erp.outocome.NAMES
+            + erp.business_details.NAMES
+            + erp.personal_details.NAMES
+            + erp.summary.NAMES
+        )
+        allowed_end_page_names = [
+            name for name in allowed_end_page_names if f"({user_type})" in name
+        ]
+        error = (
+            f"Provide page name: '{end_at}' is not recognised. Please use one the names"
+            f" from the following list: {allowed_end_page_names}"
+        )
+        assert end_at in allowed_end_page_names, error
+
+    visit_page(context, actor_alias, get_full_page_name(erp.triage_user_type))
+
+    generic_pick_radio_option_and_submit(context, actor_alias, option="UK business")
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.triage_import_from_overseas),
+    )
+
+    generic_pick_radio_option_and_submit(context, actor_alias, option="imported")
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.product_search, page_sub_type=user_type),
+    )
+
+
+def erp_user_flow_developing_country(
+    context: Context, actor_alias: str, *, end_at: str = None
+):
+    pass
+
+
 def erp_follow_user_flow(
     context: Context, actor_alias: str, user_type, *, end_at: str = None
 ):
@@ -1088,6 +1188,10 @@ def erp_follow_user_flow(
         erp_user_flow_individual_customer(context, actor_alias, end_at=end_at)
     elif user_type == "consumer group":
         erp_user_flow_consumer_group(context, actor_alias, end_at=end_at)
+    elif user_type == "UK business":
+        erp_user_flow_uk_business(context, actor_alias, end_at=end_at)
+    elif user_type == "UK importer":
+        erp_user_flow_uk_importer(context, actor_alias, end_at=end_at)
     else:
         raise KeyError(f"Unknown user type: {user_type}")
 
