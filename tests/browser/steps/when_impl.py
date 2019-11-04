@@ -1297,6 +1297,171 @@ def erp_user_flow_uk_importer(
         page_name=get_full_page_name(erp.product_search, page_sub_type=user_type),
     )
 
+    erp_drill_down_hierarchy_tree(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.product_detail, page_sub_type=user_type),
+    )
+    if end_at in erp.product_detail.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    click_on_page_element(context, actor_alias, element_name="continue")
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.uk_importer_where_do_you_import_from),
+    )
+    if end_at == erp.uk_importer_where_do_you_import_from.NAME:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(
+            erp.uk_importer_are_goods_used_to_make_something_else
+        ),
+    )
+    if end_at == erp.uk_importer_are_goods_used_to_make_something_else.NAME:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.sales_volumes, page_sub_type=user_type),
+    )
+    if end_at in erp.sales_volumes.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.sales_revenue, page_sub_type=user_type),
+    )
+    if end_at in erp.sales_revenue.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(
+            erp.aware_of_sales_changes, page_sub_type=user_type
+        ),
+    )
+    if end_at in erp.aware_of_sales_changes.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(
+            erp.aware_of_market_size_changes, page_sub_type=user_type
+        ),
+    )
+    if end_at in erp.aware_of_market_size_changes.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(
+            erp.aware_of_other_changes_after_brexit, page_sub_type=user_type
+        ),
+    )
+    if end_at in erp.aware_of_other_changes_after_brexit.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.uk_importer_production_percentage),
+    )
+    if end_at == erp.uk_importer_production_percentage.NAME:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.uk_importer_equivalent_uk_goods),
+    )
+    if end_at == erp.uk_importer_equivalent_uk_goods.NAME:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.market_size, page_sub_type=user_type),
+    )
+    if end_at in erp.market_size.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.outocome, page_sub_type=user_type),
+    )
+    if end_at in erp.outocome.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.business_details, page_sub_type=user_type),
+    )
+    if end_at in erp.business_details.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.personal_details, page_sub_type=user_type),
+    )
+    if end_at in erp.personal_details.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.summary, page_sub_type=user_type),
+    )
+    if end_at in erp.summary.NAMES:
+        logging.debug(f"Stopping user flow for: '{user_type}' @ {end_at}")
+        return
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        page_name=get_full_page_name(erp.finished, page_sub_type=user_type),
+    )
+
 
 def erp_user_flow_developing_country(
     context: Context, actor_alias: str, *, end_at: str = None
