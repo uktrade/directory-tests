@@ -21,6 +21,7 @@ __all__ = [
     "personal_details",
     "product_detail",
     "product_search",
+    "sales_revenue",
     "sales_volumes",
     "save_for_later",
     "save_for_later_progress_saved",
