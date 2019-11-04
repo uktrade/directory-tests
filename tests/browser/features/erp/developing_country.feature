@@ -20,8 +20,13 @@ Feature: ERP - An exporter from developing country
 
 
   @TT-2122
-  Scenario: An exporter from developing country should see a list of product codes which might be affected by Brexit
-    Given "Robert" got to "ERP - Select country (Developing country)" from "ERP - User type" via "exporter from developing country"
+  @<business_type>
+  Scenario Outline: An exporter from developing country should see a list of product codes which might be affected by Brexit
+    Given "Robert" got to "ERP - Select country (<business_type>)" from "ERP - User type" via "exporter from developing country"
 
     When "Robert" fills out and submits the form
-    Then "Robert" should be on the "ERP - Product search (Developing country)" page
+    Then "Robert" should be on the "ERP - Product search (<business_type>)" page
+
+    Examples: business type
+      | business_type      |
+      | Developing country |
