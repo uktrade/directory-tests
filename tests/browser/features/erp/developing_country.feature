@@ -26,6 +26,9 @@ Feature: ERP - An exporter from developing country
 
     When "Robert" fills out and submits the form
     Then "Robert" should be on the "ERP - Product search (<business_type>)" page
+    And "Robert" should see following sections
+      | Sections       |
+      | Save for later |
 
     Examples: business type
       | business_type      |
