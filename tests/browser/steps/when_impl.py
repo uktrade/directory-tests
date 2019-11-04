@@ -932,11 +932,12 @@ def erp_save_for_later(context: Context, actor_alias: str):
 def erp_user_flow_individual_customer(
     context: Context, actor_alias
 ) -> Dict[str, MethodType]:
-    user_type = "individual consumer"
+    user_type = "UK consumer"
+    uk_consumer_type = "individual consumer"
 
     def select_user_type():
         visit_page(context, actor_alias, get_full_page_name(erp.triage_user_type))
-        generic_pick_radio_option_and_submit(context, actor_alias, option="UK consumer")
+        generic_pick_radio_option_and_submit(context, actor_alias, option=user_type)
 
     def product_search():
         erp_drill_down_hierarchy_tree(context, actor_alias)
@@ -970,7 +971,7 @@ def erp_user_flow_individual_customer(
 
     def consumer_type():
         generic_pick_radio_option_and_submit(
-            context, actor_alias, option="individual consumer"
+            context, actor_alias, option=uk_consumer_type
         )
         should_be_on_page(
             context,
@@ -1005,11 +1006,12 @@ def erp_user_flow_individual_customer(
 def erp_user_flow_consumer_group(
     context: Context, actor_alias
 ) -> Dict[str, MethodType]:
-    user_type = "consumer group"
+    user_type = "UK consumer"
+    uk_consumer_type = "consumer group"
 
     def select_user_type():
         visit_page(context, actor_alias, get_full_page_name(erp.triage_user_type))
-        generic_pick_radio_option_and_submit(context, actor_alias, option="UK consumer")
+        generic_pick_radio_option_and_submit(context, actor_alias, option=user_type)
 
     def product_search():
         erp_drill_down_hierarchy_tree(context, actor_alias)
@@ -1043,7 +1045,7 @@ def erp_user_flow_consumer_group(
 
     def consumer_type():
         generic_pick_radio_option_and_submit(
-            context, actor_alias, option="consumer group"
+            context, actor_alias, option=uk_consumer_type
         )
         should_be_on_page(
             context,
