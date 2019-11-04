@@ -22,7 +22,7 @@ Feature: ERP - UK consumer
 
   @drill
   @full
-  Scenario: A UK customer should be able to select goods affected by Brexit
+  Scenario: A UK consumer should be able to select goods affected by Brexit
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" selects a random product code from the hierarchy of product codes
@@ -39,7 +39,7 @@ Feature: ERP - UK consumer
 
 
   @drill
-  Scenario: A UK customer should be able to change the goods previously selected
+  Scenario: A UK consumer should be able to change the goods previously selected
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" selects a random product code from the hierarchy of product codes
@@ -54,7 +54,7 @@ Feature: ERP - UK consumer
 
   @changes
   @full
-  Scenario: UK customers should be able to tell whether they're aware of price & choice changes since Brexit
+  Scenario: UK consumers should be able to tell whether they're aware of price & choice changes since Brexit
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" selects a random product code from the hierarchy of product codes
@@ -79,7 +79,7 @@ Feature: ERP - UK consumer
 
   @changes
   @full
-  Scenario: UK customers should be able to provide us with other information regarding price & choice changes since Brexit
+  Scenario: UK consumers should be able to provide us with other information regarding price & choice changes since Brexit
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" selects a random product code from the hierarchy of product codes
@@ -89,7 +89,7 @@ Feature: ERP - UK consumer
     Then "Robert" should be on the "ERP - Are you aware of changes (UK consumer)" page
 
     When "Robert" fills out and submits the form
-    Then "Robert" should be on the "ERP - Other information (UK customer)" page
+    Then "Robert" should be on the "ERP - Other information (UK consumer)" page
     And "Robert" should see following sections
       | Sections        |
       | Header          |
@@ -103,7 +103,7 @@ Feature: ERP - UK consumer
   @changes
   @dev-only
   @captcha
-  Scenario Outline: UK customers representing a "<specific group of consumers>" should be able to complete and submit their form
+  Scenario Outline: UK consumers representing a "<specific group of consumers>" should be able to complete and submit their form
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" selects a random product code from the hierarchy of product codes
@@ -113,7 +113,7 @@ Feature: ERP - UK consumer
     Then "Robert" should be on the "ERP - Are you aware of changes (UK consumer)" page
 
     When "Robert" fills out and submits the form
-    Then "Robert" should be on the "ERP - Other information (UK customer)" page
+    Then "Robert" should be on the "ERP - Other information (UK consumer)" page
 
     When "Robert" fills out and submits the form
     Then "Robert" should be on the "ERP - Consumer type (UK consumer)" page
@@ -141,7 +141,7 @@ Feature: ERP - UK consumer
 
   @TT-2060
   @search
-  Scenario Outline: A UK customer should be able to search for affected goods by commodity code or part of their name
+  Scenario Outline: A UK consumer should be able to search for affected goods by commodity code or part of their name
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" searches using "<phrase>"
@@ -167,7 +167,7 @@ Feature: ERP - UK consumer
 
   @TT-2060
   @search
-  Scenario Outline: A UK customer should be able to search for affected goods by commodity code or part of their name
+  Scenario Outline: A UK consumer should be able to search for affected goods by commodity code or part of their name
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" searches using "<phrase>"
@@ -189,7 +189,7 @@ Feature: ERP - UK consumer
 
   @TT-2060
   @search
-  Scenario Outline: A UK customer should be able to search for affected goods by commodity code or part of their name
+  Scenario Outline: A UK consumer should be able to search for affected goods by commodity code or part of their name
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" searches using "<phrase>"
@@ -242,7 +242,7 @@ Feature: ERP - UK consumer
       | expected                               | uk consumer         |
       | Product detail (UK consumer)           | individual consumer |
       | Are you aware of changes (UK consumer) | individual consumer |
-      | Other information (UK customer)        | individual consumer |
+      | Other information (UK consumer)        | individual consumer |
       | Consumer type (UK consumer)            | individual consumer |
       | Summary (UK consumer)                  | individual consumer |
       | Consumer type (UK consumer)            | consumer group      |

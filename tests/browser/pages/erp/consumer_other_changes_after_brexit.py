@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ERP - Other information (UK customer)"""
+"""ERP - Other information (UK consumer)"""
 from types import ModuleType
 from typing import List, Union
 
@@ -21,7 +21,7 @@ from pages.common_actions import (
 )
 from pages.erp import consumer_type
 
-NAME = "Other information (UK customer)"
+NAME = "Other information (UK consumer)"
 SERVICE = Service.ERP
 TYPE = PageType.FORM
 URL = URLs.ERP_CONSUMER_OTHER_CHANGES_AFTER_BREXIT.absolute
