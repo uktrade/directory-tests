@@ -32,10 +32,10 @@ TYPE = PageType.FORM
 URL = None
 PAGE_TITLE = ""
 SubURLs = {
-    "Product search (Developing country)": URLs.ERP_DEVELOPING_COUNTRY_PRODUCT_SEARCH.absolute,
-    "Product search (UK business)": URLs.ERP_BUSINESS_PRODUCT_SEARCH.absolute,
-    "Product search (UK consumer)": URLs.ERP_CONSUMER_PRODUCT_SEARCH.absolute,
-    "Product search (UK importer)": URLs.ERP_IMPORTER_PRODUCT_SEARCH.absolute,
+    f"{NAME} (Developing country)": URLs.ERP_DEVELOPING_COUNTRY_PRODUCT_SEARCH.absolute,
+    f"{NAME} (UK business)": URLs.ERP_BUSINESS_PRODUCT_SEARCH.absolute,
+    f"{NAME} (UK consumer)": URLs.ERP_CONSUMER_PRODUCT_SEARCH.absolute,
+    f"{NAME} (UK importer)": URLs.ERP_IMPORTER_PRODUCT_SEARCH.absolute,
 }
 NAMES = list(SubURLs.keys())
 
