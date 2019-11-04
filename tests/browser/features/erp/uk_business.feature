@@ -558,12 +558,11 @@ Feature: ERP - UK business
       | not imported    | UK business   |
 
 
-  @wip
   @TT-2116
   @save-for-later
   @restore-session
   Scenario Outline: A UK business should be able to get back to "<expected>" page using the link to restore their progress
-    Given "Robert" got to "<expected>" ERP page as "UK importer"
+    Given "Robert" got to "<expected>" ERP page as "UK business"
 
     When "Robert" saves progress for later
     Then "Robert" should receive an email with a link to restore saved ERP session
@@ -585,4 +584,10 @@ Feature: ERP - UK business
       | What outcome are you seeking for (UK business)                          |
       | Business details (UK business)                                          |
       | Personal details (UK business)                                          |
-      | Summary (UK business)                                                   |
+
+    @bug
+    @TT-2098
+    @fixme
+    Examples: stages at which user can save progress
+      | expected              |
+      | Summary (UK business) |

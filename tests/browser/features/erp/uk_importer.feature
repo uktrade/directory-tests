@@ -754,7 +754,6 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @wip
   @TT-2115
   @save-for-later
   @restore-session
@@ -785,4 +784,10 @@ Feature: ERP - UK business
       | What outcome are you seeking for (UK importer)                          |
       | Business details (UK importer)                                          |
       | Personal details (UK importer)                                          |
+
+    @bug
+    @TT-2098
+    @fixme
+    Examples: stages at which user can save progress
+      | expected              |
       | Summary (UK importer)                                                   |
