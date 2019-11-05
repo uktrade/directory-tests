@@ -2,7 +2,7 @@
 """Profile - Enrol - Enter your email address and set a password"""
 import logging
 from types import ModuleType
-from typing import List
+from typing import List, Union
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -16,8 +16,8 @@ from pages.common_actions import (
     check_for_sections,
     check_url,
     fill_out_input_fields,
-    find_and_click_on_page_element,
     go_to_url,
+    submit_form,
     take_screenshot,
     tick_captcha_checkbox,
     tick_checkboxes,
@@ -54,7 +54,10 @@ SELECTORS = {
             is_visible=False,
         ),
         "submit": Selector(
-            By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
+            By.CSS_SELECTOR,
+            "form button.button",
+            type=ElementType.SUBMIT,
+            next_page=enrol_enter_your_confirmation_code,
         ),
     },
 }
@@ -91,11 +94,7 @@ def fill_out(driver: WebDriver, details: dict):
     fill_out_input_fields(driver, form_selectors, details)
     tick_checkboxes(driver, form_selectors, details)
     tick_captcha_checkbox(driver)
-    take_screenshot(driver, "After filling out the form")
 
 
-def submit(driver: WebDriver) -> ModuleType:
-    take_screenshot(driver, "Before submitting the form")
-    find_and_click_on_page_element(driver, SELECTORS, "submit", wait_for_it=False)
-    take_screenshot(driver, "After submitting the form")
-    return enrol_enter_your_confirmation_code
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
+    return submit_form(driver, SELECTORS["registration form"])

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """SSO Registration Page Object."""
-from typing import List
+from types import ModuleType
+from typing import List, Union
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -15,11 +16,10 @@ from pages.common_actions import (
     check_url,
     fill_out_input_fields,
     find_and_click_on_page_element,
-    find_element,
     go_to_url,
+    submit_form,
     take_screenshot,
     tick_checkboxes,
-    try_js_click_on_element_click_intercepted_exception,
 )
 
 NAME = "Registration"
@@ -28,9 +28,6 @@ TYPE = PageType.FORM
 URL = URLs.SSO_SIGNUP.absolute
 PAGE_TITLE = "Register - great.gov.uk"
 
-SEND_BUTTON = Selector(
-    By.CSS_SELECTOR, "#signup_form > button", type=ElementType.BUTTON
-)
 SELECTORS = {
     "form": {
         "title": Selector(By.CSS_SELECTOR, "#profile-register-intro > h1"),
@@ -41,7 +38,9 @@ SELECTORS = {
         "t&c": Selector(
             By.ID, "id_terms_agreed", is_visible=False, type=ElementType.CHECKBOX
         ),
-        "sign up button": SEND_BUTTON,
+        "sign up button": Selector(
+            By.CSS_SELECTOR, "#signup_form > button", type=ElementType.BUTTON
+        ),
     }
 }
 SELECTORS.update(common_selectors.DOMESTIC_HEADER)
@@ -76,21 +75,14 @@ def fill_out(driver: WebDriver, contact_us_details: dict):
     form_selectors = SELECTORS["form"]
     fill_out_input_fields(driver, form_selectors, contact_us_details)
     tick_checkboxes(driver, form_selectors, contact_us_details)
-    take_screenshot(driver, NAME + "after filling out the form")
 
 
-def submit(driver: WebDriver):
-    take_screenshot(driver, "Before submitting the contact supplier form")
-    sign_up_button = find_element(
-        driver, SEND_BUTTON, element_name="Send button", wait_for_it=False
-    )
-    with try_js_click_on_element_click_intercepted_exception(driver, sign_up_button):
-        sign_up_button.click()
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
+    return submit_form(driver, SELECTORS["form"])
 
 
 def click_on_page_element(driver: WebDriver, element_name: str):
     find_and_click_on_page_element(driver, SELECTORS, element_name)
-    take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
 def should_see_sections(driver: WebDriver, names: List[str]):

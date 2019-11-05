@@ -3,7 +3,7 @@
 import logging
 from collections import defaultdict
 from types import ModuleType
-from typing import List
+from typing import List, Union
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -17,10 +17,10 @@ from pages.common_actions import (
     check_for_sections,
     check_url,
     fill_out_input_fields,
-    find_and_click_on_page_element,
     find_elements_of_type,
     go_to_url,
     pick_option,
+    submit_form,
     take_screenshot,
 )
 from pages.profile import enrol_enter_your_details
@@ -49,7 +49,10 @@ SELECTORS = {
         "industry": INDUSTRY,
         "website": WEBSITE,
         "submit": Selector(
-            By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
+            By.CSS_SELECTOR,
+            "form button.button",
+            type=ElementType.SUBMIT,
+            next_page=enrol_enter_your_details,
         ),
     },
 }
@@ -99,14 +102,10 @@ def fill_out(driver: WebDriver, details: dict):
     form_selectors = SELECTORS["enter your business details"]
     pick_option(driver, form_selectors, details)
     fill_out_input_fields(driver, form_selectors, details)
-    take_screenshot(driver, "After filling out the form")
 
 
-def submit(driver: WebDriver) -> ModuleType:
-    take_screenshot(driver, "Before submitting the form")
-    find_and_click_on_page_element(driver, SELECTORS, "submit", wait_for_it=False)
-    take_screenshot(driver, "After submitting the form")
-    return enrol_enter_your_details
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
+    return submit_form(driver, SELECTORS["enter your business details"])
 
 
 def get_form_details(driver: WebDriver) -> dict:

@@ -19,6 +19,7 @@ from pages.common_actions import (
     find_element,
     get_selectors,
     go_to_url,
+    submit_form,
     take_screenshot,
 )
 from pages.profile import (
@@ -63,7 +64,7 @@ SELECTORS = {
             is_visible=False,
         ),
         "submit": Selector(
-            By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
+            By.CSS_SELECTOR, "form button.button", type=ElementType.SUBMIT
         ),
     },
 }
@@ -110,7 +111,5 @@ def should_see_form_choices(driver: WebDriver, names: List[str]):
 def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
     radio_selectors = get_selectors(SELECTORS["form"], ElementType.RADIO)
     choose_one_form_option(driver, radio_selectors, name)
-    take_screenshot(driver, "Before submitting the form")
-    find_and_click_on_page_element(driver, SELECTORS, "submit", wait_for_it=False)
-    take_screenshot(driver, "After submitting the form")
+    submit_form(driver, SELECTORS["form"])
     return POs[name.lower()]

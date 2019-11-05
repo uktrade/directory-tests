@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """SSO Sign In Page Object."""
-from typing import List
+from types import ModuleType
+from typing import List, Union
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -15,6 +16,7 @@ from pages.common_actions import (
     find_and_click_on_page_element,
     find_element,
     go_to_url,
+    submit_form,
     take_screenshot,
 )
 
@@ -26,7 +28,6 @@ PAGE_TITLE = "Sign in - great.gov.uk"
 
 EMAIL_INPUT = Selector(By.ID, "id_login")
 PASSWORD_INPUT = Selector(By.ID, "id_password")
-SIGN_IN_BUTTON = Selector(By.CSS_SELECTOR, "form button.button")
 REGISTER_BUTTON = Selector(
     By.CSS_SELECTOR,
     "#login-form-container > div:nth-child(2) > section > a",
@@ -38,7 +39,9 @@ SELECTORS = {
         "title": Selector(By.CSS_SELECTOR, "#content h1.heading-xlarge"),
         "email input": EMAIL_INPUT,
         "password input": PASSWORD_INPUT,
-        "sign in": SIGN_IN_BUTTON,
+        "sign in": (
+            Selector(By.CSS_SELECTOR, "form button.button", type=ElementType.SUBMIT)
+        ),
         "forgotten password?": RESET_YOUR_PASSWORD_LINK,
     },
     "create a great.gov.uk account": {"create account": REGISTER_BUTTON},
@@ -70,14 +73,10 @@ def fill_out(driver: WebDriver, email: str, password: str):
     email_input.send_keys(email)
     password_input.clear()
     password_input.send_keys(password)
-    take_screenshot(driver, NAME + "after filling out the form")
 
 
-def submit(driver: WebDriver):
-    sign_up_button = find_element(driver, SIGN_IN_BUTTON)
-    # with wait_for_page_load_after_action(driver):
-    sign_up_button.click()
-    take_screenshot(driver, NAME + "after signing in")
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
+    return submit_form(driver, SELECTORS["form"])
 
 
 def should_see_sections(driver: WebDriver, names: List[str]):

@@ -2,7 +2,7 @@
 """Profile - Enrol - UK taxpayer - Enter your details"""
 import logging
 from types import ModuleType
-from typing import List
+from typing import List, Union
 from uuid import uuid4
 
 from selenium.webdriver.common.by import By
@@ -17,8 +17,8 @@ from pages.common_actions import (
     check_for_sections,
     check_url,
     fill_out_input_fields,
-    find_and_click_on_page_element,
     go_to_url,
+    submit_form,
     take_screenshot,
 )
 from pages.profile import enrol_account_created
@@ -51,7 +51,10 @@ SELECTORS = {
             By.ID, "id_personal-details-phone_number", type=ElementType.INPUT
         ),
         "submit": Selector(
-            By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
+            By.CSS_SELECTOR,
+            "form button.button",
+            type=ElementType.SUBMIT,
+            next_page=enrol_account_created,
         ),
     },
 }
@@ -86,11 +89,7 @@ def generate_form_details(actor: Actor) -> dict:
 def fill_out(driver: WebDriver, details: dict):
     form_selectors = SELECTORS["enter your details"]
     fill_out_input_fields(driver, form_selectors, details)
-    take_screenshot(driver, "After filling out the form")
 
 
-def submit(driver: WebDriver) -> ModuleType:
-    take_screenshot(driver, "Before submitting the form")
-    find_and_click_on_page_element(driver, SELECTORS, "submit", wait_for_it=False)
-    take_screenshot(driver, "After submitting the form")
-    return enrol_account_created
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
+    return submit_form(driver, SELECTORS["enter your details"])

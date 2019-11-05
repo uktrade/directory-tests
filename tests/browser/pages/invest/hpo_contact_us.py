@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Invest in Great - Contact us Page Object."""
 import logging
-from typing import List
+from types import ModuleType
+from typing import List, Union
 from uuid import uuid4
 
 from selenium.webdriver.common.by import By
@@ -21,6 +22,7 @@ from pages.common_actions import (
     find_element,
     find_selector_by_name,
     pick_option_from_autosuggestion,
+    submit_form,
     take_screenshot,
     tick_captcha_checkbox,
     tick_checkboxes_by_labels,
@@ -44,7 +46,6 @@ SubURLs = {
 PAGE_TITLE = ""
 
 IM_NOT_A_ROBOT = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")
-SUBMIT_BUTTON = Selector(By.ID, "submit-button")
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
@@ -88,7 +89,7 @@ SELECTORS = {
         "captcha": Selector(
             By.CSS_SELECTOR, "#form-container iframe", type=ElementType.IFRAME
         ),
-        "submit": SUBMIT_BUTTON,
+        "submit": Selector(By.ID, "submit-button", type=ElementType.SUBMIT),
     },
     "elements invisible to selenium": {
         "advanced food production checkbox": Selector(
@@ -163,23 +164,15 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
 
 def fill_out(driver: WebDriver, details: dict):
     form_selectors = SELECTORS["form"]
-
     fill_out_input_fields(driver, form_selectors, details)
     fill_out_textarea_fields(driver, form_selectors, details)
     pick_option_from_autosuggestion(driver, form_selectors, details)
     tick_checkboxes_by_labels(driver, form_selectors, details)
     tick_captcha_checkbox(driver)
 
-    take_screenshot(driver, "After filling out the contact us form")
 
-
-def submit(driver: WebDriver):
-    take_screenshot(driver, "Before submitting the contact us form")
-    button = find_element(
-        driver, SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
-    )
-    button.click()
-    take_screenshot(driver, "After submitting the contact us form")
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
+    return submit_form(driver, SELECTORS["form"])
 
 
 def should_not_see_section(driver: WebDriver, name: str):

@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 """SSO Confirm Your Email Address Page Object."""
+from types import ModuleType
+from typing import Union
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
-from pages.common_actions import (
-    Selector,
-    check_url,
-    find_element,
-    take_screenshot,
-    wait_for_page_load_after_action,
-)
+from pages import ElementType
+from pages.common_actions import Selector, check_url, submit_form, take_screenshot
 
 NAME = "Confirm your email address"
 SERVICE = Service.SSO
@@ -19,11 +17,14 @@ TYPE = PageType.CONFIRMATION
 URL = URLs.SSO_EMAIL_CONFIRM.absolute
 PAGE_TITLE = "Confirm email Address"
 
-CONFIRM_LINK = Selector(By.CSS_SELECTOR, "#content form > button[type=submit]")
 SELECTORS = {
-    "general": {
+    "form": {
         "title": Selector(By.CSS_SELECTOR, "#content h1"),
-        "confirm link": CONFIRM_LINK,
+        "confirm link": Selector(
+            By.CSS_SELECTOR,
+            "#content form > button[type=submit]",
+            type=ElementType.SUBMIT,
+        ),
     }
 }
 
@@ -33,7 +34,5 @@ def should_be_here(driver: WebDriver):
     check_url(driver, URL, exact_match=False)
 
 
-def submit(driver: WebDriver):
-    confirm_link = find_element(driver, CONFIRM_LINK)
-    with wait_for_page_load_after_action(driver):
-        confirm_link.click()
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
+    return submit_form(driver, SELECTORS["form"])
