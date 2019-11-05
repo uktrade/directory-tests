@@ -2,12 +2,20 @@
 """Various form autocomplete callbacks"""
 import logging
 import random
+from typing import List
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import Selector, assertion_msg, find_element, find_elements
+
+
+def extract(driver: WebDriver, css_selector: str) -> List[str]:
+    from scrapy import Selector
+
+    source = driver.page_source
+    return Selector(text=source).css(css_selector).extract()
 
 
 def autocomplete_uk_region(driver: WebDriver, *, value):
@@ -17,20 +25,9 @@ def autocomplete_uk_region(driver: WebDriver, *, value):
 
     if isinstance(value, bool):
         logging.debug(f"Will select random region to type")
-        options = find_elements(
-            driver,
-            Selector(By.CSS_SELECTOR, "select[id$=regions] option", is_visible=False),
-        )
-        options_texts = [
-            option.get_attribute("text")
-            for option in options
-            if option.get_attribute("text")
-        ]
-        logging.debug(f"Available region options: {options_texts}")
-        with assertion_msg(f"Expected to find at least 1 region option to choose from"):
-            assert options_texts
-
-        value = random.choice(options_texts)
+        options = extract(driver, "select[id$=regions] option::text")
+        logging.debug(f"Available country options: {options}")
+        value = random.choice(options)
 
     logging.debug(f"Will select '{value}' from Region Autocomplete list")
 
@@ -68,26 +65,12 @@ def autocomplete_industry(driver: WebDriver, *, value):
 
     if isinstance(value, bool):
         logging.debug(f"Will select random industry to type")
-        options = find_elements(
+        options = extract(
             driver,
-            Selector(
-                By.CSS_SELECTOR,
-                "#id_imported-products-usage-imported_good_sector-select option",
-                is_visible=False,
-            ),
+            "#id_imported-products-usage-imported_good_sector-select option::text",
         )
-        options_texts = [
-            option.get_attribute("text")
-            for option in options
-            if option.get_attribute("text") and option.get_attribute("value")
-        ]
-        logging.debug(f"Available industry options: {options_texts}")
-        with assertion_msg(
-            f"Expected to find at least 1 industry option to choose from"
-        ):
-            assert options_texts
-
-        value = random.choice(options_texts)
+        logging.debug(f"Available country options: {options}")
+        value = random.choice(options)
 
     logging.debug(f"Will select '{value}' from Industry Autocomplete list")
 
@@ -127,21 +110,9 @@ def autocomplete_country(driver: WebDriver, *, value):
 
     if isinstance(value, bool):
         logging.debug(f"Will select random country to type")
-        options = find_elements(
-            driver, Selector(By.CSS_SELECTOR, "select[id^=id] option", is_visible=False)
-        )
-        options_texts = [
-            option.get_attribute("text")
-            for option in options
-            if option.get_attribute("text") and option.get_attribute("value")
-        ]
-        logging.debug(f"Available country options: {options_texts}")
-        with assertion_msg(
-            f"Expected to find at least 1 country option to choose from"
-        ):
-            assert options_texts
-
-        value = random.choice(options_texts)
+        options = extract(driver, "select[id^=id] option::text")
+        logging.debug(f"Available country options: {options}")
+        value = random.choice(options)
 
     logging.debug(f"Will select '{value}' from country autocomplete list")
 
