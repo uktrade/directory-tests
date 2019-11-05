@@ -46,20 +46,8 @@ SELECTORS = {
     },
     "next steps": {
         "itself": Selector(By.ID, "next-container"),
-        "find export opportunities": Selector(
-            By.CSS_SELECTOR,
-            "#next-container li:nth-child(2) > a",
-            type=ElementType.LINK,
-        ),
-        "sell online overseas": Selector(
-            By.CSS_SELECTOR,
-            "#next-container li:nth-child(3) > a",
-            type=ElementType.LINK,
-        ),
-        "find events and visits": Selector(
-            By.CSS_SELECTOR,
-            "#next-container li:nth-child(4) > a",
-            type=ElementType.LINK,
+        "next step links": Selector(
+            By.CSS_SELECTOR, "#next-container li a", type=ElementType.LINK
         ),
     },
 }
