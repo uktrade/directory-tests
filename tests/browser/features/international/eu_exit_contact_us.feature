@@ -58,4 +58,4 @@ Feature: INTL - Brexit help - Contact us
     When "Robert" fills out and submits the form
 
     Then "Robert" should be on the "International - Brexit help - Thank you" page
-    And "Robert" should receive an "Thank you for your EU exit enquiry" confirmation email
+#    And "Robert" should receive an "Thank you for your EU exit enquiry" confirmation email
