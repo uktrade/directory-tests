@@ -910,7 +910,8 @@ def submit_form(
     )
     take_screenshot(driver, "Before submitting the form")
     with wait_for_page_load_after_action(driver):
-        submit_button.click()
+        with try_js_click_on_element_click_intercepted_exception(driver, submit_button):
+            submit_button.click()
     take_screenshot(driver, "After submitting the form")
 
     return submit_button_selector.next_page
