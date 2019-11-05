@@ -173,6 +173,7 @@ def find_and_click_on_page_element(
                     href = web_element.get_attribute("href")
                     driver.get(href)
             else:
+                scroll_to(driver, web_element)
                 if selector.wait_after_click:
                     with wait_for_page_load_after_action(driver):
                         web_element.click()
