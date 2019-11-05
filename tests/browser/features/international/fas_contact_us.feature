@@ -53,6 +53,7 @@ Feature: FAS - Contact us
       | Header            |
       | Content           |
       | Footer            |
+    And "Robert" should receive an "Thank you for your Buying from the UK enquiry" confirmation email
 
 
   @next-steps
