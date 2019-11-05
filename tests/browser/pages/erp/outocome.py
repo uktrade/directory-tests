@@ -140,7 +140,6 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
 
 def fill_out(driver: WebDriver, details: dict):
     check_radio(driver, SELECTORS["form"], details)
-    take_screenshot(driver, "After filling out the form")
 
 
 def submit(driver: WebDriver) -> Union[ModuleType, None]:

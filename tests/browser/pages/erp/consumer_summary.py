@@ -75,7 +75,6 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
 def fill_out(driver: WebDriver, details: dict):
     tick_checkboxes(driver, SELECTORS["form"], details)
     tick_captcha_checkbox(driver)
-    take_screenshot(driver, "After filling out the form")
 
 
 def submit(driver: WebDriver) -> Union[ModuleType, None]:

@@ -196,7 +196,6 @@ def fill_out(driver: WebDriver, details: dict):
     check_radio(driver, form_selectors, details)
     tick_checkboxes(driver, form_selectors, details)
     fill_out_textarea_fields(driver, form_selectors, details)
-    take_screenshot(driver, "After filling out the form")
 
 
 def submit(driver: WebDriver) -> Union[ModuleType, None]:

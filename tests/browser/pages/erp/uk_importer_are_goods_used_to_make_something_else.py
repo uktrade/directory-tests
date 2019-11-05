@@ -124,7 +124,6 @@ def fill_out(driver: WebDriver, details: dict):
         pick_option(driver, SELECTORS["form"], details)
         fill_out_input_fields(driver, SELECTORS["form"], details)
         fill_out_textarea_fields(driver, SELECTORS["form"], details)
-    take_screenshot(driver, "After filling out the form")
 
 
 def submit(driver: WebDriver) -> Union[ModuleType, None]:
