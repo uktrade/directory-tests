@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Domestic - First page of Long Contact us form"""
 from types import ModuleType
+from typing import Union
 from uuid import uuid4
 
 from selenium.webdriver.common.by import By
@@ -14,8 +15,8 @@ from pages.common_actions import (
     Selector,
     check_url,
     fill_out_input_fields,
-    find_element,
     go_to_url,
+    submit_form,
     take_screenshot,
 )
 from pages.domestic import contact_us_long_export_advice_business
@@ -26,9 +27,6 @@ TYPE = PageType.CONTACT_US
 URL = URLs.CONTACT_US_EXPORT_ADVICE_PERSONAL.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-SUBMIT_BUTTON = Selector(
-    By.CSS_SELECTOR, "div.exred-triage-form button", type=ElementType.BUTTON
-)
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
@@ -37,7 +35,12 @@ SELECTORS = {
         "position": Selector(By.ID, "id_personal-position", type=ElementType.INPUT),
         "email": Selector(By.ID, "id_personal-email", type=ElementType.INPUT),
         "phone": Selector(By.ID, "id_personal-phone", type=ElementType.INPUT),
-        "submit": SUBMIT_BUTTON,
+        "submit": Selector(
+            By.CSS_SELECTOR,
+            "div.exred-triage-form button",
+            type=ElementType.SUBMIT,
+            next_page=contact_us_long_export_advice_business,
+        ),
     }
 }
 
@@ -65,14 +68,7 @@ def generate_form_details(actor: Actor) -> dict:
 def fill_out(driver: WebDriver, details: dict):
     form_selectors = SELECTORS["form"]
     fill_out_input_fields(driver, form_selectors, details)
-    take_screenshot(driver, "After filling out the form")
 
 
-def submit(driver: WebDriver) -> ModuleType:
-    take_screenshot(driver, "Before submitting the form")
-    button = find_element(
-        driver, SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
-    )
-    button.click()
-    take_screenshot(driver, "After submitting the form")
-    return contact_us_long_export_advice_business
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
+    return submit_form(driver, SELECTORS["form"])

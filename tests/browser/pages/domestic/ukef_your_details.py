@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Domestic UKEF Contact Us - Page Object."""
 import logging
-from typing import List
+from types import ModuleType
+from typing import List, Union
 from uuid import uuid4
 
 from selenium.webdriver.common.by import By
@@ -16,8 +17,8 @@ from pages.common_actions import (
     check_for_sections,
     check_url,
     fill_out_input_fields,
-    find_element,
     go_to_url,
+    submit_form,
     take_screenshot,
 )
 
@@ -27,9 +28,6 @@ TYPE = PageType.UKEF_CONTACT_US
 URL = URLs.DOMESTIC_GET_FINANCE_YOUR_DETAILS.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-SUBMIT_BUTTON = Selector(
-    By.CSS_SELECTOR, "#content form button", type=ElementType.BUTTON
-)
 SELECTORS = {
     "breadcrumbs": {
         "itself": Selector(By.CSS_SELECTOR, "nav.breadcrumbs"),
@@ -50,7 +48,9 @@ SELECTORS = {
         "position": Selector(By.ID, "id_your-details-position", type=ElementType.INPUT),
         "email": Selector(By.ID, "id_your-details-email", type=ElementType.INPUT),
         "phone": Selector(By.ID, "id_your-details-phone", type=ElementType.INPUT),
-        "continue": SUBMIT_BUTTON,
+        "continue": Selector(
+            By.CSS_SELECTOR, "#content form button", type=ElementType.SUBMIT
+        ),
     },
     "error reporting": {
         "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
@@ -87,13 +87,7 @@ def generate_form_details(actor: Actor) -> dict:
 def fill_out(driver: WebDriver, details: dict):
     form_selectors = SELECTORS["form"]
     fill_out_input_fields(driver, form_selectors, details)
-    take_screenshot(driver, "After filling out the form")
 
 
-def submit(driver: WebDriver):
-    take_screenshot(driver, "Before submitting the form")
-    button = find_element(
-        driver, SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
-    )
-    button.click()
-    take_screenshot(driver, "After submitting the form")
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
+    return submit_form(driver, SELECTORS["form"])

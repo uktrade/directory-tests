@@ -18,6 +18,7 @@ from pages.common_actions import (
     fill_out_input_fields,
     find_element,
     go_to_url,
+    submit_form,
     take_screenshot,
     tick_checkboxes,
 )
@@ -30,9 +31,6 @@ TYPE = PageType.CONTACT_US
 URL = URLs.CONTACT_US_SOO_ORGANISATION.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-SUBMIT_BUTTON = Selector(
-    By.CSS_SELECTOR, "div.exred-triage-form button", type=ElementType.BUTTON
-)
 WEBSITE = Selector(By.ID, "id_organisation-website_address", type=ElementType.INPUT)
 COMPANY_NAME = Selector(By.ID, "id_organisation-company_name", type=ElementType.INPUT)
 COMPANY_POSTCODE = Selector(
@@ -49,6 +47,12 @@ SELECTORS = {
         ),
         "company website": WEBSITE,
         "company name": COMPANY_NAME,
+        "submit": Selector(
+            By.CSS_SELECTOR,
+            "div.exred-triage-form button",
+            type=ElementType.SUBMIT,
+            next_page=contact_us_soo_long_organisation_details,
+        ),
     }
 }
 
@@ -121,17 +125,10 @@ def fill_out(driver: WebDriver, details: dict):
     form_selectors = SELECTORS["form"]
     tick_checkboxes(driver, form_selectors, details)
     fill_out_input_fields(driver, form_selectors, details)
-    take_screenshot(driver, "After filling out the form")
 
 
 def submit(driver: WebDriver) -> ModuleType:
-    take_screenshot(driver, "Before submitting the form")
-    button = find_element(
-        driver, SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
-    )
-    button.click()
-    take_screenshot(driver, "After submitting the form")
-    return contact_us_soo_long_organisation_details
+    return submit_form(driver, SELECTORS["form"])
 
 
 def check_if_populated(driver: WebDriver, expected_form_details: dict):

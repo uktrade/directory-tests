@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Domestic UKEF Contact Us - Page Object."""
 import logging
+from types import ModuleType
+from typing import Union
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -13,8 +15,8 @@ from pages.common_actions import (
     Selector,
     check_url,
     fill_out_textarea_fields,
-    find_element,
     go_to_url,
+    submit_form,
     take_screenshot,
     tick_captcha_checkbox,
     tick_checkboxes,
@@ -27,9 +29,6 @@ URL = URLs.DOMESTIC_GET_FINANCE_HELP.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 BREADCRUMB_LINKS = Selector(By.CSS_SELECTOR, "div.breadcrumbs a")
-SUBMIT_BUTTON = Selector(
-    By.CSS_SELECTOR, "#content form button", type=ElementType.BUTTON
-)
 SELECTORS = {
     "breadcrumbs": {
         "itself": Selector(By.CSS_SELECTOR, "div.breadcrumbs"),
@@ -45,7 +44,9 @@ SELECTORS = {
         "terms and conditions": Selector(
             By.ID, "id_help-terms_agreed", type=ElementType.CHECKBOX, is_visible=False
         ),
-        "continue": SUBMIT_BUTTON,
+        "continue": Selector(
+            By.CSS_SELECTOR, "#content form button", type=ElementType.SUBMIT
+        ),
     },
     "error reporting": {
         "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
@@ -77,13 +78,7 @@ def fill_out(driver: WebDriver, details: dict):
     fill_out_textarea_fields(driver, form_selectors, details)
     tick_checkboxes(driver, form_selectors, details)
     tick_captcha_checkbox(driver)
-    take_screenshot(driver, "After filling out the form")
 
 
-def submit(driver: WebDriver):
-    take_screenshot(driver, "Before submitting the form")
-    button = find_element(
-        driver, SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
-    )
-    button.click()
-    take_screenshot(driver, "After submitting the form")
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
+    return submit_form(driver, SELECTORS["form"])

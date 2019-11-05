@@ -15,8 +15,8 @@ from pages.common_actions import (
     Selector,
     check_url,
     fill_out_input_fields,
-    find_element,
     go_to_url,
+    submit_form,
     take_screenshot,
     tick_captcha_checkbox,
     tick_checkboxes,
@@ -29,9 +29,6 @@ TYPE = PageType.CONTACT_US
 URL = URLs.CONTACT_US_SOO_ORGANISATION_CONTACT_DETAILS.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-SUBMIT_BUTTON = Selector(
-    By.CSS_SELECTOR, "div.exred-triage-form button", type=ElementType.BUTTON
-)
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
@@ -49,6 +46,12 @@ SELECTORS = {
         ),
         "t & c": Selector(
             By.ID, "id_contact-details-terms_agreed", type=ElementType.CHECKBOX
+        ),
+        "submit": Selector(
+            By.CSS_SELECTOR,
+            "div.exred-triage-form button",
+            type=ElementType.SUBMIT,
+            next_page=contact_us_soo_long_thank_you,
         ),
     }
 }
@@ -81,14 +84,7 @@ def fill_out(driver: WebDriver, details: dict):
     fill_out_input_fields(driver, form_selectors, details)
     tick_checkboxes(driver, form_selectors, details)
     tick_captcha_checkbox(driver)
-    take_screenshot(driver, "After filling out the form")
 
 
 def submit(driver: WebDriver) -> ModuleType:
-    take_screenshot(driver, "Before submitting the form")
-    button = find_element(
-        driver, SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
-    )
-    button.click()
-    take_screenshot(driver, "After submitting the form")
-    return contact_us_soo_long_thank_you
+    return submit_form(driver, SELECTORS["form"])

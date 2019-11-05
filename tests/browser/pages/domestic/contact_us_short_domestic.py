@@ -3,6 +3,7 @@
 import logging
 import random
 from types import ModuleType
+from typing import Union
 from uuid import uuid4
 
 from selenium.webdriver.common.by import By
@@ -18,9 +19,9 @@ from pages.common_actions import (
     check_url,
     fill_out_input_fields,
     fill_out_textarea_fields,
-    find_element,
     go_to_url,
     pick_option,
+    submit_form,
     take_screenshot,
     tick_captcha_checkbox,
     tick_checkboxes,
@@ -40,9 +41,6 @@ TYPE = PageType.CONTACT_US
 URL = URLs.CONTACT_US_FORM_DOMESTIC.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-SUBMIT_BUTTON = Selector(
-    By.CSS_SELECTOR, "div.exred-triage-form button", type=ElementType.BUTTON
-)
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
@@ -63,7 +61,12 @@ SELECTORS = {
         "terms and conditions": Selector(
             By.ID, "id_terms_agreed", type=ElementType.CHECKBOX
         ),
-        "submit": SUBMIT_BUTTON,
+        "submit": Selector(
+            By.CSS_SELECTOR,
+            "div.exred-triage-form button",
+            type=ElementType.SUBMIT,
+            next_page=contact_us_short_domestic_thank_you,
+        ),
     }
 }
 OTHER_SELECTORS = {
@@ -123,14 +126,7 @@ def fill_out(driver: WebDriver, details: dict):
     tick_checkboxes(driver, form_selectors, details)
     pick_option(driver, form_selectors, details)
     tick_captcha_checkbox(driver)
-    take_screenshot(driver, "After filling out the form")
 
 
-def submit(driver: WebDriver) -> ModuleType:
-    take_screenshot(driver, "Before submitting the form")
-    button = find_element(
-        driver, SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
-    )
-    button.click()
-    take_screenshot(driver, "After submitting the form")
-    return contact_us_short_domestic_thank_you
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
+    return submit_form(driver, SELECTORS["form"])
