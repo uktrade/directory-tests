@@ -11,7 +11,7 @@ Feature: SSO - Sign in
       | Header                        |
       | SSO links - logged out        |
       | Breadcrumbs                   |
-      | Login form                    |
+      | Form                          |
       | Create a great.gov.uk account |
 #      See TT-1778 there's a problem with lazy loading and Firefox
 #      | Footer                        |

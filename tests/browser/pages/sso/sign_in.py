@@ -34,7 +34,7 @@ REGISTER_BUTTON = Selector(
 )
 RESET_YOUR_PASSWORD_LINK = Selector(By.CSS_SELECTOR, "form > a")
 SELECTORS = {
-    "login form": {
+    "form": {
         "title": Selector(By.CSS_SELECTOR, "#content h1.heading-xlarge"),
         "email input": EMAIL_INPUT,
         "password input": PASSWORD_INPUT,
