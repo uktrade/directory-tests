@@ -17,9 +17,9 @@ from pages.common_actions import (
     check_url,
     fill_out_input_fields,
     fill_out_textarea_fields,
-    find_element,
     go_to_url,
     pick_option,
+    submit_form,
     take_screenshot,
     tick_captcha_checkbox,
     tick_checkboxes_by_labels,
@@ -31,9 +31,6 @@ TYPE = PageType.CONTACT_US
 URL = URLs.FAS_CONTACT_US.absolute
 PAGE_TITLE = "Contact us - trade.great.gov.uk"
 
-SUBMIT_BUTTON = Selector(
-    By.CSS_SELECTOR, "form input[type=submit]", type=ElementType.BUTTON
-)
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
@@ -51,7 +48,9 @@ SELECTORS = {
         "accept t&c": Selector(
             By.ID, "id_terms_agreed", type=ElementType.LABEL, is_visible=False
         ),
-        "submit": SUBMIT_BUTTON,
+        "submit": Selector(
+            By.CSS_SELECTOR, "form input[type=submit]", type=ElementType.SUBMIT
+        ),
     }
 }
 SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
@@ -106,13 +105,6 @@ def fill_out(driver: WebDriver, contact_us_details: dict, *, captcha: bool = Tru
     if captcha:
         tick_captcha_checkbox(driver)
 
-    take_screenshot(driver, "After filling out the contact us form")
-
 
 def submit(driver: WebDriver):
-    take_screenshot(driver, "Before submitting the contact us form")
-    button = find_element(
-        driver, SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
-    )
-    button.click()
-    take_screenshot(driver, "After submitting the contact us form")
+    return submit_form(driver, SELECTORS["form"])
