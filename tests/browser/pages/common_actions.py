@@ -157,10 +157,8 @@ def find_and_click_on_page_element(
             found_selector = True
             selector = selectors[element_name.lower()]
             logging.debug(
-                "Found '%s' in '%s' section with following selector: '%s'",
-                element_name,
-                section_name,
-                selector,
+                f"Found selector for '{element_name}' in '{section_name}' section: "
+                f"'{selector}'"
             )
             web_element = find_element(
                 driver, selector, element_name=element_name, wait_for_it=wait_for_it
@@ -220,7 +218,7 @@ def add_actor(context: Context, actor: Actor):
         f"Expected Actor named tuple but got '{type(actor)}'" " instead"
     )
     context.scenario_data.actors[actor.alias] = actor
-    logging.debug("Successfully added actor: %s to Scenario Data", actor.alias)
+    logging.debug(f"Successfully added actor: {actor.alias} to Scenario Data")
 
 
 def get_actor(context: Context, alias: str) -> Actor:
@@ -250,9 +248,9 @@ def update_actor(context: Context, alias: str, **kwargs):
     actors = context.scenario_data.actors
     for arg in kwargs:
         if arg in Actor._fields:
-            logging.debug("Set '%s'='%s' for %s", arg, kwargs[arg], alias)
+            logging.debug(f"Set '{arg}'='{kwargs[arg]}' for {alias}")
             actors[alias] = actors[alias]._replace(**{arg: kwargs[arg]})
-    logging.debug("Successfully updated %s's details: %s", alias, actors[alias])
+    logging.debug(f"Successfully updated {alias}'s details: {actors[alias]}")
 
 
 def avoid_browser_stack_idle_timeout_exception(driver: WebDriver):
@@ -360,8 +358,10 @@ def wait_for_visibility(
     by_locator = (selector.by, selector.value)
     with selenium_action(
         driver,
-        "Element identified by '{}' was not visible after waiting "
-        "for {} seconds".format(selector.value, time_to_wait),
+        (
+            f"Element identified by '{selector.value}' was not visible after waiting "
+            f"for {time_to_wait} seconds"
+        ),
     ):
         WebDriverWait(driver, time_to_wait).until(
             expected_conditions.visibility_of_element_located(by_locator)
