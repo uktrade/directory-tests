@@ -94,10 +94,10 @@ def click_on_page_element(driver: WebDriver, element_name: str):
 
 def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
     result = {
-        "q3 2019": randrange(0, 1000),
-        "q2 2019": randrange(0, 1000),
-        "q1 2019": randrange(0, 1000),
-        "q4 2018": randrange(0, 1000),
+        "q3 2019": str(randrange(-1000, 1000)),
+        "q2 2019": str(randrange(-1000, 1000)),
+        "q1 2019": str(randrange(-1000, 1000)),
+        "q4 2018": str(randrange(-1000, 1000)),
     }
 
     if custom_details:

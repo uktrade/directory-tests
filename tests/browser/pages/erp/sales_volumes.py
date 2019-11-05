@@ -155,10 +155,10 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
         "meters": metric[2],
         "units (number of items)": metric[3],
         "other": metric[4],
-        "q3 2019": randrange(0, 1000),
-        "q2 2019": randrange(0, 1000),
-        "q1 2019": randrange(0, 1000),
-        "q4 2018": randrange(0, 1000),
+        "q3 2019": str(randrange(-1000, 1000)),
+        "q2 2019": str(randrange(-1000, 1000)),
+        "q1 2019": str(randrange(-1000, 1000)),
+        "q4 2018": str(randrange(-1000, 1000)),
     }
 
     # if "Other" is selected then provide metric's name
