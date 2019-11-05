@@ -227,7 +227,7 @@ Feature: ERP - UK consumer
   @TT-2056
   @save-for-later
   @restore-session
-  Scenario Outline: A "<uk consumer>" should be able to get back to "<expected>" page using the link to restore their progress
+  Scenario Outline: A "<uk consumer>" should be able to resume progress giving feedback from "<expected>" page
     Given "Robert" got to "<expected>" ERP page as "<uk consumer>"
 
     When "Robert" saves progress for later
@@ -237,6 +237,7 @@ Feature: ERP - UK consumer
     And "Robert" decides to restore saved ERP progress using the link he received
 
     Then "Robert" should be on the "ERP - <expected>" page
+    And "Robert" should be able to resume giving feedback as "<uk consumer>" from "<expected>" page
 
     Examples: stages at which user can save progress
       | expected                               | uk consumer         |
