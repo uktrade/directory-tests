@@ -588,6 +588,9 @@ def scroll_to(driver: WebDriver, element: WebElement):
                 f"Element is already positioned ({vertical_position}) within view_port "
                 f"({view_port_height})"
             )
+        if not element.is_displayed():
+            logging.debug(f"Scrolling to element using scrollIntoView: {element}")
+            driver.execute_script(f"arguments[0].scrollIntoView(true);", element)
     else:
         action_chains = ActionChains(driver)
         action_chains.move_to_element(element)
