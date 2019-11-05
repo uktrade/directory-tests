@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """International - Contact the Capital Investment team page"""
-from typing import List
+from types import ModuleType
+from typing import List, Union
 from uuid import uuid4
 
 from selenium.webdriver.common.by import By
@@ -16,9 +17,9 @@ from pages.common_actions import (
     check_url,
     fill_out_input_fields,
     fill_out_textarea_fields,
-    find_element,
     go_to_url,
     pick_option,
+    submit_form,
     take_screenshot,
     tick_captcha_checkbox,
     tick_checkboxes,
@@ -30,7 +31,6 @@ TYPE = PageType.CONTACT_US
 URL = URLs.INTERNATIONAL_CAPITAL_INVEST_CONTACT.absolute
 PAGE_TITLE = "Capital Invest Contact Form - great.gov.uk international"
 
-SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form[method=POST] button")
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
@@ -45,7 +45,9 @@ SELECTORS = {
         "terms and conditions": Selector(
             By.ID, "id_terms_agreed", type=ElementType.CHECKBOX, is_visible=False
         ),
-        "submit": SUBMIT_BUTTON,
+        "submit": Selector(
+            By.CSS_SELECTOR, "form[method=POST] button", type=ElementType.SUBMIT
+        ),
     }
 }
 
@@ -90,13 +92,7 @@ def fill_out(driver: WebDriver, details: dict):
     pick_option(driver, form_selectors, details)
     tick_checkboxes(driver, form_selectors, details)
     tick_captcha_checkbox(driver)
-    take_screenshot(driver, "After filling out the form")
 
 
-def submit(driver: WebDriver):
-    take_screenshot(driver, "Before submitting the form")
-    button = find_element(
-        driver, SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
-    )
-    button.click()
-    take_screenshot(driver, "After submitting the form")
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
+    return submit_form(driver, SELECTORS["form"])

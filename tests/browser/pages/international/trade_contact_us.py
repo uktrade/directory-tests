@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Find a Supplier - Contact us."""
 import logging
-from typing import List
+from types import ModuleType
+from typing import List, Union
 from uuid import uuid4
 
 from selenium.webdriver.common.by import By
@@ -106,5 +107,5 @@ def fill_out(driver: WebDriver, contact_us_details: dict, *, captcha: bool = Tru
         tick_captcha_checkbox(driver)
 
 
-def submit(driver: WebDriver):
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
     return submit_form(driver, SELECTORS["form"])
