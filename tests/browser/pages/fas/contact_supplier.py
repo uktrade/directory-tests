@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Find a Supplier Landing Page Object."""
 import logging
-from typing import List
+from types import ModuleType
+from typing import List, Union
 from uuid import uuid4
 
 from selenium.webdriver.common.by import By
@@ -16,13 +17,12 @@ from pages.common_actions import (
     check_for_sections,
     fill_out_input_fields,
     fill_out_textarea_fields,
-    find_element,
     go_to_url,
     pick_option,
+    submit_form,
     take_screenshot,
     tick_captcha_checkbox,
     tick_checkboxes,
-    try_js_click_on_element_click_intercepted_exception,
 )
 
 NAME = "Contact Supplier"
@@ -31,9 +31,6 @@ TYPE = PageType.CONTACT_US
 URL = URLs.FAS_CONTACT_SUPPLIER.absolute_template
 PAGE_TITLE = "Find a Buyer - GREAT.gov.uk"
 
-SEND_BUTTON = Selector(
-    By.CSS_SELECTOR, "#content form button.button", type=ElementType.BUTTON
-)
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
@@ -46,7 +43,9 @@ SELECTORS = {
         "subject": Selector(By.ID, "id_subject", type=ElementType.INPUT),
         "message": Selector(By.ID, "id_body", type=ElementType.TEXTAREA),
         "t&c": Selector(By.ID, "id_terms", type=ElementType.CHECKBOX, is_visible=False),
-        "send": SEND_BUTTON,
+        "send": Selector(
+            By.CSS_SELECTOR, "#content form button.button", type=ElementType.SUBMIT
+        ),
     }
 }
 SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
@@ -97,14 +96,6 @@ def fill_out(driver: WebDriver, contact_us_details: dict, *, captcha: bool = Tru
     if captcha:
         tick_captcha_checkbox(driver)
 
-    take_screenshot(driver, "After filling out the contact us form")
 
-
-def submit(driver: WebDriver):
-    take_screenshot(driver, "Before submitting the contact supplier form")
-    button = find_element(
-        driver, SEND_BUTTON, element_name="Send button", wait_for_it=False
-    )
-    with try_js_click_on_element_click_intercepted_exception(driver, button):
-        button.click()
-    take_screenshot(driver, "After submitting the contact supplier form")
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
+    return submit_form(driver, SELECTORS["form"])

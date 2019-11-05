@@ -2,14 +2,15 @@
 """Find a Supplier Search Results Page Object."""
 import logging
 import random
-from typing import List
+from types import ModuleType
+from typing import List, Union
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
-from pages import common_selectors
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Actor,
     Selector,
@@ -20,6 +21,7 @@ from pages.common_actions import (
     find_element,
     find_elements,
     pick_option,
+    submit_form,
     take_screenshot,
 )
 
@@ -35,14 +37,17 @@ SECTOR_FILTERS = Selector(
 PROFILE_LINKS = Selector(
     By.CSS_SELECTOR, "#companies-column li > a:not(.button-ghost-blue):not(.button)"
 )
-UPDATE_RESULTS = Selector(By.CSS_SELECTOR, "#filter-column button[type=submit]")
 FILTER_TOGGLE = Selector(By.ID, "toggle_id_industries")
 SELECTORS = {
     "search form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
         "search box label": Selector(By.CSS_SELECTOR, "label[for=id_q]"),
         "search box": Selector(By.ID, "id_q"),
-        "update results button": UPDATE_RESULTS,
+        "update results button": Selector(
+            By.CSS_SELECTOR,
+            "#filter-column button[type=submit]",
+            type=ElementType.SUBMIT,
+        ),
     },
     "filters": {
         "itself": Selector(By.ID, "filter-column"),
@@ -118,16 +123,10 @@ def fill_out(driver: WebDriver, contact_us_details: dict):
     form_selectors = SELECTORS["search form"]
     fill_out_input_fields(driver, form_selectors, contact_us_details)
     pick_option(driver, form_selectors, contact_us_details)
-    take_screenshot(driver, "After filling out the search form")
 
 
-def submit(driver: WebDriver):
-    take_screenshot(driver, "Before submitting the search form")
-    button = find_element(
-        driver, UPDATE_RESULTS, element_name="Update results", wait_for_it=False
-    )
-    button.click()
-    take_screenshot(driver, "After submitting the search form")
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
+    return submit_form(driver, SELECTORS["search form"])
 
 
 def open_profile(driver: WebDriver, number: int):

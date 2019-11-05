@@ -3,6 +3,7 @@
 import logging
 import random
 from types import ModuleType
+from typing import Union
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -107,5 +108,5 @@ def fill_out(driver: WebDriver, details: dict):
     fill_out_input_fields(driver, form_selectors, details)
 
 
-def submit(driver: WebDriver) -> ModuleType:
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
     return submit_form(driver, SELECTORS["form"])
