@@ -99,4 +99,3 @@ def should_see_content_for(driver: WebDriver, region_name: str):
 
 def click_on_page_element(driver: WebDriver, element_name: str):
     find_and_click_on_page_element(driver, SELECTORS, element_name)
-    take_screenshot(driver, PAGE_TITLE + " after clicking on " + element_name)

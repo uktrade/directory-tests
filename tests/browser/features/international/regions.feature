@@ -15,6 +15,7 @@ Feature: International - Regional pages
       | Header           |
       | Hero             |
       | Breadcrumbs      |
+      | Regions list     |
       | The UK map       |
       | Contact us       |
       | Error reporting  |
@@ -22,7 +23,9 @@ Feature: International - Regional pages
 
 
   @CMS-215
-  Scenario Outline: Visitors should be able to find out more about "<region>"
+  @link
+  @anchor
+  Scenario Outline: Visitors should be able to find out more about "<region>" using regular page links
     Given "Robert" visits the "International - Regions" page
 
     When "Robert" decides to find out more about "<region>"
@@ -38,12 +41,39 @@ Feature: International - Regional pages
 
     Examples: Regions
       | region           |
-      | North England    |
-      | Northern Ireland |
       | Scotland         |
-      | South England    |
-      | Midlands         |
+      | Northern Ireland |
+      | North England    |
       | Wales            |
+      | Midlands         |
+      | South England    |
+
+
+  @CMS-215
+  @link
+  @map
+  Scenario Outline: Visitors should be able to find out more about "<region>" using links on UK map
+    Given "Robert" visits the "International - Regions" page
+
+    When "Robert" decides to use "<region> - svg" link
+
+    Then "Robert" should be on the "International - <region> - region" page
+    And "Robert" should see following sections
+      | Sections         |
+      | Header           |
+      | Hero             |
+      | Error reporting  |
+      | Footer           |
+    And "Robert" should see content specific to "International - <region> - region" page
+
+    Examples: Regions
+      | region           |
+      | Scotland         |
+      | Northern Ireland |
+      | North England    |
+      | Wales            |
+      | Midlands         |
+      | South England    |
 
 
   @CMS-215
