@@ -38,14 +38,14 @@ PAGE_TITLE = "high potential"
 
 
 SubURLs = {
-    "Aquaculture": URLs.INVEST_HPO_AQUACULTURE.absolute,
-    "High productivity food production (Dev)": URLs.INVEST_HPO_FOOD_DEV.absolute,
-    "High productivity food production (Staging)": URLs.INVEST_HPO_FOOD_STAGING.absolute,
-    "Lightweight structures": URLs.INVEST_HPO_LIGHTWEIGHT.absolute,
-    "Photonics and microelectronics": URLs.INVEST_HPO_PHOTONICS.absolute,
-    "Rail infrastructure": URLs.INVEST_HPO_RAIL.absolute,
-    "Space": URLs.INVEST_HPO_SPACE.absolute,
-    "Sustainable packaging": URLs.INVEST_HPO_SUSTAINABLE_PACKAGING.absolute,
+    "aquaculture": URLs.INVEST_HPO_AQUACULTURE.absolute,
+    "high productivity food production (dev)": URLs.INVEST_HPO_FOOD_DEV.absolute,
+    "high productivity food production (staging)": URLs.INVEST_HPO_FOOD_STAGING.absolute,
+    "lightweight structures": URLs.INVEST_HPO_LIGHTWEIGHT.absolute,
+    "photonics and microelectronics": URLs.INVEST_HPO_PHOTONICS.absolute,
+    "rail infrastructure": URLs.INVEST_HPO_RAIL.absolute,
+    "space": URLs.INVEST_HPO_SPACE.absolute,
+    "sustainable packaging": URLs.INVEST_HPO_SUSTAINABLE_PACKAGING.absolute,
 }
 
 
