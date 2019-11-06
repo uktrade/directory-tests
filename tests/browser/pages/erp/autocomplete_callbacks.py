@@ -2,20 +2,13 @@
 """Various form autocomplete callbacks"""
 import logging
 import random
-from typing import List
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from directory_tests_shared.utils import extract_by_css
 from pages.common_actions import Selector, assertion_msg, find_element, find_elements
-
-
-def extract(driver: WebDriver, css_selector: str) -> List[str]:
-    from scrapy import Selector
-
-    source = driver.page_source
-    return Selector(text=source).css(css_selector).extract()
 
 
 def autocomplete_uk_region(driver: WebDriver, *, value):
@@ -25,7 +18,9 @@ def autocomplete_uk_region(driver: WebDriver, *, value):
 
     if isinstance(value, bool):
         logging.debug(f"Will select random region to type")
-        options = extract(driver, "select[id$=regions] option::text")
+        options = extract_by_css(
+            driver.page_source, "select[id$=regions] option::text", first=False
+        )
         logging.debug(f"Available country options: {options}")
         value = random.choice(options)
 
@@ -65,9 +60,10 @@ def autocomplete_industry(driver: WebDriver, *, value):
 
     if isinstance(value, bool):
         logging.debug(f"Will select random industry to type")
-        options = extract(
-            driver,
+        options = extract_by_css(
+            driver.page_source,
             "#id_imported-products-usage-imported_good_sector-select option::text",
+            first=False,
         )
         logging.debug(f"Available country options: {options}")
         value = random.choice(options)
@@ -110,7 +106,9 @@ def autocomplete_country(driver: WebDriver, *, value):
 
     if isinstance(value, bool):
         logging.debug(f"Will select random country to type")
-        options = extract(driver, "select[id^=id] option::text")
+        options = extract_by_css(
+            driver.page_source, "select[id^=id] option::text", first=False
+        )
         logging.debug(f"Available country options: {options}")
         value = random.choice(options)
 
