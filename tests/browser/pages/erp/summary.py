@@ -18,7 +18,6 @@ from pages.common_actions import (
     submit_form,
     take_screenshot,
     tick_captcha_checkbox,
-    tick_checkboxes,
 )
 from pages.erp import consumer_finished
 
@@ -39,13 +38,6 @@ SELECTORS = {
     "form": {
         "selection form": Selector(By.CSS_SELECTOR, "#content form[method='post']"),
         "heading": Selector(By.CSS_SELECTOR, "form[method=post] h1"),
-        "t&c": Selector(
-            By.ID,
-            "id_summary-terms_agreed",
-            type=ElementType.CHECKBOX,
-            is_visible=False,
-            alternative_visibility_check=True,
-        ),
         "submit": Selector(
             By.CSS_SELECTOR,
             "#content > form button.govuk-button",
@@ -73,18 +65,13 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 
 def click_on_page_element(driver: WebDriver, element_name: str):
     find_and_click_on_page_element(driver, SELECTORS, element_name)
-    take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
 def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
-    result = {"t&c": True}
-    if custom_details:
-        result.update(custom_details)
-    return result
+    return {}
 
 
 def fill_out(driver: WebDriver, details: dict):
-    tick_checkboxes(driver, SELECTORS["form"], details)
     tick_captcha_checkbox(driver)
 
 
