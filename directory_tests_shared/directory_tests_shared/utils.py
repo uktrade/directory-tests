@@ -7,7 +7,9 @@ import uuid
 from contextlib import contextmanager
 from random import choice, randint
 from types import BuiltinFunctionType
-from typing import Tuple, Union
+from typing import List, Tuple, Union
+
+from scrapy.selector import Selector as ScrapySelector
 
 from .constants import OPERATING_COUNTRIES, PRODUCT_CATEGORIES, RARE_WORDS, SECTORS
 from .settings import BASICAUTH_PASS, BASICAUTH_USER
@@ -127,6 +129,37 @@ def assertion_msg(message: str, *args):
         raise
 
 
+def extract_attributes_by_css(
+    content: str, selector: str, *, attrs: List[str] = None, text: bool = True
+) -> List[dict]:
+    """Extract attributes of matching html elements.
+
+    If element has no matching attribute then it's value will default to None
+
+    :param content: HTML page content
+    :param selector: a CSS selector
+    :param attrs: (optional) a list of attributes to extract
+    :param text: (optional) extract element's text (defaults to True)
+    :return: a list of dictionaries with matching attribute values
+    """
+    results = []
+    elements = ScrapySelector(text=content).css(selector)
+    for element in elements:
+        element_details = {}
+        if attrs:
+            for attribute in attrs:
+                element_details[attribute] = element.attrib.get(attribute, None)
+
+        if text:
+            parts = [part for part in element.css("*::text").getall() if part.strip()]
+            element_details["text"] = parts[0] if parts else None
+
+        if element_details:
+            results.append(element_details)
+
+    return results
+
+
 def extract_by_css(
     content: str, selector: str, *, first: bool = True
 ) -> Union[str, list]:
@@ -137,9 +170,7 @@ def extract_by_css(
     :param first: (optional) return first found element or all of them
     :return: value of the 1st found element or emtpy string if not found; or a list of all found elements
     """
-    from scrapy.selector import Selector
-
-    extracted = Selector(text=content).css(selector).extract()
+    extracted = ScrapySelector(text=content).css(selector).extract()
     if first:
         result = extracted[0] if len(extracted) > 0 else ""
     else:
