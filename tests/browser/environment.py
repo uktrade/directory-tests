@@ -64,7 +64,7 @@ def before_step(context: Context, step: Step):
 
 def after_step(context: Context, step: Step):
     logging.debug(
-        f"Finished step: {step.step_type} {str(repr(step.name))} {step.duration}"
+        f"Finished step: {round(step.duration, 3)} {step.step_type.capitalize()} {step.name}"
     )
 
 
@@ -95,6 +95,7 @@ def after_scenario(context: Context, scenario: Scenario):
             reason = f"Scenario: '{scenario.name}' failed: {scenario.exception}"
             flag_browserstack_session_as_failed(session_id, reason)
             terminate_driver(driver)
+    logging.debug(f"Finished scenario: {round(scenario.duration, 3)} → {scenario.name}")
 
 
 def after_feature(context: Context, feature: Feature):
