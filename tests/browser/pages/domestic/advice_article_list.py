@@ -10,13 +10,12 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
+from directory_tests_shared.utils import extract_attributes_by_css
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
-    check_if_element_is_visible,
     check_url,
-    find_elements,
     go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
@@ -99,12 +98,12 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 
 
 def open_any_article(driver: WebDriver) -> str:
-    article_links = find_elements(driver, ARTICLE_LINKS)
-    error = f"Expected to see at least 1 article but found none on {driver.current_url}"
-    assert article_links, error
-    link = random.choice(article_links)
-    link_text = link.text
-    check_if_element_is_visible(link, element_name=link_text)
+    article_links = extract_attributes_by_css(
+        driver.page_source, ARTICLE_LINKS.value, attrs=["href"]
+    )
+    article_link = random.choice(article_links)
+
+    link = driver.find_element_by_css_selector(f"a[href='{article_link['href']}']")
     with wait_for_page_load_after_action(driver):
         link.click()
-    return link_text
+    return article_link["text"]
