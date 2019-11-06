@@ -19,6 +19,7 @@ from pages.common_actions import (
     get_selectors,
     go_to_url,
     take_screenshot,
+    wait_for_page_load_after_action,
 )
 from pages.international import (
     international_contact_us,
@@ -94,8 +95,8 @@ def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
     button = find_element(
         driver, SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
     )
-    button.click()
-    take_screenshot(driver, "After submitting the form")
+    with wait_for_page_load_after_action(driver, timeout=15):
+        button.click()
     return POs[name.lower()]
 
 
