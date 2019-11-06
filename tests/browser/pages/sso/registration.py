@@ -38,7 +38,7 @@ SELECTORS = {
             By.ID, "id_terms_agreed", is_visible=False, type=ElementType.CHECKBOX
         ),
         "sign up button": Selector(
-            By.CSS_SELECTOR, "#signup_form > button", type=ElementType.BUTTON
+            By.CSS_SELECTOR, "#signup_form > button", type=ElementType.SUBMIT
         ),
     }
 }

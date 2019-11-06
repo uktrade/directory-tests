@@ -15,7 +15,7 @@ URL = URLs.CONTACT_US_INTERNATIONAL_EXPORTING_TO_THE_UK.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
-    By.CSS_SELECTOR, "div.exred-triage-form button", type=ElementType.BUTTON
+    By.CSS_SELECTOR, "div.exred-triage-form button", type=ElementType.SUBMIT
 )
 SELECTORS = {
     "support content": {
