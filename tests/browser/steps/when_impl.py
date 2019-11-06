@@ -162,9 +162,9 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
 def articles_open_any(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_any_article")
-    element_details = page.open_any_article(context.driver)
-    update_actor(context, actor_alias, element_details=element_details)
-    logging.info(f"{actor_alias} opened article: {element_details}")
+    article_name = page.open_any_article(context.driver)
+    update_actor(context, actor_alias, visited_articles=article_name)
+    logging.info(f"{actor_alias} opened article: {article_name}")
 
 
 def registration_should_get_verification_email(context: Context, actor_alias: str):

@@ -51,7 +51,6 @@ Actor = namedtuple(
         "registered",
         "visited_page",
         "last_tag",
-        "element_details",
         "forms_data",
         "saved_progress_link",
     ],
