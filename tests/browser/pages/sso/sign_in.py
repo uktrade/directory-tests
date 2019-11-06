@@ -13,7 +13,6 @@ from pages.common_actions import (
     Selector,
     check_for_sections,
     check_url,
-    find_and_click_on_page_element,
     find_element,
     go_to_url,
     submit_form,
@@ -59,11 +58,6 @@ def visit(driver: WebDriver):
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
-
-
-def click_on_page_element(driver: WebDriver, element_name: str):
-    find_and_click_on_page_element(driver, SELECTORS, element_name)
-    take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
 def fill_out(driver: WebDriver, email: str, password: str):

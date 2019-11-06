@@ -18,7 +18,6 @@ from pages.common_actions import (
     check_for_sections,
     check_url,
     fill_out_input_fields,
-    find_and_click_on_page_element,
     find_elements_of_type,
     go_to_url,
     submit_form,
@@ -135,7 +134,3 @@ def get_form_details(driver: WebDriver) -> dict:
         result[key] = value
 
     return dict(result)
-
-
-def click_on_page_element(driver: WebDriver, element_name: str):
-    find_and_click_on_page_element(driver, SELECTORS, element_name)

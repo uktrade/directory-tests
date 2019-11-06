@@ -14,7 +14,6 @@ from pages.common_actions import (
     check_for_sections,
     check_if_element_is_visible,
     check_url,
-    find_and_click_on_page_element,
     find_element,
     go_to_url,
     take_screenshot,
@@ -114,8 +113,3 @@ def open(driver: WebDriver, group: str, element: str, *, same_tab: bool = True):
         with wait_for_page_load_after_action(driver):
             link.click()
     take_screenshot(driver, NAME + " after clicking on: %s link".format(element))
-
-
-def click_on_page_element(driver: WebDriver, element_name: str):
-    find_and_click_on_page_element(driver, SELECTORS, element_name)
-    take_screenshot(driver, NAME + " after clicking on " + element_name)

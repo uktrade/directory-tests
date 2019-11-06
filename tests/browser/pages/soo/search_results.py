@@ -13,7 +13,6 @@ from pages.common_actions import (
     Selector,
     assertion_msg,
     check_url,
-    find_and_click_on_page_element,
     find_element,
     find_elements,
     go_to_url,
@@ -53,11 +52,6 @@ def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", NAME)
-
-
-def click_on_page_element(driver: WebDriver, element_name: str):
-    find_and_click_on_page_element(driver, SELECTORS, element_name)
-    take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
 def open_random_marketplace(driver: WebDriver):

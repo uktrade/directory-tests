@@ -15,7 +15,6 @@ from pages.common_actions import (
     check_for_sections,
     check_if_element_is_visible,
     check_url,
-    find_and_click_on_page_element,
     find_element,
     find_elements,
     go_to_url,
@@ -111,11 +110,6 @@ def search(driver: WebDriver, *, keyword: str = None, sector: str = None):
     )
     button.click()
     take_screenshot(driver, NAME + " after submitting the search form")
-
-
-def click_on_page_element(driver: WebDriver, element_name: str):
-    find_and_click_on_page_element(driver, SELECTORS, element_name)
-    take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
 def open_industry(driver: WebDriver, industry_name: str):

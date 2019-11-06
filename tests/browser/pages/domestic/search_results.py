@@ -14,7 +14,6 @@ from pages.common_actions import (
     Selector,
     assertion_msg,
     check_url,
-    find_and_click_on_page_element,
     find_element,
     find_elements,
     find_selector_by_name,
@@ -103,11 +102,6 @@ def has_pagination(driver: WebDriver, min_page_num: int):
         f"Expected to see more that {min_page_num} search results page but got just {len(selectors)}"
     ):
         assert len(selectors) > min_page_num
-
-
-def click_on_page_element(driver, element_name):
-    find_and_click_on_page_element(driver, SELECTORS, element_name)
-    take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
 def search(driver: WebDriver, phrase: str):

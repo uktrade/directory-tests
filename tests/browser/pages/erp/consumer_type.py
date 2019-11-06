@@ -14,7 +14,6 @@ from pages.common_actions import (
     check_for_sections,
     check_form_choices,
     check_url,
-    find_and_click_on_page_element,
     go_to_url,
     pick_one_option_and_submit,
     take_screenshot,
@@ -79,8 +78,3 @@ def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
     return pick_one_option_and_submit(
         driver, SELECTORS["form"], name, submit_button_name="continue"
     )
-
-
-def click_on_page_element(driver: WebDriver, element_name: str):
-    find_and_click_on_page_element(driver, SELECTORS, element_name)
-    take_screenshot(driver, NAME + " after clicking on " + element_name)

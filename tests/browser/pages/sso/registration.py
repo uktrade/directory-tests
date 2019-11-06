@@ -15,7 +15,6 @@ from pages.common_actions import (
     check_for_sections,
     check_url,
     fill_out_input_fields,
-    find_and_click_on_page_element,
     go_to_url,
     submit_form,
     take_screenshot,
@@ -79,10 +78,6 @@ def fill_out(driver: WebDriver, contact_us_details: dict):
 
 def submit(driver: WebDriver) -> Union[ModuleType, None]:
     return submit_form(driver, SELECTORS["form"])
-
-
-def click_on_page_element(driver: WebDriver, element_name: str):
-    find_and_click_on_page_element(driver, SELECTORS, element_name)
 
 
 def should_see_sections(driver: WebDriver, names: List[str]):

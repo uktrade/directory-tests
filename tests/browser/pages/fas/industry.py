@@ -15,7 +15,6 @@ from pages.common_actions import (
     assertion_msg,
     check_for_sections,
     check_url,
-    find_and_click_on_page_element,
     find_element,
     go_to_url,
     take_screenshot,
@@ -179,11 +178,6 @@ def should_see_content_for(driver: WebDriver, industry_name: str):
         from html import escape
 
         assert escape(industry_name) in source
-
-
-def click_on_page_element(driver: WebDriver, element_name: str):
-    find_and_click_on_page_element(driver, SELECTORS, element_name)
-    take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
 def search(driver: WebDriver, *, keyword: str = None, sector: str = None):

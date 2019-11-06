@@ -14,7 +14,6 @@ from pages.common_actions import (
     assertion_msg,
     check_for_sections,
     check_url,
-    find_and_click_on_page_element,
     take_screenshot,
     visit_url,
 )
@@ -95,7 +94,3 @@ def should_see_content_for(driver: WebDriver, region_name: str):
         driver.current_url,
     ):
         assert region_name.lower() in source.lower()
-
-
-def click_on_page_element(driver: WebDriver, element_name: str):
-    find_and_click_on_page_element(driver, SELECTORS, element_name)

@@ -14,7 +14,6 @@ from pages.common_actions import (
     Selector,
     check_for_sections,
     check_url,
-    find_and_click_on_page_element,
     submit_form,
     take_screenshot,
     tick_captcha_checkbox,
@@ -56,10 +55,6 @@ def should_be_here(driver: WebDriver):
 
 def should_see_sections(driver: WebDriver, names: List[str]):
     check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
-
-
-def click_on_page_element(driver: WebDriver, element_name: str):
-    find_and_click_on_page_element(driver, SELECTORS, element_name)
 
 
 def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:

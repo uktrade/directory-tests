@@ -18,7 +18,6 @@ from pages.common_actions import (
     check_radio,
     check_url,
     fill_out_textarea_fields,
-    find_and_click_on_page_element,
     submit_form,
     take_screenshot,
     tick_checkboxes,
@@ -108,11 +107,6 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 
 def should_see_form_choices(driver: WebDriver, names: List[str]):
     check_form_choices(driver, SELECTORS["form"], names)
-
-
-def click_on_page_element(driver: WebDriver, element_name: str):
-    find_and_click_on_page_element(driver, SELECTORS, element_name)
-    take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
 def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:

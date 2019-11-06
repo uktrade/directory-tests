@@ -8,13 +8,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
 from pages import common_selectors
-from pages.common_actions import (
-    Selector,
-    check_url,
-    find_and_click_on_page_element,
-    find_elements,
-    take_screenshot,
-)
+from pages.common_actions import Selector, check_url, find_elements, take_screenshot
 
 NAME = "International EU Exit news"
 SERVICE = Service.INTERNATIONAL
@@ -79,8 +73,3 @@ def open_any_tag(driver: WebDriver) -> str:
     tag = link.text.lower()
     link.click()
     return tag
-
-
-def click_on_page_element(driver: WebDriver, element_name: str):
-    find_and_click_on_page_element(driver, SELECTORS, element_name)
-    take_screenshot(driver, NAME + " after clicking on " + element_name)

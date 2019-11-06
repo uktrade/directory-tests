@@ -39,6 +39,7 @@ from pages.common_actions import (
     add_actor,
     avoid_browser_stack_idle_timeout_exception,
     barred_actor,
+    find_and_click_on_page_element,
     get_actor,
     get_full_page_name,
     get_last_visited_page,
@@ -337,8 +338,7 @@ def click_on_page_element(
         page = get_page_object(page_name)
     else:
         page = get_last_visited_page(context, actor_alias)
-    has_action(page, "click_on_page_element")
-    page.click_on_page_element(context.driver, element_name)
+    find_and_click_on_page_element(context.driver, page.SELECTORS, element_name)
     logging.debug(
         "%s decided to click on '%s' on '%s' page", actor_alias, element_name, page.NAME
     )

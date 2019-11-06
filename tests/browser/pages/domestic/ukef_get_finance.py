@@ -14,7 +14,6 @@ from pages.common_actions import (
     Selector,
     check_for_sections,
     check_url,
-    find_and_click_on_page_element,
     go_to_url,
     scroll_to,
     take_screenshot,
@@ -111,8 +110,3 @@ def get_video_watch_time(driver: WebDriver) -> int:
     logging.debug("Video watch time: %d", watch_time)
     logging.debug("Video duration : %d", duration)
     return int(watch_time)
-
-
-def click_on_page_element(driver: WebDriver, element_name: str):
-    find_and_click_on_page_element(driver, SELECTORS, element_name)
-    take_screenshot(driver, NAME + " after clicking on " + element_name)

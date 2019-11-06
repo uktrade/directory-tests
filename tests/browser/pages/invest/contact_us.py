@@ -17,7 +17,6 @@ from pages.common_actions import (
     check_url,
     fill_out_input_fields,
     fill_out_textarea_fields,
-    find_and_click_on_page_element,
     pick_option_from_autosuggestion,
     submit_form,
     take_screenshot,
@@ -109,7 +108,3 @@ def fill_out(driver: WebDriver, details: dict):
 
 def submit(driver: WebDriver) -> Union[ModuleType, None]:
     return submit_form(driver, SELECTORS["form"])
-
-
-def click_on_page_element(driver: WebDriver, element_name: str):
-    find_and_click_on_page_element(driver, SELECTORS, element_name)

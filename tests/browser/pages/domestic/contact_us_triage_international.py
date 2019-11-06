@@ -14,7 +14,6 @@ from pages.common_actions import (
     Selector,
     check_url,
     choose_one_form_option,
-    find_and_click_on_page_element,
     find_element,
     get_selectors,
     go_to_url,
@@ -98,8 +97,3 @@ def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
     with wait_for_page_load_after_action(driver, timeout=15):
         button.click()
     return POs[name.lower()]
-
-
-def click_on_page_element(driver: WebDriver, element_name: str):
-    find_and_click_on_page_element(driver, SELECTORS, element_name)
-    take_screenshot(driver, NAME + " after clicking on " + element_name)
