@@ -249,8 +249,14 @@ def update_actor(context: Context, alias: str, **kwargs):
     actors = context.scenario_data.actors
     for arg in kwargs:
         if arg in Actor._fields:
-            logging.debug(f"Set '{arg}'='{kwargs[arg]}' for {alias}")
-            actors[alias] = actors[alias]._replace(**{arg: kwargs[arg]})
+            if isinstance(getattr(actors[alias], arg), list):
+                logging.debug(f"Appended '{kwargs[arg]}' to '{arg}' for {alias}")
+                new_value = getattr(actors[alias], arg)
+                new_value.append(kwargs[arg])
+            else:
+                logging.debug(f"Set '{arg}'='{kwargs[arg]}' for {alias}")
+                new_value = kwargs[arg]
+            actors[alias] = actors[alias]._replace(**{arg: new_value})
     logging.debug(f"Successfully updated {alias}'s details: {actors[alias]}")
 
 
