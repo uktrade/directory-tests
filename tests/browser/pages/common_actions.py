@@ -175,11 +175,12 @@ def find_and_click_on_page_element(
             else:
                 scroll_to(driver, web_element)
                 if selector.wait_after_click:
-                    with wait_for_page_load_after_action(driver):
+                    with wait_for_page_load_after_action(driver, timeout=10):
                         with try_alternative_click_on_exception(driver, web_element):
                             web_element.click()
                 else:
-                    web_element.click()
+                    with try_alternative_click_on_exception(driver, web_element):
+                        web_element.click()
     with assertion_msg(f"Could not find '{element_name}' in any section"):
         assert found_selector
 
