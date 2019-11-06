@@ -679,11 +679,17 @@ def domestic_open_random_advice_article(context: Context, actor_alias: str):
         add_actor(context, unauthenticated_actor(actor_alias))
     driver = context.driver
     domestic.advice_landing.visit(driver)
-    domestic.advice_landing.open_any_article(driver)
-    domestic.advice_article_list.open_any_article(driver)
+    advice_name = domestic.advice_landing.open_any_article(driver)
+    article_name = domestic.advice_article_list.open_any_article(driver)
     domestic.advice_article.should_be_here(driver)
-    update_actor(context, actor_alias, visited_page=domestic.advice_article)
-    update_actor(context, actor_alias, article_url=driver.current_url)
+    update_actor(
+        context,
+        actor_alias,
+        visited_page=domestic.advice_article,
+        article_url=driver.current_url,
+        article_category=advice_name,
+        visited_articles=article_name,
+    )
 
 
 def generic_report_problem_with_page(context: Context, actor_alias: str):
