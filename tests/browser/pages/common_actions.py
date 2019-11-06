@@ -21,6 +21,7 @@ from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import (
     ElementClickInterceptedException,
+    ElementNotInteractableException,
     NoSuchElementException,
     TimeoutException,
     WebDriverException,
@@ -175,7 +176,8 @@ def find_and_click_on_page_element(
                 scroll_to(driver, web_element)
                 if selector.wait_after_click:
                     with wait_for_page_load_after_action(driver):
-                        web_element.click()
+                        with try_alternative_click_on_exception(driver, web_element):
+                            web_element.click()
                 else:
                     web_element.click()
     with assertion_msg(f"Could not find '{element_name}' in any section"):
@@ -522,28 +524,38 @@ def check_hash_of_remote_file(expected_hash: str, file_url: str):
 
 
 @contextmanager
-def try_js_click_on_element_click_intercepted_exception(
-    driver: WebDriver, element: WebElement
-):
-    """Try to use JS to perform click on an element if regular way didn't work
+def try_alternative_click_on_exception(driver: WebDriver, element: WebElement):
+    """Try alternative click methods (JS or ActionChains) if regular way didn't work.
 
-    This is to handle situations when clicking on element triggers:
+    JS workaround:
+        Handle situations when clicking on element triggers:
         selenium.common.exceptions.ElementClickInterceptedException:
             Message: element click intercepted:
-            Element <input id="id_terms" name="terms" type="checkbox">
-            is not clickable at point (714, 1235).
-            Other element would receive the click:
-            <label for="id_terms">...</label>
+            Element <input id="id_terms"> is not clickable at point (714, 1235).
+            Other element would receive the click: <label for="id_terms">...</label>
+        See: https://stackoverflow.com/a/44916498
 
-    See: https://stackoverflow.com/a/44916498
+    ActionChains workaround:
+        Handles situations when clicking on element triggers:
+        selenium.common.exceptions.ElementNotInteractableException:
+        Message: Element <a href="..."> could not be scrolled into view
+        See: https://selenium-python.readthedocs.io/api.html#module-selenium.webdriver.common.action_chains
     """
     try:
         yield
     except ElementClickInterceptedException as e:
         logging.warning(
-            f"Click was intercepted. Will try JS workaround. Exception msg: " f"{e.msg}"
+            f"Failed click intercepted. Will try JS workaround for: {e.msg}"
         )
         driver.execute_script("arguments[0].click();", element)
+    except ElementNotInteractableException as e:
+        logging.warning(
+            f"Failed click intercepted. Will try ActionChains workaround for: {e.msg}"
+        )
+        action_chains = ActionChains(driver)
+        action_chains.move_to_element(element)
+        action_chains.click()
+        action_chains.perform()
 
 
 class wait_for_page_load_after_action(object):
@@ -915,7 +927,7 @@ def submit_form(
     )
     take_screenshot(driver, "Before submitting the form")
     with wait_for_page_load_after_action(driver):
-        with try_js_click_on_element_click_intercepted_exception(driver, submit_button):
+        with try_alternative_click_on_exception(driver, submit_button):
             submit_button.click()
     take_screenshot(driver, "After submitting the form")
 
@@ -957,9 +969,7 @@ def tick_checkboxes(
                 driver, selector, element_name=key, wait_for_it=False
             )
             if not checkbox.get_property("checked"):
-                with try_js_click_on_element_click_intercepted_exception(
-                    driver, checkbox
-                ):
+                with try_alternative_click_on_exception(driver, checkbox):
                     checkbox.click()
 
 
@@ -975,9 +985,7 @@ def tick_checkboxes_by_labels(
             )
             if not checkbox.get_property("checked"):
                 logging.debug(f"'{key}' checkbox is not ticked, checking it")
-                with try_js_click_on_element_click_intercepted_exception(
-                    driver, checkbox
-                ):
+                with try_alternative_click_on_exception(driver, checkbox):
                     checkbox.click()
         else:
             logging.debug(f"'{key}' checkbox should be left unchanged")
@@ -986,7 +994,5 @@ def tick_checkboxes_by_labels(
             )
             if checkbox.get_property("checked"):
                 logging.debug(f"'{key}' checkbox is ticked, unchecking it")
-                with try_js_click_on_element_click_intercepted_exception(
-                    driver, checkbox
-                ):
+                with try_alternative_click_on_exception(driver, checkbox):
                     checkbox.click()
