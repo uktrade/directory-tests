@@ -8,9 +8,11 @@ from contextlib import contextmanager
 from random import choice, randint
 from types import BuiltinFunctionType
 from typing import List, Tuple, Union
+from urllib.parse import urlsplit
 
 from scrapy.selector import Selector as ScrapySelector
 
+import parse
 from .constants import OPERATING_COUNTRIES, PRODUCT_CATEGORIES, RARE_WORDS, SECTORS
 from .settings import BASICAUTH_PASS, BASICAUTH_USER
 
@@ -230,3 +232,20 @@ def get_comparison_details(description: str) -> Tuple[BuiltinFunctionType, int]:
     )
     assert len(matching_comparison_details) == 1, error
     return matching_comparison_details[0]
+
+
+def check_url_path_matches_template(template: str, url: str):
+    path = urlsplit(url).path
+
+    # ensure that both URL template and checked URL start in the same way
+    if path.startswith("/"):
+        path = path[1:]
+    if template.startswith("/"):
+        template = template[1:]
+
+    parser = parse.compile(template)
+    result = parser.parse(path)
+    error = f"Provided URL: {url} does not match URL path template: {template}"
+    with assertion_msg(error):
+        assert result
+    logging.debug(f"Provided URL: {url} matches given URL path template: {template}")
