@@ -594,6 +594,7 @@ def try_alternative_click_on_exception(driver: WebDriver, element: WebElement):
         action_chains.move_to_element(element)
         action_chains.click()
         action_chains.perform()
+        logging.warning(f"ActionChains click workaround is done")
 
 
 class wait_for_page_load_after_action(object):
@@ -613,7 +614,12 @@ class wait_for_page_load_after_action(object):
 
     def page_has_loaded(self):
         new_page = self.driver.find_element_by_tag_name("html")
-        return new_page.id != self.old_page.id
+        has_loaded = new_page.id != self.old_page.id
+        if has_loaded:
+            logging.debug(f"Page has loaded. {self.driver.current_url}")
+        else:
+            logging.debug(f"Waiting for {self.driver.current_url} page to load...")
+        return has_loaded
 
     def __exit__(self, *_):
         self.wait_for(self.page_has_loaded)
