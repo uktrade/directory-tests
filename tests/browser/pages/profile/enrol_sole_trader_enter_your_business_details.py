@@ -20,7 +20,7 @@ from pages.common_actions import (
     fill_out_input_fields,
     find_elements_of_type,
     go_to_url,
-    pick_option_from_autosuggestion,
+    pick_option,
     submit_form,
     take_screenshot,
 )
@@ -111,7 +111,7 @@ def generate_form_details(actor: Actor) -> dict:
 
 def fill_out(driver: WebDriver, details: dict):
     form_selectors = SELECTORS["enter your business details"]
-    pick_option_from_autosuggestion(driver, form_selectors, details)
+    pick_option(driver, form_selectors, details)
     fill_out_input_fields(driver, form_selectors, details)
 
 

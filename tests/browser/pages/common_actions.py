@@ -34,6 +34,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 from directory_tests_shared.settings import BARRED_USERS, TAKE_SCREENSHOTS
+from directory_tests_shared.utils import extract_attributes_by_css
 from pages import ElementType
 
 ScenarioData = namedtuple("ScenarioData", ["actors"])
@@ -829,50 +830,39 @@ def check_form_choices(
     )
 
 
+def get_option_values(
+    driver: WebDriver, selector: Selector, *, remove_empty_values: bool = True
+) -> List[str]:
+    error = f"'{selector.by}' not recognised. Only By.ID, By.CSS_SELECTOR are allowed"
+    assert selector.by in (By.ID, By.CSS_SELECTOR), error
+    if selector.by == By.ID:
+        option_selector = f"#{selector.value} option"
+    else:
+        option_selector = f"{selector.value} option"
+    logging.debug(f"Looking for option values using: '{option_selector}'")
+    option_values = extract_attributes_by_css(
+        driver.page_source, option_selector, attrs=["value"], text=False
+    )
+    if remove_empty_values:
+        option_values = [item for item in option_values if item["value"]]
+    logging.debug(f"Available options: {option_values}")
+    return [item["value"] for item in option_values]
+
+
 def pick_option(
     driver: WebDriver, form_selectors: Dict[str, Selector], form_details: dict
 ):
     select_selectors = get_selectors(form_selectors, ElementType.SELECT)
     for key, selector in select_selectors.items():
-        logging.debug(f"Picking option from {key} dropdown list")
-        select = find_element(driver, selector, element_name=key, wait_for_it=False)
         if form_details.get(key, None):
             option = form_details[key]
         else:
-            options = select.find_elements_by_css_selector("option")
-            values = [
-                option.get_property("value")
-                for option in options
-                if option.get_property("value")
-            ]
-            logging.debug("Available options: {}".format(values))
+            logging.debug(
+                f"Picking an option from '{key}' dropdown list using: {selector}"
+            )
+            values = get_option_values(driver, selector)
             option = random.choice(values)
         logging.debug(f"Will select option: {option}")
-        option_value_selector = f"option[value='{option}']"
-        option_element = select.find_element_by_css_selector(option_value_selector)
-        option_element.click()
-
-
-def pick_option_from_autosuggestion(
-    driver: WebDriver, form_selectors: Dict[str, Selector], form_details: dict
-):
-    select_selectors = get_selectors(form_selectors, ElementType.SELECT)
-    for key, selector in select_selectors.items():
-        logging.debug(f"Picking option from {key} dropdown list")
-        select = find_element(driver, selector, element_name=key, wait_for_it=False)
-        logging.debug(f"dealing with {key} {selector}")
-        if form_details.get(key, None):
-            option = form_details[key]
-        else:
-            options = select.find_elements_by_css_selector("option")
-            values = [
-                option.get_attribute("value")
-                for option in options
-                if option.get_attribute("value")
-            ]
-            logging.debug(f"Available options: {values}")
-            option = random.choice(values)
-        logging.debug(f"Selected option: {option}")
         if key == "country":
             js_field_selector = Selector(By.ID, "js-country-select")
             js_field = find_element(driver, js_field_selector)
@@ -887,7 +877,8 @@ def pick_option_from_autosuggestion(
             )
             first_suggestion.click()
         else:
-            option_value_selector = "option[value='{}']".format(option)
+            select = find_element(driver, selector, element_name=key, wait_for_it=False)
+            option_value_selector = f"option[value='{option}']"
             option_element = select.find_element_by_css_selector(option_value_selector)
             option_element.click()
 
@@ -960,7 +951,7 @@ def submit_form(
         driver, submit_button_selector, element_name="submit button", wait_for_it=False
     )
     take_screenshot(driver, "Before submitting the form")
-    with wait_for_page_load_after_action(driver):
+    with wait_for_page_load_after_action(driver, timeout=15):
         with try_alternative_click_on_exception(driver, submit_button):
             submit_button.click()
     take_screenshot(driver, "After submitting the form")

@@ -20,11 +20,11 @@ from pages.common_actions import (
     fill_out_textarea_fields,
     find_element,
     find_selector_by_name,
-    pick_option_from_autosuggestion,
+    pick_option,
     submit_form,
     take_screenshot,
     tick_captcha_checkbox,
-    tick_checkboxes_by_labels,
+    tick_checkboxes,
     visit_url,
 )
 
@@ -161,8 +161,8 @@ def fill_out(driver: WebDriver, details: dict):
     form_selectors = SELECTORS["form"]
     fill_out_input_fields(driver, form_selectors, details)
     fill_out_textarea_fields(driver, form_selectors, details)
-    pick_option_from_autosuggestion(driver, form_selectors, details)
-    tick_checkboxes_by_labels(driver, form_selectors, details)
+    pick_option(driver, form_selectors, details)
+    tick_checkboxes(driver, form_selectors, details)
     tick_captcha_checkbox(driver)
 
 
