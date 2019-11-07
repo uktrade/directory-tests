@@ -9,24 +9,23 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
+from directory_tests_shared.utils import check_url_path_matches_template
 from pages import common_selectors
 from pages.common_actions import (
     Selector,
     assertion_msg,
-    check_for_expected_sections_elements,
     check_for_sections,
     check_if_element_is_not_visible,
     find_and_click_on_page_element,
     find_element,
     go_to_url,
-    take_screenshot,
 )
 from pages.domestic import actions as domestic_actions
 
 NAME = "Advice"
 SERVICE = Service.DOMESTIC
 TYPE = PageType.ARTICLE
-URL = URLs.DOMESTIC_ADVICE.absolute
+URL = URLs.DOMESTIC_ADVICE_ARTICLE.template
 
 ARTICLE_NAME = Selector(By.CSS_SELECTOR, "article h1")
 ARTICLE_TEXT = Selector(By.CSS_SELECTOR, ".article-content")
@@ -69,8 +68,7 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
-    check_for_expected_sections_elements(driver, SELECTORS)
+    check_url_path_matches_template(URL, driver.current_url)
 
 
 def should_see_sections(driver: WebDriver, names: List[str]):
