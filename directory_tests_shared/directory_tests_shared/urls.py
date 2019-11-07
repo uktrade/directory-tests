@@ -338,6 +338,9 @@ class URLs(Enum):
 
     # Domestic site
     DOMESTIC_ADVICE = DomesticUrl("advice/")
+    DOMESTIC_ADVICE_ARTICLE = DomesticUrl(
+        "advice/{category}/{slug}/", template="advice/{category}/{slug}/"
+    )
     DOMESTIC_API_COMPANY_HOUSE_SEARCH = DomesticUrl(
         "api/internal/companies-house-search/"
     )
