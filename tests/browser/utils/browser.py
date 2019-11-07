@@ -44,11 +44,11 @@ CAPABILITIES_TEMPLATES = {
         "browser_capabilities": {
             "chrome": {
                 "browser": "Chrome",
-                "browser_version": "76.0",
+                "browser_version": "78.0",
                 "pageLoadStrategy": "none",
                 "os": "Windows",
                 "os_version": "10",
-                "browserstack.chrome.driver": "75.0.3770.8",
+                "browserstack.chrome.driver": "78.0.3904.70",
             },
             "edge": {
                 "browser": "Edge",
@@ -58,7 +58,7 @@ CAPABILITIES_TEMPLATES = {
             },
             "firefox": {
                 "browser": "Firefox",
-                "browser_version": "68.0",
+                "browser_version": "70.0",
                 "pageLoadStrategy": "eager",
                 "os": "Windows",
                 "os_version": "10",
