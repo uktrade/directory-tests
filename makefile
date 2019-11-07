@@ -177,22 +177,31 @@ docker_browserstack: BROWSER_DOCKER_REMOVE_ALL
 	docker-compose -f docker-compose-browser.yml -p browser build && \
 	docker-compose -f docker-compose-browser.yml -p browser run browser_tests
 
-compile_requirements:
-	python3 -m piptools compile requirements.in
+compile_requirements_browser:
+	@rm requirements_browser.txt
+	python3 -m piptools compile --quiet requirements_browser.in
+	@sed -i 's/^file.*/.\/directory_tests_shared\//' requirements_browser.txt
 
-compile_browser_requirements:
-	python3 -m piptools compile requirements_browser.in
+compile_requirements_functional:
+	@rm requirements_functional.txt
+	python3 -m piptools compile --quiet requirements_functional.in
+	@sed -i 's/^\-e file.*/\-e .\/directory_tests_shared\//' requirements_functional.txt
 
-compile_functional_requirements:
-	python3 -m piptools compile requirements_functional.in
+compile_requirements_smoke:
+	@rm requirements_smoke.txt
+	python3 -m piptools compile --quiet requirements_smoke.in
+	@sed -i 's/^\-e file.*/\-e .\/directory_tests_shared\//' requirements_smoke.txt
 
-compile_smoke_requirements:
-	python3 -m piptools compile requirements_smoke.in
+compile_requirements_load:
+	@rm requirements_load.txt
+	python3 -m piptools compile --quiet requirements_load.in
+	@sed -i 's/^\-e file.*/\-e .\/directory_tests_shared\//' requirements_load.txt
 
-compile_load_requirements:
-	python3 -m piptools compile requirements_load.in
+compile_requirements_test_tools:
+	@rm requirements_test_tools.txt
+	python3 -m piptools compile --quiet requirements_test_tools.in
 
-compile_all_requirements: compile_requirements compile_browser_requirements compile_functional_requirements compile_smoke_requirements compile_load_requirements
+compile_all_requirements: compile_requirements_browser compile_requirements_functional compile_requirements_smoke compile_requirements_load compile_requirements_test_tools
 
 find_duplicated_scenario_names: SHELL:=/usr/bin/env bash  # set shell for this target to bash
 find_duplicated_scenario_names:
