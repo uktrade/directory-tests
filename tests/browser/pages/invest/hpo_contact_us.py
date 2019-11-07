@@ -15,7 +15,6 @@ from pages.common_actions import (
     Actor,
     Selector,
     check_for_sections,
-    check_if_element_is_not_visible,
     check_url,
     fill_out_input_fields,
     fill_out_textarea_fields,
@@ -111,10 +110,6 @@ SELECTORS.update(common_selectors.BETA_BAR)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
 SELECTORS.update(common_selectors.INVEST_FOOTER)
 
-UNEXPECTED_ELEMENTS = {
-    "breadcrumbs": {"itself": Selector(By.CSS_SELECTOR, "div.breadcrumbs")}
-}
-
 
 def visit(driver: WebDriver, *, page_name: str = None):
     url = SubURLs[page_name] if page_name else URL
@@ -173,9 +168,3 @@ def fill_out(driver: WebDriver, details: dict):
 
 def submit(driver: WebDriver) -> Union[ModuleType, None]:
     return submit_form(driver, SELECTORS["form"])
-
-
-def should_not_see_section(driver: WebDriver, name: str):
-    section = UNEXPECTED_ELEMENTS[name.lower()]
-    for key, selector in section.items():
-        check_if_element_is_not_visible(driver, selector, element_name=key)

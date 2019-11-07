@@ -86,28 +86,6 @@ Feature: Invest - High Potential Opportunities
       | Rail infrastructure      |
 
 
-  @bug
-  @TT-518
-  @fixme
-  @TT-442
-  Scenario Outline: Investors should not see breadcrumbs on "HPO - <selected>" page
-    Given "Annette Geissinger" visits the "Invest - <selected> - Contact us" page
-
-    Then "Annette Geissinger" should not see following section
-      | section          |
-      | Breadcrumbs      |
-
-    Examples: HPO Contact Us pages
-      | selected                          |
-      | High productivity food production |
-
-    @full
-    Examples: HPO Contact Us pages
-      | selected                 |
-      | Lightweight structures   |
-      | Rail infrastructure      |
-
-
   @TT-442
   @related-opportunities
   Scenario Outline: Investors should be able to view "Other investment opportunities" from "HPO - <selected>" page
