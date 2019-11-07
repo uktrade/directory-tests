@@ -21,6 +21,7 @@ setup(
         "directory-cms-client>=11.0.0",
         "directory-sso-api-client>=6.1.0",
         "notifications-python-client>=5.3.0",
+        "parse>=1.12.1",
         "pdfminer2>=20151206",
         "retrying>=1.3.3",
         "scrapy>=1.7.3",
