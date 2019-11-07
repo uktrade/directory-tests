@@ -59,7 +59,7 @@ def before_scenario(context: Context, scenario: Scenario):
 
 
 def before_step(context: Context, step: Step):
-    logging.debug(f"Started step: {step.step_type} {str(repr(step.name))}")
+    logging.debug(f"Started step: {step.step_type.capitalize()} {step.name}")
 
 
 def after_step(context: Context, step: Step):
