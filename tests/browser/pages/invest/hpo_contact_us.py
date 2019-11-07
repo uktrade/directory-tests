@@ -60,28 +60,63 @@ SELECTORS = {
         "organisation size": Selector(
             By.ID, "id_company_size", type=ElementType.SELECT
         ),
+        "aquaculture": Selector(
+            By.ID,
+            "checkbox-multiple-aquaculture",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+            alternative_visibility_check=True,
+        ),
         "advanced food production": Selector(
             By.ID,
-            "checkbox-multiple-advanced-food-production",
-            type=ElementType.LABEL,
+            "checkbox-multiple-high-productivity-food-production",
+            type=ElementType.CHECKBOX,
             is_visible=False,
-        ),
-        "lightweight structures": Selector(
-            By.ID,
-            "checkbox-multiple-lightweight-structures",
-            type=ElementType.LABEL,
-            is_visible=False,
+            alternative_visibility_check=True,
         ),
         "rail infrastructure": Selector(
             By.ID,
             "checkbox-multiple-rail-infrastructure",
-            type=ElementType.LABEL,
+            type=ElementType.CHECKBOX,
             is_visible=False,
+            alternative_visibility_check=True,
+        ),
+        "lightweight structures": Selector(
+            By.ID,
+            "checkbox-multiple-lightweight-structures",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+            alternative_visibility_check=True,
+        ),
+        "photonics and microelectronics": Selector(
+            By.ID,
+            "checkbox-multiple-photonics-and-microelectronics",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+            alternative_visibility_check=True,
+        ),
+        "space": Selector(
+            By.ID,
+            "checkbox-multiple-space",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+            alternative_visibility_check=True,
+        ),
+        "sustainable packaging": Selector(
+            By.ID,
+            "checkbox-multiple-sustainable-packaging",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+            alternative_visibility_check=True,
+        ),
+        "terms and conditions": Selector(
+            By.ID,
+            "id_terms_agreed",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+            alternative_visibility_check=True,
         ),
         "comment": Selector(By.ID, "id_comment", type=ElementType.TEXTAREA),
-        "terms and conditions": Selector(
-            By.ID, "id_terms_agreed", type=ElementType.LABEL, is_visible=False
-        ),
         "terms and conditions link": Selector(
             By.CSS_SELECTOR, "#id_terms_agreed-label a"
         ),
@@ -90,20 +125,7 @@ SELECTORS = {
         ),
         "submit": Selector(By.ID, "submit-button", type=ElementType.SUBMIT),
     },
-    "elements invisible to selenium": {
-        "advanced food production checkbox": Selector(
-            By.ID, "checkbox-multiple-advanced-food-production", is_visible=False
-        ),
-        "rail infrastructure checkbox": Selector(
-            By.ID, "checkbox-multiple-rail-infrastructure", is_visible=False
-        ),
-        "lightweight structures checkbox": Selector(
-            By.ID, "checkbox-multiple-lightweight-structures", is_visible=False
-        ),
-        "terms and conditions checkbox": Selector(
-            By.ID, "id_terms_agreed", is_visible=False
-        ),
-    },
+    "elements invisible to selenium": {},
 }
 SELECTORS.update(common_selectors.INVEST_HEADER)
 SELECTORS.update(common_selectors.BETA_BAR)
@@ -146,9 +168,13 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
         "country": None,
         "organisation size": None,
         "comment": "This form was submitted by Automated test",
+        "aquaculture": True,
         "advanced food production": True,
         "lightweight structures": True,
         "rail infrastructure": True,
+        "photonics and microelectronics": True,
+        "space": True,
+        "sustainable packaging": True,
         "terms and conditions": True,
     }
     if custom_details:
