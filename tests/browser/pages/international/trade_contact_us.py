@@ -85,6 +85,7 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
         "body": "This is a test message sent via automated tests",
         "source": None,
         "accept t&c": True,
+        "captcha": True,
     }
     if custom_details:
         if custom_details.get("industry", None):
@@ -103,7 +104,7 @@ def fill_out(driver: WebDriver, contact_us_details: dict, *, captcha: bool = Tru
     pick_option(driver, form_selectors, contact_us_details)
     tick_checkboxes_by_labels(driver, form_selectors, contact_us_details)
 
-    if captcha:
+    if contact_us_details["captcha"]:
         tick_captcha_checkbox(driver)
 
 

@@ -29,7 +29,6 @@ from pages import (
     erp,
     fas,
     get_page_object,
-    international,
     profile,
     soo,
     sso,
@@ -384,36 +383,6 @@ def generic_open_industry_page(context: Context, actor_alias: str, industry_name
     page.open_industry(context.driver, industry_name)
     update_actor(context, actor_alias, visited_page=page)
     logging.debug("%s opened '%s' page on %s", actor_alias, industry_name, page.URL)
-
-
-def fas_fill_out_and_submit_contact_us_form(
-    context: Context,
-    actor_alias: str,
-    *,
-    sector: str = None,
-    sources: str = None,
-    company_size: str = None,
-    accept_tc: bool = True,
-    captcha: bool = True,
-):
-    actor = get_actor(context, actor_alias)
-    company_name = actor.company_name or "Automated test"
-    contact_us_details = {
-        "full name": actor.alias,
-        "email": actor.email,
-        "phone number": "this is a test",
-        "industry": sector,
-        "organisation": company_name,
-        "organisation size": company_size,
-        "country": "DIT QA TEAM",
-        "body": "This is a test message sent via automated tests",
-        "source": sources,
-        "accept t&c": accept_tc,
-    }
-    international.trade_contact_us.fill_out(
-        context.driver, contact_us_details, captcha=captcha
-    )
-    international.trade_contact_us.submit(context.driver)
 
 
 def fas_view_selected_company_profile(

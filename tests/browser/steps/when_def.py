@@ -22,7 +22,6 @@ from steps.when_impl import (
     erp_open_restore_session_link,
     erp_save_for_later,
     erp_select_random_search_result,
-    fas_fill_out_and_submit_contact_us_form,
     fas_search_for_companies,
     fas_view_article,
     fas_view_selected_company_profile,
@@ -138,12 +137,6 @@ def fas_when_actor_searches_for_companies(
 def fas_when_actor_opens_industry_page(
         context: Context, actor_alias: str, industry_name: str):
     generic_open_industry_page(context, actor_alias, industry_name)
-
-
-@when('"{actor_alias}" fills out and submits the contact us form without passing captcha')
-def fas_when_actor_fills_out_and_submits_contact_us_form_wo_captcha(
-        context: Context, actor_alias: str):
-    fas_fill_out_and_submit_contact_us_form(context, actor_alias, captcha=False)
 
 
 @when('"{actor_alias}" says that affected goods are "{option}" from overseas')
