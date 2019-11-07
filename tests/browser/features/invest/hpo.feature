@@ -71,7 +71,6 @@ Feature: Invest - High Potential Opportunities
     And "Annette Geissinger" should see that "<selected> checkbox" in the form is "selected"
     And "Annette Geissinger" should see following sections
       | sections         |
-#      | Beta Bar         |
       | Form             |
       | Error reporting  |
 
@@ -124,7 +123,6 @@ Feature: Invest - High Potential Opportunities
     Then "Annette Geissinger" should be on the "Invest - Thank you for your enquiry - Contact us" page
     And "Annette Geissinger" should see following sections
       | Sections         |
-#      | Beta bar         |
       | Confirmation     |
       | Documents        |
       | Error reporting  |
