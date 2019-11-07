@@ -541,6 +541,26 @@ def check_hash_of_remote_file(expected_hash: str, file_url: str):
 
 
 @contextmanager
+def scroll_to_element_if_not_visible(
+    driver: WebDriver, element: WebElement, *, section: str = None, name: str = None
+):
+    """Scroll to element only if it's not visible.
+
+    Delaying scrolling to every element can save around 100ms per element.
+    """
+    try:
+        yield
+    except TimeoutException as e:
+        if section & name:
+            logging.debug(f"Scrolling/Moving focus to '{section} → {name}' element")
+        logging.warning(
+            f"Element is not visible, will scroll to it & check it's visibility: {e.msg}"
+        )
+        scroll_to(driver, element)
+        assert element.is_displayed()
+
+
+@contextmanager
 def try_alternative_click_on_exception(driver: WebDriver, element: WebElement):
     """Try alternative click methods (JS or ActionChains) if regular way didn't work.
 
