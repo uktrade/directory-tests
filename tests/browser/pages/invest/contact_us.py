@@ -17,11 +17,11 @@ from pages.common_actions import (
     check_url,
     fill_out_input_fields,
     fill_out_textarea_fields,
+    go_to_url,
     pick_option,
     submit_form,
     take_screenshot,
     tick_captcha_checkbox,
-    visit_url,
 )
 
 NAME = "Contact us"
@@ -70,7 +70,7 @@ SELECTORS.update(common_selectors.INVEST_FOOTER)
 
 
 def visit(driver: WebDriver):
-    visit_url(driver, URL)
+    go_to_url(driver, URL, NAME)
 
 
 def should_be_here(driver: WebDriver):

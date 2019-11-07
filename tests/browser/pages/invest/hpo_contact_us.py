@@ -20,12 +20,12 @@ from pages.common_actions import (
     fill_out_textarea_fields,
     find_element,
     find_selector_by_name,
+    go_to_url,
     pick_option,
     submit_form,
     take_screenshot,
     tick_captcha_checkbox,
     tick_checkboxes,
-    visit_url,
 )
 
 NAME = "HPO Contact us"
@@ -135,7 +135,7 @@ SELECTORS.update(common_selectors.INVEST_FOOTER)
 
 def visit(driver: WebDriver, *, page_name: str = None):
     url = SubURLs[page_name] if page_name else URL
-    visit_url(driver, url)
+    go_to_url(driver, url, page_name or NAME)
 
 
 def should_be_here(driver: WebDriver, *, page_name: str):

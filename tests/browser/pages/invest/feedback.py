@@ -6,7 +6,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
-from pages.common_actions import check_url, take_screenshot, visit_url
+from pages.common_actions import check_url, go_to_url, take_screenshot
 
 NAME = "Feedback"
 SERVICE = Service.INVEST
@@ -17,7 +17,7 @@ SELECTORS = {}
 
 
 def visit(driver: WebDriver):
-    visit_url(driver, URL)
+    go_to_url(driver, URL, NAME)
 
 
 def should_be_here(driver: WebDriver):

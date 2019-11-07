@@ -15,7 +15,6 @@ from pages.common_actions import (
     check_for_sections,
     check_url,
     go_to_url,
-    take_screenshot,
     wait_for_page_load_after_action,
 )
 
@@ -48,7 +47,6 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, PAGE_TITLE)
     check_url(driver, URL, exact_match=False)
 
 

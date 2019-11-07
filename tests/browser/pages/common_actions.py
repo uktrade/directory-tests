@@ -742,10 +742,6 @@ def selectors_by_group(form_selectors: Dict[str, Selector]) -> Dict[str, Selecto
     return groups
 
 
-def visit_url(driver: WebDriver, url: str):
-    driver.get(url)
-
-
 def tick_captcha_checkbox(driver: WebDriver):
     dev_site_key = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
     g_recaptcha = find_element(

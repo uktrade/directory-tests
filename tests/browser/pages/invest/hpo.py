@@ -15,8 +15,8 @@ from pages.common_actions import (
     check_for_sections,
     check_if_element_is_not_visible,
     check_url,
+    go_to_url,
     take_screenshot,
-    visit_url,
 )
 
 NAME = "HPO"
@@ -158,7 +158,7 @@ UNEXPECTED_ELEMENTS = {
 
 def visit(driver: WebDriver, *, page_name: str = None):
     url = SubURLs[page_name] if page_name else URL
-    visit_url(driver, url)
+    go_to_url(driver, url, page_name or NAME)
 
 
 def should_be_here(driver: WebDriver, *, page_name: str):

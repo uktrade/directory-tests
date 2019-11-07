@@ -14,8 +14,8 @@ from pages.common_actions import (
     assertion_msg,
     check_for_sections,
     check_url,
+    go_to_url,
     take_screenshot,
-    visit_url,
 )
 
 NAME = "Region"
@@ -66,7 +66,7 @@ SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 def visit(driver: WebDriver, *, page_name: str = None):
     url = SubURLs[page_name] if page_name else URL
-    visit_url(driver, url)
+    go_to_url(driver, url, page_name or NAME)
 
 
 def should_be_here(driver: WebDriver, *, page_name: str):

@@ -14,8 +14,8 @@ from pages.common_actions import (
     check_for_sections,
     check_url,
     find_element,
+    go_to_url,
     take_screenshot,
-    visit_url,
 )
 
 NAME = "How to set up in the UK"
@@ -65,7 +65,7 @@ SELECTORS.update(common_selectors.INVEST_FOOTER)
 
 
 def visit(driver: WebDriver):
-    visit_url(driver, URL)
+    go_to_url(driver, URL, NAME)
 
 
 def should_be_here(driver: WebDriver):
