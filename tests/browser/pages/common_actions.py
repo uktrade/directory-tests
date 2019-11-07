@@ -360,6 +360,22 @@ def selenium_action(driver: WebDriver, message: str, *args):
         raise
 
 
+def wait_for_element_visibility(
+    driver: WebDriver, element: WebElement, *, time_to_wait: int = 3
+):
+    """Wait until element is visible."""
+    with selenium_action(
+        driver,
+        (
+            f"Element identified by '{element}' was not visible after waiting "
+            f"for {time_to_wait} seconds"
+        ),
+    ):
+        WebDriverWait(driver, time_to_wait).until(
+            expected_conditions.visibility_of(element)
+        )
+
+
 def wait_for_visibility(
     driver: WebDriver, selector: Selector, *, time_to_wait: int = 5
 ):
