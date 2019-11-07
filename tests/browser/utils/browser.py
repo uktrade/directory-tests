@@ -27,6 +27,7 @@ CAPABILITIES_TEMPLATES = {
                 "browserstack.timezone": "UTC",
                 "browserstack.use_w3c": True,
                 "browserstack.networkLogs": False,
+                "browserstack.console": "errors",
                 "project": "DIT",
                 "resolution": "1600x1200",
                 "build": None,
