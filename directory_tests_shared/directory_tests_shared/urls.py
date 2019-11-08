@@ -815,6 +815,7 @@ class URLs(Enum):
     )
     INVEST_SITEMAP = InvestUrl("sitemap.xml")
     INVEST_PIR = InvestUrl("perfectfit/")
+    INVEST_PIR_SUCCESS = InvestUrl("perfectfit/success/")
     INVEST_HPO = InvestUrl("#high-potential-opportunities")
     INVEST_HPO_CONTACT = InternationalUrl(
         "content/invest/high-potential-opportunities/contact/"
