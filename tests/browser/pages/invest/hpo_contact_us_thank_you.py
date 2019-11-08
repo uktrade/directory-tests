@@ -12,7 +12,6 @@ from pages import common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
-    check_if_element_is_not_visible,
     check_url,
     take_screenshot,
 )
@@ -49,10 +48,6 @@ SELECTORS.update(common_selectors.BETA_BAR)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
 SELECTORS.update(common_selectors.INVEST_FOOTER)
 
-UNEXPECTED_ELEMENTS = {
-    "breadcrumbs": {"itself": Selector(By.CSS_SELECTOR, "div.breadcrumbs")}
-}
-
 
 def should_be_here(driver: WebDriver, *, page_name: str):
     take_screenshot(driver, PAGE_TITLE)
@@ -62,12 +57,6 @@ def should_be_here(driver: WebDriver, *, page_name: str):
 
 def should_see_sections(driver: WebDriver, names: List[str]):
     check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
-
-
-def should_not_see_section(driver: WebDriver, name: str):
-    section = UNEXPECTED_ELEMENTS[name.lower()]
-    for key, selector in section.items():
-        check_if_element_is_not_visible(driver, selector, element_name=key)
 
 
 def download_all_pdfs(driver: WebDriver) -> List[Dict[str, bytes]]:

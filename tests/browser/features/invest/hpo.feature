@@ -141,34 +141,3 @@ Feature: Invest - High Potential Opportunities
       | selected                 |
       | Lightweight structures   |
       | Rail infrastructure      |
-
-
-  @bug
-  @TT-879
-  @fixed
-  @bug
-  @TT-518
-  @fixme
-  @TT-443
-  @contact-us
-  @dev-only
-  @captcha
-  Scenario Outline: Investors should not see breadcrumbs on the "Thank you for your enquiry" page
-    Given "Annette Geissinger" visits the "Invest - <selected> - Contact us" page
-
-    When "Annette Geissinger" fills out and submits the form
-
-    Then "Annette Geissinger" should be on the "Invest - Thank you for your enquiry - Contact us" page
-    Then "Annette Geissinger" should not see following section
-      | section          |
-      | Breadcrumbs      |
-
-    Examples: HPO pages
-      | selected                 |
-      | High productivity food production |
-
-    @full
-    Examples: HPO pages
-      | selected                 |
-      | Lightweight structures   |
-      | Rail infrastructure      |
