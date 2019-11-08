@@ -165,12 +165,13 @@ def then_should_receive_confirmation_email_from_govnotify(
 
 @then('"{actor_alias}" should receive an "{subject}" confirmation email')
 @then('"{actor_alias}" should receive a "{subject}" confirmation email')
+@then('"{actor_alias}" should receive "{subject}" confirmation email from "{service}"')
 @then('"{actor_alias}" should receive "{subject}" confirmation email')
 @then('"{actor_alias}" should receive "{subject}" email')
 def then_should_receive_confirmation_email_from_govnotify(
-        context: Context, actor_alias: str, subject: str):
+        context: Context, actor_alias: str, subject: str, *, service: str = None):
     generic_contact_us_should_receive_confirmation_email(
-        context, actor_alias, subject
+        context, actor_alias, subject, service=service
     )
 
 

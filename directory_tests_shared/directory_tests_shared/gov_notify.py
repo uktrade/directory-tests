@@ -6,7 +6,7 @@ from typing import List
 
 from retrying import retry
 
-from .clients import GOV_NOTIFY_CLIENT
+from .clients import GOV_NOTIFY_CLIENT, PIR_GOV_NOTIFY_CLIENT
 from .constants import (
     EMAIL_VERIFICATION_CODE_SUBJECT,
     EMAIL_VERIFICATION_MSG_SUBJECT,
@@ -117,13 +117,15 @@ def get_email_notification(from_email: str, to_email: str, subject: str) -> dict
 
 @retry(wait_fixed=5000, stop_max_attempt_number=5)
 def get_email_confirmation_notification(
-    email: str, *, subject: str = None, resent_code: bool = False
+    email: str, *, subject: str = None, resent_code: bool = False, service: str = None
 ) -> dict:
     subject = subject or EMAIL_VERIFICATION_MSG_SUBJECT
     logging.debug(f"Looking for email sent to '{email}' with subject: '{subject}'")
-    notifications = GOV_NOTIFY_CLIENT.get_all_notifications(template_type="email")[
-        "notifications"
-    ]
+    if service == "PIR":
+        client = PIR_GOV_NOTIFY_CLIENT
+    else:
+        client = GOV_NOTIFY_CLIENT
+    notifications = client.get_all_notifications(template_type="email")["notifications"]
 
     user_notifications = filter_by_recipient(notifications, email)
     email_confirmations = filter_by_subject(user_notifications, subject)

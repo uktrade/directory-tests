@@ -370,12 +370,12 @@ def generic_should_see_message(context: Context, actor_alias: str, message: str 
 # https://www.browserstack.com/automate/timeouts
 @retry(wait_fixed=5000, stop_max_attempt_number=7, wrap_exception=False)
 def generic_contact_us_should_receive_confirmation_email(
-    context: Context, actor_alias: str, subject: str
+    context: Context, actor_alias: str, subject: str, *, service: str = None
 ):
     avoid_browser_stack_idle_timeout_exception(context.driver)
     actor = get_actor(context, actor_alias)
     confirmation = get_email_confirmation_notification(
-        email=actor.email, subject=subject
+        email=actor.email, subject=subject, service=service
     )
     assert confirmation
 
