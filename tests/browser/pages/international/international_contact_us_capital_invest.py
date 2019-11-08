@@ -61,8 +61,8 @@ SELECTORS.update(common_selectors.ERROR_REPORTING)
 SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
-def visit(driver: WebDriver, *, page_name: str = None):
-    go_to_url(driver, URL, page_name or NAME)
+def visit(driver: WebDriver):
+    go_to_url(driver, URL, NAME)
 
 
 def should_be_here(driver: WebDriver):

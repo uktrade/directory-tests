@@ -63,8 +63,7 @@ SELECTORS.update(common_selectors.DOMESTIC_FOOTER)
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
-    take_screenshot(driver, page_name or NAME)
-    url = SubURLs[page_name.lower()] if page_name else URL
+    url = SubURLs[page_name] if page_name else URL
     go_to_url(driver, url, page_name or NAME)
 
 

@@ -56,7 +56,6 @@ SELECTORS.update(common_selectors.ERP_SAVE_FOR_LATER)
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
-    take_screenshot(driver, page_name or NAME)
     url = SubURLs[page_name]
     go_to_url(driver, url, page_name or NAME)
 
