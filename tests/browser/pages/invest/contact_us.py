@@ -23,6 +23,8 @@ from pages.common_actions import (
     take_screenshot,
     tick_captcha_checkbox,
 )
+from pages.common_autocomplete_callbacks import js_country_select
+from pages.invest import contact_us_thank_you
 
 NAME = "Contact us"
 SERVICE = Service.INVEST
@@ -47,8 +49,9 @@ SELECTORS = {
         "country": Selector(
             By.CSS_SELECTOR,
             "form[method=post] #js-country-select-select",
-            type=ElementType.SELECT,
+            type=ElementType.INPUT,
             is_visible=False,
+            autocomplete_callback=js_country_select,
         ),
         "organisation size": Selector(
             By.ID, "id_staff_number", type=ElementType.SELECT, is_visible=False
@@ -60,7 +63,10 @@ SELECTORS = {
         "i'm not a robot": IM_NOT_A_ROBOT,
         "hint": Selector(By.CSS_SELECTOR, "#content form div.form-hint"),
         "submit": Selector(
-            By.CSS_SELECTOR, "#content form button.button", type=ElementType.SUBMIT
+            By.CSS_SELECTOR,
+            "#content form button.button",
+            type=ElementType.SUBMIT,
+            next_page=contact_us_thank_you,
         ),
     },
 }
@@ -91,7 +97,7 @@ def generate_form_details(actor: Actor) -> dict:
         "phone": "0123456789",
         "company name": actor.company_name or "Automated test - company name",
         "website url": "https://example.com",
-        "country": None,
+        "country": True,
         "organisation size": None,
         "your plans": "This is a test message sent via automated tests",
     }
