@@ -484,6 +484,8 @@ Feature: Domestic - Contact us
 
 
   @TT-758
+  @dev-only
+  @captcha
   @capital-investment
   @international
   Scenario: International Enquirers should be able to get to contact the Capital Investment team
@@ -493,6 +495,27 @@ Feature: Domestic - Contact us
 
     Then "Robert" should be on the "International - Thank you for contacting the Capital Investment team" page
     And "Robert" should receive "Thank you for your enquiry" confirmation email
+    And "Robert" should see following sections
+      | sections          |
+      | Header            |
+      | Breadcrumbs       |
+      | Thank you message |
+      | What's next       |
+      | Error reporting   |
+      | Footer            |
+
+
+  @TT-758
+  @dev-only
+  @captcha
+  @international
+  Scenario: International Enquirers should be able to contact International Team
+    Given "Robert" got to the "International - Contact us" page via "Outside the UK -> Other"
+
+    When "Robert" fills out and submits the form
+
+    Then "Robert" should be on the "International - Thank you for your enquiry" page
+    And "Robert" should receive "Thank you for your international enquiry" confirmation email
     And "Robert" should see following sections
       | sections          |
       | Header            |

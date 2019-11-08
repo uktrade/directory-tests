@@ -212,6 +212,7 @@ class URLs(Enum):
     CONTACT_US_FORM_DOMESTIC_ENQUIRES = ContactUrl("domestic/enquiries/")
     CONTACT_US_FORM_EXPORT_ADVICE = ContactUrl("export-advice/comment/")
     CONTACT_US_FORM_INTERNATIONAL = ContactUrl("international/")
+    CONTACT_US_FORM_INTERNATIONAL_SUCCESS = ContactUrl("international/success/")
     CONTACT_US_GREAT_ACCOUNT = ContactUrl("triage/great-account/")
     CONTACT_US_GREAT_ACCOUNT_CH_LOGIN = ContactUrl(
         "triage/great-account/companies-house-login/"

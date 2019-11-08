@@ -26,7 +26,7 @@ from pages.common_actions import (
     tick_captcha_checkbox,
     tick_checkboxes,
 )
-from pages.domestic import contact_us_triage_domestic
+from pages.international import international_contact_us_thank_you
 
 NAME = "Contact us"
 SERVICE = Service.INTERNATIONAL
@@ -55,7 +55,7 @@ SELECTORS = {
             By.CSS_SELECTOR,
             "div.exred-triage-form button",
             type=ElementType.SUBMIT,
-            next_page=contact_us_triage_domestic,
+            next_page=international_contact_us_thank_you,
         ),
     }
 }
@@ -89,11 +89,11 @@ def generate_form_details(actor: Actor) -> dict:
 
 
 def fill_out(driver: WebDriver, details: dict):
-    form_selectors = SELECTORS["enter your details form"]
+    form_selectors = SELECTORS["form"]
     fill_out_input_fields(driver, form_selectors, details)
-    fill_out_textarea_fields(driver, form_selectors, details)
     check_radio(driver, form_selectors, details)
     pick_option(driver, form_selectors, details)
+    fill_out_textarea_fields(driver, form_selectors, details)
     tick_checkboxes(driver, form_selectors, details)
     tick_captcha_checkbox(driver)
 
