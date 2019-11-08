@@ -875,7 +875,8 @@ def pick_option(
             select = find_element(driver, selector, element_name=key, wait_for_it=False)
             option_value_selector = f"option[value='{option}']"
             option_element = select.find_element_by_css_selector(option_value_selector)
-            option_element.click()
+            with try_alternative_click_on_exception(driver, option_element):
+                option_element.click()
 
 
 def check_radio(
