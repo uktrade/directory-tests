@@ -13,7 +13,7 @@ load_run_time: &load_run_time
 # Machines configs
 machine_python3: &machine_python3
   docker:
-    - image: circleci/python:3.7.4
+    - image: circleci/python:3.8.0
 
 
 # Individual (shared) steps.
