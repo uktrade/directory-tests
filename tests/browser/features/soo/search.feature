@@ -10,7 +10,7 @@ Feature: SOO - Search for marketplace
   @soo-long-domestic
   @account-support
   @read-only
-  Scenario Outline: Visitors should be able to search for marketplaces to sell "<products>" in "<countries>"
+  Scenario Outline: Visitors should be able to search for marketplaces to sell "<products>" in "<country>"
     Given "Robert" visits the "Selling Online Overseas - <starting page>" page
 
     When "Robert" searches for marketplaces in "<country>" to sell "<products>"
