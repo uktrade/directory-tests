@@ -6,7 +6,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="directory_tests_shared",
-    version="1.0",
+    version="1.1",
     url="https://github.com/uktrade/directory-tests",
     license="MIT",
     author="Department for International Trade",
@@ -19,12 +19,12 @@ setup(
         "envparse>=0.2.0",
         "directory-api-client>=20.0.0",
         "directory-cms-client>=11.0.0",
-        "directory-sso-api-client>=6.1.0",
-        "notifications-python-client>=5.3.0",
+        "directory-sso-api-client>=6.2.0",
+        "notifications-python-client>=5.4.0",
         "parse>=1.12.1",
         "pdfminer2>=20151206",
         "retrying>=1.3.3",
-        "scrapy>=1.7.3",
+        "scrapy>=1.8.0",
     ],
     extras_require={},
     classifiers=[
