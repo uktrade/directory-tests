@@ -289,6 +289,9 @@ def hpo_should_receive_enquiry_confirmation_email(context: Context, actor_alias:
 
 def hpo_agent_should_receive_enquiry_email(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
+    logging.debug(
+        f"Looking for a notification sent to HPO agent: {HPO_AGENT_EMAIL_ADDRESS}"
+    )
     get_email_confirmations_with_matching_string(
         recipient_email=HPO_AGENT_EMAIL_ADDRESS,
         subject=HPO_AGENT_EMAIL_SUBJECT,

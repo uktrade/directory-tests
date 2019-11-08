@@ -210,12 +210,19 @@ def get_email_confirmations_with_matching_string(
     email_confirmations = filter_by_subject(user_notifications, subject)
     with_matching_string = filter_by_strings_in_body(email_confirmations, strings)
 
+    extra_message = ""
+    if not with_matching_string and email_confirmations:
+        extra_message = (
+            f"BTW. Here are other notifications for '{recipient_email}': "
+            f"{email_confirmations}"
+        )
+
     logging.debug(pformat(with_matching_string))
     assert len(with_matching_string) == 1, (
         f"Expected to find 1 email confirmation notification containing "
         f"'{strings}' in message body send to {recipient_email} but found "
-        f"{len(email_confirmations)}. BTW. Check what's the agent's email "
-        f"address used in the application configuration"
+        f"{len(with_matching_string)}. Check if you're using correct email address for "
+        f"the agent that supposed to receive it. {extra_message}"
     )
 
     return with_matching_string[0]
