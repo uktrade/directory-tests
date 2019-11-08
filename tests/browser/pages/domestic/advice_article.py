@@ -22,7 +22,7 @@ from pages.common_actions import (
 )
 from pages.domestic import actions as domestic_actions
 
-NAME = "Advice"
+NAME = "Advice article"
 SERVICE = Service.DOMESTIC
 TYPE = PageType.ARTICLE
 URL = URLs.DOMESTIC_ADVICE_ARTICLE.template
