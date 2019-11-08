@@ -112,6 +112,9 @@ Feature: Invest - High Potential Opportunities
   @TT-879
   @fixed
   @TT-443
+  @bug
+  @TT-1509
+  @fixed
   @dev-only
   @captcha
   @contact-us
@@ -121,16 +124,13 @@ Feature: Invest - High Potential Opportunities
     When "Annette Geissinger" fills out and submits the form
 
     Then "Annette Geissinger" should be on the "Invest - Thank you for your enquiry - Contact us" page
+    And "Annette Geissinger" should receive HPO enquiry confirmation email
+    And HPO Agent should receive HPO enquiry email from "Annette Geissinger"
     And "Annette Geissinger" should see following sections
       | Sections         |
       | Confirmation     |
       | Documents        |
       | Error reporting  |
-    And "Annette Geissinger" should receive HPO enquiry confirmation email
-#    @bug
-#    @TT-1509
-#    @fixme
-#    And HPO Agent should receive HPO enquiry email from "Annette Geissinger"
 
     Examples: HPO pages
       | selected                          |
