@@ -178,27 +178,27 @@ docker_browserstack: BROWSER_DOCKER_REMOVE_ALL
 	docker-compose -f docker-compose-browser.yml -p browser run browser_tests
 
 compile_requirements_browser:
-	@rm requirements_browser.txt
+	@rm -fr requirements_browser.txt
 	python3 -m piptools compile --quiet requirements_browser.in
 	@sed -i 's/^file.*/.\/directory_tests_shared\//' requirements_browser.txt
 
 compile_requirements_functional:
-	@rm requirements_functional.txt
+	@rm -fr requirements_functional.txt
 	python3 -m piptools compile --quiet requirements_functional.in
 	@sed -i 's/^\-e file.*/\-e .\/directory_tests_shared\//' requirements_functional.txt
 
 compile_requirements_smoke:
-	@rm requirements_smoke.txt
+	@rm -fr requirements_smoke.txt
 	python3 -m piptools compile --quiet requirements_smoke.in
 	@sed -i 's/^\-e file.*/\-e .\/directory_tests_shared\//' requirements_smoke.txt
 
 compile_requirements_load:
-	@rm requirements_load.txt
+	@rm -fr requirements_load.txt
 	python3 -m piptools compile --quiet requirements_load.in
 	@sed -i 's/^\-e file.*/\-e .\/directory_tests_shared\//' requirements_load.txt
 
 compile_requirements_test_tools:
-	@rm requirements_test_tools.txt
+	@rm -fr requirements_test_tools.txt
 	python3 -m piptools compile --quiet requirements_test_tools.in
 
 compile_all_requirements: compile_requirements_browser compile_requirements_functional compile_requirements_smoke compile_requirements_load compile_requirements_test_tools
