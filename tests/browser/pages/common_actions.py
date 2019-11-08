@@ -605,7 +605,7 @@ class wait_for_page_load_after_action(object):
     https://www.develves.net/blogs/asd/2017-03-04-selenium-waiting-for-page-load/
     """
 
-    def __init__(self, driver: WebDriver, *, timeout: int = 3):
+    def __init__(self, driver: WebDriver, *, timeout: int = 10):
         self.driver = driver
         self.timeout = timeout
 
@@ -632,7 +632,7 @@ class wait_for_page_load_after_action(object):
             if condition_function():
                 return True
             else:
-                time.sleep(0.1)
+                time.sleep(0.5)
         raise Exception(
             f"Timed out after {self.timeout}s of waiting for the new page to load"
         )
