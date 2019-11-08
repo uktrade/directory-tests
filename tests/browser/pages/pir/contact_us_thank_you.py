@@ -27,7 +27,7 @@ SELECTORS = {
         "message box": Selector(By.CSS_SELECTOR, "section div.message-box")
     }
 }
-SELECTORS.update(common_selectors.INTERNATIONAL_HEADER)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
 SELECTORS.update(common_selectors.BREADCRUMBS)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
 SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
