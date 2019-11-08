@@ -180,7 +180,8 @@ docker_browserstack: BROWSER_DOCKER_REMOVE_ALL
 compile_requirements_browser:
 	@rm -fr requirements_browser.txt
 	python3 -m piptools compile --quiet requirements_browser.in
-	@sed -i 's/^file.*/.\/directory_tests_shared\//' requirements_browser.txt
+	@sed -i '/^file.*/d' requirements_browser.txt
+	@sed -i '7i.\/directory_tests_shared\/' requirements_browser.txt
 
 compile_requirements_functional:
 	@rm -fr requirements_functional.txt
