@@ -448,7 +448,7 @@ jobs:
     environment:
       TEST_ENV: "dev"
       BROWSER: "firefox"
-      TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@eu-exit --tags=~@skip"
+      TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@eu-exit --tags=~@skip --tags=~@skip-in-firefox"
     <<: [
     *machine_python3,
     *steps_run_browser_tests,
@@ -470,7 +470,7 @@ jobs:
     environment:
       TEST_ENV: "dev"
       BROWSER: "firefox"
-      TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@full --tags=~@eu-exit --tags=~@skip"
+      TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@full --tags=~@eu-exit --tags=~@skip --tags=~@skip-in-firefox"
     <<: [
     *machine_python3,
     *steps_run_browser_tests,
@@ -492,7 +492,7 @@ jobs:
     environment:
       TEST_ENV: "stage"
       BROWSER: "firefox"
-      TAGS: "--tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@skip"
+      TAGS: "--tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@skip --tags=~@skip-in-firefox"
     <<: [
     *machine_python3,
     *steps_run_browser_tests,
@@ -514,7 +514,7 @@ jobs:
     environment:
       TEST_ENV: "stage"
       BROWSER: "firefox"
-      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@skip"
+      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@skip --tags=~@skip-in-firefox"
     <<: [
     *machine_python3,
     *steps_run_browser_tests,
@@ -536,7 +536,7 @@ jobs:
     environment:
       TEST_ENV: "uat"
       BROWSER: "firefox"
-      TAGS: "--tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@skip"
+      TAGS: "--tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@skip --tags=~@skip-in-firefox"
     <<: [
     *machine_python3,
     *steps_run_browser_tests,
@@ -558,7 +558,7 @@ jobs:
     environment:
       TEST_ENV: "uat"
       BROWSER: "firefox"
-      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@skip"
+      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@skip --tags=~@skip-in-firefox"
     <<: [
     *machine_python3,
     *steps_run_browser_tests,

@@ -52,6 +52,7 @@ Feature: International - Regional pages
   @CMS-215
   @link
   @map
+  @skip-in-firefox
   Scenario Outline: Visitors should be able to find out more about "<region>" using links on UK map
     Given "Robert" visits the "International - Regions" page
 
