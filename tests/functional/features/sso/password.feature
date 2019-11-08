@@ -1,8 +1,10 @@
+@sso
+@dev-only
+@captcha
 Feature: SSO password management
 
 
   @ED-2146
-  @sso
   @account
   @manage
   @password
@@ -21,7 +23,6 @@ Feature: SSO password management
   @TT-876
   @fixed
   @ED-2251
-  @sso
   @account
   @manage
   @password
@@ -39,7 +40,6 @@ Feature: SSO password management
 
 
   @ED-2251
-  @sso
   @account
   @manage
   @password
@@ -60,7 +60,6 @@ Feature: SSO password management
   @TT-1297
   @fixme
   @ED-2251
-  @sso
   @account
   @manage
   @password
@@ -76,7 +75,6 @@ Feature: SSO password management
 
 
   @ED-2146
-  @sso
   @account
   @manage
   @password
@@ -91,7 +89,6 @@ Feature: SSO password management
 
 
   @ED-2146
-  @sso
   @account
   @manage
   @password

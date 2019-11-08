@@ -96,6 +96,7 @@ Feature: Multi-user accounts
 
   @ED-3560
   @captcha
+  @dev-only
   @multi-user
   @add-collaborator
   @bug

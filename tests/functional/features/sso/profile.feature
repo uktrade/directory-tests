@@ -1,3 +1,6 @@
+@sso
+@dev-only
+@captcha
 Feature: SSO profile
 
 
@@ -5,7 +8,6 @@ Feature: SSO profile
   @TT-1823
   @fixed
   @ED-1757
-  @sso
   @login
   @verification
   @no-sso-email-verification-required
@@ -19,7 +21,6 @@ Feature: SSO profile
 
 
   @ED-1756
-  @sso
   @account
   @real-email-verification
   Scenario: Suppliers should receive an email verification msg after creating a standalone SSO/great.gov.uk account
@@ -32,7 +33,6 @@ Feature: SSO profile
 
 
   @ED-2145
-  @sso
   @account
   @no-sso-email-verification-required
   Scenario: Suppliers should not be able to register with the same email again
@@ -51,7 +51,6 @@ Feature: SSO profile
 
 
   @ED-2147
-  @sso
   @account
   @fake-sso-email-verification
   Scenario: Suppliers should be able to sign out and sign back in

@@ -59,6 +59,8 @@ Feature: Profile pages
   @ED-2267
   @sso
   @account
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario: Authenticated Users should be able to view Profile sub-pages
     Given "Peter Alder" created a "verified Individual" profile
