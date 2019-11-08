@@ -783,8 +783,11 @@ def fill_out_input_fields(
     for key, selector in input_selectors.items():
         value_to_type = form_details.get(key, None)
         if isinstance(value_to_type, bool):
-            if selector.autocomplete_callback:
-                logging.debug(f"Calling autocomplete_callback() for '{key}'")
+            if value_to_type and selector.autocomplete_callback:
+                logging.debug(
+                    f"value_to_type=True. Will call autocomplete_callback() for"
+                    f" '{key}'"
+                )
                 selector.autocomplete_callback(driver, value=value_to_type)
         else:
             if not value_to_type:
@@ -865,19 +868,9 @@ def pick_option(
             values = get_option_values(driver, selector)
             option = random.choice(values)
         logging.debug(f"Will select option: {option}")
-        if key == "country":
-            js_field_selector = Selector(By.ID, "js-country-select")
-            js_field = find_element(driver, js_field_selector)
-            js_field.click()
-            js_field.clear()
-            js_field.send_keys(option)
-            first_suggestion_selector = Selector(
-                By.CSS_SELECTOR, "#js-country-select__listbox li:nth-child(1)"
-            )
-            first_suggestion = find_element(
-                driver, first_suggestion_selector, wait_for_it=True
-            )
-            first_suggestion.click()
+        if selector.autocomplete_callback:
+            logging.debug(f"Calling autocomplete_callback() for '{key}'")
+            selector.autocomplete_callback(driver, value=option)
         else:
             select = find_element(driver, selector, element_name=key, wait_for_it=False)
             option_value_selector = f"option[value='{option}']"
