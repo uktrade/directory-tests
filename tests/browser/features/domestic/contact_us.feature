@@ -481,3 +481,23 @@ Feature: Domestic - Contact us
       | The UK -> Great.gov.uk account and services support                                 | Domestic - What can we help you with? - Domestic Contact us |
       | The UK -> Great.gov.uk account and services support -> Export opportunities service | Domestic - Great.gov.uk account and services support        |
       | The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk | Domestic - Great.gov.uk account and services support        |
+
+
+  @TT-758
+  @capital-investment
+  @international
+  Scenario: International Enquirers should be able to get to contact the Capital Investment team
+    Given "Robert" got to the "International - Contact the Capital Investment team" page via "Outside the UK -> Investing capital in the UK"
+
+    When "Robert" fills out and submits the form
+
+    Then "Robert" should be on the "International - Thank you for contacting the Capital Investment team" page
+    And "Robert" should receive "Thank you for your enquiry" confirmation email
+    And "Robert" should see following sections
+      | sections          |
+      | Header            |
+      | Breadcrumbs       |
+      | Thank you message |
+      | What's next       |
+      | Error reporting   |
+      | Footer            |

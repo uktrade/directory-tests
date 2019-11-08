@@ -663,6 +663,9 @@ class URLs(Enum):
     INTERNATIONAL_CAPITAL_INVEST_CONTACT = InternationalUrl(
         "content/capital-invest/contact/"
     )
+    INTERNATIONAL_CAPITAL_INVEST_CONTACT_SUCCESS = InternationalUrl(
+        "content/capital-invest/contact/success/"
+    )
     INTERNATIONAL_INDUSTRY_ADVANCED_MANUFACTURING = InternationalUrl(
         "content/about-uk/industries/advanced-manufacturing/"
     )

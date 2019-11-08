@@ -5,6 +5,7 @@ __all__ = [
     "landing",
     "international_contact_us",
     "international_contact_us_capital_invest",
+    "international_contact_us_capital_invest_thank_you",
     "international_contact_us_exporting_to_the_uk",
     "international_eu_exit_contact_us",
     "international_eu_exit_contact_us_thank_you",
