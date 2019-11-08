@@ -24,6 +24,7 @@ from pages.common_actions import (
     tick_captcha_checkbox,
     tick_checkboxes,
 )
+from pages.international import international_contact_us_capital_invest_thank_you
 
 NAME = "Contact the Capital Investment team"
 SERVICE = Service.INTERNATIONAL
@@ -46,7 +47,10 @@ SELECTORS = {
             By.ID, "id_terms_agreed", type=ElementType.CHECKBOX, is_visible=False
         ),
         "submit": Selector(
-            By.CSS_SELECTOR, "form[method=POST] button", type=ElementType.SUBMIT
+            By.CSS_SELECTOR,
+            "form[method=POST] button",
+            type=ElementType.SUBMIT,
+            next_page=international_contact_us_capital_invest_thank_you,
         ),
     }
 }
