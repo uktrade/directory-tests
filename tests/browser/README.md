@@ -82,14 +82,14 @@ TAG=ED-2366 BROWSER=Edge VERSIONS=18.0 make browserstack
 To run all scenarios on [BrowserStack](https://www.browserstack.com/automate) with `behave` command (always defaults to `Chrome`):  
 ```bash
 cd tests/browser
-BROWSER_ENVIRONMENT=remote BROWSER=chrome AUTO_RETRY=true behave -k --format progress3 --no-logcapture --stop --tags=~@wip --tags=~@skip --tags=~@fixme --tags=~@decommissioned
+BROWSER_ENVIRONMENT=remote BROWSER=chrome AUTO_RETRY=true behave -k --format progress3 --no-logcapture --stop --tags=~@wip --tags=~@skip --tags=~@fixme
 ```
 
 
 To run specific scenario on [BrowserStack](https://www.browserstack.com/automate) with `behave` command):  
 ```bash
 cd tests/browser
-BROWSER_ENVIRONMENT=remote BROWSER=Edge AUTO_RETRY=true behave -k --format progress3 --no-logcapture --stop --tags=~@wip --tags=~@skip --tags=~@fixme --tags=~@decommissioned  --tags={YOUR_TAG}
+BROWSER_ENVIRONMENT=remote BROWSER=Edge AUTO_RETRY=true behave -k --format progress3 --no-logcapture --stop --tags=~@wip --tags=~@skip --tags=~@fixme --tags={YOUR_TAG}
 ```
 
 
