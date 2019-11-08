@@ -27,6 +27,7 @@ from pages.common_actions import (
     tick_captcha_checkbox,
     tick_checkboxes,
 )
+from pages.common_autocomplete_callbacks import js_country_select
 
 NAME = "HPO Contact us"
 NAMES = [
@@ -55,7 +56,11 @@ SELECTORS = {
         "company name": Selector(By.ID, "id_company_name", type=ElementType.INPUT),
         "website url": Selector(By.ID, "id_website_url", type=ElementType.INPUT),
         "country": Selector(
-            By.ID, "js-country-select-select", type=ElementType.SELECT, is_visible=False
+            By.ID,
+            "js-country-select-select",
+            type=ElementType.INPUT,
+            is_visible=False,
+            autocomplete_callback=js_country_select,
         ),
         "organisation size": Selector(
             By.ID, "id_company_size", type=ElementType.SELECT
@@ -165,7 +170,7 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
         "phone": "0123456789",
         "company name": actor.company_name or "Automated test - company name",
         "website url": "https://browser.tests.com",
-        "country": None,
+        "country": True,
         "organisation size": None,
         "comment": "This form was submitted by Automated test",
         "aquaculture": True,
