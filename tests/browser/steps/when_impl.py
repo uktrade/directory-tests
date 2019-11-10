@@ -149,7 +149,7 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     check_for_errors(context.driver.page_source, context.driver.current_url)
     has_action(page, "should_be_here")
     if hasattr(page, "SubURLs"):
-        special_page_name = page_name.split(" - ")[1]
+        special_page_name = page_name.split(" - ")[1].lower()
         page.should_be_here(context.driver, page_name=special_page_name)
     else:
         page.should_be_here(context.driver)
