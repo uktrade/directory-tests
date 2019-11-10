@@ -35,6 +35,7 @@ SubURLs = {
     f"{NAME} (UK business)": URLs.ERP_BUSINESS_SALES_VOLUME_BEFORE_BREXIT.absolute,
     f"{NAME} (UK importer)": URLs.ERP_IMPORTER_SALES_VOLUME_BEFORE_BREXIT.absolute,
 }
+SubURLs = {key.lower(): val for key, val in SubURLs.items()}
 NAMES = list(SubURLs.keys())
 
 SELECTORS = {

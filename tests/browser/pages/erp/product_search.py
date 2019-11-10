@@ -37,6 +37,7 @@ SubURLs = {
     f"{NAME} (UK consumer)": URLs.ERP_CONSUMER_PRODUCT_SEARCH.absolute,
     f"{NAME} (UK importer)": URLs.ERP_IMPORTER_PRODUCT_SEARCH.absolute,
 }
+SubURLs = {key.lower(): val for key, val in SubURLs.items()}
 NAMES = list(SubURLs.keys())
 
 PRODUCT_CATEGORIES_SELECTOR = Selector(By.CSS_SELECTOR, "#content form a.govuk-link")
