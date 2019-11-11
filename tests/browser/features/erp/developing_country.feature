@@ -412,6 +412,9 @@ Feature: ERP - An exporter from developing country
   @TT-2136
   @save-for-later
   @restore-session
+  @bug
+  @TT-2098
+  @fixed
   Scenario Outline: An exporter from developing country should be able to resume progress giving feedback from "<expected>" page
     Given "Robert" got to "<expected>" ERP page as "exporter from developing country"
 
@@ -436,10 +439,4 @@ Feature: ERP - An exporter from developing country
       | What outcome are you seeking for (Developing country)     |
       | Business details (Developing country)                     |
       | Personal details (Developing country)                     |
-
-    @bug
-    @TT-2098
-    @fixme
-    Examples: stages at which user can save progress
-      | expected                                                  |
       | Summary (Developing country)                              |

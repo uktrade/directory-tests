@@ -573,6 +573,9 @@ Feature: ERP - UK business
   @TT-2116
   @save-for-later
   @restore-session
+  @bug
+  @TT-2098
+  @fixed
   Scenario Outline: A UK business should be able to resume progress giving feedback from "<expected>" page
     Given "Robert" got to "<expected>" ERP page as "UK business"
 
@@ -597,10 +600,4 @@ Feature: ERP - UK business
       | What outcome are you seeking for (UK business)     |
       | Business details (UK business)                     |
       | Personal details (UK business)                     |
-
-    @bug
-    @TT-2098
-    @fixme
-    Examples: stages at which user can save progress
-      | expected              |
-      | Summary (UK business) |
+      | Summary (UK business)                              |

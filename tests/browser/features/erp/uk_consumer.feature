@@ -227,6 +227,9 @@ Feature: ERP - UK consumer
   @TT-2056
   @save-for-later
   @restore-session
+  @bug
+  @TT-2098
+  @fixed
   Scenario Outline: A "<uk consumer>" should be able to resume progress giving feedback from "<expected>" page
     Given "Robert" got to "<expected>" ERP page as "<uk consumer>"
 
@@ -248,11 +251,5 @@ Feature: ERP - UK consumer
       | Summary (UK consumer)                  | individual consumer |
       | Consumer type (UK consumer)            | consumer group      |
       | Summary (UK consumer)                  | consumer group      |
-
-    @bug
-    @TT-2098
-    @fixme
-    Examples: stages at which user can save progress
-      | expected                               | uk consumer         |
       | Consumer group details (UK consumer)   | consumer group      |
       | Personal details (UK consumer)         | individual consumer |
