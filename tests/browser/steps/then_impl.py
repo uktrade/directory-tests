@@ -411,7 +411,7 @@ def generic_contact_us_should_receive_confirmation_email_containing_message(
     )
 
 
-@retry(wait_fixed=5000, stop_max_attempt_number=15)
+@retry(wait_fixed=5000, stop_max_attempt_number=5)
 def generic_a_notification_should_be_sent(
     context: Context, actor_alias: str, action: str, subject: str
 ):
