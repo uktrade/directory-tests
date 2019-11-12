@@ -34,6 +34,7 @@ from directory_tests_shared.settings import (
     BASICAUTH_USER,
     USE_BASIC_AUTH,
 )
+from directory_tests_shared.utils import red
 
 REQUEST_EXCEPTIONS = (
     BaseHTTPError,
@@ -128,7 +129,7 @@ def make_request(
     :param no_filename_in_multipart_form_data: (optional) remove filename parameter from multipart form data
     :return: Response
     """
-    from tests.functional.utils.generic import assertion_msg, log_response, red
+    from tests.functional.utils.generic import assertion_msg, log_response
 
     with assertion_msg("Can't make a request without a valid URL!"):
         assert url is not None

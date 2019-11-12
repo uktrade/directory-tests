@@ -7,21 +7,19 @@ from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
 
 from directory_tests_shared.pdf import NoPDFMinerLogEntriesFilter
 from directory_tests_shared.settings import AUTO_RETRY, AUTO_RETRY_MAX_ATTEMPTS
+from directory_tests_shared.utils import blue, green, red
 from tests.functional.utils.context_utils import (
     get_company,
     initialize_scenario_data,
     update_company,
 )
 from tests.functional.utils.generic import (
-    blue,
     delete_supplier_data_from_dir,
     delete_supplier_data_from_sso,
     extract_form_errors,
     extract_main_error,
     extract_section_error,
-    green,
     print_response,
-    red,
 )
 from tests.functional.utils.request import REQUEST_EXCEPTIONS
 

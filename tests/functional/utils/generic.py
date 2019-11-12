@@ -20,7 +20,6 @@ from behave.runner import Context
 from bs4 import BeautifulSoup
 from langdetect import DetectorFactory, detect_langs
 from requests import Response
-from termcolor import cprint
 
 from directory_constants import choices
 from directory_tests_shared import URLs
@@ -29,7 +28,14 @@ from directory_tests_shared.clients import (
     SSO_TEST_API_CLIENT,
 )
 from directory_tests_shared.constants import SECTORS, TEST_IMAGES_DIR, JPEGs, PNGs
-from directory_tests_shared.utils import extract_by_css, rare_word, sentence
+from directory_tests_shared.utils import (
+    blue,
+    extract_by_css,
+    green,
+    rare_word,
+    red,
+    sentence,
+)
 from tests.functional.utils.context_utils import (
     CaseStudy,
     Company,
@@ -461,18 +467,6 @@ def assertion_msg(message: str, *args):
                     break
         traceback.print_tb(tb)
         raise
-
-
-def red(x: str):
-    cprint(x, "red", attrs=["bold"])
-
-
-def green(x: str):
-    cprint(x, "green", attrs=["bold"])
-
-
-def blue(x: str):
-    cprint(x, "blue", attrs=["bold"])
 
 
 def surround(text: str, tag: str):

@@ -11,6 +11,7 @@ from typing import List, Tuple, Union
 from urllib.parse import urlsplit
 
 from scrapy.selector import Selector as ScrapySelector
+from termcolor import cprint
 
 import parse
 from .constants import OPERATING_COUNTRIES, PRODUCT_CATEGORIES, RARE_WORDS, SECTORS
@@ -249,3 +250,18 @@ def check_url_path_matches_template(template: str, url: str):
     with assertion_msg(error):
         assert result
     logging.debug(f"Provided URL: {url} matches given URL path template: {template}")
+
+
+def red(x: str):
+    """Print out a message in red to console."""
+    cprint(x, "red", attrs=["bold"])
+
+
+def green(x: str):
+    """Print out a message in green to console."""
+    cprint(x, "green", attrs=["bold"])
+
+
+def blue(x: str):
+    """Print out a message in blue to console."""
+    cprint(x, "blue", attrs=["bold"])
