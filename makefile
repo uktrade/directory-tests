@@ -11,15 +11,6 @@ clean:
 	-rm -fr ./tests/smoke/reports/*.xml
 	-rm -fr ./reports/*.csv
 
-requirements_load:
-	pip install -r requirements_load.txt
-
-requirements_smoke:
-	pip install -r requirements_smoke.txt
-
-requirements_functional:
-	pip install -r requirements_functional.txt
-
 pep8:
 	flake8 .
 
@@ -176,6 +167,18 @@ docker_browserstack: BROWSER_DOCKER_REMOVE_ALL
 	$(BROWSER_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose-browser.yml -p browser build && \
 	docker-compose -f docker-compose-browser.yml -p browser run browser_tests
+
+requirements_browser:
+	pip install -r requirements_browser.txt
+
+requirements_functional:
+	pip install -r requirements_functional.txt
+
+requirements_load:
+	pip install -r requirements_load.txt
+
+requirements_smoke:
+	pip install -r requirements_smoke.txt
 
 compile_requirements_browser:
 	@rm -fr requirements_browser.txt
