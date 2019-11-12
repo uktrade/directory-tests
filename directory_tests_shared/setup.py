@@ -16,15 +16,9 @@ setup(
     long_description_content_type="text/markdown",
     include_package_data=True,
     install_requires=[
-        "envparse>=0.2.0",
-        "directory-api-client>=20.0.0",
-        "directory-cms-client>=11.0.0",
-        "directory-sso-api-client>=6.2.0",
-        "notifications-python-client>=5.4.0",
-        "parse>=1.12.1",
-        "pdfminer2>=20151206",
-        "retrying>=1.3.3",
-        "scrapy>=1.8.0",
+        line.strip()
+        for line in open("requirements.txt", "r").readlines()
+        if (line.strip() and not line.startswith("#"))
     ],
     extras_require={},
     classifiers=[
@@ -34,7 +28,7 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
         "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
 )
