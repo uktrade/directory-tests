@@ -61,11 +61,12 @@ service-identity==18.1.0  # via scrapy
 sigauth==4.1.1            # via directory-client-core
 six==1.13.0               # via automat, cryptography, geventhttpclient-wheels, locustio, mohawk, parsel, pdfminer2, protego, pyhamcrest, pyopenssl, retrying, scrapy, w3lib
 sqlparse==0.3.0           # via django
-twisted==19.7.0           # via scrapy
-urllib3==1.25.6           # via requests
+termcolor==1.1.0
+twisted==19.10.0          # via scrapy
+urllib3==1.25.7           # via requests
 w3lib==1.21.0             # via directory-client-core, parsel, scrapy
 werkzeug==0.16.0          # via flask
-zope.interface==4.6.0     # via scrapy, twisted
+zope.interface==4.7.1     # via scrapy, twisted
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools==41.6.0        # via pyhamcrest, zope.interface

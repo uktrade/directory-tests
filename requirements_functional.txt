@@ -28,7 +28,7 @@ envparse==0.2.0
 future==0.18.2            # via notifications-python-client
 hyperlink==19.0.0         # via twisted
 idna==2.8                 # via hyperlink, requests
-importlib-metadata==0.23  # via jsonschema, pluggy, pytest
+importlib-metadata==0.23  # via jsonschema
 incremental==17.5.0       # via twisted
 jsonschema==3.1.1
 langdetect==1.0.7
@@ -53,7 +53,7 @@ pydispatcher==2.0.5       # via scrapy
 pyhamcrest==1.9.0         # via twisted
 pyjwt==1.7.1              # via notifications-python-client
 pyopenssl==19.0.0         # via scrapy
-pyparsing==2.4.4          # via packaging
+pyparsing==2.4.5          # via packaging
 pyrsistent==0.15.5        # via jsonschema
 pytest==5.2.2
 pytz==2019.3              # via django
@@ -67,13 +67,13 @@ six==1.13.0               # via automat, behave, cryptography, jsonschema, langd
 soupsieve==1.9.5          # via beautifulsoup4
 sqlparse==0.3.0           # via django
 termcolor==1.1.0
-twisted==19.7.0           # via scrapy
-urllib3==1.25.6           # via requests
+twisted==19.10.0          # via scrapy
+urllib3==1.25.7           # via requests
 w3lib==1.21.0             # via directory-client-core, parsel, scrapy
 wcwidth==0.1.7            # via pytest
 xmltodict==0.12.0
 zipp==0.6.0               # via importlib-metadata
-zope.interface==4.6.0     # via scrapy, twisted
+zope.interface==4.7.1     # via scrapy, twisted
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools==41.6.0        # via jsonschema, pyhamcrest, zope.interface

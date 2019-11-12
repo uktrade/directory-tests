@@ -57,11 +57,11 @@ six==1.13.0               # via automat, behave, cryptography, mohawk, parse-typ
 soupsieve==1.9.5          # via beautifulsoup4
 sqlparse==0.3.0           # via django
 termcolor==1.1.0
-twisted==19.7.0           # via scrapy
-urllib3==1.25.6
+twisted==19.10.0          # via scrapy
+urllib3==1.25.7
 w3lib==1.21.0             # via directory-client-core, parsel, scrapy
 xmltodict==0.12.0
-zope.interface==4.6.0     # via scrapy, twisted
+zope.interface==4.7.1     # via scrapy, twisted
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools==41.6.0        # via pyhamcrest, zope.interface
