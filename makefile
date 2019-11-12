@@ -180,6 +180,9 @@ requirements_load:
 requirements_smoke:
 	pip install -r requirements_smoke.txt
 
+requirements_tests_shared:
+	pip install -r ./directory_tests_shared/requirements.txt
+
 compile_requirements_browser:
 	@rm -fr requirements_browser.txt
 	python3 -m piptools compile --quiet requirements_browser.in
@@ -205,7 +208,11 @@ compile_requirements_test_tools:
 	@rm -fr requirements_test_tools.txt
 	python3 -m piptools compile --quiet requirements_test_tools.in
 
-compile_all_requirements: compile_requirements_browser compile_requirements_functional compile_requirements_smoke compile_requirements_load compile_requirements_test_tools
+compile_requirements_tests_shared:
+	@rm -fr ./directory_tests_shared/requirements.txt
+	python3 -m piptools compile --quiet --no-annotate --output-file ./directory_tests_shared/requirements.txt ./directory_tests_shared/requirements.in
+
+compile_all_requirements: compile_requirements_browser compile_requirements_functional compile_requirements_smoke compile_requirements_load compile_requirements_test_tools compile_requirements_tests_shared
 
 find_duplicated_scenario_names: SHELL:=/usr/bin/env bash  # set shell for this target to bash
 find_duplicated_scenario_names:
