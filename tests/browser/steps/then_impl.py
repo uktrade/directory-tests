@@ -27,7 +27,7 @@ from directory_tests_shared.gov_notify import (
     get_verification_link,
 )
 from directory_tests_shared.pdf import extract_text_from_pdf
-from directory_tests_shared.utils import check_for_errors, get_comparison_details
+from directory_tests_shared.utils import blue, check_for_errors, get_comparison_details
 from pages import (
     common_language_selector,
     domestic,
@@ -427,10 +427,12 @@ def generic_a_notification_should_be_sent(
     assert len(submissions) == 1, error
 
     if not submissions[0]["is_sent"]:
-        logging.warning(
+        message = (
             f"A '{action}' notification entitled '{subject}' was NOT sent to "
             f"'{actor.email}' yet!"
         )
+        logging.warning(message)
+        blue(message)
 
 
 def generic_a_notification_should_be_sent_to_specific_dit_office(
