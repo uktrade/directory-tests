@@ -840,14 +840,8 @@ def domestic_search_for_phrase_on_page(
 def domestic_find_more_about_search_result_type(
     context: Context, actor_alias: str, type_of: str
 ):
-    should_be_on_page(
-        context,
-        actor_alias,
-        f"{domestic.search_results.SERVICE} - {domestic.search_results.NAME}",
-    )
-    page = get_last_visited_page(context, actor_alias)
-    has_action(page, "click_on_result_of_type")
-    page.click_on_result_of_type(context.driver, type_of)
+    should_be_on_page(context, actor_alias, get_full_page_name(domestic.search_results))
+    domestic.search_results.click_on_result_of_type(context.driver, type_of)
 
 
 def domestic_search_result_has_more_than_one_page(
