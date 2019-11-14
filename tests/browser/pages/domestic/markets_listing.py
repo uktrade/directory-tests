@@ -12,7 +12,7 @@ from pages import ElementType, common_selectors
 from pages.common_actions import Selector, check_url, go_to_url, take_screenshot
 from pages.domestic import actions as domestic_actions
 
-NAME = "Markets"
+NAME = "Market listing"
 SERVICE = Service.DOMESTIC
 TYPE = PageType.LISTING
 URL = URLs.DOMESTIC_MARKETS.absolute

@@ -18,14 +18,13 @@ from pages.common_actions import (
     check_if_element_is_not_visible,
     find_and_click_on_page_element,
     find_element,
-    go_to_url,
 )
 from pages.domestic import actions as domestic_actions
 
 NAME = "Advice article"
 SERVICE = Service.DOMESTIC
 TYPE = PageType.ARTICLE
-URL = URLs.DOMESTIC_ADVICE_ARTICLE.template
+URL = URLs.DOMESTIC_ADVICE_ARTICLE.absolute_template
 
 ARTICLE_NAME = Selector(By.CSS_SELECTOR, "article h1")
 ARTICLE_TEXT = Selector(By.CSS_SELECTOR, ".article-content")
@@ -61,10 +60,6 @@ SELECTORS = {
 SELECTORS.update(common_selectors.DOMESTIC_HEADER)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
 SELECTORS.update(common_selectors.DOMESTIC_FOOTER)
-
-
-def visit(driver: WebDriver):
-    go_to_url(driver, URL, NAME)
 
 
 def should_be_here(driver: WebDriver):

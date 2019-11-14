@@ -7,18 +7,14 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
+from directory_tests_shared.utils import check_url_path_matches_template
 from pages import ElementType, common_selectors
-from pages.common_actions import (
-    Selector,
-    check_for_sections,
-    check_url,
-    take_screenshot,
-)
+from pages.common_actions import Selector, check_for_sections, take_screenshot
 
 NAME = "Marketplace"
 SERVICE = Service.SOO
 TYPE = PageType.SEARCH
-URL = URLs.SOO_MARKET_DETAILS.absolute
+URL = URLs.SOO_MARKET_DETAILS.absolute_template
 PAGE_TITLE = "Marketplace details | Selling Online Overseas"
 
 
@@ -47,7 +43,7 @@ SELECTORS.update(common_selectors.DOMESTIC_FOOTER)
 
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
-    check_url(driver, URL, exact_match=False)
+    check_url_path_matches_template(URL, driver.current_url)
 
 
 def should_see_sections(driver: WebDriver, names: List[str]):

@@ -17,6 +17,7 @@ from pages.common_actions import (
     go_to_url,
     wait_for_page_load_after_action,
 )
+from pages.domestic import actions as domestic_actions
 
 NAME = "Advice landing"
 TYPE = PageType.LANDING
@@ -64,3 +65,7 @@ def open_any_article(driver: WebDriver) -> str:
     with wait_for_page_load_after_action(driver):
         link.click()
     return selected_link["text"]
+
+
+def search(driver: WebDriver, phrase: str):
+    domestic_actions.search(driver, phrase)
