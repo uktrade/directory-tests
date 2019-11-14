@@ -32,7 +32,7 @@ Feature: Domestic - Great site search
 
   @bug
   @XOT-840
-  @fixme
+  @fixed
   @XOT-760
   Scenario Outline: Visitors should be able to find out more about the "<type of>" search results
     Given "Robert" searched using "<phrase>" on the "Domestic - <specific>" page
@@ -42,12 +42,18 @@ Feature: Domestic - Great site search
     Then "Robert" should be on one of the "<expected>" pages
 
     Examples: event, market, service and opportunity
-      | specific | phrase         | type of     | expected                           |
-      | Home     | Food           | Event       | Events - Event                     |
-      | Advice   | Transport      | Article     | Domestic - Advice                  |
-      | Advice   | export finance | Service     | Domestic - Get Finance             |
-      | Markets  | Food           | Market      | Something                          |
-      | Services | Manufacture    | Opportunity | Export Opportunities - Opportunity |
+      | specific       | phrase | type of            | expected                                                                          |
+      | Home           | Food   | Event              | Events - Event                                                                    |
+      | Market listing | Food   | Online marketplace | Selling Online Overseas - Marketplace, Domestic - Markets - guide, Events - event |
+
+    @bug
+    @XOT-1208
+    @fixme
+    Examples: event, market, service and opportunity
+      | specific       | phrase         | type of            | expected                                                                                            |
+      | Advice landing | export finance | Service            | Domestic - Get Finance, Export Opportunities - Home, Selling Online Overseas - Home, Events - event |
+      | Advice landing | Transport      | Article            | Domestic - Advice article, Domestic - Markets                                                       |
+      | Services       | Manufacture    | Export opportunity | Export Opportunities - Opportunity                                                                  |
 
 
   @XOT-760
