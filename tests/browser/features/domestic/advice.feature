@@ -28,7 +28,7 @@ Feature: Domestic - Advice articles
 
     When "Robert" opens any article on the list
 
-    Then "Robert" should be on the "Domestic - Advice - article list" page
+    Then "Robert" should be on the "Domestic - Advice article list" page
     And "Robert" should see following sections
       | sections                 |
       | Header                   |
@@ -47,7 +47,7 @@ Feature: Domestic - Advice articles
 
     When "Robert" opens any article on the list
 
-    Then "Robert" should be on the "Domestic - Advice - Article" page
+    Then "Robert" should be on the "Domestic - Advice article" page
     And "Robert" should see following sections
       | sections        |
       | Header          |
@@ -96,7 +96,7 @@ Feature: Domestic - Advice articles
     Then "Robert" should be on the "Domestic - <target>" page or be redirected to "International - Landing" page
 
     Examples:
-      | breadcrumb   | target                |
-      | great.gov.uk | Home                  |
-      | Advice       | Advice Landing        |
-      | Article list | Advice - article list |
+      | breadcrumb   | target              |
+      | great.gov.uk | Home                |
+      | Advice       | Advice Landing      |
+      | Article list | Advice article list |
