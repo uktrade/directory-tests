@@ -5,6 +5,7 @@ import sys
 import traceback
 import uuid
 from contextlib import contextmanager
+from difflib import SequenceMatcher
 from random import choice, randint
 from types import BuiltinFunctionType
 from typing import List, Tuple, Union
@@ -235,21 +236,59 @@ def get_comparison_details(description: str) -> Tuple[BuiltinFunctionType, int]:
     return matching_comparison_details[0]
 
 
-def check_url_path_matches_template(template: str, url: str):
-    path = urlsplit(url).path
+def format_matching_parts(template: str, url: str) -> Tuple[str, str]:
+    """Format matching parts of both strings in bold"""
+    sequence = SequenceMatcher(None, template, url)
+    blocks = sequence.get_matching_blocks()
+    start = "\033[1m"  # start bold text
+    end = "\033[0;0m"  # end bold text
+    template_matches = ""
+    url_matches = ""
+    for idx, block in enumerate(blocks):
+        template_matches += f"{start}{template[block.a:(block.a + block.size)]}{end}"
+        url_matches += f"{start}{url[block.b:(block.b + block.size)]}{end}"
+        if idx + 1 < len(blocks):
+            template_matches += f"{template[(block.a + block.size):blocks[idx + 1].a]}"
+            url_matches += f"{url[(block.b + block.size):blocks[idx + 1].b]}"
+    return template_matches, url_matches
 
-    # ensure that both URL template and checked URL start in the same way
-    if path.startswith("/"):
-        path = path[1:]
-    if template.startswith("/"):
-        template = template[1:]
 
+def check_url_path_matches_template(template: str, url_or_path: str):
+    """Check if given URL matches expected URL path or URL template.
+
+    Possible checks:
+        url url -> url
+        url path -> path
+        path url -> path
+        path path -> path
+    """
     parser = parse.compile(template)
-    result = parser.parse(path)
-    error = f"Provided URL: {url} does not match URL path template: {template}"
+
+    if template.startswith("http") and url_or_path.startswith("http"):
+        result = parser.parse(url_or_path)
+        template_matches, url_matches = format_matching_parts(template, url_or_path)
+        error = f"Provided URL: {url_matches} does not match: {template_matches}"
+        success = f"Provided URL: {url_or_path} matches URL template: {template}"
+    else:
+        path = urlsplit(url_or_path).path
+
+        # ensure that both template and checked string start in the same way
+        if path.startswith("/"):
+            path = path[1:]
+        if template.startswith("/"):
+            template = template[1:]
+
+        result = parser.parse(path)
+        template_matches, path_matches = format_matching_parts(template, path)
+        error = (
+            f"Path '{path_matches}' of provided URL: {url_or_path} does not match: "
+            f"{template_matches}"
+        )
+        success = f"Path part {path} of {url_or_path} matches template: {template}"
+
     with assertion_msg(error):
         assert result
-    logging.debug(f"Provided URL: {url} matches given URL path template: {template}")
+        logging.debug(success)
 
 
 def red(x: str):
