@@ -2,6 +2,7 @@
 """Then step implementations."""
 import logging
 from collections import defaultdict
+from inspect import signature
 from typing import List, Union
 from urllib.parse import urlparse
 
@@ -71,7 +72,13 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     has_action(page, "should_be_here")
     if hasattr(page, "SubURLs"):
         special_page_name = page_name.split(" - ")[1].lower()
-        page.should_be_here(context.driver, page_name=special_page_name)
+        if signature(page.should_be_here).parameters.get("page_name"):
+            page.should_be_here(context.driver, page_name=special_page_name)
+        else:
+            raise TypeError(
+                f"{page.__name__}.should_be_here() doesn't accept 'page_name' keyword "
+                f"argument but it should as this Page Object has 'SubURLs' attribute."
+            )
     else:
         page.should_be_here(context.driver)
     update_actor(context, actor_alias, visited_page=page)
