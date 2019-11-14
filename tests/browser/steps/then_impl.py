@@ -573,16 +573,20 @@ def generic_should_be_on_one_of_the_pages(
     context: Context, actor_alias: str, expected_pages: str
 ):
     expected_pages = [page.strip() for page in expected_pages.split(",")]
+    urls = [get_page_object(name).URL for name in expected_pages]
+    logging.debug(f"Will check {context.driver.current_url} against {urls}")
     results = defaultdict()
     for page_name in expected_pages:
         try:
             should_be_on_page(context, actor_alias, page_name)
             results[page_name] = True
+            break
         except AssertionError:
             results[page_name] = False
 
     with assertion_msg(
-        f"{actor_alias} didn't see any of expected pages, instead it's on {context.driver.current_url}"
+        f"{actor_alias} expected to land on one of the following pages: {urls}, "
+        f"instead we got to: {context.driver.current_url}"
     ):
         assert any(list(results.values()))
 
