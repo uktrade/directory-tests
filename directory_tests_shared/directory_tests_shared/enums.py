@@ -161,6 +161,7 @@ class PageType(Enum):
     LANDING = "landing"
     LISTING = "listing"
     OPTION = "option"
+    OPPORTUNITY = "opportunity"
     PROFILE = "profile"
     REGION = "region"
     SEARCH = "search"

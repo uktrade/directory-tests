@@ -592,6 +592,9 @@ class URLs(Enum):
 
     # ExOpps UI - Export Opportunities
     EXOPPS_LANDING = ExOppsUrl("")
+    EXOPPS_OPPORTUNITY = ExOppsUrl(
+        "opportunities/{slug}", template="opportunities/{slug}"
+    )
     EXOPPS_SITEMAP = ExOppsUrl("sitemap.xml")
 
     # Find a Buyer
