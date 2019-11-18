@@ -51,3 +51,74 @@ Feature: Domestic - Home Page
     When "Robert" decides to find out more about "exporting goods from the UK"
 
     Then "Robert" should be on the "Market Access Database - Landing" page
+
+
+  @XOT-1216
+  @govuk
+  @sections
+  Scenario: Any Exporter should be able to find out more about "preparing business for Brexit"
+    Given "Robert" visits the "Domestic - Home" page
+
+    When "Robert" decides to find out more about "preparing business for Brexit"
+
+    Then "Robert" should be on the "GOV.UK - Prepare your business or organisation for Brexit" page
+
+
+  @XOT-1216
+  @govuk
+  @sections
+  Scenario: Any Exporter should be able to find out more how to "prepare business for Brexit" by going to one of the "brexit related" pages on GOV.UK
+    Given "Robert" visits the "Domestic - Home" page
+
+    When "Robert" decides to use one of the "brexit related links to GOV.UK"
+
+    Then "Robert" should be on the "GOV.UK - Brexit related article" page
+
+
+  @XOT-1217
+  @markets
+  @sections
+  Scenario Outline: Any Exporter should be able to get to the export markets listing using "<export market guides>" link on Home page
+    Given "Robert" visits the "Domestic - Home" page
+
+    When "Robert" decides to "<export market guides>"
+
+    Then "Robert" should be on the "Domestic - markets listing" page
+
+    Examples:
+      | export market guides      |
+      | view export market guides |
+      | view all market guides    |
+
+
+  @XOT-1217
+  @markets
+  @sections
+  Scenario: Exporters should be able to quickly filter export markets by one of the preselected sectors
+    Given "Robert" visits the "Domestic - Home" page
+
+    When "Robert" decides to use one of the "sector selector quick links"
+
+    Then "Robert" should be on the "Domestic - filtered markets listing" page
+
+
+  @XOT-1217
+  @markets
+  @sections
+  Scenario: Exporters should be able to filter export markets by the sector their business is in
+    Given "Robert" visits the "Domestic - Home" page
+
+    When "Robert" decides to find new markets for his business
+
+    Then "Robert" should be on the "Domestic - filtered markets listing" page
+
+
+  @XOT-1218
+  @markets
+  @sections
+  Scenario: Any Exporter should be able to learn what's new on our site
+    Given "Robert" visits the "Domestic - Home" page
+
+    When "Robert" decides to use one of the "what's new links"
+
+    Then "Robert" should get to a working page
