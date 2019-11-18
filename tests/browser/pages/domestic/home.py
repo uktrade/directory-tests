@@ -3,7 +3,8 @@
 import logging
 import random
 import time
-from typing import List
+from types import ModuleType
+from typing import List, Union
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -12,6 +13,7 @@ from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
 from pages import ElementType, common_selectors
 from pages.common_actions import (
+    Actor,
     Selector,
     assertion_msg,
     check_for_sections,
@@ -21,10 +23,12 @@ from pages.common_actions import (
     find_element,
     find_elements,
     go_to_url,
+    pick_option,
+    submit_form,
     take_screenshot,
     wait_for_page_load_after_action,
 )
-from pages.domestic import actions as domestic_actions
+from pages.domestic import actions as domestic_actions, markets_listing
 
 NAME = "Home"
 SERVICE = Service.DOMESTIC
@@ -48,7 +52,7 @@ SELECTORS = {
         "prepare for brexit banner": Selector(
             By.CSS_SELECTOR, "section.prepare-for-brexit-section"
         ),
-        "prepare your business for brexit": Selector(
+        "preparing business for brexit": Selector(
             By.CSS_SELECTOR,
             "section.prepare-for-brexit-section a.chevron-banner__link",
             type=ElementType.LINK,
@@ -75,10 +79,14 @@ SELECTORS = {
             By.CSS_SELECTOR, "section.sector-potential-section"
         ),
         "select your sector": Selector(By.ID, "id_sector", type=ElementType.SELECT),
-        "show markets": Selector(By.ID, "sector-submit", type=ElementType.SUBMIT),
-        "sector selector quick links": Selector(
+        "show markets": Selector(
             By.CSS_SELECTOR,
-            "section.sector-potential-section div.sector-selector-quick-links ul li a",
+            "#id_sector-container ~ button",
+            type=ElementType.SUBMIT,
+            next_page=markets_listing,
+        ),
+        "sector selector quick links": Selector(
+            By.CSS_SELECTOR, "div.sector-selector-quick-links ul li a"
         ),
         "view all market guides": Selector(
             By.CSS_SELECTOR, "section.sector-potential-section a.view-markets"
@@ -105,7 +113,7 @@ SELECTORS = {
         "watch video": Selector(
             By.ID, "hero-campaign-section-watch-video-button", type=ElementType.LINK
         ),
-        "card links": Selector(
+        "what's new links": Selector(
             By.CSS_SELECTOR,
             "#content section:nth-child(6) a.card-link",
             type=ElementType.LINK,
@@ -203,3 +211,22 @@ def open_any_article(driver: WebDriver) -> str:
 
 def search(driver: WebDriver, phrase: str):
     domestic_actions.search(driver, phrase)
+
+
+def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
+    result = {"select your sector": None}
+
+    if custom_details:
+        result.update(custom_details)
+
+    logging.debug(f"Generated form details: {result}")
+    return result
+
+
+def fill_out(driver: WebDriver, details: dict):
+    form_selectors = SELECTORS["find new markets"]
+    pick_option(driver, form_selectors, details)
+
+
+def submit(driver: WebDriver) -> Union[ModuleType, None]:
+    return submit_form(driver, SELECTORS["find new markets"])
