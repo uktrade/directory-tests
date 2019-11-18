@@ -187,6 +187,8 @@ def when_actor_fills_out_and_submits_the_form(context: Context, actor_alias: str
     generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=context.table, retry_on_errors=True, go_back=True)
 
 
+@when('"{actor_alias}" decides to find new markets for her business')
+@when('"{actor_alias}" decides to find new markets for his business')
 @when('"{actor_alias}" fills out and submits the form')
 def when_actor_fills_out_and_submits_the_form(context: Context, actor_alias: str):
     generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=context.table)
