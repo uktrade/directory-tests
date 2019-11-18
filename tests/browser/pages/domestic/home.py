@@ -88,7 +88,9 @@ SELECTORS = {
         "export goods from the uk section": Selector(
             By.CSS_SELECTOR, "section.export-goods-from-uk"
         ),
-        "find out more": Selector(By.CSS_SELECTOR, "section.export-goods-from-uk a"),
+        "exporting goods from the uk": Selector(
+            By.CSS_SELECTOR, "section.export-goods-from-uk a"
+        ),
     },
     "what's new": {
         "what's new section": Selector(

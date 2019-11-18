@@ -40,3 +40,13 @@ Feature: Domestic - Home Page
     And "Robert" closes the window with promotional video
 
     Then "Robert" should not see the window with promotional video
+
+
+  @XOT-1215
+  @sections
+  Scenario: Any Exporter should be able to get to the "Market Access Database" using link on the home page
+    Given "Robert" visits the "Domestic - Home" page
+
+    When "Robert" decides to find out more about "exporting goods from the UK"
+
+    Then "Robert" should be on the "Market Access Database - Landing" page

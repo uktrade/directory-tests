@@ -131,6 +131,7 @@ class Service(Enum):
     INVEST = "Invest"
     ISD = "ISD"
     LINKEDIN = "LinkedIn"
+    MADDB = "Market Access Database"
     PIR = "PIR"
     PROFILE = "Profile"
     SOO = "Selling Online Overseas"
