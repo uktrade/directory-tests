@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """When step implementations."""
 import logging
+import random
 from collections import defaultdict
 from types import MethodType
 from typing import Dict
@@ -39,11 +40,15 @@ from pages.common_actions import (
     avoid_browser_stack_idle_timeout_exception,
     barred_actor,
     find_and_click_on_page_element,
+    find_elements,
+    find_selector_by_name,
     get_actor,
     get_full_page_name,
     get_last_visited_page,
     go_to_url,
+    scroll_to,
     selenium_action,
+    try_alternative_click_on_exception,
     unauthenticated_actor,
     update_actor,
     wait_for_page_load_after_action,
@@ -574,6 +579,20 @@ def generic_click_on_random_industry(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_any_article")
     page.open_any_article(context.driver)
+
+
+def generic_click_on_random_element(
+    context: Context, actor_alias: str, elements_name: str
+):
+    page = get_last_visited_page(context, actor_alias)
+    selector = find_selector_by_name(page.SELECTORS, elements_name)
+    elements = find_elements(context.driver, selector)
+    element = random.choice(elements)
+    logging.debug(f"Will click on: {element.text.strip()}")
+    scroll_to(context.driver, element)
+    with wait_for_page_load_after_action(context.driver, timeout=10):
+        with try_alternative_click_on_exception(context.driver, element):
+            element.click()
 
 
 def generic_click_on_random_marketplace(context: Context, actor_alias: str):

@@ -25,6 +25,7 @@ from steps.when_impl import (
     fas_search_for_companies,
     fas_view_article,
     fas_view_selected_company_profile,
+    generic_click_on_random_element,
     generic_click_on_random_industry,
     generic_click_on_random_marketplace,
     generic_download_all_pdfs,
@@ -117,6 +118,13 @@ def when_actor_views_page_in_selected_language(
 def when_actor_decides_to_click_on_page_element(
         context, actor_alias, element_name):
     click_on_page_element(context, actor_alias, element_name)
+
+
+@when('"{actor_alias}" decides to use one of the "{elements_name}"')
+def when_actor_clicks_on_random_element(
+        context: Context, actor_alias: str, elements_name: str
+):
+    generic_click_on_random_element(context, actor_alias, elements_name)
 
 
 @when('"{actor_alias}" searches for companies using "{keyword}" keyword in "{sector}" sector')
