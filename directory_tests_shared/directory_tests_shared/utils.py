@@ -6,6 +6,7 @@ import traceback
 import uuid
 from contextlib import contextmanager
 from difflib import SequenceMatcher
+from enum import Enum
 from random import choice, randint
 from types import BuiltinFunctionType
 from typing import List, Tuple, Union
@@ -236,21 +237,109 @@ def get_comparison_details(description: str) -> Tuple[BuiltinFunctionType, int]:
     return matching_comparison_details[0]
 
 
-def format_matching_parts(template: str, url: str) -> Tuple[str, str]:
-    """Format matching parts of both strings in bold"""
-    sequence = SequenceMatcher(None, template, url)
-    blocks = sequence.get_matching_blocks()
-    start = "\033[1m"  # start bold text
-    end = "\033[0;0m"  # end bold text
-    template_matches = ""
-    url_matches = ""
+class ANSIIColor(Enum):
+    """ANSII text color codes
+    see: https://en.wikipedia.org/wiki/ANSI_escape_code
+    """
+
+    BLACK = "30"
+    DARK_RED = "31"
+    DARK_GREEN = "32"
+    RED = "33"
+    DARK_BLUE = "34"
+    PURPLE = "35"
+    BLUE = "36"
+    GRAY = "37"
+    BRIGHT_BLACK = "1;30"
+    BRIGHT_RED = "1;31"
+    BRIGHT_GREEN = "1;32"
+    BRIGHT_YELLOW = "1;33"
+    BRIGHT_BLUE = "1;34"
+    BRIGHT_PURPLE = "1;35"
+    BRIGHT_CYAN = "1;36"
+    BRIGHT_GRAY = "1;37"
+
+
+class ANSIIStyle:
+    """Generate ANSII text style & color escape start & end codes
+    see: https://en.wikipedia.org/wiki/ANSI_escape_code
+    """
+
+    start = ""
+    end = ""
+
+    def __init__(
+        self,
+        *,
+        bold: bool = False,
+        italic: bool = False,
+        underline: bool = False,
+        strikethrough: bool = False,
+        color: ANSIIColor = None,
+    ):
+        tmp = []
+        if bold:
+            tmp.append("1")
+        if italic:
+            tmp.append("3")
+        if underline:
+            tmp.append("4")
+        if strikethrough:
+            tmp.append("9")
+        if color:
+            tmp.append(color.value)
+        if tmp:
+            self.start = f"\033[{';'.join(tmp)}m"
+            self.end = "\033[0m"
+
+
+def red(x: str):
+    """Print out a message in red to console."""
+    cprint(x, "red", attrs=["bold"])
+
+
+def green(x: str):
+    """Print out a message in green to console."""
+    cprint(x, "green", attrs=["bold"])
+
+
+def blue(x: str):
+    """Print out a message in blue to console."""
+    cprint(x, "blue", attrs=["bold"])
+
+
+def format_matching_parts(
+    string_a: str,
+    string_b: str,
+    *,
+    invert: bool = False,
+    style: ANSIIStyle = ANSIIStyle(),
+) -> Tuple[str, str]:
+    """Format matching parts of both strings in desired style & color"""
+    if invert:
+        start = ""
+        end = ""
+        invert_start = style.start
+        invert_end = style.end
+    else:
+        start = style.start
+        end = style.end
+        invert_start = ""
+        invert_end = ""
+
+    string_a_matches = ""
+    string_b_matches = ""
+    blocks = SequenceMatcher(isjunk=None, a=string_a, b=string_b).get_matching_blocks()
     for idx, block in enumerate(blocks):
-        template_matches += f"{start}{template[block.a:(block.a + block.size)]}{end}"
-        url_matches += f"{start}{url[block.b:(block.b + block.size)]}{end}"
+        if idx == 0 and block.a != 0:
+            string_a_matches += f"{invert_start}{string_a[:block.a]}{invert_end}"
+            string_b_matches += f"{invert_start}{string_b[:block.b]}{invert_end}"
+        string_a_matches += f"{start}{string_a[block.a:(block.a + block.size)]}{end}"
+        string_b_matches += f"{start}{string_b[block.b:(block.b + block.size)]}{end}"
         if idx + 1 < len(blocks):
-            template_matches += f"{template[(block.a + block.size):blocks[idx + 1].a]}"
-            url_matches += f"{url[(block.b + block.size):blocks[idx + 1].b]}"
-    return template_matches, url_matches
+            string_a_matches += f"{invert_start}{string_a[(block.a + block.size):blocks[idx + 1].a]}{invert_end}"
+            string_b_matches += f"{invert_start}{string_b[(block.b + block.size):blocks[idx + 1].b]}{invert_end}"
+    return string_a_matches, string_b_matches
 
 
 def check_url_path_matches_template(template: str, url_or_path: str):
@@ -289,18 +378,3 @@ def check_url_path_matches_template(template: str, url_or_path: str):
     with assertion_msg(error):
         assert result
         logging.debug(success)
-
-
-def red(x: str):
-    """Print out a message in red to console."""
-    cprint(x, "red", attrs=["bold"])
-
-
-def green(x: str):
-    """Print out a message in green to console."""
-    cprint(x, "green", attrs=["bold"])
-
-
-def blue(x: str):
-    """Print out a message in blue to console."""
-    cprint(x, "blue", attrs=["bold"])
