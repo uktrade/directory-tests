@@ -42,6 +42,7 @@ from steps.then_impl import (
     share_page_via_email_should_have_article_details,
     should_be_on_page,
     should_be_on_page_or_be_redirected_to_page,
+    should_be_on_working_page,
     should_not_see_sections,
     should_see_links_in_specific_location,
     should_see_page_in_preferred_language,
@@ -59,6 +60,11 @@ def then_actor_should_be_on_page_on_international_page(
     should_be_on_page_or_be_redirected_to_page(
         context, actor_alias, page_name, redirect_page
     )
+
+
+@then('"{actor_alias}" should get to a working page')
+def then_actor_should_be_on_working_page(context, actor_alias):
+    should_be_on_working_page(context, actor_alias)
 
 
 @then('"{actor_alias}" should be on the "{page_name}" page')

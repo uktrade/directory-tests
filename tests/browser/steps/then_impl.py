@@ -87,6 +87,11 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     )
 
 
+def should_be_on_working_page(context: Context, actor_alias: str):
+    check_for_errors(context.driver.page_source, context.driver.current_url)
+    logging.debug(f"{actor_alias} is on {context.driver.current_url}")
+
+
 def should_be_on_page_or_be_redirected_to_page(
     context: Context, actor_alias: str, page_name: str, redirect_page: str
 ):
