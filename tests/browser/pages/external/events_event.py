@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 """Events Event Page Object."""
-import logging
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -22,4 +20,3 @@ SELECTORS = {
 
 def should_be_here(driver: WebDriver):
     check_url(driver, URL, exact_match=False)
-    logging.debug("All expected elements are visible on '%s' page", NAME)
