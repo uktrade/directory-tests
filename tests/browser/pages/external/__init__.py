@@ -4,6 +4,8 @@ __all__ = [
     "eori_home",
     "events_event",
     "events_home",
+    "govuk_article_page",
+    "govuk_prepare_business_for_brexit",
     "maddb_home",
     "visit_britain_home",
 ]

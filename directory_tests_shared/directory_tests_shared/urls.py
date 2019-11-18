@@ -654,6 +654,9 @@ class URLs(Enum):
     FORMS_API_ADMIN = FormsApiUrl("admin/")
     FORMS_API_TESTAPI = FormsApiUrl("testapi/submissions-by-email/{email}/")
 
+    # Gov.UK links
+    GOVUK_WILDCARD = Url("https://www.gov.uk/", "{slug}", template="{slug}")
+
     # New International site
     INTERNATIONAL_LANDING = InternationalUrl("")
     INTERNATIONAL_CONTACT_US = InternationalUrl("contact/")

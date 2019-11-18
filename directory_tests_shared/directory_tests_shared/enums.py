@@ -127,6 +127,7 @@ class Service(Enum):
     FACEBOOK = "Facebook"
     FAS = "Find a Supplier"
     GENERIC = "Generic"
+    GOVUK = "GOV.UK"
     INTERNATIONAL = "International"
     INVEST = "Invest"
     ISD = "ISD"
