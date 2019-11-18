@@ -355,6 +355,9 @@ class URLs(Enum):
     DOMESTIC_LANDING = DomesticUrl("")
     DOMESTIC_LANDING_UK = DomesticUrl("?lang=en-gb")
     DOMESTIC_MARKETS = DomesticUrl("markets/")
+    DOMESTIC_MARKETS_FILTERED = DomesticUrl(
+        "markets/?sector={sector_id}", template="markets/?sector={sector_id}"
+    )
     DOMESTIC_MARKETS_GUIDE = DomesticUrl(
         "markets/{country}/", template="markets/{country}/"
     )
