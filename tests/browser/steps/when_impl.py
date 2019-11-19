@@ -588,7 +588,8 @@ def generic_click_on_random_element(
     selector = find_selector_by_name(page.SELECTORS, elements_name)
     elements = find_elements(context.driver, selector)
     element = random.choice(elements)
-    logging.debug(f"Will click on: {element.text.strip()}")
+    href = f" → {element.get_attribute('href')}" if element.tag_name == "a" else ""
+    logging.debug(f"Will click on: '{element.text.strip()}'{href}")
     scroll_to(context.driver, element)
     with wait_for_page_load_after_action(context.driver, timeout=10):
         with try_alternative_click_on_exception(context.driver, element):
