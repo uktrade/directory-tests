@@ -1,3 +1,4 @@
+@dev-only
 @erp
 @uk_consumer
 Feature: ERP - An exporter from developing country

@@ -1,3 +1,4 @@
+@dev-only
 @erp
 @uk_business
 Feature: ERP - UK business
