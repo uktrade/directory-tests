@@ -23,7 +23,6 @@ Feature: ERP - common pages
       | Sections |
       | Header   |
       | Beta bar |
-      | Go back  |
       | Form     |
       | Footer   |
 
