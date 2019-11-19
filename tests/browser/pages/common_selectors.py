@@ -284,6 +284,13 @@ ERP_BETA = {
         "feedback": Selector(By.CSS_SELECTOR, "#content div.govuk-phase-banner p a"),
     }
 }
+ERP_BETA_SHORT = {
+    "beta bar": {
+        "beta bar itself": Selector(By.CSS_SELECTOR, "#content div.govuk-phase-banner"),
+        "beta": Selector(By.CSS_SELECTOR, "#content div.govuk-phase-banner p strong"),
+        "text": Selector(By.CSS_SELECTOR, "#content div.govuk-phase-banner p span"),
+    }
+}
 ERP_BREADCRUMBS = {
     "breadcrumbs": {
         "breadcrumbs bar": Selector(By.CSS_SELECTOR, "#content nav.breadcrumbs"),

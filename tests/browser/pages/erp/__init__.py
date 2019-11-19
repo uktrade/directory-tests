@@ -16,6 +16,7 @@ __all__ = [
     "developing_country_business_details",
     "developing_country_select",
     "finished",
+    "holding",
     "landing",
     "market_size",
     "outocome",
