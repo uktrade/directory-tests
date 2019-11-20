@@ -26,6 +26,7 @@ from steps.then_impl import (
     generic_should_see_expected_page_content,
     generic_should_see_form_choices,
     generic_should_see_message,
+    generic_should_see_prepopulated_fields,
     header_check_favicon,
     header_check_logo,
     hpo_agent_should_receive_enquiry_email,
@@ -266,6 +267,11 @@ def then_actor_should_be_on_one_of_the_pages(context: Context, actor_alias: str,
 @then('"{actor_alias}" should see form fields populated with his company details')
 def then_form_should_be_prepopulated(context: Context, actor_alias: str):
     soo_contact_form_should_be_prepopulated(context, actor_alias)
+
+
+@then('"{actor_alias}" should see following fields populated with values provided on other forms')
+def then_form_should_be_prepopulated_w_personal(context: Context, actor_alias: str):
+    generic_should_see_prepopulated_fields(context, actor_alias, context.table)
 
 
 @then("Google Tag Manager properties should be set to proper values")

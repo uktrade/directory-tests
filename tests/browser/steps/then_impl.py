@@ -41,6 +41,7 @@ from pages.common_actions import (
     assertion_msg,
     avoid_browser_stack_idle_timeout_exception,
     get_actor,
+    get_full_page_name,
     get_last_visited_page,
     update_actor,
 )
@@ -606,6 +607,38 @@ def soo_contact_form_should_be_prepopulated(context: Context, actor_alias: str):
 
     has_action(page, "check_if_populated")
     page.check_if_populated(context.driver, form_data)
+
+
+def generic_should_see_prepopulated_fields(
+    context: Context, actor_alias: str, table: Table
+):
+    table.require_columns(["form", "fields"])
+    expected_form_fields = {
+        row.get("form"): [
+            field.strip() for field in row.get("fields").split(",") if field
+        ]
+        for row in table
+    }
+    error = f"Expected to check at least 1 list of form fields but got 0"
+    assert expected_form_fields, error
+
+    actor = get_actor(context, actor_alias)
+    page = get_last_visited_page(context, actor_alias)
+
+    field_values_to_check = {}
+    for form_name, fields in expected_form_fields.items():
+        form_page_object = get_page_object(form_name)
+        form_full_page_name = get_full_page_name(form_page_object)
+        submitted_form_data = actor.forms_data[form_full_page_name]
+        for field in fields:
+            field_values_to_check[field] = submitted_form_data[field]
+
+    logging.debug(
+        f"Will check if form on '{get_full_page_name(page)}' is populated with "
+        f"following values: {field_values_to_check}"
+    )
+    has_action(page, "check_if_populated")
+    page.check_if_populated(context.driver, field_values_to_check)
 
 
 def generic_check_gtm_datalayer_properties(context: Context, table: Table):
