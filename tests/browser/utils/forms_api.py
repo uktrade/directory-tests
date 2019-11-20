@@ -12,14 +12,23 @@ def filter_by_action(submissions: List[dict], action: str) -> list:
 
 def filter_by_sender_email(submissions: List[dict], email: str) -> list:
     return list(
-        filter(lambda x:
-               "sender" in x["meta"] and x["meta"]["sender"]["email_address"] == email,
-               submissions)
+        filter(
+            lambda x: "sender" in x["meta"]
+            and x["meta"]["sender"]["email_address"] == email,
+            submissions,
+        )
     )
 
 
 def filter_by_subject(submissions: List[dict], action: str) -> list:
-    return list(filter(lambda x: x["meta"]["subject"] == action, submissions))
+    return list(
+        filter(
+            lambda x: x["meta"]["subject"] == action
+            if "subject" in x["meta"]
+            else None,
+            submissions,
+        )
+    )
 
 
 def filter_by_uuid_last_name(submissions: List[dict], uuid: str) -> list:
@@ -48,7 +57,7 @@ def find_form_submissions(email: str) -> List[dict]:
 
 
 def find_form_submissions_by_subject_and_action(
-        email: str, subject: str, action: str
+    email: str, subject: str, action: str
 ) -> List[dict]:
     submissions = find_form_submissions(email)
     by_subject = filter_by_subject(submissions, subject)
@@ -57,7 +66,7 @@ def find_form_submissions_by_subject_and_action(
 
 @retry(wait_fixed=5000, stop_max_attempt_number=2)
 def find_form_submissions_for_dit_office(
-        mailbox: str, sender: str, *, uuid: str = None
+    mailbox: str, sender: str, *, uuid: str = None
 ) -> List[dict]:
     submissions = find_form_submissions(mailbox)
     by_sender = filter_by_sender_email(submissions, sender)
