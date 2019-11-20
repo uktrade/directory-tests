@@ -816,14 +816,6 @@ def soo_find_and_open_random_marketplace(
     )
 
 
-def soo_find_random_marketplace_and_apply_via_dit(
-    context: Context, actor_alias: str, country: str, category: str
-):
-    soo_find_and_open_random_marketplace(context, actor_alias, country, category)
-    click_on_page_element(context, actor_alias, "Apply now")
-    domestic.contact_us_soo_long_your_business.should_be_here(context.driver)
-
-
 def domestic_submit_soo_contact_us_form(
     context: Context, actor_alias: str, custom_details_table: Table
 ):
