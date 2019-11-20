@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Domestic - First page of Long SOO Contact us form"""
+"""Domestic - 3/4 page of Long SOO Contact us form"""
 import logging
 import random
 from types import ModuleType
@@ -10,85 +10,54 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
-from pages import ElementType
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Actor,
     Selector,
     check_random_radio,
     check_url,
     fill_out_input_fields,
-    go_to_url,
     submit_form,
     take_screenshot,
 )
-from pages.domestic import contact_us_soo_long_your_experience
+from pages.domestic import contact_us_soo_4_your_experience
 
-NAME = "Long Domestic (Organisation details)"
+NAME = "About your products (SOO)"
 SERVICE = Service.DOMESTIC
 TYPE = PageType.CONTACT_US
-URL = URLs.CONTACT_US_SOO_ORGANISATION_DETAILS.absolute
+URL = URLs.CONTACT_US_SOO_ORGANISATION_CONTACT_APPLICANT_DETAILS.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
-        "under £100,000": Selector(
-            By.ID,
-            "id_organisation-details-turnover_0",
-            type=ElementType.RADIO,
-            group_id=1,
-        ),
-        "£100,000 to £500,000": Selector(
-            By.ID,
-            "id_organisation-details-turnover_1",
-            type=ElementType.RADIO,
-            group_id=1,
-        ),
-        "£500,001 to £2million": Selector(
-            By.ID,
-            "id_organisation-details-turnover_2",
-            type=ElementType.RADIO,
-            group_id=1,
-        ),
-        "more than £2million": Selector(
-            By.ID,
-            "id_organisation-details-turnover_3",
-            type=ElementType.RADIO,
-            group_id=1,
-        ),
         "sku": Selector(
-            By.ID, "id_organisation-details-sku_count", type=ElementType.INPUT
+            By.ID, "id_applicant-details-sku_count", type=ElementType.INPUT
         ),
         "yes": Selector(
             By.ID,
-            "id_organisation-details-trademarked_0",
+            "id_applicant-details-trademarked_0",
             type=ElementType.RADIO,
-            group_id=2,
+            group_id=1,
         ),
         "no": Selector(
             By.ID,
-            "id_organisation-details-trademarked_1",
+            "id_applicant-details-trademarked_1",
             type=ElementType.RADIO,
-            group_id=2,
+            group_id=1,
         ),
         "submit": Selector(
             By.CSS_SELECTOR,
-            "div.exred-triage-form button",
+            "form button.button[type=submit]",
             type=ElementType.SUBMIT,
-            next_page=contact_us_soo_long_your_experience,
+            next_page=contact_us_soo_4_your_experience,
         ),
     }
 }
-
-OTHER_SELECTORS = {
-    "postcode": Selector(
-        By.ID, "id_organisation-company_postcode", type=ElementType.INPUT
-    )
-}
-
-
-def visit(driver: WebDriver):
-    go_to_url(driver, URL, NAME)
+SELECTORS.update(common_selectors.DOMESTIC_HEADER)
+SELECTORS.update(common_selectors.BREADCRUMBS)
+SELECTORS.update(common_selectors.ERROR_REPORTING)
+SELECTORS.update(common_selectors.DOMESTIC_FOOTER)
 
 
 def should_be_here(driver: WebDriver):

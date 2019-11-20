@@ -258,7 +258,14 @@ class URLs(Enum):
         "selling-online-overseas/your-experience/"
     )
     CONTACT_US_SOO_ORGANISATION_CONTACT_DETAILS = ContactUrl(
-        "selling-online-overseas/contact-details/"
+        "selling-online-overseas/contact-details/",
+        template="selling-online-overseas/contact-details/?market={market}",
+    )
+    CONTACT_US_SOO_ORGANISATION_CONTACT_APPLICANT = ContactUrl(
+        "selling-online-overseas/applicant/"
+    )
+    CONTACT_US_SOO_ORGANISATION_CONTACT_APPLICANT_DETAILS = ContactUrl(
+        "selling-online-overseas/applicant-details/"
     )
     CONTACT_US_SOO_ORGANISATION_SUCCESS = ContactUrl("selling-online-overseas/success/")
 
