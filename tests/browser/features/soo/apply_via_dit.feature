@@ -37,53 +37,10 @@ Feature: SOO - Apply via DIT
 
     When "Robert" decides to "Apply now"
 
-    Then "Robert" should be on the "Domestic - Long Domestic (Your Business)" page
-
-    Examples: products and countries
-      | country   | products                 |
-      | Australia | Clothing and accessories |
-
-
-  @XOT-749
-  @exopps
-  @captcha
-  @dev-only
-  @soo-long-domestic
-  @account-support
-  Scenario Outline: Logged in Domestic "Selling Online Overseas" Enquirers should be able to fill the Enquiry page
-    Given "Robert" has a verified standalone SSO/great.gov.uk account
-    And "Robert" is signed in
-    And "Robert" found a marketplace in "<country>" to sell "<products>"
-
-    When "Robert" decides to "Apply now"
-
-    Then "Robert" should be on the "Domestic - Long Domestic (Your Business)" page
-
-    When "Robert" submits the SOO contact-us form
-      | field                         | value   |
-      | I don't have a company number | checked |
-
-    Then "Robert" should be on the "Domestic - Long Domestic (Thank you for your enquiry)" page
-
-    Examples: products and countries
-      | country   | products                 |
-      | Australia | Clothing and accessories |
-
-
-  @XOT-741
-  @exopps
-  @captcha
-  @dev-only
-  @soo-long-domestic
-  @account-support
-  Scenario Outline: Logged in Domestic "Selling Online Overseas" Enquirers with a Business profile should be able to get pre-populated Enquiry page
-    Given "Robert" has created a great.gov.uk account for a "LTD, PLC or Royal Charter"
-    And "Robert" found a marketplace in "<country>" to sell "<products>"
-
-    When "Robert" decides to "Apply now"
-
-    Then "Robert" should be on the "Domestic - Long Domestic (Your Business)" page
-    And "Robert" should see form fields populated with his company details
+    Then "Robert" should be on the "Domestic - Contact details (SOO)" page
+    And "Robert" should see following fields populated with values provided on other forms
+      | form               | fields |
+      | SSO - Registration | email  |
 
     Examples: products and countries
       | country   | products                 |
@@ -91,20 +48,37 @@ Feature: SOO - Apply via DIT
 
 
   @XOT-689
-  @zendesk
+  @XOT-741
   @exopps
   @captcha
   @dev-only
   @soo-long-domestic
   @account-support
-  Scenario Outline: Logged in Domestic "Selling Online Overseas" Enquirers should receive a enquiry confirmation email after submitting the contact us form
-    Given "Robert" has a verified standalone SSO/great.gov.uk account
-    And "Robert" is signed in
-    And "Robert" applied via DIT to contact randomly selected marketplace in "<country>" to sell "<products>"
+  Scenario Outline: Enquirers representing a "LTD, PLC or Royal Charter" organisation should see SOO contact form pre-populated with their details
+    Given "Robert" has created a great.gov.uk account for a "LTD, PLC or Royal Charter"
+    And "Robert" found a marketplace in "<country>" to sell "<products>"
 
-    When "Robert" submits the SOO contact-us form
-      | field                         | value   |
-      | I don't have a company number | checked |
+    When "Robert" decides to "Apply now"
+    Then "Robert" should be on the "Domestic - Contact details (SOO)" page
+    And "Robert" should see following fields populated with values provided on other forms
+      | form                                                                              | fields                |
+      | Profile - Enter your email address and set a password (LTD, PLC or Royal Charter) | email                 |
+      | Profile - Enter your details (LTD, PLC or Royal Charter)                          | first name, last name |
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "Domestic - About your business (SOO)" page
+    And "Robert" should see following fields populated with values provided on other forms
+      | form                                           | fields                                                 |
+      | Profile - Enter your business details [step 2] | company name, company number, company website, address |
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "Domestic - About your products (SOO)" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "Domestic - Your experience (SOO)" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "Domestic - Thank you for your enquiry (SOO)" page
 
     Then a "zendesk" notification entitled "great.gov.uk Selling Online Overseas contact form" should be sent to "Robert"
 
