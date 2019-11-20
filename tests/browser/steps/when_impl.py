@@ -515,6 +515,9 @@ def generic_fill_out_and_submit_form(
         form_data = page.get_form_details(context.driver)
         if form_data:
             update_actor_forms_data(context, actor, form_data)
+    else:
+        if details:
+            update_actor_forms_data(context, actor, details)
 
     page.submit(context.driver)
     if retry_on_errors:
