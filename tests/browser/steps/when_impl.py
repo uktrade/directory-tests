@@ -830,16 +830,16 @@ def domestic_submit_soo_contact_us_form(
     generic_fill_out_and_submit_form(
         context, actor_alias, custom_details_table=custom_details_table
     )
-    domestic.contact_us_soo_long_organisation_details.should_be_here(context.driver)
+    domestic.contact_us_soo_3_about_your_products.should_be_here(context.driver)
 
     generic_fill_out_and_submit_form(context, actor_alias)
-    domestic.contact_us_soo_long_your_experience.should_be_here(context.driver)
+    domestic.contact_us_soo_4_your_experience.should_be_here(context.driver)
 
     generic_fill_out_and_submit_form(context, actor_alias)
-    domestic.contact_us_soo_long_contact_details.should_be_here(context.driver)
+    domestic.contact_us_soo_1_contact_details.should_be_here(context.driver)
 
     generic_fill_out_and_submit_form(context, actor_alias)
-    domestic.contact_us_soo_long_thank_you.should_be_here(context.driver)
+    domestic.contact_us_soo_5_thank_you.should_be_here(context.driver)
 
 
 def generic_search_for_phrase(context: Context, actor_alias: str, phrase: str):
