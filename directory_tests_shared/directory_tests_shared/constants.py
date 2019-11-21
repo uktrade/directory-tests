@@ -204,7 +204,7 @@ a) Wictionary top 100,000 most frequently-used English words
   -> https://gist.github.com/h3xx/1976236
 b) 20000 most common English words in order of frequency, as determined by
   n-gram frequency analysis of the Google's Trillion Word Corpus
-  -> https://github.com/first20hours/google-10000-english
+  -> https://github.com/first20hours/google-10000-english/blob/master/20k.txt
 
 The selection process was as follows:
 1) delete first 30000 lines from a)
@@ -234,6 +234,15 @@ nine = sorted(set([w.lower() for w in words
 """
 with open(os.path.join(TEST_IMAGES_DIR, "rare.txt"), "r") as f:
     RARE_WORDS = f.read().split()
+
+"""
+This list
+PS.
+a) 20000 most common English words in order of frequency, as determined by
+  -> https://github.com/first20hours/google-10000-english/blob/master/google-10000-english-usa-no-swears-medium.txt
+"""
+with open(os.path.join(TEST_IMAGES_DIR, "english-4k.txt"), "r") as f:
+    POPULAR_ENGLISH_WORDS = f.read().split()
 
 SEARCHABLE_CASE_STUDY_DETAILS = [
     "title",

@@ -16,7 +16,12 @@ from scrapy.selector import Selector as ScrapySelector
 from termcolor import cprint
 
 import parse
-from .constants import OPERATING_COUNTRIES, PRODUCT_CATEGORIES, RARE_WORDS, SECTORS
+from .constants import (
+    OPERATING_COUNTRIES,
+    POPULAR_ENGLISH_WORDS,
+    PRODUCT_CATEGORIES,
+    SECTORS,
+)
 from .settings import BASICAUTH_PASS, BASICAUTH_USER
 
 
@@ -41,7 +46,7 @@ def basic_auth():
 def sentence(
     *,
     max_length: int = 60,
-    min_word_length: int = 9,
+    min_word_length: int = 5,
     max_words: int = 10,
     min_words: int = 3,
 ) -> str:
@@ -57,7 +62,7 @@ def sentence(
     assert min_words <= max_words
     number_of_words = randint(min_words, max_words)
     while len(words) < number_of_words:
-        word = choice(RARE_WORDS)
+        word = choice(POPULAR_ENGLISH_WORDS)
         if len(word) > min_word_length:
             words.append(word)
     while 0 < max_length < len(" ".join(words)):
@@ -65,7 +70,7 @@ def sentence(
     return " ".join(words)
 
 
-def rare_word(*, min_length: int = 9, max_length: int = 20):
+def rare_word(*, min_length: int = 5, max_length: int = 20):
     """Get a random rare english word.
 
     NOTE:
@@ -77,7 +82,7 @@ def rare_word(*, min_length: int = 9, max_length: int = 20):
     assert min_length < max_length
     word = ""
     while min_length >= len(word) <= max_length:
-        word = choice(RARE_WORDS)
+        word = choice(POPULAR_ENGLISH_WORDS)
     return word
 
 
