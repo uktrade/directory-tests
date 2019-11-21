@@ -34,16 +34,18 @@ def before_feature(context, feature):
 
 
 def before_step(context, step):
-    logging.debug("Step: %s %s", step.step_type, str(repr(step.name)))
+    logging.debug(f"Started step: {step.step_type.capitalize()} {step.name}")
 
 
 def after_step(context, step):
+    logging.debug(
+        f"Finished step: {round(step.duration, 3)} {step.step_type.capitalize()} "
+        f"{step.name}"
+    )
     if step.status == "failed":
         logging.debug(
-            'Step "%s %s" failed. Reason: "%s"',
-            step.step_type,
-            step.name,
-            step.exception,
+            f"Step: {step.step_type.capitalize()} {step.name} failed. Reason: "
+            f"{step.exception}"
         )
         logging.debug(context.scenario_data)
         red("\nScenario data:")
@@ -81,7 +83,7 @@ def after_step(context, step):
 
 
 def before_scenario(context, scenario):
-    logging.debug("Starting scenario: %s", scenario.name)
+    logging.debug(f"Starting scenario: {scenario.name}")
     # re-initialize the scenario data
     context.scenario_data = initialize_scenario_data()
 
@@ -91,15 +93,16 @@ def after_scenario(context, scenario):
     for actor in actors.values():
         if actor.session:
             actor.session.close()
-            logging.debug("Closed Requests session for %s", actor.alias)
+            logging.debug(f"Closed Requests session for {actor.alias}")
         if actor.type == "supplier":
             delete_supplier_data_from_sso(actor.email, context=context)
             if actor.company_alias:
                 company = get_company(context, actor.company_alias)
                 if not company:
                     logging.warning(
-                        f"Could not find company '{actor.company_alias}' details in context.scenario_data.companies. "
-                        f"Possibly details were not stored in it after its alias was added to actor's details"
+                        f"Could not find company '{actor.company_alias}' details in "
+                        f"context.scenario_data.companies. Possibly details were not "
+                        f"stored in it after its alias was added to actor's details"
                     )
                     continue
                 if company.deleted:
@@ -118,7 +121,7 @@ def after_scenario(context, scenario):
             )
     # clear the scenario data after every scenario
     context.scenario_data = None
-    logging.debug("Finished scenario: %s", scenario.name)
+    logging.debug(f"Finished scenario: {round(scenario.duration, 3)} → {scenario.name}")
 
 
 def before_all(context):
