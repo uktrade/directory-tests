@@ -53,7 +53,17 @@ def filter_by_uuid_last_name(submissions: List[dict], uuid: str) -> list:
 
 
 def find_form_submissions(email: str) -> List[dict]:
-    return FORMS_API_CLIENT.get(f"testapi/submissions-by-email/{email}/").json()
+    assert email, "Please provide email address!"
+    response = FORMS_API_CLIENT.get(f"testapi/submissions-by-email/{email}/")
+    if response.status_code == 200:
+        result = response.json()
+    elif response.status_code == 404:
+        result = {}
+    else:
+        raise ConnectionError(
+            f"Expected 200 OK but got {response.status_code} from {response.url}"
+        )
+    return result
 
 
 def find_form_submissions_by_subject_and_action(
