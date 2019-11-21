@@ -72,6 +72,7 @@ Selector = namedtuple(
         "wait_after_click",
         "next_page",
         "alternative_visibility_check",
+        "disabled",
     ],
 )
 
@@ -88,6 +89,7 @@ Selector.__new__.__defaults__ = (
     None,
     None,
     True,
+    None,
     None,
     None,
 )
@@ -452,6 +454,15 @@ def check_if_element_is_not_visible(
         pass
 
 
+def check_if_element_is_disabled(web_element: WebElement, element_name: str):
+    """Check if provided web element is disabled."""
+    with assertion_msg(
+        f"Expected '{element_name}' element to be disabled but it's not"
+    ):
+        assert not web_element.is_enabled()
+    logging.debug(f"As expected '{element_name}' field is disabled.")
+
+
 def run_alternative_visibility_check(
     driver: WebDriver,
     element_name: str,
@@ -498,6 +509,8 @@ def find_element(
         element = driver.find_element(by=selector.by, value=selector.value)
     if wait_for_it and selector.is_visible:
         wait_for_visibility(driver, selector)
+    if selector.disabled:
+        check_if_element_is_disabled(element, element_name)
     elif selector.alternative_visibility_check:
         run_alternative_visibility_check(
             driver, element_name, selector, element=element

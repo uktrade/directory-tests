@@ -54,9 +54,11 @@ SELECTORS.update(common_selectors.ERROR_REPORTING)
 SELECTORS.update(common_selectors.DOMESTIC_FOOTER)
 
 PREPOPULATED_FORM_FIELDS = {
-    "first name": Selector(By.ID, "id_contact-details-contact_first_name"),
-    "last name": Selector(By.ID, "id_contact-details-contact_last_name"),
-    "email": Selector(By.ID, "id_contact-details-contact_email"),
+    "first name": Selector(
+        By.ID, "id_contact-details-contact_first_name", disabled=True
+    ),
+    "last name": Selector(By.ID, "id_contact-details-contact_last_name", disabled=True),
+    "email": Selector(By.ID, "id_contact-details-contact_email", disabled=True),
 }
 
 
