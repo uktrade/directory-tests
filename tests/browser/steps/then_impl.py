@@ -32,6 +32,7 @@ from directory_tests_shared.utils import blue, check_for_errors, get_comparison_
 from pages import (
     common_language_selector,
     domestic,
+    erp,
     fas,
     get_page_object,
     invest,
@@ -759,3 +760,11 @@ def erp_should_see_number_of_product_categories_to_expand(
     logging.debug(
         f"{actor_alias} saw: {comparison_description} product categories(s) to expand"
     )
+
+
+def erp_should_see_correct_data_on_summary_page(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    erp.summary.should_see_correct_data_on_summary_page(
+        context.driver, actor.forms_data
+    )
+    logging.debug(f"{actor_alias} saw: all expected data on the ERP Summary page")

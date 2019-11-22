@@ -74,3 +74,7 @@ def fill_out(driver: WebDriver, details: dict):
 
 def submit(driver: WebDriver) -> Union[ModuleType, None]:
     return submit_form(driver, SELECTORS["form"])
+
+
+def should_see_correct_data_on_summary_page(driver: WebDriver, forms_data: dict):
+    pass

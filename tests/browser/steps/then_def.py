@@ -9,6 +9,7 @@ from steps.then_impl import (
     articles_should_be_on_share_page,
     domestic_search_finder_should_see_page_number,
     erp_should_receive_email_with_link_to_restore_saved_progress,
+    erp_should_see_correct_data_on_summary_page,
     erp_should_see_number_of_product_categories_to_expand,
     erp_should_see_number_of_product_codes_to_select,
     fas_search_results_filtered_by_industries,
@@ -352,3 +353,8 @@ def then_erp_resume_giving_feedback(
         context: Context, actor_alias: str, user_type: str, resume_from: str
 ):
     erp_follow_user_flow(context, actor_alias, user_type, resume_from=resume_from)
+
+
+@then('"{actor_alias}" should see correct data shown on the summary page')
+def then_erp_should_see_correct_data_on_summary(context: Context, actor_alias: str):
+    erp_should_see_correct_data_on_summary_page(context, actor_alias)
