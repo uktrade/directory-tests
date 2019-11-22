@@ -52,3 +52,21 @@ Feature: ERP - common pages
     When "Robert" decides to use one of the "Gov.UK links"
 
     Then "Robert" should get to a working page
+
+
+  @wip
+  @TT-2183
+  @dev-only
+  @summary
+  Scenario Outline: Should see correct data on summary page
+    Given "Robert" got to "<summary>" ERP page as "<specific_user_type>"
+
+    Then "Robert" should see correct data shown on the summary page
+
+    Examples:
+      | specific_user_type               | summary                      |
+      | consumer group                   | Summary (UK consumer)        |
+      | exporter from developing country | Summary (Developing country) |
+      | individual consumer              | Summary (UK consumer)        |
+      | UK business                      | Summary (UK business)        |
+      | UK importer                      | Summary (UK importer)        |
