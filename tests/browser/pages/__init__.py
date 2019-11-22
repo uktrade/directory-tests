@@ -21,6 +21,7 @@ class ElementType(Enum):
     LINK = "a"
     RADIO = "radio"
     SELECT = "select"
+    SPAN = "span"
     SUBMIT = "submit"
     TEXTAREA = "textarea"
 

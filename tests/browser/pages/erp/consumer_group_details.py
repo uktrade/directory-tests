@@ -16,6 +16,7 @@ from pages.common_actions import (
     check_for_sections,
     check_url,
     fill_out_input_fields,
+    find_elements,
     submit_form,
     take_screenshot,
 )
@@ -66,6 +67,12 @@ SELECTORS.update(common_selectors.ERP_BACK)
 SELECTORS.update(common_selectors.ERP_SAVE_FOR_LATER)
 SELECTORS.update(common_selectors.ERP_FOOTER)
 
+SELECTED_REGIONS = Selector(
+    By.CSS_SELECTOR,
+    "span.multi-select-autocomplete-selected-item",
+    type=ElementType.SPAN,
+)
+
 
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
@@ -96,3 +103,13 @@ def fill_out(driver: WebDriver, details: dict):
 
 def submit(driver: WebDriver) -> Union[ModuleType, None]:
     return submit_form(driver, SELECTORS["form"])
+
+
+def get_form_details(driver: WebDriver) -> dict:
+    elements = find_elements(driver, SELECTED_REGIONS)
+    result = {"regions": []}
+    for element in elements:
+        region_name = element.text
+        result["regions"].append(region_name.replace(" ❌", ""))
+
+    return result
