@@ -887,9 +887,11 @@ def erp_drill_down_hierarchy_tree(
 ):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "drill_down_hierarchy_tree")
-    next_page = page.drill_down_hierarchy_tree(
+    next_page, selected_code_value = page.drill_down_hierarchy_tree(
         context.driver, use_expanded_category=use_expanded_category
     )
+    actor = get_actor(context, actor_alias)
+    update_actor_forms_data(context, actor, selected_code_value)
     update_actor(context, actor_alias, visited_page=next_page)
 
 

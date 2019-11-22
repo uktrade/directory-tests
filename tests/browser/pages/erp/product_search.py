@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """ERP - Product Search"""
+import json
 import logging
+from json import JSONDecodeError
 from random import choice
 from types import BuiltinFunctionType, ModuleType
 from typing import List, Tuple
@@ -73,7 +75,7 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 
 def drill_down_hierarchy_tree(
     driver: WebDriver, *, use_expanded_category: bool = False
-) -> ModuleType:
+) -> Tuple[ModuleType, dict]:
     if use_expanded_category:
         last_expanded_level = Selector(
             By.CSS_SELECTOR, "li.app-hierarchy-tree__parent--open:last-of-type"
@@ -94,7 +96,9 @@ def drill_down_hierarchy_tree(
             logging.debug(f"First level: {first_id} -> {first.text}")
             first.click()
 
-    select_code_selector = Selector(By.CSS_SELECTOR, "div.app-hierarchy-button")
+    select_code_selector = Selector(
+        By.CSS_SELECTOR, "button[name=product-search-commodity]"
+    )
     select_product_codes_present = is_element_present(driver, select_code_selector)
     logging.debug(
         f"Is Select product code button present: {select_product_codes_present}"
@@ -125,14 +129,19 @@ def drill_down_hierarchy_tree(
     if select_product_codes_present:
         select_codes = find_elements(driver, select_code_selector)
         select = choice(select_codes)
-        select_id = select.get_property("id")
-        logging.debug(f"Selected product code: {select_id}")
+        selected_code_value = select.get_attribute("value")
+        try:
+            selected_code_value = json.loads(selected_code_value)
+        except JSONDecodeError:
+            pass
+        logging.debug(f"Selected product code: {selected_code_value}")
         with wait_for_page_load_after_action(driver, timeout=5):
             select.click()
     else:
         logging.error("Strange! Could not find 'Select' product codes button")
+        selected_code_value = {}
 
-    return product_detail
+    return product_detail, selected_code_value
 
 
 def search(driver: WebDriver, phrase: str):
