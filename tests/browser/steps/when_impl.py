@@ -912,6 +912,11 @@ def erp_user_flow_individual_customer(
 
     def select_user_type():
         visit_page(context, actor_alias, get_full_page_name(erp.triage_user_type))
+        update_actor_forms_data(
+            context,
+            get_actor(context, actor_alias),
+            {"business type": "UK consumer or consumer representative"},
+        )
         generic_pick_radio_option_and_submit(context, actor_alias, option=user_type)
 
     def product_search():
@@ -990,6 +995,11 @@ def erp_user_flow_consumer_group(
 
     def select_user_type():
         visit_page(context, actor_alias, get_full_page_name(erp.triage_user_type))
+        update_actor_forms_data(
+            context,
+            get_actor(context, actor_alias),
+            {"business type": "UK consumer or consumer representative"},
+        )
         generic_pick_radio_option_and_submit(context, actor_alias, option=user_type)
 
     def product_search():
@@ -1069,6 +1079,9 @@ def erp_user_flow_uk_business(
         visit_page(context, actor_alias, get_full_page_name(erp.triage_user_type))
 
         generic_pick_radio_option_and_submit(context, actor_alias, option=user_type)
+        update_actor_forms_data(
+            context, get_actor(context, actor_alias), {"business type": user_type}
+        )
         should_be_on_page(
             context,
             actor_alias,
@@ -1078,6 +1091,11 @@ def erp_user_flow_uk_business(
     def import_from_overseas():
         generic_pick_radio_option_and_submit(
             context, actor_alias, option="not imported"
+        )
+        update_actor_forms_data(
+            context,
+            get_actor(context, actor_alias),
+            {"import from overseas": "I produce the affected goods in the UK"},
         )
         should_be_on_page(
             context,
@@ -1214,6 +1232,9 @@ def erp_user_flow_uk_importer(
         visit_page(context, actor_alias, get_full_page_name(erp.triage_user_type))
 
         generic_pick_radio_option_and_submit(context, actor_alias, option="UK business")
+        update_actor_forms_data(
+            context, get_actor(context, actor_alias), {"business type": user_type}
+        )
         should_be_on_page(
             context,
             actor_alias,
@@ -1222,6 +1243,11 @@ def erp_user_flow_uk_importer(
 
     def import_from_overseas():
         generic_pick_radio_option_and_submit(context, actor_alias, option="imported")
+        update_actor_forms_data(
+            context,
+            get_actor(context, actor_alias),
+            {"import from overseas": "I import the affected goods from overseas"},
+        )
         should_be_on_page(
             context,
             actor_alias,
@@ -1397,6 +1423,9 @@ def erp_user_flow_developing_country(
 
         generic_pick_radio_option_and_submit(
             context, actor_alias, option=user_friendly_name
+        )
+        update_actor_forms_data(
+            context, get_actor(context, actor_alias), {"business type": user_type}
         )
         should_be_on_page(
             context,
