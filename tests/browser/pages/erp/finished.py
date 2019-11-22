@@ -20,12 +20,13 @@ from pages.common_actions import (
 NAME = "Finished"
 SERVICE = Service.ERP
 TYPE = PageType.FORM
-URL = URLs.ERP_CONSUMER_FINISHED.absolute
+URL = None
 PAGE_TITLE = ""
 SubURLs = {
     f"{NAME} (Developing country)": URLs.ERP_DEVELOPING_COUNTRY_FINISHED.absolute,
     f"{NAME} (UK business)": URLs.ERP_BUSINESS_FINISHED.absolute,
     f"{NAME} (UK importer)": URLs.ERP_IMPORTER_FINISHED.absolute,
+    f"{NAME} (UK consumer)": URLs.ERP_CONSUMER_FINISHED.absolute,
 }
 SubURLs = {key.lower(): val for key, val in SubURLs.items()}
 NAMES = list(SubURLs.keys())
@@ -57,11 +58,8 @@ def should_be_able_to_print(driver: WebDriver):
     print_link_selector = Selector(By.PARTIAL_LINK_TEXT, "print a copy now")
     print_link = find_element(driver, print_link_selector)
     onclick = print_link.get_attribute("onclick")
-    href = print_link.get_attribute("href")
     error = f"Expected 'window.print()' got '{onclick}' on {driver.current_url}"
     assert onclick == "window.print()", error
-    error = f"Expected '{URL}#' got '{href}' on {driver.current_url}"
-    assert href == f"{URL}#", error
 
     print_only_selector = "div.print-only *::text"
     raw_to_print = extract_by_css(driver.page_source, print_only_selector, first=False)

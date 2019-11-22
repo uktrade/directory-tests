@@ -6,7 +6,6 @@ __all__ = [
     "aware_of_sales_changes",
     "business_details",
     "consumer_aware_of_changes",
-    "consumer_finished",
     "consumer_group_details",
     "consumer_other_changes_after_brexit",
     "consumer_personal_details",
