@@ -18,7 +18,7 @@ from pages.common_actions import (
     take_screenshot,
     tick_captcha_checkbox,
 )
-from pages.erp import consumer_finished
+from pages.erp import finished
 
 NAME = "Summary"
 SERVICE = Service.ERP
@@ -29,6 +29,7 @@ SubURLs = {
     f"{NAME} (Developing country)": URLs.ERP_DEVELOPING_COUNTRY_SUMMARY.absolute,
     f"{NAME} (UK business)": URLs.ERP_BUSINESS_SUMMARY.absolute,
     f"{NAME} (UK importer)": URLs.ERP_IMPORTER_SUMMARY.absolute,
+    f"{NAME} (UK consumer)": URLs.ERP_CONSUMER_SUMMARY.absolute,
 }
 SubURLs = {key.lower(): val for key, val in SubURLs.items()}
 NAMES = list(SubURLs.keys())
@@ -42,7 +43,7 @@ SELECTORS = {
             By.CSS_SELECTOR,
             "#content > form button.govuk-button",
             type=ElementType.SUBMIT,
-            next_page=consumer_finished,
+            next_page=finished,
         ),
     },
 }

@@ -19,7 +19,7 @@ from pages.common_actions import (
     submit_form,
     take_screenshot,
 )
-from pages.erp import consumer_summary
+from pages.erp import summary
 
 NAME = "Personal details"
 SERVICE = Service.ERP
@@ -50,7 +50,7 @@ SELECTORS = {
             By.CSS_SELECTOR,
             "#content > form button.govuk-button",
             type=ElementType.SUBMIT,
-            next_page=consumer_summary,
+            next_page=summary,
         ),
     }
 }

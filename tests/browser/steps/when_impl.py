@@ -966,7 +966,9 @@ def erp_user_flow_individual_customer(
     def personal_details():
         generic_fill_out_and_submit_form(context, actor_alias)
         should_be_on_page(
-            context, actor_alias, page_name=get_full_page_name(erp.consumer_summary)
+            context,
+            actor_alias,
+            page_name=get_full_page_name(erp.summary, page_sub_type=user_type),
         )
 
     def summary():
@@ -1040,7 +1042,9 @@ def erp_user_flow_consumer_group(
     def group_details():
         generic_fill_out_and_submit_form(context, actor_alias)
         should_be_on_page(
-            context, actor_alias, page_name=get_full_page_name(erp.consumer_summary)
+            context,
+            actor_alias,
+            page_name=get_full_page_name(erp.summary, page_sub_type=user_type),
         )
 
     def summary():

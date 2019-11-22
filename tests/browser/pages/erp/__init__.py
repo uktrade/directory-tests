@@ -11,7 +11,6 @@ __all__ = [
     "consumer_other_changes_after_brexit",
     "consumer_personal_details",
     "consumer_product_detail",
-    "consumer_summary",
     "consumer_type",
     "developing_country_business_details",
     "developing_country_select",
