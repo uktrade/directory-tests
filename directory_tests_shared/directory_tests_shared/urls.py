@@ -250,7 +250,10 @@ class URLs(Enum):
     )
 
     # SOO Contact-Us pages
-    CONTACT_US_SOO_ORGANISATION = ContactUrl("selling-online-overseas/organisation/")
+    CONTACT_US_SOO_ORGANISATION = ContactUrl(
+        "selling-online-overseas/organisation/",
+        template="selling-online-overseas/organisation/?market={market}",
+    )
     CONTACT_US_SOO_ORGANISATION_DETAILS = ContactUrl(
         "selling-online-overseas/organisation-details/"
     )
@@ -607,6 +610,9 @@ class URLs(Enum):
     EXOPPS_LANDING = ExOppsUrl("")
     EXOPPS_OPPORTUNITY = ExOppsUrl(
         "opportunities/{slug}", template="opportunities/{slug}"
+    )
+    EXOPPS_SEARCH = ExOppsUrl(
+        "opportunities/?s={term}", template="opportunities/?s={term}"
     )
     EXOPPS_SITEMAP = ExOppsUrl("sitemap.xml")
 
@@ -1132,6 +1138,7 @@ class URLs(Enum):
     SOO_LANDING = SOOUrl("")
     SOO_SITEMAP = SOOUrl("sitemap.xml")
     SOO_SEARCH_RESULTS = SOOUrl("markets/results/")
+    SOO_MARKETS_COUNT = SOOUrl("markets/count.json")
     SOO_MARKET_DETAILS = SOOUrl(
         "markets/details/", template="markets/details/{market}/"
     )
