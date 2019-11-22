@@ -2,7 +2,6 @@
 """When step implementations."""
 import logging
 import random
-from collections import defaultdict
 from types import MethodType
 from typing import Dict
 from urllib.parse import urljoin, urlparse
@@ -35,7 +34,6 @@ from pages import (
     sso,
 )
 from pages.common_actions import (
-    Actor,
     add_actor,
     avoid_browser_stack_idle_timeout_exception,
     barred_actor,
@@ -51,6 +49,7 @@ from pages.common_actions import (
     try_alternative_click_on_exception,
     unauthenticated_actor,
     update_actor,
+    update_actor_forms_data,
     wait_for_page_load_after_action,
 )
 from steps import has_action
@@ -462,16 +461,6 @@ def check_for_errors_or_non_trading_companies(
             with wait_for_page_load_after_action(driver):
                 driver.back()
         raise e
-
-
-def update_actor_forms_data(context: Context, actor: Actor, form_data: dict):
-    actor_forms_data = actor.forms_data
-    page = actor.visited_page
-    if not actor_forms_data:
-        actor_forms_data = defaultdict()
-    form_data_key = f"{page.SERVICE} - {page.NAME} - {page.TYPE}"
-    actor_forms_data[form_data_key] = form_data
-    update_actor(context, actor.alias, forms_data=actor_forms_data)
 
 
 @retry(

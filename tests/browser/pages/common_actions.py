@@ -265,6 +265,16 @@ def update_actor(context: Context, alias: str, **kwargs):
     logging.debug(f"Successfully updated {alias}'s details: {actors[alias]}")
 
 
+def update_actor_forms_data(context: Context, actor: Actor, form_data: dict):
+    actor_forms_data = actor.forms_data
+    page = actor.visited_page
+    if not actor_forms_data:
+        actor_forms_data = defaultdict()
+    form_data_key = f"{page.SERVICE} - {page.NAME} - {page.TYPE}"
+    actor_forms_data[form_data_key] = form_data
+    update_actor(context, actor.alias, forms_data=actor_forms_data)
+
+
 def avoid_browser_stack_idle_timeout_exception(driver: WebDriver):
     """BrowserStack will stop browser session after 90s of inactivity.
 
