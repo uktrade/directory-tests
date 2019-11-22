@@ -4,6 +4,10 @@
 Feature: ERP - An exporter from developing country
 
 
+  Background:
+    Given basic authentication is done for "ERP - Landing" page
+
+
   @TT-2121
   Scenario: An enquirer representing an "exporter from developing country" should be able to tell which country they are from
     Given "Robert" visits the "ERP - User type" page

@@ -4,6 +4,10 @@
 Feature: ERP - UK business
 
 
+  Background:
+    Given basic authentication is done for "ERP - Landing" page
+
+
   @TT-2073
   @UK_business
   Scenario: A UK business should be able to tell whether they're importing from overseas or not

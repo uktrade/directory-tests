@@ -1,6 +1,11 @@
 @erp
 Feature: ERP - common pages
 
+
+  Background:
+    Given basic authentication is done for "ERP - Landing" page
+
+
   @dev-only
   Scenario: Enquirers should be able to find out more about ERP service on its Landing page
     When "Robert" goes to the "ERP - Landing" page

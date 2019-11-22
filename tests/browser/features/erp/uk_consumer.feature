@@ -5,6 +5,10 @@
 Feature: ERP - UK consumer
 
 
+  Background:
+    Given basic authentication is done for "ERP - Landing" page
+
+
   Scenario: An enquirer representing a "UK consumer" should be able to tell which goods are affected
     Given "Robert" visits the "ERP - User type" page
 

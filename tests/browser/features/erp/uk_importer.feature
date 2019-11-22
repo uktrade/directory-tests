@@ -4,6 +4,10 @@
 Feature: ERP - UK business
 
 
+  Background:
+    Given basic authentication is done for "ERP - Landing" page
+
+
   @TT-2074
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should see a list of product codes which might be affected by Brexit
