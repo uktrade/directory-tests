@@ -52,11 +52,6 @@ SELECTORS = {
         "prepare for brexit banner": Selector(
             By.CSS_SELECTOR, "section.prepare-for-brexit-section"
         ),
-        "preparing business for brexit": Selector(
-            By.CSS_SELECTOR,
-            "section.prepare-for-brexit-section a.chevron-banner__link",
-            type=ElementType.LINK,
-        ),
         "brexit related links to gov.uk": Selector(
             By.CSS_SELECTOR,
             "section.prepare-for-brexit-section a.card-link",

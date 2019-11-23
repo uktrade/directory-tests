@@ -56,17 +56,6 @@ Feature: Domestic - Home Page
   @XOT-1216
   @govuk
   @sections
-  Scenario: Any Exporter should be able to find out more about "preparing business for Brexit"
-    Given "Robert" visits the "Domestic - Home" page
-
-    When "Robert" decides to find out more about "preparing business for Brexit"
-
-    Then "Robert" should be on the "GOV.UK - Prepare your business or organisation for Brexit" page
-
-
-  @XOT-1216
-  @govuk
-  @sections
   Scenario: Any Exporter should be able to find out more how to "prepare business for Brexit" by going to one of the "brexit related" pages on GOV.UK
     Given "Robert" visits the "Domestic - Home" page
 
