@@ -16,6 +16,7 @@ from pages.common_actions import (
     check_form_choices,
     check_url,
     fill_out_input_fields,
+    find_element,
     go_to_url,
     pick_one_option_and_submit,
     submit_form,
@@ -35,7 +36,7 @@ SELECTORS = {
         "form itself": Selector(By.CSS_SELECTOR, "#content form[method='post']"),
         "country": Selector(
             By.ID,
-            "id_developing_country_wizard-current_step",
+            "id_country-country",
             type=ElementType.INPUT,
             is_visible=False,
             autocomplete_callback=autocomplete_country,
@@ -92,3 +93,9 @@ def fill_out(driver: WebDriver, details: dict):
 
 def submit(driver: WebDriver) -> Union[ModuleType, None]:
     return submit_form(driver, SELECTORS["form"])
+
+
+def get_form_details(driver: WebDriver) -> dict:
+    selected_country = find_element(driver, SELECTORS["form"]["country"])
+    result = {"country": selected_country.get_attribute("value")}
+    return result
