@@ -23,11 +23,11 @@ Feature: Domestic - Great site search
 #    And "Robert" should see search results in following order "Article, Service, Event, Opportunity"
 
     Examples: event, market, service and opportunity
-      | specific | phrase            |
-      | Home     | Food              |
-      | Advice   | Transport         |
-      | Markets  | Steel             |
-      | Services | Manufacture       |
+      | specific        | phrase      |
+      | Home            | Food        |
+      | Advice landing  | Transport   |
+      | Markets listing | Steel       |
+      | Services        | Manufacture |
 
 
   @bug
@@ -68,11 +68,11 @@ Feature: Domestic - Great site search
     Then "Robert" should see search results page number "1" for "<phrase>"
 
     Examples: event, market, service and opportunity
-      | specific       | phrase      |
-      | Home           | Food        |
-      | Advice landing | Transport   |
-      | Markets        | Steel       |
-      | Services       | Manufacture |
+      | specific        | phrase      |
+      | Home            | Food        |
+      | Advice landing  | Transport   |
+      | Markets listing | Steel       |
+      | Services        | Manufacture |
 
 
   @XOT-760
@@ -85,8 +85,8 @@ Feature: Domestic - Great site search
     Then "Robert" should see search results page number "1" for "<second phrase>"
 
     Examples: event, market, service and opportunity
-      | specific       | first phrase | second phrase           |
-      | Home           | Food         | Full food service       |
-      | Advice landing | Transport    | Passenger transport     |
-      | Markets        | Steel        | Market selection clinic |
-      | Services       | Manufacture  | Motor vehicles          |
+      | specific        | first phrase | second phrase           |
+      | Home            | Food         | Full food service       |
+      | Advice landing  | Transport    | Passenger transport     |
+      | Markets listing | Steel        | Market selection clinic |
+      | Services        | Manufacture  | Motor vehicles          |
