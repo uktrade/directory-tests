@@ -26,9 +26,9 @@ Feature: Domestic - Home Page
   Scenario: Any Exporter should be able to play promotional video on the Home page
     Given "Robert" visits the "Domestic - Home" page
 
-    When "Robert" decides to watch "6" seconds of the promotional video
+    When "Robert" decides to watch "7" seconds of the promotional video
 
-    Then "Robert" should be able to watch at least first "5" seconds of the promotional video
+    Then "Robert" should be able to watch at least first "3" seconds of the promotional video
 
 
   @ED-3014
