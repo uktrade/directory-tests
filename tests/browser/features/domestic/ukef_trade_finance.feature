@@ -35,7 +35,7 @@ Feature: Domestic - UK Export Finance page & contact-us form
 
     When "Robert" decides to "Read more about getting money to grow your business"
 
-    Then "Robert" should be on the "Domestic - Advice - Article list" page
+    Then "Robert" should be on the "Domestic - Advice article list" page
 
 
   @TT-585
