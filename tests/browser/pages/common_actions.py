@@ -779,6 +779,7 @@ def tick_captcha_checkbox(driver: WebDriver):
         element_name="captcha",
         wait_for_it=False,
     )
+    scroll_to(driver, g_recaptcha)
     current_site_key = g_recaptcha.get_attribute("data-sitekey")
     logging.debug(f"Current site key: {current_site_key}")
     logging.debug(f"Site key for captcha in dev mode: {dev_site_key}")
