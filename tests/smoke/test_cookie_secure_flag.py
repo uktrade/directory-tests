@@ -17,6 +17,7 @@ def assert_secure_cookie_flag_is_set(response: Response):
     assert all(c.secure for c in response.cookies), error
 
 
+@pytest.mark.skip(reason="See TT-1614")
 @pytest.mark.parametrize(
     "url",
     [
@@ -50,6 +51,7 @@ def test_secure_cookie_flag_is_set_for_pages_behind_auth(
     assert_secure_cookie_flag_is_set(response)
 
 
+@pytest.mark.skip(reason="See TT-1614")
 @pytest.mark.parametrize(
     "url",
     [
@@ -102,6 +104,7 @@ def test_secure_cookie_flag_is_set_for_public_pages(url, basic_auth):
     assert_secure_cookie_flag_is_set(response)
 
 
+@pytest.mark.skip(reason="See TT-1614")
 @pytest.mark.dev
 @pytest.mark.parametrize(
     "url",
@@ -116,6 +119,7 @@ def test_secure_cookie_flag_is_present_export_opportunities_dev(url, basic_auth)
     assert_secure_cookie_flag_is_set(response)
 
 
+@pytest.mark.skip(reason="See TT-1614")
 @pytest.mark.stage
 @pytest.mark.parametrize(
     "url",
@@ -129,6 +133,7 @@ def test_secure_cookie_flag_is_present_export_opportunities_stage(url, basic_aut
     assert_secure_cookie_flag_is_set(response)
 
 
+@pytest.mark.skip(reason="See TT-1614")
 @pytest.mark.dev
 @pytest.mark.parametrize(
     "url",

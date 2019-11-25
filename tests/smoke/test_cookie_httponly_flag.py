@@ -20,6 +20,7 @@ def assert_httponly_cookie_flag_is_set(response: Response):
     assert not list(without_httponly.keys()), error
 
 
+@pytest.mark.skip(reason="See TT-1615")
 @pytest.mark.parametrize(
     "url",
     [
@@ -53,6 +54,7 @@ def test_secure_cookie_flag_is_set_for_pages_behind_auth(
     assert_httponly_cookie_flag_is_set(response)
 
 
+@pytest.mark.skip(reason="See TT-1615")
 @pytest.mark.parametrize(
     "url",
     [
@@ -105,6 +107,7 @@ def test_secure_cookie_flag_is_set_for_public_pages(url, basic_auth):
     assert_httponly_cookie_flag_is_set(response)
 
 
+@pytest.mark.skip(reason="See TT-1615")
 @pytest.mark.dev
 @pytest.mark.parametrize(
     "url",
@@ -119,6 +122,7 @@ def test_secure_cookie_flag_is_present_export_opportunities_dev(url, basic_auth)
     assert_httponly_cookie_flag_is_set(response)
 
 
+@pytest.mark.skip(reason="See TT-1615")
 @pytest.mark.stage
 @pytest.mark.parametrize(
     "url",
@@ -132,6 +136,7 @@ def test_secure_cookie_flag_is_present_export_opportunities_stage(url, basic_aut
     assert_httponly_cookie_flag_is_set(response)
 
 
+@pytest.mark.skip(reason="See TT-1615")
 @pytest.mark.dev
 @pytest.mark.parametrize(
     "url",
