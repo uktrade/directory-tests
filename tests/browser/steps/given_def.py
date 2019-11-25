@@ -47,6 +47,7 @@ def given_actor_has_small_screen(context, actor_alias):
 @given('"{actor_alias}" went to the "{page_name}" page')
 @given('"{actor_alias}" goes to the "{page_name}" page')
 @given('"{actor_alias}" visited the "{page_name}" page')
+@given('"{actor_alias}" visited "{page_name}" page')
 @given('"{actor_alias}" visits the "{page_name}" page')
 def given_actor_visits_page(context, actor_alias, page_name):
     visit_page(context, actor_alias, page_name)
