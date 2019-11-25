@@ -87,7 +87,8 @@ def generic_set_basic_auth_creds(context: Context, page_name: str):
     else:
         with_creds += "/automated-test-auth"
     logging.debug(f"Visiting {page.URL} in order to pass basic auth")
-    driver.get(with_creds)
+    with wait_for_page_load_after_action(driver):
+        driver.get(with_creds)
     with selenium_action(driver, f"Request to {driver.current_url} was blocked"):
         assert "Access Denied" not in driver.page_source
 
