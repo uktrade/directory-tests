@@ -66,6 +66,10 @@ def after_step(context: Context, step: Step):
     logging.debug(
         f"Finished step: {round(step.duration, 3)} {step.step_type.capitalize()} {step.name}"
     )
+    if round(step.duration, 3) > 5:
+        logging.warning(
+            f"SLOW step: {round(step.duration, 3)} {step.step_type.capitalize()} {step.name}"
+        )
 
 
 def after_scenario(context: Context, scenario: Scenario):
