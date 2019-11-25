@@ -7,5 +7,6 @@ __all__ = [
     "industry",
     "landing",
     "search_results",
+    "subscribe",
     "thank_you_for_registering",
 ]
