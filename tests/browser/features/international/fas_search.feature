@@ -1,6 +1,5 @@
 @ED-3183
 @ED-4259
-@industry-pages
 @no-sso-email-verification-required
 Feature: FAS - Search
 
@@ -17,6 +16,14 @@ Feature: FAS - Search
 
     Then "Robert" should be on the "Find a Supplier - search results" page
     And "Robert" should see search results filtered by "<specific>" industry
+    And "Robert" should see following sections
+      | Sections                    |
+      | Header                      |
+      | Search form                 |
+      | Filters                     |
+      | Results                     |
+      | Subscribe for email updates |
+      | Footer                      |
 
     Examples: Industries
       | following  | specific                               |
