@@ -19,8 +19,8 @@ from pages.common_actions import (
 
 NAME = "Thank you for registering"
 SERVICE = Service.FAS
-TYPE = PageType.CONTACT_US
-URL = URLs.FAS_SUBSCRIBE.absolute
+TYPE = PageType.THANK_YOU
+URL = URLs.FAS_SUBSCRIBE_SUCCESS.absolute
 PAGE_TITLE = "Find a Buyer - GREAT.gov.uk"
 
 SELECTORS = {
