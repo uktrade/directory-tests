@@ -23,6 +23,8 @@ from pages.common_actions import (
     pick_option,
     submit_form,
     take_screenshot,
+    tick_captcha_checkbox,
+    tick_checkboxes,
 )
 from pages.fas import thank_you_for_registering
 
@@ -132,20 +134,28 @@ def should_see_filtered_results(driver: WebDriver, expected_filters: List[str]):
 
 def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
     result = {
-        "q": custom_details["q"] if "q" in custom_details else "food",
-        "sector": None,
+        "full name": actor.alias,
+        "email": actor.email,
+        "industry": None,
+        "company name": "AUTOMATED TESTS",
+        "country": None,
+        "t&c": True,
     }
+    if custom_details:
+        result.update(custom_details)
     return result
 
 
 def fill_out(driver: WebDriver, contact_us_details: dict):
-    form_selectors = SELECTORS["search form"]
+    form_selectors = SELECTORS["subscribe for email updates"]
     fill_out_input_fields(driver, form_selectors, contact_us_details)
     pick_option(driver, form_selectors, contact_us_details)
+    tick_checkboxes(driver, form_selectors, contact_us_details)
+    tick_captcha_checkbox(driver)
 
 
 def submit(driver: WebDriver) -> Union[ModuleType, None]:
-    return submit_form(driver, SELECTORS["search form"])
+    return submit_form(driver, SELECTORS["subscribe for email updates"])
 
 
 def open_profile(driver: WebDriver, number: int):
