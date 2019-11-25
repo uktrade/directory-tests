@@ -26,9 +26,10 @@ Feature: FAS - Common header & Footer
 
     Then "Robert" should be on the "Find a Supplier - Search results" page
     And "Robert" should see following sections
-      | Sections |
-      | Header   |
-      | Footer   |
+      | Sections                    |
+      | Header                      |
+      | Subscribe for email updates |
+      | Footer                      |
 
 
   Scenario: Buyers should see correct header & footer on "Company Profile" page

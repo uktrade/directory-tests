@@ -24,6 +24,7 @@ from pages.common_actions import (
     submit_form,
     take_screenshot,
 )
+from pages.fas import thank_you_for_registering
 
 NAME = "Search results"
 SERVICE = Service.FAS
@@ -59,6 +60,24 @@ SELECTORS = {
     "results": {
         "itself": Selector(By.ID, "companies-column"),
         "number of results": Selector(By.CSS_SELECTOR, "#hero-container h2"),
+    },
+    "subscribe for email updates": {
+        "itself": Selector(
+            By.CSS_SELECTOR, "section div.subscription-form-container form"
+        ),
+        "full name": Selector(By.ID, "id_full_name", type=ElementType.INPUT),
+        "email": Selector(By.ID, "id_email_address", type=ElementType.INPUT),
+        "industry": Selector(By.ID, "id_sector", type=ElementType.SELECT),
+        "company name": Selector(By.ID, "id_company_name", type=ElementType.INPUT),
+        "country": Selector(By.ID, "id_country", type=ElementType.SELECT),
+        "t&c": Selector(By.ID, "id_terms", type=ElementType.CHECKBOX),
+        "captcha": Selector(By.ID, "id_captcha"),
+        "send": Selector(
+            By.CSS_SELECTOR,
+            "#id_terms-container ~ button",
+            type=ElementType.SUBMIT,
+            next_page=thank_you_for_registering,
+        ),
     },
 }
 SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
