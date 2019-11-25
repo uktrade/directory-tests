@@ -653,6 +653,7 @@ class URLs(Enum):
     FAS_SEARCH = FASUrl("search/", template="search/?q={query}&industries={industries}")
     FAS_SITEMAP = FASUrl("sitemap.xml")
     FAS_SUBSCRIBE = FASUrl("subscribe/")
+    FAS_SUBSCRIBE_SUCCESS = FASUrl("subscribe/success/")
     FAS_SUPPLIER = FASUrl("suppliers/", template="suppliers/{ch_number}/")
     FAS_SUPPLIERS = FASUrl("suppliers/", template="suppliers/{ch_number}/{slug}/")
     FAS_INCOMING_REDIRECT = FASUrl("incoming/", template="incoming/{endpoint}")
