@@ -1041,3 +1041,15 @@ def tick_checkboxes_by_labels(
                 logging.debug(f"'{key}' checkbox is ticked, unchecking it")
                 with try_alternative_click_on_exception(driver, checkbox):
                     checkbox.click()
+
+
+def untick_selected_checkboxes(driver: WebDriver, selector: Selector):
+    checkboxes = find_elements(driver, selector)
+    logging.debug(f"There are {len(checkboxes)} checkboxes on {driver.current_url}")
+    for checkbox in checkboxes:
+        if checkbox.get_property("checked"):
+            logging.debug(
+                f"Unticking checkbox {checkbox.get_attribute('value') or checkbox.get_attribute('id')}"
+            )
+            with try_alternative_click_on_exception(driver, checkbox):
+                checkbox.click()
