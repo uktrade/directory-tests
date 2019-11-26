@@ -26,7 +26,7 @@ Feature: FAS - Search
   Scenario Outline: Buyers should be able to subscribe to receive email updates of the latest UK companies in "<specific>" sector
     Given "Robert" searched for companies using "<following>" keyword in "<specific>" sector
 
-    When "Robert" fills out and submits the form
+    When "Robert" fills out and submits "subscribe for email updates" form
 
     Then "Robert" should be on the "Find a Supplier - Thank you for registering" page
 
