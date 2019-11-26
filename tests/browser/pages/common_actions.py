@@ -1008,8 +1008,13 @@ def tick_checkboxes(
         if checkbox_value is None:
             logging.debug(f"Skipping '{key}' as there no value for it")
             continue
-        logging.debug(f"Ticking {key} checkbox (if necessary)")
+        logging.debug(f"Will tick off '{key}' checkbox (if necessary)")
         if checkbox_value:
+            if not isinstance(checkbox_value, bool):
+                logging.debug(f"Will select checkbox with '{checkbox_value}' value")
+                selector = Selector(
+                    By.CSS_SELECTOR, f"{selector.value}[value={checkbox_value}]"
+                )
             checkbox = find_element(
                 driver, selector, element_name=key, wait_for_it=False
             )
