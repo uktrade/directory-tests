@@ -44,8 +44,12 @@ FILTER_TOGGLE = Selector(By.ID, "toggle_id_industries")
 SELECTORS = {
     "search form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
-        "search box label": Selector(By.CSS_SELECTOR, "label[for=id_q]"),
-        "search box": Selector(By.ID, "id_q"),
+        "q": Selector(By.ID, "id_q", type=ElementType.INPUT),
+        "industries": Selector(
+            By.CSS_SELECTOR,
+            "#checkbox-industry-expertise li input",
+            type=ElementType.CHECKBOX,
+        ),
         "update results button": Selector(
             By.CSS_SELECTOR,
             "#filter-column button[type=submit]",
@@ -121,41 +125,61 @@ def should_see_filtered_results(driver: WebDriver, expected_filters: List[str]):
     number_expected_filters = len(formatted_expected_filters)
     number_checked_filters = len(checked_sector_filters)
     with assertion_msg(
-        "Expected to see %d sector filter(s) to be checked but saw %d",
-        number_expected_filters,
-        number_checked_filters,
+        f"Expected to see {number_expected_filters} sector filter(s) to be checked but "
+        f"saw {number_checked_filters}"
     ):
         assert number_checked_filters == number_expected_filters
 
     diff = list(set(formatted_expected_filters) - set(checked_sector_filters))
-    with assertion_msg("Couldn't find '%s' among checked filters", diff):
+    with assertion_msg(
+        f"Couldn't find '{diff}' among checked filters: {checked_sector_filters}"
+    ):
         assert not diff
 
 
-def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
-    result = {
-        "full name": actor.alias,
-        "email": actor.email,
-        "industry": None,
-        "company name": "AUTOMATED TESTS",
-        "country": None,
-        "t&c": True,
-    }
+def generate_form_details(
+    actor: Actor, *, custom_details: dict = None, form_name: str = None
+) -> dict:
+    if form_name == "subscribe for email updates":
+        result = {
+            "full name": actor.alias,
+            "email": actor.email,
+            "industry": None,
+            "company name": "AUTOMATED TESTS",
+            "country": None,
+            "t&c": True,
+        }
+    elif form_name == "search form":
+        result = {
+            "q": custom_details["q"] if "q" in custom_details else "food",
+            "industries": None,
+        }
+    else:
+        raise KeyError(f"Unexpected form name: {form_name}")
     if custom_details:
         result.update(custom_details)
+    if "industries" in result:
+        result["industries"] = result["industries"].upper().replace(" ", "_")
     return result
 
 
-def fill_out(driver: WebDriver, contact_us_details: dict):
-    form_selectors = SELECTORS["subscribe for email updates"]
-    fill_out_input_fields(driver, form_selectors, contact_us_details)
-    pick_option(driver, form_selectors, contact_us_details)
-    tick_checkboxes(driver, form_selectors, contact_us_details)
-    tick_captcha_checkbox(driver)
+def fill_out(driver: WebDriver, form_details: dict, form_name: str = None):
+    if form_name == "subscribe for email updates":
+        form_selectors = SELECTORS[form_name]
+        fill_out_input_fields(driver, form_selectors, form_details)
+        pick_option(driver, form_selectors, form_details)
+        tick_checkboxes(driver, form_selectors, form_details)
+        tick_captcha_checkbox(driver)
+    elif form_name == "search form":
+        form_selectors = SELECTORS[form_name]
+        fill_out_input_fields(driver, form_selectors, form_details)
+        tick_checkboxes(driver, form_selectors, form_details)
+    else:
+        raise KeyError(f"Unexpected form name: {form_name}")
 
 
-def submit(driver: WebDriver) -> Union[ModuleType, None]:
-    return submit_form(driver, SELECTORS["subscribe for email updates"])
+def submit(driver: WebDriver, form_name: str = None) -> Union[ModuleType, None]:
+    return submit_form(driver, SELECTORS[form_name or "subscribe for email updates"])
 
 
 def open_profile(driver: WebDriver, number: int):
