@@ -12,6 +12,7 @@ from steps.then_impl import (
     erp_should_see_correct_data_on_summary_page,
     erp_should_see_number_of_product_categories_to_expand,
     erp_should_see_number_of_product_codes_to_select,
+    fas_buyer_should_be_signed_up_for_email_updates,
     fas_search_results_filtered_by_industries,
     form_check_state_of_element,
     forms_confirmation_email_should_not_be_sent,
@@ -358,3 +359,8 @@ def then_erp_resume_giving_feedback(
 @then('"{actor_alias}" should see correct data shown on the summary page')
 def then_erp_should_see_correct_data_on_summary(context: Context, actor_alias: str):
     erp_should_see_correct_data_on_summary_page(context, actor_alias)
+
+
+@then('"{actor_alias}" should be signed up for email updates of the latest UK companies in selected industry')
+def then_buyer_should_be_signed_up_for_email_updates(context: Context, actor_alias: str):
+    fas_buyer_should_be_signed_up_for_email_updates(context, actor_alias)

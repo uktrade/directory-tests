@@ -5,6 +5,7 @@ Feature: FAS - Search
     Given basic authentication is done for "International - Landing" page
 
 
+  @TT-2194
   @subscribe
   @dev-only
   @captcha
@@ -14,8 +15,10 @@ Feature: FAS - Search
     When "Robert" fills out and submits the form
 
     Then "Robert" should be on the "Find a Supplier - Thank you for registering" page
+    And "Robert" should be signed up for email updates of the latest UK companies in selected industry
 
 
+  @TT-2194
   @bug
   @TT-2186
   @fixed
@@ -29,6 +32,7 @@ Feature: FAS - Search
     When "Robert" fills out and submits "subscribe for email updates" form
 
     Then "Robert" should be on the "Find a Supplier - Thank you for registering" page
+    And "Robert" should be signed up for email updates of the latest UK companies in selected industry
 
     Examples: Industries
       | following  | specific                               |
