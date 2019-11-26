@@ -37,6 +37,7 @@ from steps.when_impl import (
     generic_pick_radio_option,
     generic_pick_radio_option_and_submit,
     generic_pick_random_radio_option_and_submit,
+    generic_remove_previous_field_selections,
     generic_report_problem_with_page,
     generic_search_for_phrase,
     generic_select_dropdown_option,
@@ -185,6 +186,15 @@ def when_actor_goes_to_guide(
 @when('"{actor_alias}" fills out and submits the form (and go 1 page back on error)')
 def when_actor_fills_out_and_submits_the_form(context: Context, actor_alias: str):
     generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=context.table, retry_on_errors=True, go_back=True)
+
+
+@when('"{actor_alias}" removed previous "{selector_name}" selections')
+def when_actor_removes_previous_form_selections(
+        context: Context, actor_alias: str, selector_name: str
+):
+    generic_remove_previous_field_selections(
+        context, actor_alias, selector_name
+    )
 
 
 @when('"{actor_alias}" decides to find new markets for her business')

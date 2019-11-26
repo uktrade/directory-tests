@@ -48,6 +48,7 @@ from pages.common_actions import (
     selenium_action,
     try_alternative_click_on_exception,
     unauthenticated_actor,
+    untick_selected_checkboxes,
     update_actor,
     update_actor_forms_data,
     wait_for_page_load_after_action,
@@ -462,6 +463,14 @@ def check_for_errors_or_non_trading_companies(
             with wait_for_page_load_after_action(driver):
                 driver.back()
         raise e
+
+
+def generic_remove_previous_field_selections(
+    context: Context, actor_alias: str, selector_name: str
+):
+    page = get_last_visited_page(context, actor_alias)
+    selector = find_selector_by_name(page.SELECTORS, selector_name)
+    untick_selected_checkboxes(context.driver, selector)
 
 
 @retry(
