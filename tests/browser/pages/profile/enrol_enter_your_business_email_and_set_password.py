@@ -78,13 +78,15 @@ def should_see_sections(driver: WebDriver, names: List[str]):
     check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
-def generate_form_details(actor: Actor) -> dict:
+def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
     result = {
         "email": actor.email,
         "password": actor.password,
         "confirm password": actor.password,
         "t & c": True,
     }
+    if custom_details:
+        result.update(custom_details)
     logging.debug(f"Generated form details: {result}")
     return result
 
