@@ -84,6 +84,64 @@ Feature: Profile - Non-CH enrolment flows
 
 
   @dev-only
+  @TT-2176
+  @TT-2193
+  @password
+  @ltd-plc-royal
+  @sole-trader-other-business
+  @tax-payer
+  Scenario Outline: "<business type>" representative shouldn't be able to use a password that doesn't meet requirements otherwise their going to see "<an error message>"
+    Given "Natalia" visits the "Profile - Enter your email address and set a password (<business type>)" page
+
+    When "Natalia" fills out and submits the form
+      | field            | value              |
+      | password         | <password>         |
+      | confirm password | <confirm password> |
+
+    Then "Natalia" should be on the "Profile - Enter your email address and set a password (<business type>)" page
+    And "Natalia" should see "<an error message>" on the page
+
+    Examples:
+      | business type                         | password    | confirm password | an error message                                                   |
+      | Sole trader or other type of business | letters     | letters          | This password contains letters only                                |
+      | Sole trader or other type of business | abcdefghij  | abcdefghij       | This password contains letters only                                |
+      | Sole trader or other type of business | abcdefghijk | abcdefghijk      | This password contains letters only                                |
+      | Sole trader or other type of business | 0123456789  | 0123456789       | This password is entirely numeric                                  |
+      | Sole trader or other type of business | password    | don't match      | Passwords don't match                                              |
+      | Sole trader or other type of business | password    | empty            | This field is required                                             |
+      | Sole trader or other type of business | empty       | empty            | This field is required                                             |
+      | Sole trader or other type of business | password    | password         | This password contains the word 'password'                         |
+      | Sole trader or other type of business | 123 short   | 123 short        | This password is too short. It must contain at least 10 characters |
+      | UK taxpayer                           | letters     | letters          | This password contains letters only                                |
+      | UK taxpayer                           | abcdefghij  | abcdefghij       | This password contains letters only                                |
+      | UK taxpayer                           | abcdefghijk | abcdefghijk      | This password contains letters only                                |
+      | UK taxpayer                           | 0123456789  | 0123456789       | This password is entirely numeric                                  |
+      | UK taxpayer                           | password    | don't match      | Passwords don't match                                              |
+      | UK taxpayer                           | password    | empty            | This field is required                                             |
+      | UK taxpayer                           | empty       | empty            | This field is required                                             |
+      | UK taxpayer                           | password    | password         | This password contains the word 'password'                         |
+      | UK taxpayer                           | 123 short   | 123 short        | This password is too short. It must contain at least 10 characters |
+
+    @bug
+    @TT-2189
+    @fixme
+    Examples: examples affected by bug TT-2189
+      | business type                         | password    | confirm password | an error message                                                  |
+      | Sole trader or other type of business | empty       | password         | This field is required                                            |
+      | UK taxpayer                           | empty       | password         | This field is required                                            |
+
+    @bug
+    @TT-2192
+    @fixme
+    Examples: examples affected by bug TT-2192
+      | business type                         | password    | confirm password | an error message                                                   |
+      | Sole trader or other type of business | a b c d e f | a b c d e f      | This password contains letters only                                |
+      | Sole trader or other type of business | 1 2 3 4 5 6 | 1 2 3 4 5 6      | This password is entirely numeric                                  |
+      | UK taxpayer                           | a b c d e f | a b c d e f      | This password contains letters only                                |
+      | UK taxpayer                           | 1 2 3 4 5 6 | 1 2 3 4 5 6      | This password is entirely numeric                                  |
+
+
+  @dev-only
   @TT-1121
   @ltd-plc-royal
   @sole-trader-other-business

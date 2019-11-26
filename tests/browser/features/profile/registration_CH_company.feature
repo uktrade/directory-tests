@@ -82,6 +82,52 @@ Feature: Profile - CH enrolment flows
 
 
   @dev-only
+  @TT-2176
+  @TT-2193
+  @password
+  @ltd-plc-royal
+  @sole-trader-other-business
+  @tax-payer
+  Scenario Outline: "<business type>" representative shouldn't be able to use a password that doesn't meet requirements otherwise their going to see "<an error message>"
+    Given "Natalia" visits the "Profile - Enter your email address and set a password (<business type>)" page
+
+    When "Natalia" fills out and submits the form
+      | field            | value              |
+      | password         | <password>         |
+      | confirm password | <confirm password> |
+
+    Then "Natalia" should be on the "Profile - Enter your email address and set a password (<business type>)" page
+    And "Natalia" should see "<an error message>" on the page
+
+    Examples:
+      | business type             | password    | confirm password | an error message                                                   |
+      | LTD, PLC or Royal Charter | letters     | letters          | This password contains letters only                                |
+      | LTD, PLC or Royal Charter | abcdefghij  | abcdefghij       | This password contains letters only                                |
+      | LTD, PLC or Royal Charter | abcdefghijk | abcdefghijk      | This password contains letters only                                |
+      | LTD, PLC or Royal Charter | 0123456789  | 0123456789       | This password is entirely numeric                                  |
+      | LTD, PLC or Royal Charter | password    | don't match      | Passwords don't match                                              |
+      | LTD, PLC or Royal Charter | password    | empty            | This field is required                                             |
+      | LTD, PLC or Royal Charter | empty       | empty            | This field is required                                             |
+      | LTD, PLC or Royal Charter | password    | password         | This password contains the word 'password'                         |
+      | LTD, PLC or Royal Charter | 123 short   | 123 short        | This password is too short. It must contain at least 10 characters |
+
+    @bug
+    @TT-2189
+    @fixme
+    Examples: examples affected by bug TT-2189
+      | business type             | password    | confirm password | an error message                                                   |
+      | LTD, PLC or Royal Charter | empty       | password         | This field is required                                             |
+
+    @bug
+    @TT-2192
+    @fixme
+    Examples: examples affected by bug TT-2192
+      | business type             | password    | confirm password | an error message                                                   |
+      | LTD, PLC or Royal Charter | a b c d e f | a b c d e f      | This password contains letters only                                |
+      | LTD, PLC or Royal Charter | 1 2 3 4 5 6 | 1 2 3 4 5 6      | This password is entirely numeric                                  |
+
+
+  @dev-only
   @TT-1121
   @ltd-plc-royal
   @sole-trader-other-business
