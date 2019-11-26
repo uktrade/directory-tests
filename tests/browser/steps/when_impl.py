@@ -2,6 +2,7 @@
 """When step implementations."""
 import logging
 import random
+from inspect import signature
 from types import MethodType
 from typing import Dict
 from urllib.parse import urljoin, urlparse
@@ -486,12 +487,20 @@ def generic_fill_out_and_submit_form(
     custom_details_table: Table = None,
     retry_on_errors: bool = False,
     go_back: bool = False,
+    form_name: str = None,
 ):
     actor = get_actor(context, actor_alias)
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "generate_form_details")
     has_action(page, "fill_out")
     has_action(page, "submit")
+    if form_name:
+        error = f"generate_form_details() in {page} should accept 'form_name' but it doesn't"
+        assert signature(page.generate_form_details).parameters.get("form_name"), error
+        error = f"fill_out() in {page} should accept 'form_name' but it doesn't"
+        assert signature(page.fill_out).parameters.get("form_name"), error
+        error = f"submit() in {page} should accept 'form_name' but it doesn't"
+        assert signature(page.submit).parameters.get("form_name"), error
     if custom_details_table:
         custom_details_table.require_column("field")
         custom_details_table.require_column("value")
@@ -501,14 +510,25 @@ def generic_fill_out_and_submit_form(
             key = row["field"].lower()
             value = row["value"]
             custom_details[key] = value_mapping.get(value, value)
-        details = page.generate_form_details(actor, custom_details=custom_details)
+        if form_name:
+            details = page.generate_form_details(
+                actor, custom_details=custom_details, form_name=form_name
+            )
+        else:
+            details = page.generate_form_details(actor, custom_details=custom_details)
     else:
-        details = page.generate_form_details(actor)
+        if form_name:
+            details = page.generate_form_details(actor, form_name=form_name)
+        else:
+            details = page.generate_form_details(actor)
     logging.debug(f"{actor_alias} will fill out the form with: {details}")
 
     update_actor_forms_data(context, actor, details)
 
-    page.fill_out(context.driver, details)
+    if form_name:
+        page.fill_out(context.driver, details, form_name=form_name)
+    else:
+        page.fill_out(context.driver, details)
 
     if hasattr(page, "get_form_details"):
         form_data = page.get_form_details(context.driver)
@@ -518,7 +538,10 @@ def generic_fill_out_and_submit_form(
         if details:
             update_actor_forms_data(context, actor, details)
 
-    page.submit(context.driver)
+    if form_name:
+        page.submit(context.driver, form_name=form_name)
+    else:
+        page.submit(context.driver)
     if retry_on_errors:
         check_for_errors_or_non_trading_companies(context.driver, go_back=go_back)
 

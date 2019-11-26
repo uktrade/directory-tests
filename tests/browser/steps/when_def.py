@@ -199,9 +199,14 @@ def when_actor_removes_previous_form_selections(
 
 @when('"{actor_alias}" decides to find new markets for her business')
 @when('"{actor_alias}" decides to find new markets for his business')
+@when('"{actor_alias}" fills out and submits "{form_name}" form')
 @when('"{actor_alias}" fills out and submits the form')
-def when_actor_fills_out_and_submits_the_form(context: Context, actor_alias: str):
-    generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=context.table)
+def when_actor_fills_out_and_submits_the_form(
+        context: Context, actor_alias: str, *, form_name: str = None
+):
+    generic_fill_out_and_submit_form(
+        context, actor_alias, custom_details_table=context.table, form_name=form_name
+    )
 
 
 @when('"{actor_alias}" downloads all visible PDFs')
