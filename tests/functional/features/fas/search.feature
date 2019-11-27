@@ -161,10 +161,10 @@ Feature: Find a Supplier
     Given "Annette Geissinger" is a buyer
 
     When "Annette Geissinger" searches for Suppliers using product name, service name and a keyword
-      | product         | service               | keyword  | company                     |
-      | social insights | market research       | B2B      | YOLO COMMUNICATIONS LIMITED |
-      | logo animations | content for broadcast | 3dCG     | LIGHTRHYTHM VISUALS LTD     |
-      | CANbus displays | stabilisation systems | NMEA2000 | CANTRONIK LTD               |
+      | product                  | service                 | keyword           | company                 |
+      | meaningful relationships | Strategy & Planning     | NationalJigsawDay | AGENCY UK               |
+      | logo animations          | content for broadcast   | 3dCG              | LIGHTRHYTHM VISUALS LTD |
+      | CANbus displays          | CAN bus Instrumentation | NMEA2000          | CANTRONIK LTD           |
     Then "Annette Geissinger" should be able to find all sought companies
 
 
