@@ -154,6 +154,7 @@ Feature: Find a Supplier
     Then "Annette Geissinger" should be told to enter a search term or use the filters
 
 
+  @dev-only
   @ED-2020
   @search
   @no-sso-email-verification-required
@@ -165,6 +166,36 @@ Feature: Find a Supplier
       | meaningful relationships | Strategy & Planning     | NationalJigsawDay | AGENCY UK               |
       | logo animations          | content for broadcast   | 3dCG              | LIGHTRHYTHM VISUALS LTD |
       | CANbus displays          | CAN bus Instrumentation | NMEA2000          | CANTRONIK LTD           |
+    Then "Annette Geissinger" should be able to find all sought companies
+
+
+  @staging-only
+  @ED-2020
+  @search
+  @no-sso-email-verification-required
+  Scenario: Buyers should be able to find Suppliers by product, service or keyword
+    Given "Annette Geissinger" is a buyer
+
+    When "Annette Geissinger" searches for Suppliers using product name, service name and a keyword
+      | product                  | service                 | keyword           | company                 |
+      | meaningful relationships | Strategy & Planning     | NationalJigsawDay | AGENCY UK               |
+      | logo animations          | content for broadcast   | 3dCG              | LIGHTRHYTHM VISUALS LTD |
+      | CANbus displays          | CAN bus Instrumentation | NMEA2000          | CANTRONIK LTD           |
+    Then "Annette Geissinger" should be able to find all sought companies
+
+
+  @uat-only
+  @ED-2020
+  @search
+  @no-sso-email-verification-required
+  Scenario: Buyers should be able to find Suppliers by product, service or keyword
+    Given "Annette Geissinger" is a buyer
+
+    When "Annette Geissinger" searches for Suppliers using product name, service name and a keyword
+      | product         | service                 | keyword  | company                 |
+      | pokers          | construction equipment  | screeds  | MULTIQUIP (UK) LIMITED  |
+      | logo animations | content for broadcast   | 3dCG     | LIGHTRHYTHM VISUALS LTD |
+      | CANbus displays | CAN bus Instrumentation | NMEA2000 | CANTRONIK LTD           |
     Then "Annette Geissinger" should be able to find all sought companies
 
 
