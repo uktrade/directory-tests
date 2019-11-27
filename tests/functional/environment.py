@@ -4,6 +4,8 @@ import logging
 from pprint import pformat
 
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
+from behave.model import Feature, Scenario, Step
+from behave.runner import Context
 
 from directory_tests_shared.pdf import NoPDFMinerLogEntriesFilter
 from directory_tests_shared.settings import AUTO_RETRY, AUTO_RETRY_MAX_ATTEMPTS
@@ -24,13 +26,13 @@ from tests.functional.utils.generic import (
 from tests.functional.utils.request import REQUEST_EXCEPTIONS
 
 
-def before_all(context):
+def before_all(context: Context):
     context.config.setup_logging(configfile=".behave_logging")
     logger = logging.getLogger()
     logger.addFilter(NoPDFMinerLogEntriesFilter())
 
 
-def before_feature(context, feature):
+def before_feature(context: Context, feature: Feature):
     """Use autoretry feature which automatically retries failing scenarios."""
     if AUTO_RETRY:
         for scenario in feature.scenarios:
@@ -39,17 +41,17 @@ def before_feature(context, feature):
             )
 
 
-def before_scenario(context, scenario):
+def before_scenario(context: Context, scenario: Scenario):
     logging.debug(f"Starting scenario: {scenario.name}")
     # re-initialize the scenario data
     context.scenario_data = initialize_scenario_data()
 
 
-def before_step(context, step):
+def before_step(context: Context, step: Step):
     logging.debug(f"Started step: {step.step_type.capitalize()} {step.name}")
 
 
-def after_step(context, step):
+def after_step(context: Context, step: Step):
     logging.debug(
         f"Finished step: {round(step.duration, 3)} {step.step_type.capitalize()} "
         f"{step.name}"
@@ -94,7 +96,7 @@ def after_step(context, step):
             blue("There's no response content to log")
 
 
-def after_scenario(context, scenario):
+def after_scenario(context: Context, scenario: Scenario):
     actors = context.scenario_data.actors
     for actor in actors.values():
         if actor.session:
