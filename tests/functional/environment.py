@@ -10,14 +10,11 @@ from behave.runner import Context
 from directory_tests_shared.pdf import NoPDFMinerLogEntriesFilter
 from directory_tests_shared.settings import AUTO_RETRY, AUTO_RETRY_MAX_ATTEMPTS
 from directory_tests_shared.utils import blue, green, red
-from tests.functional.utils.context_utils import (
-    get_company,
-    initialize_scenario_data,
-    update_company,
-)
+from tests.functional.utils.context_utils import initialize_scenario_data
 from tests.functional.utils.generic import (
-    delete_supplier_data_from_dir,
-    delete_supplier_data_from_sso,
+    delete_test_companies_from_directory_api,
+    delete_test_submissions_from_forms_api,
+    delete_test_users_from_sso,
     extract_form_errors,
     extract_main_error,
     extract_section_error,
@@ -102,31 +99,13 @@ def after_scenario(context: Context, scenario: Scenario):
         if actor.session:
             actor.session.close()
             logging.debug(f"Closed Requests session for {actor.alias}")
-        if actor.type == "supplier":
-            delete_supplier_data_from_sso(actor.email, context=context)
-            if actor.company_alias:
-                company = get_company(context, actor.company_alias)
-                if not company:
-                    logging.warning(
-                        f"Could not find company '{actor.company_alias}' details in "
-                        f"context.scenario_data.companies. Possibly details were not "
-                        f"stored in it after its alias was added to actor's details"
-                    )
-                    continue
-                if company.deleted:
-                    logging.debug(f"Company '{company.alias}' is already deleted")
-                    continue
-                if company.number:
-                    logging.debug(f"Delete company by number: {company.number}")
-                    delete_supplier_data_from_dir(company.number, context=context)
-                else:
-                    logging.debug(f"Delete company by title: {company.title}")
-                    delete_supplier_data_from_dir(company.title, context=context)
-                update_company(context, alias=company.alias, deleted=True)
-        else:
-            logging.debug(
-                f"'{actor.alias}' is not a supplier. No need to delete anything"
-            )
     # clear the scenario data after every scenario
     context.scenario_data = None
     logging.debug(f"Finished scenario: {round(scenario.duration, 3)} → {scenario.name}")
+
+
+def after_all(context: Context):
+    logging.debug(f"Deleting test users, companies & submissions")
+    delete_test_users_from_sso()
+    delete_test_companies_from_directory_api()
+    delete_test_submissions_from_forms_api()

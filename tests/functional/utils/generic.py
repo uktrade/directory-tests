@@ -25,6 +25,7 @@ from directory_constants import choices
 from directory_tests_shared import URLs
 from directory_tests_shared.clients import (
     DIRECTORY_TEST_API_CLIENT,
+    FORMS_API_CLIENT,
     SSO_TEST_API_CLIENT,
 )
 from directory_tests_shared.constants import SECTORS, TEST_IMAGES_DIR, JPEGs, PNGs
@@ -875,6 +876,45 @@ def delete_supplier_data_from_sso(email_address: str, *, context: Context = None
             "SSO DB",
             email_address,
         )
+
+
+def delete_test_companies_from_directory_api():
+    response = DIRECTORY_TEST_API_CLIENT.delete("testapi/test-companies/")
+    with assertion_msg(
+        f"Expected 204 or 404 from DIRECTORY-API but got:"
+        f"{response.status_code} → {response.content}"
+    ):
+        assert response.status_code in [204, 404]
+    logging.debug(
+        f"Successfully issued a request to delete test companies from DIRECTORY-API: "
+        f"{response.status_code}"
+    )
+
+
+def delete_test_users_from_sso():
+    response = SSO_TEST_API_CLIENT.delete("testapi/test-users/")
+    with assertion_msg(
+        f"Expected 204 or 404 from SSO-API but got: {response.status_code} → "
+        f"{response.content}"
+    ):
+        assert response.status_code in [204, 404]
+    logging.debug(
+        f"Successfully issued a request to delete test users from SSO-API: "
+        f"{response.status_code}"
+    )
+
+
+def delete_test_submissions_from_forms_api():
+    response = FORMS_API_CLIENT.delete("testapi/test-submissions/")
+    with assertion_msg(
+        f"Expected 204 or 404 from FORMS-API but got: {response.status_code} → "
+        f"{response.content}"
+    ):
+        assert response.status_code in [204, 404]
+    logging.debug(
+        f"Successfully issued a request to delete test submissions from FORMS-API: "
+        f"{response.status_code}"
+    )
 
 
 def delete_supplier_data_from_dir(ch_id_or_name: str, *, context: Context = None):
