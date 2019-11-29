@@ -110,6 +110,7 @@ Feature: Profile - Non-CH enrolment flows
       | Sole trader or other type of business | password    | don't match      | Passwords don't match                                              |
       | Sole trader or other type of business | password    | empty            | This field is required                                             |
       | Sole trader or other type of business | empty       | empty            | This field is required                                             |
+      | Sole trader or other type of business | empty       | password         | This field is required                                            |
       | Sole trader or other type of business | password    | password         | This password contains the word 'password'                         |
       | Sole trader or other type of business | 123 short   | 123 short        | This password is too short. It must contain at least 10 characters |
       | UK taxpayer                           | letters     | letters          | This password contains letters only                                |
@@ -119,26 +120,31 @@ Feature: Profile - Non-CH enrolment flows
       | UK taxpayer                           | password    | don't match      | Passwords don't match                                              |
       | UK taxpayer                           | password    | empty            | This field is required                                             |
       | UK taxpayer                           | empty       | empty            | This field is required                                             |
+      | UK taxpayer                           | empty       | password         | This field is required                                            |
       | UK taxpayer                           | password    | password         | This password contains the word 'password'                         |
       | UK taxpayer                           | 123 short   | 123 short        | This password is too short. It must contain at least 10 characters |
 
-    @bug
-    @TT-2189
-    @fixme
-    Examples: examples affected by bug TT-2189
-      | business type                         | password    | confirm password | an error message                                                  |
-      | Sole trader or other type of business | empty       | password         | This field is required                                            |
-      | UK taxpayer                           | empty       | password         | This field is required                                            |
 
-    @bug
-    @TT-2192
-    @fixme
-    Examples: examples affected by bug TT-2192
-      | business type                         | password    | confirm password | an error message                                                   |
-      | Sole trader or other type of business | a b c d e f | a b c d e f      | This password contains letters only                                |
-      | Sole trader or other type of business | 1 2 3 4 5 6 | 1 2 3 4 5 6      | This password is entirely numeric                                  |
-      | UK taxpayer                           | a b c d e f | a b c d e f      | This password contains letters only                                |
-      | UK taxpayer                           | 1 2 3 4 5 6 | 1 2 3 4 5 6      | This password is entirely numeric                                  |
+  @bug
+  @TT-2192
+  @fixed
+  @dev-only
+  @sole-trader-other-business
+  @tax-payer
+  Scenario Outline: "<selected business type>" representative should be able to use spaces in password
+    Given "Natalia" visits the "Profile - Enter your email address and set a password (<selected business type>)" page
+
+    When "Natalia" fills out and submits the form
+      | field            | value      |
+      | password         | <password> |
+      | confirm password | <password> |
+
+    Then "Natalia" should be on the "Profile - Enter your confirmation code (<selected business type>)" page
+
+    Examples: examples affected by bug
+      | selected business type                | password    |
+      | Sole trader or other type of business | a b c d e f |
+      | UK taxpayer                           | 1 2 3 4 5 6 |
 
 
   @dev-only
@@ -160,7 +166,6 @@ Feature: Profile - Non-CH enrolment flows
 
     Examples:
       | selected business type                |
-      | LTD, PLC or Royal Charter             |
       | Sole trader or other type of business |
 
 
@@ -179,7 +184,6 @@ Feature: Profile - Non-CH enrolment flows
       | Your business type     |
       | Enter your details     |
       | Enrolment progress bar |
-
 
 
   @dev-only

@@ -110,21 +110,28 @@ Feature: Profile - CH enrolment flows
       | LTD, PLC or Royal Charter | empty       | empty            | This field is required                                             |
       | LTD, PLC or Royal Charter | password    | password         | This password contains the word 'password'                         |
       | LTD, PLC or Royal Charter | 123 short   | 123 short        | This password is too short. It must contain at least 10 characters |
-
-    @bug
-    @TT-2189
-    @fixme
-    Examples: examples affected by bug TT-2189
-      | business type             | password    | confirm password | an error message                                                   |
       | LTD, PLC or Royal Charter | empty       | password         | This field is required                                             |
 
-    @bug
-    @TT-2192
-    @fixme
+
+  @bug
+  @TT-2192
+  @fixed
+  @dev-only
+  @ltd-plc-royal
+  Scenario Outline: "<selected business type>" representative should be able to use spaces in password
+    Given "Natalia" visits the "Profile - Enter your email address and set a password (<selected business type>)" page
+
+    When "Natalia" fills out and submits the form
+      | field            | value      |
+      | password         | <password> |
+      | confirm password | <password> |
+
+    Then "Natalia" should be on the "Profile - Enter your confirmation code (<selected business type>)" page
+
     Examples: examples affected by bug TT-2192
-      | business type             | password    | confirm password | an error message                                                   |
-      | LTD, PLC or Royal Charter | a b c d e f | a b c d e f      | This password contains letters only                                |
-      | LTD, PLC or Royal Charter | 1 2 3 4 5 6 | 1 2 3 4 5 6      | This password is entirely numeric                                  |
+      | selected business type    | password    |
+      | LTD, PLC or Royal Charter | a b c d e f |
+      | LTD, PLC or Royal Charter | 1 2 3 4 5 6 |
 
 
   @dev-only
