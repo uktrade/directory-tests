@@ -3,7 +3,35 @@ import pytest
 from rest_framework.status import HTTP_200_OK, HTTP_301_MOVED_PERMANENTLY
 
 from directory_tests_shared import URLs
+from directory_tests_shared.settings import BASICAUTH_PASS, BASICAUTH_USER
+from directory_tests_shared.utils import extract_attributes_by_css, extract_by_css
 from tests.smoke.cms_api_helpers import get_and_assert
+
+
+def get_all_market_slugs(*, auth: tuple = (BASICAUTH_USER, BASICAUTH_PASS)) -> list:
+    start_page = f"{URLs.SOO_SEARCH_RESULTS.absolute}?category_id=&country_id=&commit="
+    response = get_and_assert(url=start_page, status_code=HTTP_200_OK, auth=auth)
+    content = response.content.decode("UTF-8")
+    hrefs = extract_attributes_by_css(
+        content, "a.market-header-link", attrs=["href"], text=False
+    )
+
+    last_page_number = int(
+        extract_by_css(content, "nav.pagination > ol > li:last-of-type > a::text")
+    )
+    if last_page_number > 1:
+        for page_number in range(2, last_page_number + 1):
+            url = f"{start_page}&page={page_number}"
+            response = get_and_assert(url=url, status_code=HTTP_200_OK, auth=auth)
+            content = response.content.decode("UTF-8")
+            hrefs += extract_attributes_by_css(
+                content, "a.market-header-link", attrs=["href"], text=False
+            )
+    # flatten the results and return only the market's slug value e.g. tthigo
+    # results format is:
+    # [{'href': '/selling-online-overseas/markets/details/tthigo/'}, ...]
+    slugs = [href["href"].split("/")[-2] for href in hrefs]
+    return slugs
 
 
 @pytest.mark.parametrize(
@@ -41,167 +69,16 @@ def test_search_works(categories, countries, basic_auth):
     )
 
 
-# flake8: noqa
-@pytest.mark.dev
 @pytest.mark.parametrize(
     "url",
     list(
         map(
             lambda name: URLs.SOO_MARKET_DETAILS.absolute_template.format(market=name),
-            [
-                "1688com",
-                "amazon-canada",
-                "amazon-france",
-                "amazon-germany",
-                "amazon-italy",
-                "amazon-japan",
-                "amazon-spain",
-                "amazon-usa",
-                "cdiscount",
-                "ebay",
-                "flipkart",
-                "jd-worldwide",
-                "kaola",
-                "newegg-inc",
-                "privalia",
-                "rakuten",
-                "royal-mail-t-mall",
-                "spartoo",
-                "trademe",
-                # "alibaba-direct",
-                # "allegro",
-                # "amazon-china",
-                # "amazon-india",
-                # "ctrip",
-                # "etsy",
-                # "jack-russell-emporium-on-jdcom",
-                # "otto",
-                # "sfbest",
-                # "shangpin",
-                # "the-iconic",
-                # "tmall-global",
-                # "vip-shop",
-                # "westwing",
-                # "xiu",
-                # "zalora",
-            ],
+            get_all_market_slugs(),
         )
     ),
 )
-def test_get_market_details_dev(url, basic_auth):
-    get_and_assert(
-        url=url, allow_redirects=True, status_code=HTTP_200_OK, auth=basic_auth
-    )
-
-
-@pytest.mark.stage
-@pytest.mark.parametrize(
-    "url",
-    list(
-        map(
-            lambda name: URLs.SOO_MARKET_DETAILS.absolute_template.format(market=name),
-            [
-                "allegro",
-                "amazon-china",
-                "amazon-france",
-                "amazon-germany",
-                "amazon-india",
-                "amazon-italy",
-                "amazon-japan",
-                "amazon-mexico",
-                "amazon-spain",
-                "amazon-usa",
-                "cdiscount",
-                "ctrip",
-                "dafiti",
-                "ebay",
-                "etsy",
-                "flipkart",
-                "fruugo",
-                "goxip",
-                "jd-worldwide",
-                "kaola",
-                "la-redoute",
-                "lamoda",
-                "linio",
-                "mercado-libre",
-                "newegg-business",
-                "newegg-canada",
-                "newegg-inc",
-                "otto",
-                "privalia",
-                "rakuten",
-                "royal-mail-t-mall",
-                "sfbest",
-                "shangpin",
-                "spartoo",
-                "the-iconic",
-                "tmall-global",
-                "tthigo",
-                "westwing",
-                "xiu",
-                "zalora",
-            ],
-        )
-    ),
-)
-def test_get_market_details_stage(url, basic_auth):
-    get_and_assert(
-        url=url, allow_redirects=True, status_code=HTTP_200_OK, auth=basic_auth
-    )
-
-
-# test all market pages on Production
-@pytest.mark.prod
-@pytest.mark.parametrize(
-    "url",
-    list(
-        map(
-            lambda name: URLs.SOO_MARKET_DETAILS.absolute_template.format(market=name),
-            [
-                "1688com",
-                "amazon-australia",
-                "amazon-canada",
-                "amazon-france",
-                "amazon-germany",
-                "amazon-italy",
-                "amazon-japan",
-                "amazon-mexico",
-                "amazon-spain",
-                "amazon-usa",
-                "amazon-uae",
-                "bol",
-                "catch",
-                "cdiscount",
-                "darty",
-                "ebay",
-                "eprice",
-                "flipkart",
-                "fnac",
-                "fruugo",
-                "goxip",
-                "jd-worldwide",
-                "kaola",
-                "la-redoute",
-                "linio",
-                "mano-mano",
-                "newegg-business",
-                "newegg-canada",
-                "newegg-inc",
-                "onbuy",
-                "privalia",
-                "rakuten",
-                "realde",
-                "royal-mail-t-mall",
-                "spartoo",
-                "trademe",
-                "themarket",
-                "tthigo",
-            ],
-        )
-    ),
-)
-def test_get_market_details_prod(url, basic_auth):
+def test_get_market_details(url, basic_auth):
     get_and_assert(
         url=url, allow_redirects=True, status_code=HTTP_200_OK, auth=basic_auth
     )
