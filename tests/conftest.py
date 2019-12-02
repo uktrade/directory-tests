@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 import pytest
 import requests
-
 from requests.auth import HTTPBasicAuth
 from retrying import retry
 
 from directory_tests_shared import URLs
 from directory_tests_shared.clients import CMS_API_CLIENT
 from directory_tests_shared.constants import USERS
-from directory_tests_shared.settings import BASICAUTH_USER, BASICAUTH_PASS
+from directory_tests_shared.settings import BASICAUTH_PASS, BASICAUTH_USER
 
 
 @pytest.fixture
@@ -23,7 +22,8 @@ def basic_auth():
 
 def extract_csrf_middleware_token(content: str) -> str:
     line = [l for l in content.splitlines() if "csrfmiddlewaretoken" in l][0]
-    fields = line.strip().split("'")
+    delimiter = '"' if '"' in line else "'"
+    fields = line.strip().split(delimiter)
     token_position = 5
     return fields[token_position]
 
@@ -34,8 +34,12 @@ def logged_in_session():
     session = requests.Session()
     login_url = URLs.SSO_LOGIN.absolute
     response = session.get(url=login_url, auth=(BASICAUTH_USER, BASICAUTH_PASS))
-    assert response.status_code == 200, f"Expected 200 but got {response.status_code} from {response.url}"
-    csrfmiddlewaretoken = extract_csrf_middleware_token(response.content.decode("UTF-8"))
+    assert (
+        response.status_code == 200
+    ), f"Expected 200 but got {response.status_code} from {response.url}"
+    csrfmiddlewaretoken = extract_csrf_middleware_token(
+        response.content.decode("UTF-8")
+    )
     user = USERS["verified"]
     data = {
         "login": user["username"],
