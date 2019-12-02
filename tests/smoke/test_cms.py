@@ -25,7 +25,11 @@ if "dev" in CMS_API_URL:
         # ignore sub-sector pages as they're behind a feature flag
         # and are used to categorise capital invest opportunities
         # so come up as a filter on the opportunity listing page
+        "great_international.internationalsectorpage",
         "great_international.internationalsubsectorpage",
+        "great_international.internationaltopiclandingpage",
+        "great_international.aboutuklandingpage",
+        "great_international.capitalinvestopportunitylistingpage",
     ]
 if "staging" in CMS_API_URL:
     SKIPPED_PAGE_TYPES += [
