@@ -220,6 +220,7 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
     # get first page of results
     relative_url = URLs.CMS_API_PAGES.relative
     endpoint = f"{relative_url}?type={page_type}"
+    print(f"Fetching a list of pages for type: {page_type}")
     response = CMS_API_CLIENT.get(endpoint)
     total_response_time = response.elapsed.total_seconds()
     assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
