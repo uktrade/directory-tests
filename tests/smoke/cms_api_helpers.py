@@ -149,6 +149,7 @@ def should_skip_url(url: str) -> bool:
         "/eu-exit-news/",  # International news aren't always enabled
         "contact/find-uk-companies/success/",  # this page is not in use anymore
         "skip.this.url",  # skip URL which was deemed to skip the page checker
+        "/success-stories/",  # Success Stories are behind a feature flag
     ]
     if any(True for bit in skip if bit in url):
         return True
