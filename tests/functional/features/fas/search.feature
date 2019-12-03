@@ -37,13 +37,12 @@ Feature: Find a Supplier
       | caption 1                 |
       | caption 2                 |
       | caption 3                 |
-      | testimonial               |
-      | source name               |
-      | source job                |
+#      | testimonial               |
+#      | source name               |
+#      | source job                |
       | source company            |
       | website                   |
-      | keywords                  |
-      | slug                      |
+#      | keywords                  |
 
 
   @ED-1746

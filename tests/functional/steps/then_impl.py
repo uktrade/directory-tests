@@ -399,11 +399,11 @@ def fas_find_supplier_using_case_study_details(
         keys = [row["search using case study's"] for row in properties]
     search_terms = {}
     for key in keys:
-        if key == "keywords":
-            for index, keyword in enumerate(case_study.keywords.split(", ")):
-                search_terms[f"keyword #{index}"] = keyword
-        else:
-            search_terms[key] = getattr(case_study, key.replace(" ", "_"))
+        # if key == "keywords":
+        #     for index, keyword in enumerate(case_study.keywords.split(", ")):
+        #         search_terms[f"keyword #{index}"] = keyword
+        # else:
+        search_terms[key] = getattr(case_study, key.replace(" ", "_"))
     logging.debug(
         "Now %s will try to find '%s' using following search terms: %s",
         buyer_alias,
@@ -416,7 +416,7 @@ def fas_find_supplier_using_case_study_details(
         term = search_terms[term_type]
         logging.debug(f"Looking for '{company.title}' using '{term_type}': '{term}'")
         profile_link, context.response = can_find_supplier_by_term(
-            session, company.title, term, term_type
+            session, company.title, term, term_type, max_pages=max_pages
         )
         found = profile_link != ""
         search_results[term_type] = {"term": term, "found": found}
