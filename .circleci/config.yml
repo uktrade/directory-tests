@@ -357,7 +357,7 @@ jobs:
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "fas"
-      TAGS: "--tags=~@dev-only"
+      TAGS: "--tags=~@dev-only --tags=~@uat-only"
     <<: [
     *machine_python3,
     *steps_functional_tests,
@@ -368,7 +368,7 @@ jobs:
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "sso"
-      TAGS: "--tags=~@dev-only"
+      TAGS: "--tags=~@dev-only --tags=~@uat-only"
     <<: [
     *machine_python3,
     *steps_functional_tests,
@@ -379,7 +379,7 @@ jobs:
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "profile"
-      TAGS: "--tags=~@dev-only"
+      TAGS: "--tags=~@dev-only --tags=~@uat-only"
     <<: [
     *machine_python3,
     *steps_functional_tests,
@@ -390,7 +390,7 @@ jobs:
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "international"
-      TAGS: "--tags=~@dev-only"
+      TAGS: "--tags=~@dev-only --tags=~@uat-only"
     <<: [
     *machine_python3,
     *steps_functional_tests,
