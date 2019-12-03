@@ -401,6 +401,7 @@ jobs:
     environment:
       TEST_ENV: "uat"
       FEATURE_DIR: "fas"
+      TAGS: "--tags=~@stage-only"
     <<: [
     *machine_python3,
     *steps_functional_tests,
@@ -411,6 +412,7 @@ jobs:
     environment:
       TEST_ENV: "uat"
       FEATURE_DIR: "sso"
+      TAGS: "--tags=~@stage-only"
     <<: [
     *machine_python3,
     *steps_functional_tests,
@@ -421,6 +423,7 @@ jobs:
     environment:
       TEST_ENV: "uat"
       FEATURE_DIR: "profile"
+      TAGS: "--tags=~@stage-only"
     <<: [
     *machine_python3,
     *steps_functional_tests,
@@ -431,6 +434,7 @@ jobs:
     environment:
       TEST_ENV: "uat"
       FEATURE_DIR: "international"
+      TAGS: "--tags=~@stage-only"
     <<: [
     *machine_python3,
     *steps_functional_tests,
