@@ -915,6 +915,7 @@ def fas_search_using_company_details(
     context.search_responses = search_responses
 
 
+@retry(wait_fixed=2000, stop_max_attempt_number=5)
 def generic_view_pages_in_selected_language(
     context: Context,
     buyer_alias: str,
