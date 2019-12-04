@@ -60,7 +60,6 @@ Feature: Profile - Non-CH enrolment flows
 
   @dev-only
   @TT-1120
-  @ltd-plc-royal
   @sole-trader-other-business
   @tax-payer
   Scenario Outline: "<selected business type>" representative should receive an email with confirmation code
@@ -87,7 +86,6 @@ Feature: Profile - Non-CH enrolment flows
   @TT-2176
   @TT-2193
   @password
-  @ltd-plc-royal
   @sole-trader-other-business
   @tax-payer
   Scenario Outline: "<business type>" representative shouldn't be able to use a password ("<password>" & "<confirm password>") that doesn't meet requirements otherwise their going to see "<an error message>"
@@ -149,7 +147,6 @@ Feature: Profile - Non-CH enrolment flows
 
   @dev-only
   @TT-1121
-  @ltd-plc-royal
   @sole-trader-other-business
   Scenario Outline: A representative of a "<selected business type>" company should be asked to enter their business details after providing email confirmation code
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
@@ -188,7 +185,6 @@ Feature: Profile - Non-CH enrolment flows
 
   @dev-only
   @TT-1123
-  @ltd-plc-royal
   @sole-trader-other-business
   Scenario Outline: A representative of a "<selected business type>" company should be asked to enter their details after providing business details
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
@@ -205,15 +201,14 @@ Feature: Profile - Non-CH enrolment flows
 
     Examples:
       | selected business type                |
-      | LTD, PLC or Royal Charter             |
       | Sole trader or other type of business |
 
 
   @captcha
   @dev-only
-  @sole-trader-other-business
   @TT-1128
   @TT-1036
+  @sole-trader-other-business
   Scenario: A logged-in user representing "Sole trader or other type of business" should not be able to access SSO Sign in or Create an account pages
     Given "Natalia" has created a great.gov.uk account for a "Sole trader or other type of business"
 
@@ -226,9 +221,9 @@ Feature: Profile - Non-CH enrolment flows
 
   @captcha
   @dev-only
-  @uk-taxpayer
   @TT-1128
   @TT-1036
+  @uk-taxpayer
   Scenario: A logged-in user representing "UK taxpayer" should not be able to access SSO Sign in or Create an account pages
     Given "Natalia" has created a great.gov.uk account for a "UK taxpayer"
 
