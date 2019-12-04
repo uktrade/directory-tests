@@ -778,6 +778,14 @@ workflows:
       - browser_selected_firefox_dev:
           requires:
             - setup_env_for_browser_tests
+      - delete_test_data_dev:
+          requires:
+            - func_fas_test_dev
+            - func_international_test_dev
+            - func_sso_test_dev
+            - func_sud_test_dev
+            - browser_selected_chrome_dev
+            - browser_selected_firefox_dev
 
   run_smoke_all_functional_and_selected_browser_tests_on_stage:
     jobs:
@@ -805,6 +813,14 @@ workflows:
       - browser_selected_firefox_stage:
           requires:
             - setup_env_for_browser_tests
+      - delete_test_data_stage:
+          requires:
+            - func_fas_test_stage
+            - func_international_test_stage
+            - func_sso_test_stage
+            - func_sud_test_stage
+            - browser_selected_chrome_stage
+            - browser_selected_firefox_stage
 
   run_smoke_all_functional_and_selected_browser_tests_on_uat:
     jobs:
@@ -832,6 +848,14 @@ workflows:
       - browser_selected_firefox_uat:
           requires:
             - setup_env_for_browser_tests
+      - delete_test_data_uat:
+          requires:
+            - func_fas_test_uat
+            - func_international_test_uat
+            - func_sso_test_uat
+            - func_sud_test_uat
+            - browser_selected_chrome_uat
+            - browser_selected_firefox_uat
 
   run_cms_load_tests_on_stage:
     triggers:
@@ -988,6 +1012,8 @@ workflows:
             - func_international_test_dev
             - func_sso_test_dev
             - func_sud_test_dev
+            - browser_all_chrome_dev
+            - browser_all_firefox_dev
 
   run_all_tests_on_stage:
     triggers:
@@ -1027,6 +1053,8 @@ workflows:
             - func_international_test_stage
             - func_sso_test_stage
             - func_sud_test_stage
+            - browser_all_chrome_stage
+            - browser_all_firefox_stage
 
   run_all_tests_on_uat:
     triggers:
@@ -1054,15 +1082,17 @@ workflows:
       - func_sud_test_uat:
           requires:
             - setup_env_for_functional_tests
-      - delete_test_data_uat:
-          requires:
-            - func_fas_test_uat
-            - func_international_test_uat
-            - func_sso_test_uat
-            - func_sud_test_uat
       #- browser_all_chrome_uat:
           #requires:
             #- setup_env_for_browser_tests
       #- browser_all_firefox_uat:
           #requires:
             #- setup_env_for_browser_tests
+      - delete_test_data_uat:
+          requires:
+            - func_fas_test_uat
+            - func_international_test_uat
+            - func_sso_test_uat
+            - func_sud_test_uat
+#            - browser_all_chrome_uat
+#            - browser_all_firefox_uat
