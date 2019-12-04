@@ -12,9 +12,6 @@ from directory_tests_shared.settings import AUTO_RETRY, AUTO_RETRY_MAX_ATTEMPTS
 from directory_tests_shared.utils import blue, green, red
 from tests.functional.utils.context_utils import initialize_scenario_data
 from tests.functional.utils.generic import (
-    delete_test_companies_from_directory_api,
-    delete_test_submissions_from_forms_api,
-    delete_test_users_from_sso,
     extract_form_errors,
     extract_main_error,
     extract_section_error,
@@ -102,10 +99,3 @@ def after_scenario(context: Context, scenario: Scenario):
     # clear the scenario data after every scenario
     context.scenario_data = None
     logging.debug(f"Finished scenario: {round(scenario.duration, 3)} → {scenario.name}")
-
-
-def after_all(context: Context):
-    logging.debug(f"Deleting test users, companies & submissions")
-    delete_test_users_from_sso()
-    delete_test_companies_from_directory_api()
-    delete_test_submissions_from_forms_api()

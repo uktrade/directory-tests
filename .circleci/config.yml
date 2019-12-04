@@ -125,6 +125,17 @@ step_run_functional_tests: &step_run_functional_tests
       export PATH=$PATH:$HOME/bin
       FEATURE_DIR=${FEATURE_DIR} TAGS="${TAGS}" make functional_tests_feature_dir
 
+step_delete_test_data: &step_delete_test_data
+  run:
+    name: Delete form submissions, SSO accounts & companies created by automated tests
+    when: always
+    command: |
+      . venv/bin/activate
+      python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
+      source ./docker/.env_with_export;
+      export PATH=$PATH:$HOME/bin
+      ./delete_test_data.py
+
 step_run_browser_tests: &step_run_browser_tests
   run:
     name: Run all functional scenarios
@@ -157,7 +168,6 @@ step_merge_junit_xml_reports_from_functional_tests: &step_merge_junit_xml_report
       cd ../../../
       ./print_error_summary.py --report ./tests/functional/reports/merged.xml
 
-
 step_merge_junit_xml_reports_from_browser_tests: &step_merge_junit_xml_reports_from_browser_tests
   run:
     name: Merge JUnit XML reports & print errors summary
@@ -170,7 +180,6 @@ step_merge_junit_xml_reports_from_browser_tests: &step_merge_junit_xml_reports_f
       ls *.xml | grep -v merged.xml | xargs rm
       cd ../../../
       ./print_error_summary.py --report ./tests/browser/reports/merged.xml
-
 
 # this step requires Java 8+ to work.
 step_generate_allure_report_for_browser_tests: &step_generate_allure_report_for_browser_tests
@@ -231,6 +240,11 @@ steps_functional_tests: &steps_functional_tests
         path: ./tests/functional/reports
     - store_artifacts:
         path: ./tests/functional/reports
+
+steps_delete_test_data: &steps_delete_test_data
+  steps:
+    - *step_restore_cached_functional_tests_requirements
+    - *step_delete_test_data
 
 steps_run_browser_tests: &steps_run_browser_tests
   steps:
@@ -438,6 +452,33 @@ jobs:
     <<: [
     *machine_python3,
     *steps_functional_tests,
+    ]
+
+  delete_test_data_dev:
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "dev"
+    <<: [
+    *machine_python3,
+    *steps_delete_test_data,
+    ]
+
+  delete_test_data_stage:
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "stage"
+    <<: [
+    *machine_python3,
+    *steps_delete_test_data,
+    ]
+
+  delete_test_data_uat:
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "uat"
+    <<: [
+    *machine_python3,
+    *steps_delete_test_data,
     ]
 
   browser_all_chrome_dev:
@@ -941,6 +982,12 @@ workflows:
       - browser_all_firefox_dev:
           requires:
             - setup_env_for_browser_tests
+      - delete_test_data_dev:
+          requires:
+            - func_fas_test_dev
+            - func_international_test_dev
+            - func_sso_test_dev
+            - func_sud_test_dev
 
   run_all_tests_on_stage:
     triggers:
@@ -974,6 +1021,12 @@ workflows:
       - browser_all_firefox_stage:
           requires:
             - setup_env_for_browser_tests
+      - delete_test_data_stage:
+          requires:
+            - func_fas_test_stage
+            - func_international_test_stage
+            - func_sso_test_stage
+            - func_sud_test_stage
 
   run_all_tests_on_uat:
     triggers:
@@ -1001,6 +1054,12 @@ workflows:
       - func_sud_test_uat:
           requires:
             - setup_env_for_functional_tests
+      - delete_test_data_uat:
+          requires:
+            - func_fas_test_uat
+            - func_international_test_uat
+            - func_sso_test_uat
+            - func_sud_test_uat
       #- browser_all_chrome_uat:
           #requires:
             #- setup_env_for_browser_tests
