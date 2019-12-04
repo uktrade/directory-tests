@@ -4,7 +4,7 @@ Feature: Invest - Pixels
   Background:
     Given basic authentication is done for "International - Landing" page
 
-  Scenario Outline: Pixels should be present on "<selected>" page
+  Scenario Outline: Pixels should be present on "Invest - <selected>" page
     Given "Robert" visits the "Invest - <selected>" page
 
     Then "Robert" should be on the "Invest - <selected>" page

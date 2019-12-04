@@ -57,7 +57,7 @@ Feature: FAS - Contact us
 
 
   @next-steps
-  Scenario Outline: Buyers should be able to report a problem with the "<specific> Industry" page
+  Scenario Outline: Buyers who want to learn more on how to "<buy or invest>" should be taken to "<expected>" page from "<specific> Industry" page
     Given "Robert" visits the "International - <specific> - industry" page
 
     When "Robert" decides to "<buy or invest>"
@@ -98,7 +98,7 @@ Feature: FAS - Contact us
 
 
   @report-this-page
-  Scenario Outline: Buyers should be able to report a problem with the "<specific> Industry" page
+  Scenario Outline: Buyers should be able to get to "Domestic - Feedback" form in order to report a problem with "<specific> Industry" page
     Given "Robert" visits the "International - <specific> - industry" page
 
     When "Robert" decides to "report a problem with the page"

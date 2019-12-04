@@ -90,7 +90,7 @@ Feature: Profile - Non-CH enrolment flows
   @ltd-plc-royal
   @sole-trader-other-business
   @tax-payer
-  Scenario Outline: "<business type>" representative shouldn't be able to use a password that doesn't meet requirements otherwise their going to see "<an error message>"
+  Scenario Outline: "<business type>" representative shouldn't be able to use a password ("<password>" & "<confirm password>") that doesn't meet requirements otherwise their going to see "<an error message>"
     Given "Natalia" visits the "Profile - Enter your email address and set a password (<business type>)" page
 
     When "Natalia" fills out and submits the form
@@ -214,7 +214,7 @@ Feature: Profile - Non-CH enrolment flows
   @sole-trader-other-business
   @TT-1128
   @TT-1036
-  Scenario: Handle invalid user state - has company already - redirect to their profile
+  Scenario: A logged-in user representing "Sole trader or other type of business" should not be able to access SSO Sign in or Create an account pages
     Given "Natalia" has created a great.gov.uk account for a "Sole trader or other type of business"
 
     When "Natalia" goes to the "SSO - Sign in" page
@@ -229,7 +229,7 @@ Feature: Profile - Non-CH enrolment flows
   @uk-taxpayer
   @TT-1128
   @TT-1036
-  Scenario: Handle invalid user state - has company already - redirect to their profile
+  Scenario: A logged-in user representing "UK taxpayer" should not be able to access SSO Sign in or Create an account pages
     Given "Natalia" has created a great.gov.uk account for a "UK taxpayer"
 
     When "Natalia" goes to the "SSO - Sign in" page

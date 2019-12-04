@@ -266,7 +266,7 @@ Feature: Profile - CH enrolment flows
   @legacy-sso-registration
   @TT-1127
   @TT-1035
-  Scenario Outline: Handle case of if the email already present in Profile-Profile
+  Scenario Outline: User representing "<selected business type>" should be notified by email when there is an account already registered to their email address (legacy SSO registration)
     Given "Natalia" has a verified standalone SSO/great.gov.uk account
     And "Natalia" decided to create a great.gov.uk account as "<selected business type>"
 
@@ -285,7 +285,7 @@ Feature: Profile - CH enrolment flows
   @dev-only
   @TT-1127
   @TT-1035
-  Scenario Outline: Handle case of if the email already present in Profile-Profile
+  Scenario Outline: User representing "<selected business type>" should be notified by email when there is an account already registered to their email address
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
     And "Natalia" quickly signed out
     And "Natalia" went to the "Profile - Enter your email address and set a password (<selected business type>)" page
@@ -306,7 +306,7 @@ Feature: Profile - CH enrolment flows
   @dev-only
   @TT-1128
   @TT-1036
-  Scenario: Handle invalid user state - has company already - redirect to their profile
+  Scenario: A logged-in user representing "LTD, PLC or Royal Charter" company should not be able to access SSO Sign in or Create an account pages
     Given "Natalia" has created a great.gov.uk account for a "LTD, PLC or Royal Charter"
 
     When "Natalia" goes to the "SSO - Sign in" page
@@ -359,7 +359,7 @@ Feature: Profile - CH enrolment flows
   @fixed
   @captcha
   @dev-only
-  Scenario Outline: Newly registered users should see their business type on "Profile - Business profile" page
+  Scenario Outline: Newly registered users should see "<expected business type>" business type on their "Profile - Business profile" page
     Given "Natalia" has created a great.gov.uk account for a "<selected business type>"
 
     When "Natalia" goes to the "Profile - Edit Company Profile" page

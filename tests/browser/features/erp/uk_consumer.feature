@@ -146,7 +146,7 @@ Feature: ERP - UK consumer
 
   @TT-2060
   @search
-  Scenario Outline: A UK consumer should be able to search for affected goods by commodity code or part of their name
+  Scenario Outline: A UK consumer should be able to search for affected goods by commodity code or part of their name "<phrase>"
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" searches using "<phrase>"

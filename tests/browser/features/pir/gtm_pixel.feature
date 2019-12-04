@@ -6,7 +6,7 @@ Feature: PIR - Google Tag Manager
     Given basic authentication is done for "Domestic - Home" page
 
   @TT-1500
-  Scenario Outline: GTM properties should be properly set on "Find a Supplier - <selected>" page
+  Scenario Outline: GTM properties should be properly set on "PIR - <selected>" page
     When "Robert" goes to the "PIR - <selected>" page
 
     Then Google Tag Manager properties should be set to proper values

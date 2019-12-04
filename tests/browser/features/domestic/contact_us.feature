@@ -394,7 +394,7 @@ Feature: Domestic - Contact us
   @dev-only
   @TT-758
   @international
-  Scenario: International Enquirers should be able to see all expected contact options on the "International - What would you like to know more about?" page
+  Scenario: International Enquirers should be able to see all expected contact options on the "International - What would you like to know more about?" page (Dev)
     Given "Robert" visits the "Domestic - Contact us" page
 
     When "Robert" says that his business is "Outside the UK"
@@ -413,7 +413,7 @@ Feature: Domestic - Contact us
   @prod-only
   @TT-758
   @international
-  Scenario: International Enquirers should be able to see all expected contact options on the "International - What would you like to know more about?" page
+  Scenario: International Enquirers should be able to see all expected contact options on the "International - What would you like to know more about?" page (Staging)
     Given "Robert" visits the "Domestic - Contact us" page
 
     When "Robert" says that his business is "Outside the UK"

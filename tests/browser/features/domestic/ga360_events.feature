@@ -86,7 +86,7 @@ Feature: Domestic - Google Analytics 360 Events
   @CMS-1672
   @dev-only
   @page-events
-  Scenario Outline: All GA360 "ArticleList" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page
+  Scenario Outline: All GA360 "ArticleList" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page (Dev)
     Given "Robert" visits the "Domestic - <specific>" page
 
     When "Robert" triggers all GTM "ArticleList" events defined for "Domestic pages"
@@ -103,7 +103,7 @@ Feature: Domestic - Google Analytics 360 Events
   @CMS-1672
   @stage-only
   @page-events
-  Scenario Outline: All GA360 "ArticleList" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page
+  Scenario Outline: All GA360 "ArticleList" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page (Staging)
     Given "Robert" visits the "Domestic - <specific>" page
 
     When "Robert" triggers all GTM "ArticleList" events defined for "Domestic pages"
@@ -123,7 +123,7 @@ Feature: Domestic - Google Analytics 360 Events
   @CMS-1672
   @dev-only
   @page-events
-  Scenario Outline: All GA360 "CountryGuidePage" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page
+  Scenario Outline: All GA360 "CountryGuidePage" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page (Dev)
     Given "Robert" visits the "Domestic - <specific>" page
 
     When "Robert" triggers all GTM "CountryGuidePage" events defined for "Domestic pages"
@@ -144,14 +144,14 @@ Feature: Domestic - Google Analytics 360 Events
       | Cta             | NextStepCta     | gaEvent | Not present | Read more advice about doing business abroad   |
 
     Examples:
-      | specific               |
+      | specific       |
       | Brazil - guide |
 
 
   @CMS-1672
   @stage-only
   @page-events
-  Scenario Outline: All GA360 "CountryGuidePage" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page
+  Scenario Outline: All GA360 "CountryGuidePage" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page (Staging)
     Given "Robert" visits the "Domestic - <specific>" page
 
     When "Robert" triggers all GTM "CountryGuidePage" events defined for "Domestic pages"
@@ -171,7 +171,7 @@ Feature: Domestic - Google Analytics 360 Events
       | Cta             | NextStepCta     | gaEvent | Not present | Read more advice about doing business abroad   |
 
     Examples:
-      | specific               |
+      | specific       |
       | Brazil - guide |
 
 

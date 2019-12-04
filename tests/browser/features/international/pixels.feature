@@ -5,7 +5,7 @@ Feature: INTL - Pixels
     Given basic authentication is done for "International - Landing" page
 
   @international
-  Scenario Outline: Pixels should be present on "<selected>" page
+  Scenario Outline: Pixels should be present on "International - <selected>" page
     Given "Robert" visits the "International - <selected>" page
 
     Then "Robert" should be on the "International - <selected>" page
