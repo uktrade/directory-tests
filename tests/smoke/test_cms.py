@@ -31,6 +31,7 @@ if "dev" in CMS_API_URL:
         "great_international.aboutuklandingpage",
         "great_international.capitalinvestopportunitylistingpage",
         "great_international.internationaltradeindustrycontactpage",
+        "great_international.aboutditlandingpage",
     ]
 if "staging" in CMS_API_URL:
     SKIPPED_PAGE_TYPES += [
