@@ -27,28 +27,14 @@ Feature: Profile - CH enrolment flows
       | Overseas Company                      |
 
 
-  @TT-1115
-  Scenario: Users should be presented with the Enrolment Steps prior to starting the registration process
-    Given "Natalia" visits the "Profile - Select your business type" page
-
-    When "Natalia" chooses "LTD, PLC or Royal Charter" option
-
-    Then "Natalia" should be on the "Profile - Enter your email address and set a password (LTD, PLC or Royal Charter)" page
-    And "Natalia" should see following sections
-      | sections                  |
-      | Breadcrumbs               |
-      | Registration form         |
-      | Enrolment progress bar    |
-
-
   @TT-1117
   @ltd-plc-royal
-  @tax-payer
   Scenario Outline: "<business type>" representative should be asked to enter their email and set a password after selecting their business type
     Given "Natalia" visits the "Profile - Enter your email address and set a password (<business type>)" page
 
     Then "Natalia" should see following sections
       | sections               |
+      | Breadcrumbs            |
       | Registration form      |
       | Enrolment progress bar |
 
