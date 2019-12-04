@@ -157,7 +157,7 @@ Feature: Find a Supplier
   @ED-2020
   @search
   @no-sso-email-verification-required
-  Scenario: Buyers should be able to find Suppliers by product, service or keyword
+  Scenario: Buyers should be able to find Suppliers by product, service or keyword (Dev)
     Given "Annette Geissinger" is a buyer
 
     When "Annette Geissinger" searches for Suppliers using product name, service name and a keyword
@@ -172,7 +172,7 @@ Feature: Find a Supplier
   @ED-2020
   @search
   @no-sso-email-verification-required
-  Scenario: Buyers should be able to find Suppliers by product, service or keyword
+  Scenario: Buyers should be able to find Suppliers by product, service or keyword (Staging)
     Given "Annette Geissinger" is a buyer
 
     When "Annette Geissinger" searches for Suppliers using product name, service name and a keyword
@@ -187,7 +187,7 @@ Feature: Find a Supplier
   @ED-2020
   @search
   @no-sso-email-verification-required
-  Scenario: Buyers should be able to find Suppliers by product, service or keyword
+  Scenario: Buyers should be able to find Suppliers by product, service or keyword (UAT)
     Given "Annette Geissinger" is a buyer
 
     When "Annette Geissinger" searches for Suppliers using product name, service name and a keyword
