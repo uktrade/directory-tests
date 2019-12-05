@@ -16,7 +16,9 @@ from pages.common_actions import (
     check_for_sections,
     check_url,
     fill_out_input_fields,
+    find_element,
     find_elements,
+    find_selector_by_name,
     submit_form,
     take_screenshot,
 )
@@ -69,8 +71,8 @@ SELECTORS.update(common_selectors.ERP_FOOTER)
 
 SELECTED_REGIONS = Selector(
     By.CSS_SELECTOR,
-    "span.multi-select-autocomplete-selected-item",
-    type=ElementType.SPAN,
+    "span.multi-select-autocomplete-selected-item button",
+    type=ElementType.BUTTON,
 )
 
 
@@ -109,7 +111,16 @@ def get_form_details(driver: WebDriver) -> dict:
     elements = find_elements(driver, SELECTED_REGIONS)
     result = {"regions": []}
     for element in elements:
-        region_name = element.text
-        result["regions"].append(region_name.replace(" ❌", ""))
-
+        region_name = element.get_property("value")
+        result["regions"].append(region_name)
+    result["organisation name"] = "AUTOMATED TESTS"
+    result["given mane"] = find_element(
+        driver, find_selector_by_name(SELECTORS, "given name")
+    ).get_property("value")
+    result["family mane"] = find_element(
+        driver, find_selector_by_name(SELECTORS, "family name")
+    ).get_property("value")
+    result["email"] = find_element(
+        driver, find_selector_by_name(SELECTORS, "email")
+    ).get_property("value")
     return result

@@ -531,6 +531,7 @@ def generic_fill_out_and_submit_form(
         page.fill_out(context.driver, details)
 
     if hasattr(page, "get_form_details"):
+        logging.debug(f"Getting form details from filled out form: {page}")
         form_data = page.get_form_details(context.driver)
         if form_data:
             update_actor_forms_data(context, actor, form_data)
