@@ -90,12 +90,6 @@ Feature: FAS - Contact us
       | Legal services                      | buy from the UK  | International - Find a UK business partner - Contact us |
       | Technology                          | buy from the UK  | International - Find a UK business partner - Contact us |
 
-    @wip
-    @dev-only
-    Examples: missing content
-      | specific                            | buy or invest    | expected            |
-      | Energy                              | invest in the UK | Invest - Contact us |
-
 
   @report-this-page
   Scenario Outline: Buyers should be able to get to "Domestic - Feedback" form in order to report a problem with "<specific> Industry" page
@@ -131,12 +125,6 @@ Feature: FAS - Contact us
       | Financial and professional services |
       | Legal services                      |
       | Technology                          |
-
-    @wip
-    @dev-only
-    Examples: missing content
-      | specific                            |
-      | Energy                              |
 
 
   @captcha
