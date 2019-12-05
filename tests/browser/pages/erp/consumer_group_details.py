@@ -37,10 +37,10 @@ SELECTORS = {
             By.CSS_SELECTOR, "form[method=post] span.govuk-caption-l"
         ),
         "heading": Selector(By.CSS_SELECTOR, "form[method=post] h1"),
-        "given mane": Selector(
+        "given name": Selector(
             By.ID, "id_consumer-group-given_name", type=ElementType.INPUT
         ),
-        "family mane": Selector(
+        "family name": Selector(
             By.ID, "id_consumer-group-family_name", type=ElementType.INPUT
         ),
         "email": Selector(By.ID, "id_consumer-group-email", type=ElementType.INPUT),
@@ -85,8 +85,8 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 
 def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
     result = {
-        "given mane": actor.alias,
-        "family mane": str(uuid4()),
+        "given name": actor.alias,
+        "family name": str(uuid4()),
         "email": actor.email,
         "organisation name": "AUTOMATED TESTS",
         "regions": True,
