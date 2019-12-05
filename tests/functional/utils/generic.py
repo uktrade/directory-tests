@@ -878,6 +878,19 @@ def delete_supplier_data_from_sso(email_address: str, *, context: Context = None
         )
 
 
+def delete_test_buyers_from_directory_api():
+    response = DIRECTORY_TEST_API_CLIENT.delete("testapi/test-buyers/")
+    with assertion_msg(
+        f"Expected 204 or 404 from DIRECTORY-API but got:"
+        f"{response.status_code} → {response.content}"
+    ):
+        assert response.status_code in [204, 404]
+    logging.debug(
+        f"Successfully issued a request to delete test buyers from DIRECTORY-API: "
+        f"{response.status_code}"
+    )
+
+
 def delete_test_companies_from_directory_api():
     response = DIRECTORY_TEST_API_CLIENT.delete("testapi/test-companies/")
     with assertion_msg(
