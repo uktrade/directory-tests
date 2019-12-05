@@ -152,20 +152,6 @@ Feature: Profile pages
     Then "Annette Geissinger" should be taken to "Profile - Edit company's products and services (keywords)" for all requests
 
 
-  @ED-1727
-  @publish
-  @FAS
-  @captcha
-  @dev-only
-  @fake-sso-email-verification
-  Scenario: Once verified Company's Business Profile should be published on FAS
-    Given "Peter Alder" created a "published LTD, PLC or Royal Charter" profile for a random company "Y"
-
-    When "Peter Alder" decides to view published FAS Business Profile
-
-    Then "Peter Alder" should be on "Y"'s FAS Business Profile page
-
-
   @ED-1769
   @login
   @fab
