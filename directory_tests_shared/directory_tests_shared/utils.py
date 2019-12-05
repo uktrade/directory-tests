@@ -80,6 +80,8 @@ def rare_word(*, min_length: int = 5, max_length: int = 20):
     :return: a rare english word
     """
     assert min_length < max_length
+    longest_word = sorted(POPULAR_ENGLISH_WORDS, key=lambda x: len(x))[-1]
+    assert min_length <= len(longest_word)
     word = ""
     while min_length >= len(word) <= max_length:
         word = choice(POPULAR_ENGLISH_WORDS)

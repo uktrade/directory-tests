@@ -521,7 +521,7 @@ def random_case_study_data(alias: str) -> CaseStudy:
         source_job,
         source_company,
     ) = (sentence() for _ in range(10))
-    website = "http://{}.{}".format(rare_word(min_length=15), rare_word())
+    website = "http://{}.{}".format(rare_word(), rare_word())
     keywords = ", ".join(sentence().split())
 
     case_study = CaseStudy(
@@ -557,12 +557,10 @@ def random_feedback_data(
     terms: str = None,
     g_recaptcha_response: str = None,
 ) -> Feedback:
-    name = name or rare_word(min_length=12)
-    email = email or (
-        "test+buyer_{}@directory.uktrade.io".format(rare_word(min_length=15))
-    )
-    company_name = company_name or f"{rare_word(min_length=12)} AUTOTESTS"
-    country = country or rare_word(min_length=12)
+    name = name or rare_word()
+    email = email or ("test+buyer_{}@directory.uktrade.io".format(rare_word()))
+    company_name = company_name or f"{rare_word()} AUTOTESTS"
+    country = country or rare_word()
     comment = comment or sentence(max_length=1000)
     g_recaptcha_response = g_recaptcha_response or "test mode"
     terms = terms or "on"
@@ -603,10 +601,10 @@ def random_message_data(
 ) -> Feedback:
     alias = alias or "test message"
     body = body or sentence(max_length=1000)
-    company_name = company_name or f"{rare_word(min_length=12)} AUTOTESTS"
-    country = country or rare_word(min_length=12)
+    company_name = company_name or f"{rare_word()} AUTOTESTS"
+    country = country or rare_word()
     email_address = email_address or (
-        "test+buyer_{}@directory.uktrade.io".format(rare_word(min_length=15))
+        "test+buyer_{}@directory.uktrade.io".format(rare_word())
     )
     family_name = family_name or sentence(min_words=2, max_words=2)
     given_name = given_name or sentence(min_words=2, max_words=2)
