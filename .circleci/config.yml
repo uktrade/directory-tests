@@ -757,105 +757,93 @@ workflows:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
       - setup_env_for_browser_tests
+      - delete_test_data_dev:
+          requires:
+            - setup_env_for_functional_tests
+            - setup_env_for_browser_tests
       - smoke_tests_dev:
           requires:
             - setup_env_for_smoke_tests
       - func_fas_test_dev:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_dev
       - func_international_test_dev:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_dev
       - func_sso_test_dev:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_dev
       - func_sud_test_dev:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_dev
       - browser_selected_chrome_dev:
           requires:
-            - setup_env_for_browser_tests
+            - delete_test_data_dev
       - browser_selected_firefox_dev:
           requires:
-            - setup_env_for_browser_tests
-      - delete_test_data_dev:
-          requires:
-            - func_fas_test_dev
-            - func_international_test_dev
-            - func_sso_test_dev
-            - func_sud_test_dev
-            - browser_selected_chrome_dev
-            - browser_selected_firefox_dev
+            - delete_test_data_dev
 
   run_smoke_all_functional_and_selected_browser_tests_on_stage:
     jobs:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
       - setup_env_for_browser_tests
+      - delete_test_data_stage:
+          requires:
+            - setup_env_for_functional_tests
+            - setup_env_for_browser_tests
       - smoke_tests_stage:
           requires:
             - setup_env_for_smoke_tests
       - func_fas_test_stage:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_stage
       - func_international_test_stage:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_stage
       - func_sso_test_stage:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_stage
       - func_sud_test_stage:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_stage
       - browser_selected_chrome_stage:
           requires:
-            - setup_env_for_browser_tests
+            - delete_test_data_stage
       - browser_selected_firefox_stage:
           requires:
-            - setup_env_for_browser_tests
-      - delete_test_data_stage:
-          requires:
-            - func_fas_test_stage
-            - func_international_test_stage
-            - func_sso_test_stage
-            - func_sud_test_stage
-            - browser_selected_chrome_stage
-            - browser_selected_firefox_stage
+            - delete_test_data_stage
 
   run_smoke_all_functional_and_selected_browser_tests_on_uat:
     jobs:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
       - setup_env_for_browser_tests
+      - delete_test_data_uat:
+          requires:
+            - setup_env_for_functional_tests
+            - setup_env_for_browser_tests
       - smoke_tests_uat:
           requires:
             - setup_env_for_smoke_tests
       - func_fas_test_uat:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_uat
       - func_international_test_uat:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_uat
       - func_sso_test_uat:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_uat
       - func_sud_test_uat:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_uat
       - browser_selected_chrome_uat:
           requires:
-            - setup_env_for_browser_tests
+            - delete_test_data_uat
       - browser_selected_firefox_uat:
           requires:
-            - setup_env_for_browser_tests
-      - delete_test_data_uat:
-          requires:
-            - func_fas_test_uat
-            - func_international_test_uat
-            - func_sso_test_uat
-            - func_sud_test_uat
-            - browser_selected_chrome_uat
-            - browser_selected_firefox_uat
+            - delete_test_data_uat
 
   run_cms_load_tests_on_stage:
     triggers:
@@ -985,35 +973,31 @@ workflows:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
       - setup_env_for_browser_tests
+      - delete_test_data_dev:
+          requires:
+            - setup_env_for_functional_tests
+            - setup_env_for_browser_tests
       - smoke_tests_dev:
           requires:
             - setup_env_for_smoke_tests
       - func_fas_test_dev:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_dev
       - func_international_test_dev:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_dev
       - func_sso_test_dev:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_dev
       - func_sud_test_dev:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_dev
       - browser_all_chrome_dev:
           requires:
-            - setup_env_for_browser_tests
+            - delete_test_data_dev
       - browser_all_firefox_dev:
           requires:
-            - setup_env_for_browser_tests
-      - delete_test_data_dev:
-          requires:
-            - func_fas_test_dev
-            - func_international_test_dev
-            - func_sso_test_dev
-            - func_sud_test_dev
-            - browser_all_chrome_dev
-            - browser_all_firefox_dev
+            - delete_test_data_dev
 
   run_all_tests_on_stage:
     triggers:
@@ -1026,35 +1010,31 @@ workflows:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
       - setup_env_for_browser_tests
+      - delete_test_data_stage:
+          requires:
+            - setup_env_for_functional_tests
+            - setup_env_for_browser_tests
       - smoke_tests_stage:
           requires:
             - setup_env_for_smoke_tests
       - func_fas_test_stage:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_stage
       - func_international_test_stage:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_stage
       - func_sso_test_stage:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_stage
       - func_sud_test_stage:
           requires:
-            - setup_env_for_functional_tests
+            - delete_test_data_stage
       - browser_all_chrome_stage:
           requires:
-            - setup_env_for_browser_tests
+            - delete_test_data_stage
       - browser_all_firefox_stage:
           requires:
-            - setup_env_for_browser_tests
-      - delete_test_data_stage:
-          requires:
-            - func_fas_test_stage
-            - func_international_test_stage
-            - func_sso_test_stage
-            - func_sud_test_stage
-            - browser_all_chrome_stage
-            - browser_all_firefox_stage
+            - delete_test_data_stage
 
   run_all_tests_on_uat:
     triggers:
@@ -1067,32 +1047,28 @@ workflows:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
       - setup_env_for_browser_tests
-      - smoke_tests_uat:
-          requires:
-            - setup_env_for_smoke_tests
-      - func_fas_test_uat:
-          requires:
-            - setup_env_for_functional_tests
-      - func_international_test_uat:
-          requires:
-            - setup_env_for_functional_tests
-      - func_sso_test_uat:
-          requires:
-            - setup_env_for_functional_tests
-      - func_sud_test_uat:
-          requires:
-            - setup_env_for_functional_tests
-      #- browser_all_chrome_uat:
-          #requires:
-            #- setup_env_for_browser_tests
-      #- browser_all_firefox_uat:
-          #requires:
-            #- setup_env_for_browser_tests
       - delete_test_data_uat:
           requires:
-            - func_fas_test_uat
-            - func_international_test_uat
-            - func_sso_test_uat
-            - func_sud_test_uat
-#            - browser_all_chrome_uat
-#            - browser_all_firefox_uat
+            - setup_env_for_functional_tests
+            - setup_env_for_browser_tests
+      - smoke_tests_uat:
+          requires:
+            - delete_test_data_uat
+      - func_fas_test_uat:
+          requires:
+            - delete_test_data_uat
+      - func_international_test_uat:
+          requires:
+            - delete_test_data_uat
+      - func_sso_test_uat:
+          requires:
+            - delete_test_data_uat
+      - func_sud_test_uat:
+          requires:
+            - delete_test_data_uat
+      #- browser_all_chrome_uat:
+          #requires:
+            #- delete_test_data_uat
+      #- browser_all_firefox_uat:
+          #requires:
+            #- delete_test_data_uat
