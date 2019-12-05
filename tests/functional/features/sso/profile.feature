@@ -20,18 +20,6 @@ Feature: SSO profile
     Then "Annette Geissinger" should be told that she needs to verify her email address first
 
 
-  @ED-1756
-  @account
-  @real-email-verification
-  Scenario: Suppliers should receive an email verification msg after creating a standalone SSO/great.gov.uk account
-    Given "Peter Alder" is an unauthenticated supplier
-
-    When "Peter Alder" creates an "unverified Individual" profile
-
-    Then "Peter Alder" should be on "Profile - Enter email verification code (UK taxpayer)" page
-    And "Peter Alder" should receive an email verification msg entitled "Your confirmation code for great.gov.uk"
-
-
   @ED-2145
   @account
   @no-sso-email-verification-required
