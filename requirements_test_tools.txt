@@ -15,10 +15,10 @@ decorator==4.4.1          # via ipython, traitlets
 entrypoints==0.3          # via flake8
 flake8-spellcheck==0.9.1
 flake8==3.7.9
-identify==1.4.7           # via pre-commit
-ipdb==0.12.2
+identify==1.4.8           # via pre-commit
+ipdb==0.12.3
 ipython-genutils==0.2.0   # via traitlets
-ipython==7.9.0            # via ipdb
+ipython==7.10.1           # via ipdb
 isort==4.3.21
 jedi==0.15.1              # via ipython
 mccabe==0.6.1             # via flake8
@@ -27,22 +27,22 @@ parso==0.5.1              # via jedi
 pathspec==0.6.0           # via black
 pexpect==4.7.0            # via ipython
 pickleshare==0.7.5        # via ipython
-pip-tools==4.2.0
+pip-tools==4.3.0
 pre-commit==1.20.0
-prompt-toolkit==2.0.10    # via ipython
+prompt-toolkit==3.0.2     # via ipython
 ptyprocess==0.6.0         # via pexpect
 pycodestyle==2.5.0        # via flake8
 pyflakes==2.1.1           # via flake8
-pygments==2.4.2           # via ipython
-pyyaml==5.1.2             # via aspy.yaml, pre-commit
+pygments==2.5.2           # via ipython
+pyyaml==5.2               # via aspy.yaml, pre-commit
 regex==2019.11.1          # via black
-six==1.13.0               # via cfgv, pip-tools, pre-commit, prompt-toolkit, traitlets
+six==1.13.0               # via cfgv, pip-tools, pre-commit, traitlets
 toml==0.10.0              # via black, pre-commit
 traitlets==4.3.3          # via ipython
 typed-ast==1.4.0          # via black
-virtualenv==16.7.7        # via pre-commit
-vulture==1.1
+virtualenv==16.7.8        # via pre-commit
+vulture==1.2
 wcwidth==0.1.7            # via prompt-toolkit
 
 # The following packages are considered to be unsafe in a requirements file:
-# setuptools==41.6.0        # via ipdb, ipython
+# setuptools

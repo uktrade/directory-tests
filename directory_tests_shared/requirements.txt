@@ -6,17 +6,17 @@
 #
 attrs==19.3.0
 automat==0.8.0
-certifi==2019.9.11
+certifi==2019.11.28
 cffi==1.13.2
 chardet==3.0.4
 constantly==15.1.0
 cryptography==2.8
 cssselect==1.1.0
-directory-api-client==20.0.0
+directory-api-client==21.0.0
 directory-client-core==6.1.0
-directory-cms-client==11.0.0
+directory-cms-client==11.1.0
 directory-sso-api-client==6.2.0
-django==2.2.7
+django==2.2.8
 djangorestframework==3.10.3
 docopt==0.6.2
 envparse==0.2.0
@@ -24,7 +24,7 @@ future==0.18.2
 hyperlink==19.0.0
 idna==2.8
 incremental==17.5.0
-lxml==4.4.1
+lxml==4.4.2
 mohawk==0.3.4
 monotonic==1.5
 notifications-python-client==5.4.0
@@ -33,12 +33,12 @@ parsel==1.5.2
 pdfminer2==20151206
 protego==0.1.15
 pyasn1-modules==0.2.7
-pyasn1==0.4.7
+pyasn1==0.4.8
 pycparser==2.19
 pydispatcher==2.0.5
 pyhamcrest==1.9.0
 pyjwt==1.7.1
-pyopenssl==19.0.0
+pyopenssl==19.1.0
 pytz==2019.3
 queuelib==1.5.0
 requests==2.22.0
@@ -55,4 +55,4 @@ w3lib==1.21.0
 zope.interface==4.7.1
 
 # The following packages are considered to be unsafe in a requirements file:
-# setuptools==41.6.0
+# setuptools

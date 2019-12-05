@@ -7,25 +7,25 @@
 -e ./directory_tests_shared/
 attrs==19.3.0             # via automat, service-identity, twisted
 automat==0.8.0            # via twisted
-certifi==2019.9.11        # via geventhttpclient-wheels, requests
+certifi==2019.11.28       # via geventhttpclient-wheels, requests
 cffi==1.13.2              # via cryptography
 chardet==3.0.4            # via requests
 click==7.0                # via flask
 constantly==15.1.0        # via twisted
 cryptography==2.8         # via pyopenssl, scrapy, service-identity
 cssselect==1.1.0          # via parsel, scrapy
-directory-api-client==20.0.0
+directory-api-client==21.0.0
 directory-client-core==6.1.0  # via directory-api-client, directory-cms-client, directory-sso-api-client
-directory-cms-client==11.0.0
-directory-constants==20.9.0
+directory-cms-client==11.1.0
+directory-constants==20.10.0
 directory-sso-api-client==6.2.0
-django==2.2.7             # via directory-api-client, directory-client-core, directory-constants, sigauth
+django==2.2.8             # via directory-api-client, directory-client-core, directory-constants, sigauth
 djangorestframework==3.10.3  # via sigauth
 docopt==0.6.2
 envparse==0.2.0
 flask==1.1.1              # via locustio
 future==0.18.2            # via notifications-python-client
-gevent==1.4.0             # via geventhttpclient-wheels, locustio
+gevent==1.5a2             # via geventhttpclient-wheels, locustio
 geventhttpclient-wheels==1.3.1.dev2  # via locustio
 greenlet==0.4.15          # via gevent
 hyperlink==19.0.0         # via twisted
@@ -33,8 +33,8 @@ idna==2.8                 # via hyperlink, requests
 incremental==17.5.0       # via twisted
 itsdangerous==1.1.0       # via flask
 jinja2==2.10.3            # via flask
-locustio==0.12.2
-lxml==4.4.1               # via parsel, scrapy
+locustio==0.13.2
+lxml==4.4.2               # via parsel, scrapy
 markupsafe==1.1.1         # via jinja2
 mohawk==0.3.4             # via sigauth
 monotonic==1.5            # via directory-client-core, notifications-python-client
@@ -45,14 +45,14 @@ parsel==1.5.2             # via scrapy
 pdfminer2==20151206
 protego==0.1.15           # via scrapy
 pyasn1-modules==0.2.7     # via service-identity
-pyasn1==0.4.7             # via pyasn1-modules, service-identity
+pyasn1==0.4.8             # via pyasn1-modules, service-identity
 pycparser==2.19           # via cffi
 pydispatcher==2.0.5       # via scrapy
 pyhamcrest==1.9.0         # via twisted
 pyjwt==1.7.1              # via notifications-python-client
-pyopenssl==19.0.0         # via scrapy
+pyopenssl==19.1.0         # via scrapy
 pytz==2019.3              # via django
-pyzmq==18.1.0             # via locustio
+pyzmq==18.1.1             # via locustio
 queuelib==1.5.0           # via scrapy
 requests==2.22.0
 retrying==1.3.3
@@ -69,4 +69,4 @@ werkzeug==0.16.0          # via flask
 zope.interface==4.7.1     # via scrapy, twisted
 
 # The following packages are considered to be unsafe in a requirements file:
-# setuptools==41.6.0        # via pyhamcrest, zope.interface
+# setuptools
