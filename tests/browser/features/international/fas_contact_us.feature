@@ -155,9 +155,6 @@ Feature: FAS - Contact us
       | Creative industries                 |
 
 
-  @bug
-  @TT-1777
-  @fixme
   @TT-942
   @captcha
   @dev-only
@@ -170,7 +167,10 @@ Feature: FAS - Contact us
 
     Then "Robert" should be on the "International - Find a UK business partner - Thank you" page
     And "Robert" should not receive a confirmation email
-    And an email notification about "Robert"'s enquiry should NOT be send to "Trade mailbox"
+#    @bug
+#    @TT-1777
+#    @fixme
+#    And an email notification about "Robert"'s enquiry should NOT be send to "Trade mailbox"
 
 
   @bug
