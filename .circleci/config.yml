@@ -1053,7 +1053,7 @@ workflows:
             - setup_env_for_browser_tests
       - smoke_tests_uat:
           requires:
-            - delete_test_data_uat
+            - setup_env_for_smoke_tests
       - func_fas_test_uat:
           requires:
             - delete_test_data_uat
