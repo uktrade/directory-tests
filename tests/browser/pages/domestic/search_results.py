@@ -29,9 +29,9 @@ URL = URLs.DOMESTIC_SEARCH.absolute
 
 PAGES = Selector(By.CSS_SELECTOR, "ul.navigation li")
 PAGINATION = Selector(By.CSS_SELECTOR, "div.pagination")
-ACTIVE_PAGE = Selector(By.CSS_SELECTOR, ".pagination ul li span.active")
-NEXT = Selector(By.CSS_SELECTOR, ".pagination a.next")
-PREVIOUS = Selector(By.CSS_SELECTOR, ".pagination a.previous")
+ACTIVE_PAGE = Selector(By.CSS_SELECTOR, ".pagination span.active")
+NEXT = Selector(By.CSS_SELECTOR, ".pagination a.pagination-next")
+PREVIOUS = Selector(By.CSS_SELECTOR, ".pagination a.pagination-previous")
 SUBMIT_BUTTON = Selector(
     By.CSS_SELECTOR, "#search-again-input ~ input[type=submit]", type=ElementType.BUTTON
 )
@@ -48,7 +48,6 @@ SELECTORS = {
         "pages": PAGES,
         "search results": SEARCH_RESULTS,
         "next": NEXT,
-        "previous": PREVIOUS,
     },
 }
 

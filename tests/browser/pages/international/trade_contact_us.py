@@ -43,7 +43,7 @@ SELECTORS = {
         "organisation size": Selector(
             By.ID, "id_organisation_size", type=ElementType.SELECT
         ),
-        "country": Selector(By.ID, "id_country", type=ElementType.INPUT),
+        "country": Selector(By.ID, "js-country-select", type=ElementType.SELECT),
         "body": Selector(By.ID, "id_body", type=ElementType.INPUT),
         "source": Selector(By.ID, "id_source", type=ElementType.SELECT),
         "accept t&c": Selector(
@@ -81,7 +81,7 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
         "industry": None,
         "organisation": company_name,
         "organisation size": None,
-        "country": "DIT QA TEAM",
+        "country": None,
         "body": "This is a test message sent via automated tests",
         "source": None,
         "accept t&c": True,
