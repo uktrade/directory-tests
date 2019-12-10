@@ -764,7 +764,9 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install --quiet --upgrade pip
-            pip install --quiet docopt
+            pip install --quiet docopt nodeenv
+            nodeenv -p
+            npm install -g allure-commandline@2.13.0
       - run:
           name: Generate docker environment file
           command: |
@@ -784,6 +786,22 @@ jobs:
               --scale worker=8 \
               --scale=firefox=4 \
               --scale=chrome=4
+      - run:
+          name: Fetch Allure test results
+          when: always
+          command: |
+            set -xe
+            docker ps -a --format "table {{.Names}}" | grep worker | while IFS=$'\r' read -r container_name ; do
+              docker cp ${container_name}:/home/celery/chrome_results .
+              docker cp ${container_name}:/home/celery/firefox_results .
+            done
+            . venv/bin/activate
+            make results
+            make report
+      - store_artifacts:
+          path: /home/celery/results/
+      - store_artifacts:
+          path: /home/celery/report/
 
 workflows:
   version: 2
