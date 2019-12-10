@@ -15,7 +15,6 @@ Options:
 import contextlib
 import io
 import os
-import sys
 import time
 from contextlib import redirect_stdout
 from datetime import datetime
@@ -109,7 +108,6 @@ def delegate_test(self, browser: str, scenario: str):
     logger.info(behave_result)
     if exit_code == 1:
         self.update_state(state=states.FAILURE, meta=behave_result)
-    sys.exit(exit_code)
 
 
 def get_task_stats() -> tuple:
