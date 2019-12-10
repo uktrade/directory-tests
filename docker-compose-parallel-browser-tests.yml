@@ -127,14 +127,15 @@ services:
       context: ./
       dockerfile: ./Dockerfile-behave-celery-worker
     env_file: ./docker/.env_without_export
+    environment:
+      PYTHONPATH: "/home/celery/"
+      FEATURE_DIR: "sso"
     user: celery
     working_dir: /home/celery/
     depends_on:
       - redis
     networks:
       - grid
-    environment:
-      PYTHONPATH: "/home/celery/"
     command: [celery, worker, --app=behave_celery_task.app, --loglevel=DEBUG, --queues=behave, --concurrency=1]
 
   test_loader:
@@ -143,15 +144,15 @@ services:
       dockerfile: ./Dockerfile-behave-celery-worker
     working_dir: /home/celery/
     env_file: ./docker/.env_without_export
+    environment:
+      PYTHONPATH: "/home/celery/"
+      FEATURE_DIR: "sso"
     user: celery
     depends_on:
       - redis
       - worker
     networks:
       - grid
-    environment:
-      PYTHONPATH: "/home/celery/"
-      FEATURE_DIR: "invest"
     command: [./run_browser_tests_in_parallel.sh]
 
 networks:
