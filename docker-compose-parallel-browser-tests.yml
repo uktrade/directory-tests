@@ -1,0 +1,158 @@
+version: "3.7"
+services:
+
+  selenium-hub:
+    image: selenium/hub:3.141.59-xenon
+    container_name: selenium-hub
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 700M
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: "65536"
+        hard: "65536"
+    networks:
+      - grid
+    volumes:
+      - /dev/shm:/dev/shm
+    environment:
+      - JAVA_OPTS=-Xmx512m
+    healthcheck:
+        test: ["CMD", "/opt/bin/check-grid.sh", "--host", "0.0.0.0", "--port", "4444"]
+        interval: 15s
+        timeout: 30s
+        retries: 5
+        start_period: 40s
+    ports:
+      - "4444:4444"
+
+  chrome:
+    image: selenium/node-chrome:3.141.59-xenon
+    networks:
+      - grid
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    healthcheck:
+      test: ["CMD", "/opt/bin/check-grid.sh", "--host", "selenium-hub", "--port", "4444"]
+      interval: 5s
+      timeout: 5s
+      retries: 2
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1G
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: "65536"
+        hard: "65536"
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+      - START_XVFB=true
+      - SCREEN_DEPTH=24
+      - SCREEN_DPI=74
+      - SCREEN_WIDTH=1600
+      - SCREEN_HEIGHT=2200
+
+  firefox:
+    image: selenium/node-firefox:3.141.59-xenon
+    networks:
+      - grid
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+    healthcheck:
+        test: ["CMD", "/opt/bin/check-grid.sh", "--host", "selenium-hub", "--port", "4444"]
+        interval: 5s
+        timeout: 5s
+        retries: 2
+        start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1G
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: "65536"
+        hard: "65536"
+    environment:
+      - HUB_HOST=selenium-hub
+      - HUB_PORT=4444
+# there's a bug in geckodriver https://github.com/mozilla/geckodriver/issues/1354
+# that unfortunately doesn't allow for changing screen resolution of headless
+# FF and thus ATM we have to run it in XVFB
+# This way we can take hi-res screenshots. Otherwise when you use headless FF
+# then screenshot resolution will be only 1356x694px or similar!
+      - START_XVFB=true
+      - MOZ_SCREEN_DEPTH=24
+      - MOZ_SCREEN_DPI=74
+      - MOZ_HEADLESS_WIDTH=1600
+      - MOZ_HEADLESS_HEIGHT=2200
+
+  redis:
+    image: "redis:5.0.6-alpine"
+    hostname: "redis"
+    networks:
+      - grid
+    ports:
+      - "6379:6379"
+
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    depends_on:
+      - redis
+    networks:
+      - grid
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
+
+  worker:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile-behave-celery-worker
+    env_file: ./docker/.env_without_export
+    user: celery
+    working_dir: /home/celery/
+    depends_on:
+      - redis
+    networks:
+      - grid
+    environment:
+      PYTHONPATH: "/home/celery/"
+    command: [celery, worker, --app=behave_celery_task.app, --loglevel=DEBUG, --queues=behave, --concurrency=1]
+
+  test_loader:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile-behave-celery-worker
+    working_dir: /home/celery/
+    env_file: ./docker/.env_without_export
+    user: celery
+    depends_on:
+      - redis
+      - worker
+    networks:
+      - grid
+    environment:
+      PYTHONPATH: "/home/celery/"
+      FEATURE_DIR: "invest"
+    command: [./run_browser_tests_in_parallel.sh]
+
+networks:
+  grid:
