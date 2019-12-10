@@ -780,6 +780,7 @@ jobs:
               --file docker-compose-parallel-browser-tests.yml \
               --project-name pbt \
               up \
+              --quiet-pull \
               --detach \
               --scale worker=4 \
               --scale=firefox=2 \
