@@ -748,6 +748,28 @@ jobs:
     *steps_run_load_tests,
     ]
 
+  # https://circleci.com/docs/2.0/docker-compose/
+  dev_parallel_browser_tests:
+    <<: [
+    *machine_python3
+    ]
+    working_directory: ~/directory-tests
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Start containers and verify that they're working
+          command: |
+            set -x
+            sudo docker-compose \
+              --file docker-compose-parallel-browser-tests.yml \
+              --project-name pbt \
+              up \
+              --detach \
+              --scale worker=4 \
+              --scale=firefox=2 \
+              --scale=chrome=2
+#              --build
 
 workflows:
   version: 2
@@ -1072,3 +1094,8 @@ workflows:
       #- browser_all_firefox_uat:
           #requires:
             #- delete_test_data_uat
+
+
+  run_browser_tests_in_parallel_in_dev:
+    jobs:
+      - dev_parallel_browser_tests
