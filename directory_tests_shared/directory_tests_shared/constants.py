@@ -180,9 +180,12 @@ POSTCODES = [
 ]
 
 # Absolute path to a directory with test images
+test_files_path_current_dir = os.path.abspath(os.path.join(".", "files"))
 test_files_path_browser_tests = os.path.abspath(os.path.join("..", "files"))
 test_files_path_other_tests = os.path.abspath(os.path.join("tests", "files"))
-if os.path.isdir(test_files_path_browser_tests):
+if os.path.isdir(test_files_path_current_dir):
+    TEST_IMAGES_DIR = test_files_path_current_dir
+elif os.path.isdir(test_files_path_browser_tests):
     TEST_IMAGES_DIR = test_files_path_browser_tests
 elif os.path.isdir(test_files_path_other_tests):
     TEST_IMAGES_DIR = test_files_path_other_tests
