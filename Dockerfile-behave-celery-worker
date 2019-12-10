@@ -1,7 +1,7 @@
 FROM circleci/python:3.8.0
 LABEL maintainer="janusz"
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 PYTHONUNBUFFERED=1
-RUN groupadd -r celery --gid 1000 && useradd --no-log-init -r -g celery --uid 1000 celery
+RUN sudo groupadd -r celery --gid 1000 && sudo useradd --no-log-init -r -g celery --uid 1000 celery
 
 WORKDIR /home/celery/
 
