@@ -73,6 +73,13 @@ CAPABILITIES_TEMPLATES = {
             },
         },
     },
+    "parallel": {
+        "common_capabilities": {"desktop": {}},
+        "browser_capabilities": {
+            "chrome": {"browserName": "chrome"},
+            "firefox": {"browserName": "firefox"},
+        },
+    },
 }
 
 
