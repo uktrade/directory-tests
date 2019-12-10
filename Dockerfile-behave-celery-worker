@@ -13,7 +13,6 @@ COPY ./directory_tests_shared /home/celery/directory_tests_shared
 COPY ./docker /home/celery/docker
 COPY ./parallel_browser_tests/requirements.txt /home/celery/requirements.txt
 COPY ./parallel_browser_tests/.behaverc /home/celery/.behaverc
-COPY ./parallel_browser_tests/add_task.py /home/celery/add_task.py
 COPY ./parallel_browser_tests/behave_celery_task.py /home/celery/behave_celery_task.py
 COPY ./parallel_browser_tests/run_browser_tests_in_parallel.sh /home/celery/run_browser_tests_in_parallel.sh
 COPY ./tests/files /home/celery/files
