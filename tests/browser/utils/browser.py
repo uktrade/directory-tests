@@ -157,6 +157,7 @@ def start_driver_session(session_name: str, capabilities: dict) -> WebDriver:
             options.add_argument("--start-maximized")
             options.add_argument("--disable-extensions")
             options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
         elif browser_name == "firefox":
             from selenium.webdriver.firefox.options import Options
 
@@ -164,6 +165,7 @@ def start_driver_session(session_name: str, capabilities: dict) -> WebDriver:
             if BROWSER_HEADLESS:
                 options.add_argument("--headless")
                 options.add_argument("--window-size=1600x2200")
+                options.add_argument("--safe-mode")
 
         print(
             f"Starting local instance of {browser_name} with options: {options.arguments}"
