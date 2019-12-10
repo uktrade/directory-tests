@@ -1,4 +1,17 @@
 # -*- coding: utf-8 -*-
+"""A Celery task to run Behave scenario
+
+Usage:
+  behave_celery_task.py [--browser=chrome | --browser=firefox] [--scenario="name"]
+  behave_celery_task.py (-h | --help)
+  behave_celery_task.py --version
+
+Options:
+  -h --help             Show this screen.
+  --browser=BROWSER     Specify browser name.
+  --scenario="name"     Specify scenario to run.
+  --version             Show version.
+"""
 import contextlib
 import io
 import os
@@ -8,6 +21,7 @@ from contextlib import redirect_stdout
 from typing import Dict
 
 from behave.__main__ import main as behave_main
+from docopt import docopt
 
 from celery import Celery, states
 from celery.utils.log import get_task_logger
@@ -109,9 +123,15 @@ def get_task_stats() -> tuple:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        delegate_test.delay(browser=sys.argv[1], scenario=sys.argv[2])
+    arguments = docopt(__doc__, version="env_writer 1.0")
+    browser = arguments["--browser"]
+    scenario = arguments["--scenario"]
+
+    if browser and scenario:
+        print(f"Adding task to run '{scenario}' in {browser}")
+        delegate_test.delay(browser=browser, scenario=scenario)
     else:
+        print("Monitoring queue...")
         active, reserved, total = get_task_stats()
         while active != 0 and reserved != 0:
             print(f"Task stats: active={active} reserved={reserved} total={total}")
