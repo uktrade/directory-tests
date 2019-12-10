@@ -758,7 +758,6 @@ jobs:
       TEST_ENV: "dev"
     steps:
       - checkout
-      - setup_remote_docker
       - run:
           name: Create virtualenv and install dependencies
           command: |
@@ -767,12 +766,12 @@ jobs:
             pip install --quiet --upgrade pip
             pip install --quiet docopt
       - run:
-          name: Start containers and verify that they're working
+          name: Generate docker environment file
           command: |
             set -x
             . venv/bin/activate
             python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
-            export PATH=$PATH:$HOME/bin
+      - setup_remote_docker
       - run:
           name: Start containers and verify that they're working
           command: |
