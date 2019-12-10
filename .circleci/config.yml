@@ -768,14 +768,14 @@ jobs:
       - run:
           name: Generate docker environment file
           command: |
-            set -x
+            set -xe
             . venv/bin/activate
             python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
       - setup_remote_docker
       - run:
           name: Start containers and verify that they're working
           command: |
-            set -x
+            set -xe
             docker-compose \
               --file docker-compose-parallel-browser-tests.yml \
               --project-name pbt \
