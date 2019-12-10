@@ -760,12 +760,12 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-        name: Create virtualenv and install dependencies
-        command: |
-          python3 -m venv venv
-          . venv/bin/activate
-          pip install --quiet --upgrade pip
-          pip install --quiet docopt
+          name: Create virtualenv and install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install --quiet --upgrade pip
+            pip install --quiet docopt
       - run:
           name: Start containers and verify that they're working
           command: |
