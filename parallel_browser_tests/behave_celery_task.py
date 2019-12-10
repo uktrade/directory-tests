@@ -109,7 +109,7 @@ def get_task_stats() -> tuple:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 2:
+    if len(sys.argv) > 1:
         delegate_test.delay(browser=sys.argv[1], scenario=sys.argv[2])
     else:
         active, reserved, total = get_task_stats()
