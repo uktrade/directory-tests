@@ -25,6 +25,12 @@ app.conf.send_task_sent_event = True
 logger = get_task_logger(__name__)
 
 
+def replace_char(string: str) -> str:
+    for chars in REPLACE_CHARS:
+        string = string.replace(chars, "")
+    return string
+
+
 @contextlib.contextmanager
 def set_env(environ: Dict[str, str]):
     """Temporarily set the process environment variables.
@@ -49,11 +55,6 @@ def set_env(environ: Dict[str, str]):
     queue=QUEUE_NAME,
 )
 def delegate_test(self, browser: str, scenario: str):
-    def replace_char(string: str) -> str:
-        for chars in REPLACE_CHARS:
-            string = string.replace(chars, "")
-        return string
-
     feature_dir = os.environ["FEATURE_DIR"].lower()
     args_list = [
         f"features/{feature_dir}/",
@@ -115,3 +116,5 @@ if __name__ == "__main__":
         while active != 0 and reserved != 0:
             print(f"Task stats: active={active} reserved={reserved} total={total}")
             time.sleep(5)
+        print("There are no more tests to run.")
+        print(f"{total} test scenarios were executed. Bye")
