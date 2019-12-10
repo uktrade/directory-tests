@@ -1,10 +1,7 @@
-FROM python:3.8.0-alpine3.10
+FROM circleci/python:3.8.0
 LABEL maintainer="janusz"
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 PYTHONUNBUFFERED=1
-RUN addgroup -S celery -g 1000 && adduser -S celery -G celery -u 1000
-
-# install deps to build pyopenssl. See https://cryptography.io/en/latest/installation/#alpine
-RUN apk add bash gcc musl-dev python3-dev libffi-dev openssl-dev libxml2-dev libxslt-dev
+RUN groupadd -r celery --gid 1000 && useradd --no-log-init -r -g celery --uid 1000 celery
 
 WORKDIR /home/celery/
 
@@ -19,7 +16,7 @@ COPY ./tests/files /home/celery/files
 RUN rm -fr /home/celery/.behave_logging
 
 RUN pip install --upgrade pip
-RUN pip install  --quiet --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 RUN chown -R celery:celery /home/celery/
 USER celery
