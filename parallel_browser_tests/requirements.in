@@ -1,0 +1,20 @@
+-e ../directory_tests_shared/
+allure-behave
+beautifulsoup4
+behave
+celery
+celery[redis]
+datadiff
+directory-api-client
+directory-cms-client
+directory-sso-api-client
+docopt
+nodeenv
+notifications-python-client
+requests
+retrying
+selenium
+sigauth
+termcolor
+urllib3
+xmltodict
