@@ -781,11 +781,9 @@ jobs:
               --project-name pbt \
               up \
               --quiet-pull \
-              --scale worker=4 \
-              --scale=firefox=2 \
-              --scale=chrome=2
-#              --detach \
-#              --build
+              --scale worker=8 \
+              --scale=firefox=4 \
+              --scale=chrome=4
 
 workflows:
   version: 2
