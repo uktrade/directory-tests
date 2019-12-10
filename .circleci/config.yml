@@ -770,6 +770,7 @@ jobs:
           name: Start containers and verify that they're working
           command: |
             set -x
+            . venv/bin/activate
             python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
             export PATH=$PATH:$HOME/bin
       - run:
