@@ -96,7 +96,8 @@ def get_driver_capabilities() -> dict:
     capabilities.update(common)
     capabilities.update(browser)
     if BUILD_ID:
-        capabilities["build"] = BUILD_ID
+        if BROWSER_ENVIRONMENT != "parallel":
+            capabilities["build"] = BUILD_ID
     if BROWSER_VERSION:
         capabilities["browser_version"] = BROWSER_VERSION
     if BROWSER_CUSTOM_CAPABILITIES:
