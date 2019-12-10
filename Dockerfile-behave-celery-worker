@@ -19,7 +19,7 @@ COPY ./tests/files /home/celery/files
 RUN rm -fr /home/celery/.behave_logging
 
 RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install  --quiet --no-cache-dir -r requirements.txt
 
 RUN chown -R celery:celery /home/celery/
 USER celery
