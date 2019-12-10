@@ -3,6 +3,7 @@ import contextlib
 import io
 import os
 import sys
+import time
 from contextlib import redirect_stdout
 from typing import Dict
 
@@ -11,13 +12,15 @@ from behave.__main__ import main as behave_main
 from celery import Celery, states
 from celery.utils.log import get_task_logger
 
+TASK_NAME = "run scenario"
+QUEUE_NAME = "behave"
+REPLACE_CHARS = ("Scenario: ", "Scenario Outline: ", "\r")
+
 app = Celery("tasks", broker="redis://redis@redis:6379//")
-app.conf.task_default_queue = "behave"
+app.conf.task_default_queue = QUEUE_NAME
 app.conf.broker_transport_options = {"visibility_timeout": 3600}
 app.conf.send_events = True
 app.conf.send_task_sent_event = True
-
-REPLACE_CHARS = ("Scenario: ", "Scenario Outline: ", "\r")
 
 logger = get_task_logger(__name__)
 
@@ -42,8 +45,8 @@ def set_env(environ: Dict[str, str]):
     autoretry_for=(),
     broker_pool_limit=1,
     ignore_result=True,
-    name="run scenario",
-    queue="behave",
+    name=TASK_NAME,
+    queue=QUEUE_NAME,
 )
 def delegate_test(self, browser: str, scenario: str):
     def replace_char(string: str) -> str:
@@ -51,8 +54,9 @@ def delegate_test(self, browser: str, scenario: str):
             string = string.replace(chars, "")
         return string
 
+    feature_dir = os.environ["FEATURE_DIR"].lower()
     args_list = [
-        "features/invest/",
+        f"features/{feature_dir}/",
         "--no-skipped",
         "--format=allure_behave.formatter:AllureFormatter",
         f"--outfile={browser}_results/",
@@ -87,5 +91,27 @@ def delegate_test(self, browser: str, scenario: str):
     sys.exit(exit_code)
 
 
+def get_task_stats() -> tuple:
+    tasks = app.control.inspect()
+    nodes = list(tasks.stats().keys())
+    node_name = nodes[0]
+
+    # get number of active tasks
+    active = len(tasks.active()[node_name])
+
+    # get number of tasks that have been claimed by workers
+    reserved = len(tasks.reserved()[node_name])
+
+    total = tasks.stats()[node_name]["total"][TASK_NAME]
+
+    return active, reserved, total
+
+
 if __name__ == "__main__":
-    delegate_test.delay(browser=sys.argv[1], scenario=sys.argv[2])
+    if len(sys.argv) == 2:
+        delegate_test.delay(browser=sys.argv[1], scenario=sys.argv[2])
+    else:
+        active, reserved, total = get_task_stats()
+        while active != 0 and reserved != 0:
+            print(f"Task stats: active={active} reserved={reserved} total={total}")
+            time.sleep(5)
