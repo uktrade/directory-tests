@@ -18,6 +18,7 @@ import os
 import sys
 import time
 from contextlib import redirect_stdout
+from datetime import datetime
 from typing import Dict
 
 from behave.__main__ import main as behave_main
@@ -37,6 +38,10 @@ app.conf.send_events = True
 app.conf.send_task_sent_event = True
 
 logger = get_task_logger(__name__)
+
+
+def get_datetime() -> str:
+    return datetime.isoformat(datetime.now())
 
 
 def replace_char(string: str) -> str:
@@ -111,9 +116,11 @@ def get_task_stats() -> tuple:
     tasks = app.control.inspect()
     nodes = list(tasks.stats().keys())
     node_name = nodes[0]
+    print(tasks.stats())
 
     # get number of active tasks
     active = len(tasks.active()[node_name])
+    print(tasks.active())
 
     # get number of tasks that have been claimed by workers
     reserved = len(tasks.reserved()[node_name])
@@ -129,13 +136,15 @@ if __name__ == "__main__":
     scenario = arguments["--scenario"]
 
     if browser and scenario:
-        print(f"Adding task to run '{scenario}' in {browser}")
+        print(f"{get_datetime()} - Adding task to run '{scenario}' in {browser}")
         delegate_test.delay(browser=browser, scenario=scenario)
     else:
-        print("Monitoring queue...")
+        print(f"{get_datetime()} - Monitoring queue...")
         active, reserved, total = get_task_stats()
         while active != 0 and reserved != 0:
-            print(f"Task stats: active={active} reserved={reserved} total={total}")
+            print(
+                f"{get_datetime()} - Task stats: active={active} reserved={reserved} total={total}"
+            )
             time.sleep(5)
-        print("There are no more tests to run.")
-        print(f"{total} test scenarios were executed. Bye")
+        print(f"{get_datetime()} - There are no more tests to run.")
+        print(f"{get_datetime()} - {total} test scenarios were executed. Bye")
