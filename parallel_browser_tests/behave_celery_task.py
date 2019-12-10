@@ -132,8 +132,11 @@ if __name__ == "__main__":
         delegate_test.delay(browser=browser, scenario=scenario)
     else:
         print(f"{get_datetime()} - Monitoring queue...")
+        max_repetitions = 20
+        counter = 0
         active, reserved = get_task_stats()
-        while active != 0 and reserved != 0:
+        while active != 0 and reserved != 0 and counter < max_repetitions:
             print(f"{get_datetime()} - Task stats: active={active} reserved={reserved}")
+            counter += 1
             time.sleep(5)
         print(f"{get_datetime()} - There are no more tests to run.")
