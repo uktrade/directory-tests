@@ -31,9 +31,10 @@ def before_all(context: Context):
     print(f"CAPABILITIES: {DRIVER_CAPABILITIES}")
     logging.debug(f"CAPABILITIES: {DRIVER_CAPABILITIES}")
 
-    context.config.setup_logging(configfile=".behave_logging")
-    logger = logging.getLogger()
-    logger.addFilter(NoPDFMinerLogEntriesFilter())
+    if BROWSER_ENVIRONMENT != "parallel":
+        context.config.setup_logging(configfile=".behave_logging")
+        logger = logging.getLogger()
+        logger.addFilter(NoPDFMinerLogEntriesFilter())
 
 
 def before_feature(context: Context, feature: Feature):
