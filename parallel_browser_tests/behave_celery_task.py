@@ -19,7 +19,6 @@ import sys
 import time
 from contextlib import redirect_stdout
 from datetime import datetime
-from pprint import pprint
 from typing import Dict
 
 from behave.__main__ import main as behave_main
@@ -115,18 +114,16 @@ def delegate_test(self, browser: str, scenario: str):
 
 def get_task_stats() -> tuple:
     tasks = app.control.inspect()
-    nodes = list(tasks.stats().keys())
-    node_name = nodes[0]
-    pprint(tasks.stats())
 
     # get number of active tasks
-    active = len(tasks.active()[node_name])
-    pprint(tasks.active())
+    active = sum(len(node_tasks) for node_tasks in tasks.active())
 
     # get number of tasks that have been claimed by workers
-    reserved = len(tasks.reserved()[node_name])
+    reserved = sum(len(node_tasks) for node_tasks in tasks.reserved())
 
-    total = tasks.stats()[node_name]["total"][TASK_NAME]
+    total = sum(
+        list(node_tasks["total"].values())[0] for node_tasks in tasks.stats().values()
+    )
 
     return active, reserved, total
 
