@@ -19,6 +19,7 @@ import sys
 import time
 from contextlib import redirect_stdout
 from datetime import datetime
+from pprint import pprint
 from typing import Dict
 
 from behave.__main__ import main as behave_main
@@ -116,11 +117,11 @@ def get_task_stats() -> tuple:
     tasks = app.control.inspect()
     nodes = list(tasks.stats().keys())
     node_name = nodes[0]
-    print(tasks.stats())
+    pprint(tasks.stats())
 
     # get number of active tasks
     active = len(tasks.active()[node_name])
-    print(tasks.active())
+    pprint(tasks.active())
 
     # get number of tasks that have been claimed by workers
     reserved = len(tasks.reserved()[node_name])
