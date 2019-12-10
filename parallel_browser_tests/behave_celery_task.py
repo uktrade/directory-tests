@@ -80,7 +80,7 @@ def delegate_test(self, browser: str, scenario: str):
         "--no-skipped",
         "--format=allure_behave.formatter:AllureFormatter",
         f"--outfile={browser}_results/",
-        "--format=progress3",
+        "--format=pretty",
         "--logging-filter=-root",
         "--tags=~@wip",
         "--tags=~@fixme",
