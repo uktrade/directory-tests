@@ -776,7 +776,7 @@ jobs:
           name: Start containers and verify that they're working
           command: |
             set -x
-            sudo docker-compose \
+            docker-compose \
               --file docker-compose-parallel-browser-tests.yml \
               --project-name pbt \
               up \
