@@ -119,11 +119,7 @@ def get_task_stats() -> tuple:
     # get number of tasks that have been claimed by workers
     reserved = sum(len(node_tasks) for node_tasks in tasks.reserved())
 
-    total = sum(
-        list(node_tasks["total"].values())[0] for node_tasks in tasks.stats().values()
-    )
-
-    return active, reserved, total
+    return active, reserved
 
 
 if __name__ == "__main__":
@@ -136,11 +132,8 @@ if __name__ == "__main__":
         delegate_test.delay(browser=browser, scenario=scenario)
     else:
         print(f"{get_datetime()} - Monitoring queue...")
-        active, reserved, total = get_task_stats()
+        active, reserved = get_task_stats()
         while active != 0 and reserved != 0:
-            print(
-                f"{get_datetime()} - Task stats: active={active} reserved={reserved} total={total}"
-            )
+            print(f"{get_datetime()} - Task stats: active={active} reserved={reserved}")
             time.sleep(5)
         print(f"{get_datetime()} - There are no more tests to run.")
-        print(f"{get_datetime()} - {total} test scenarios were executed. Bye")
