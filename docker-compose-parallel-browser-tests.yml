@@ -132,8 +132,12 @@ services:
       FEATURE_DIR: "sso"
     user: celery
     working_dir: /home/celery/
+    restart: always
     depends_on:
       - redis
+      - selenium-hub
+      - chrome
+      - firefox
     networks:
       - grid
     command: [celery, worker, --app=behave_celery_task.app, --loglevel=INFO, --queues=behave, --concurrency=1]
@@ -150,6 +154,9 @@ services:
     user: celery
     depends_on:
       - redis
+      - selenium-hub
+      - chrome
+      - firefox
       - worker
     networks:
       - grid
