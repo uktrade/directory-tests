@@ -1,0 +1,26 @@
+FROM python:3.8.0-alpine3.10
+LABEL maintainer="janusz"
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 PYTHONUNBUFFERED=1
+RUN addgroup -S celery -g 1000 && adduser -S celery -G celery -u 1000
+
+# install deps to build pyopenssl. See https://cryptography.io/en/latest/installation/#alpine
+RUN apk add bash gcc musl-dev python3-dev libffi-dev openssl-dev libxml2-dev libxslt-dev
+
+WORKDIR /home/celery/
+
+COPY ./tests/browser /home/celery/
+COPY ./directory_tests_shared /home/celery/directory_tests_shared
+COPY ./docker /home/celery/docker
+COPY ./parallel_browser_tests/requirements.txt /home/celery/requirements.txt
+COPY ./parallel_browser_tests/.behaverc /home/celery/.behaverc
+COPY ./parallel_browser_tests/add_task.py /home/celery/add_task.py
+COPY ./parallel_browser_tests/behave_celery_task.py /home/celery/behave_celery_task.py
+COPY ./parallel_browser_tests/run_browser_tests_in_parallel.sh /home/celery/run_browser_tests_in_parallel.sh
+COPY ./tests/files /home/celery/files
+RUN rm -fr /home/celery/.behave_logging
+
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+
+RUN chown -R celery:celery /home/celery/
+USER celery
