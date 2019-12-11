@@ -809,9 +809,9 @@ jobs:
             echo "Container status"
             docker ps -a | sort
             echo "List of worker containers:"
-            docker ps -a --format "table {{.Names}}" | grep worker
+            docker ps -a --format "table {{.Names}}" | grep worker | sort
             echo "Fetching Allure test results from all of them..."
-            docker ps -a --format "table {{.Names}}" | grep worker | while IFS=$'\r' read -r container_name ; do
+            docker ps -a --format "table {{.Names}}" | grep worker | sort | while IFS=$'\r' read -r container_name ; do
               docker exec ${container_name} [ -d "/home/celery/chrome_results" ] \
                 && docker cp ${container_name}:/home/celery/chrome_results . \
                 || echo "There are no Chrome Allure results in ${container_name}"
