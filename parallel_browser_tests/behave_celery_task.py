@@ -126,7 +126,7 @@ def get_task_stats() -> tuple:
 def get_redis_counter() -> int:
     connection = redis.Redis("redis")
     length = connection.llen("behave")
-    print(f"Currently there are {length} task in 'behave' queue")
+    print(f"Currently there are {length} tasks in 'behave' queue")
     return length
 
 

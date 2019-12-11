@@ -809,9 +809,16 @@ jobs:
           when: always
           command: |
             set -xe
+            echo "List of worker containers:"
+            docker ps -a --format "table {{.Names}}" | grep worker
+            echo "Fetching Allure test results from all of them..."
             docker ps -a --format "table {{.Names}}" | grep worker | while IFS=$'\r' read -r container_name ; do
-              docker cp ${container_name}:/home/celery/chrome_results .
-              docker cp ${container_name}:/home/celery/firefox_results .
+              docker exec ${container_name} [ -d "/home/celery/chrome_results" ] \
+                && docker cp ${container_name}:/home/celery/chrome_results . \
+                || echo "There are no Chrome Allure results in ${container_name}"
+              docker exec ${container_name} [ -d "/home/celery/firefox_results" ] \
+                && docker cp ${container_name}:/home/celery/firefox_results . \
+                || echo "There are no Firefox Allure results in ${container_name}"
             done
             . venv/bin/activate
             make results
