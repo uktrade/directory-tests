@@ -762,7 +762,7 @@ jobs:
           name: Install Java
           command: |
             sudo apt -q install -y default-jre
-            javac -version
+            java -version
       - run:
           name: Create virtualenv and install dependencies
           command: |
