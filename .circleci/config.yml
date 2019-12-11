@@ -759,6 +759,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install Java
+          command: |
+            apt install -y default-jre
+            javac -version
+      - run:
           name: Create virtualenv and install dependencies
           command: |
             python3 -m venv venv
