@@ -26,7 +26,7 @@ def update_allure_feature_name(results_dir: str, prefix: str):
             with open(result_file, "w") as json_file:
                 json.dump(report, json_file, indent=2, ensure_ascii=False)
                 update_count += 1
-    print(f"Updated {update_count} JSON reports")
+    print(f"Updated {update_count} JSON reports in {results_dir_path}")
 
 
 if __name__ == "__main__":
