@@ -775,17 +775,35 @@ jobs:
             python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
       - setup_remote_docker
       - run:
-          name: Start containers and verify that they're working
+          name: Start containers
           command: |
             set -xe
             docker-compose \
               --file docker-compose-parallel-browser-tests.yml \
               --project-name pbt \
               up \
+              --detach \
               --quiet-pull \
               --scale worker=8 \
               --scale=firefox=4 \
               --scale=chrome=4
+      - run:
+          name: Attach test loader and create test tasks
+          command: |
+            set -xe
+            docker-compose \
+              --file docker-compose-parallel-browser-tests-loader.yml \
+              --project-name pbt \
+              up \
+              --quiet-pull
+      - run:
+          name: Stop containers
+          command: |
+            set -xe
+            docker-compose \
+              --file docker-compose-parallel-browser-tests.yml \
+              --project-name pbt \
+              stop
       - run:
           name: Fetch Allure test results
           when: always
