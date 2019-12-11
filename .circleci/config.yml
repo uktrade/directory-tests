@@ -817,9 +817,9 @@ jobs:
                 && echo "Fetching Firefox Allure results from ${container_name}..."; docker cp ${container_name}:/home/celery/firefox_results . \
                 || echo "There are no Firefox Allure results in ${container_name}"
             done
-            . venv/bin/activate
             cp ./parallel_browser_tests/makefile .
             cp ./parallel_browser_tests/update_results.py .
+            . venv/bin/activate
             make results
             make report
       - run:
