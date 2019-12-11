@@ -820,6 +820,7 @@ jobs:
                 || echo "There are no Firefox Allure results in ${container_name}"
             done
             . venv/bin/activate
+            cp ./parallel_browser_tests/makefile .
             make results
             make report
       - run:
