@@ -74,9 +74,8 @@ def set_env(environ: Dict[str, str]):
     queue=QUEUE_NAME,
 )
 def delegate_test(self, browser: str, scenario: str):
-    feature_dir = os.environ["FEATURE_DIR"].lower()
     args_list = [
-        f"features/{feature_dir}/",
+        f"features/",
         "--no-skipped",
         "--format=allure_behave.formatter:AllureFormatter",
         f"--outfile={browser}_results/",
