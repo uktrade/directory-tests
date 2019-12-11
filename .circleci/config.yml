@@ -770,14 +770,14 @@ jobs:
       - run:
           name: Generate docker environment file
           command: |
-            set -xe
+            set -e
             . venv/bin/activate
             python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
       - setup_remote_docker
       - run:
           name: Start containers
           command: |
-            set -xe
+            set -e
             docker-compose \
               --file docker-compose-parallel-browser-tests.yml \
               --project-name pbt \
@@ -792,7 +792,7 @@ jobs:
       - run:
           name: Attach test loader and create test tasks
           command: |
-            set -xe
+            set -e
             echo "Container status"
             docker-compose -f docker-compose-parallel-browser-tests.yml ps --all
             echo "Starting test loader..."
@@ -805,7 +805,7 @@ jobs:
           name: Fetch Allure test results
           when: always
           command: |
-            set -xe
+            set -e
             echo "List of worker containers:"
             docker ps -a --format "table {{.Names}}" | grep worker
             echo "Fetching Allure test results from all of them..."
@@ -824,7 +824,7 @@ jobs:
           name: Stop containers
           when: always
           command: |
-            set -xe
+            set -e
             echo "Container status"
             docker-compose -f docker-compose-parallel-browser-tests.yml ps --all
             echo "Stopping containers..."
