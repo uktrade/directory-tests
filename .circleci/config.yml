@@ -811,10 +811,10 @@ jobs:
             echo "Fetching Allure test results from all of them..."
             docker ps -a --format "table {{.Names}}" | grep worker | sort | while IFS=$'\r' read -r container_name ; do
               docker exec ${container_name} [ -d "/home/celery/chrome_results" ] \
-                && docker cp ${container_name}:/home/celery/chrome_results . \
+                && echo "Fetching Chrome Allure results from ${container_name}..."; docker cp ${container_name}:/home/celery/chrome_results . \
                 || echo "There are no Chrome Allure results in ${container_name}"
               docker exec ${container_name} [ -d "/home/celery/firefox_results" ] \
-                && docker cp ${container_name}:/home/celery/firefox_results . \
+                && echo "Fetching Firefox Allure results from ${container_name}..."; docker cp ${container_name}:/home/celery/firefox_results . \
                 || echo "There are no Firefox Allure results in ${container_name}"
             done
             . venv/bin/activate
