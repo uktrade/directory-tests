@@ -110,23 +110,9 @@ def delegate_test(self, browser: str, scenario: str):
         self.update_state(state=states.FAILURE, meta=behave_result)
 
 
-def get_task_stats() -> tuple:
-    tasks = app.control.inspect()
-
-    # get number of active tasks
-    active = sum(len(node_tasks) for node_tasks in tasks.active())
-
-    # get number of tasks that have been claimed by workers
-    reserved = sum(len(node_tasks) for node_tasks in tasks.reserved())
-
-    return active, reserved
-
-
 def get_redis_counter() -> int:
     connection = redis.Redis("redis")
-    length = connection.llen("behave")
-    print(f"Currently there are {length} tasks in 'behave' queue")
-    return length
+    return connection.llen("behave")
 
 
 if __name__ == "__main__":
@@ -139,13 +125,32 @@ if __name__ == "__main__":
         delegate_test.delay(browser=browser, scenario=scenario)
     else:
         print(f"{get_datetime()} - Monitoring queue...")
+        wait_time = 5
         max_repetitions = 20
         counter = 0
-        active, reserved = get_task_stats()
-        while active != 0 and reserved != 0 and counter < max_repetitions:
-            get_redis_counter()
-            print(f"{get_datetime()} - Task stats: active={active} reserved={reserved}")
+        list_of_task_numbers = []
+        remaining_tasks = get_redis_counter()
+        print(
+            f"{get_datetime()} - Number of tasks in 'behave' queue: {remaining_tasks}"
+        )
+        list_of_task_numbers.append(remaining_tasks)
+        while remaining_tasks != 0 and len(list_of_task_numbers) < max_repetitions:
             counter += 1
-            time.sleep(5)
-            active, reserved = get_task_stats()
-        print(f"{get_datetime()} - There are no more tests to run.")
+            time.sleep(wait_time)
+            remaining_tasks = get_redis_counter()
+            print(f"{get_datetime()} - list_of_task_numbers -> {list_of_task_numbers}")
+            if list(set(list_of_task_numbers))[0] == remaining_tasks:
+                list_of_task_numbers.append(remaining_tasks)
+            else:
+                list_of_task_numbers = [remaining_tasks]
+            print(
+                f"{get_datetime()} - Number of tasks in 'behave' queue: {remaining_tasks}"
+            )
+        if len(list_of_task_numbers) >= max_repetitions:
+            print(
+                f"{get_datetime()} - Looks like queue got stale as for past "
+                f"{wait_time * max_repetitions}s redis reported that there were "
+                f"{list(set(list_of_task_numbers))[0]} tasks in 'behave' queue"
+            )
+        else:
+            print(f"{get_datetime()} - Hooray! There are no more tests to run.")
