@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+
+  test_loader:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile-behave-celery-worker
+    working_dir: /home/celery/
+    env_file: ./docker/.env_without_export
+    environment:
+      PYTHONPATH: "/home/celery/"
+      FEATURE_DIR: "sso"
+    user: celery
+    networks:
+      - grid
+    command: [./run_browser_tests_in_parallel.sh]
+
+networks:
+  grid:

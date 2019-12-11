@@ -142,25 +142,5 @@ services:
       - grid
     command: [celery, worker, --app=behave_celery_task.app, --loglevel=INFO, --queues=behave, --concurrency=1]
 
-  test_loader:
-    build:
-      context: ./
-      dockerfile: ./Dockerfile-behave-celery-worker
-    working_dir: /home/celery/
-    env_file: ./docker/.env_without_export
-    environment:
-      PYTHONPATH: "/home/celery/"
-      FEATURE_DIR: "sso"
-    user: celery
-    depends_on:
-      - redis
-      - selenium-hub
-      - chrome
-      - firefox
-      - worker
-    networks:
-      - grid
-    command: [./run_browser_tests_in_parallel.sh]
-
 networks:
   grid:
