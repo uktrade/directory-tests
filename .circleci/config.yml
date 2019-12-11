@@ -787,10 +787,15 @@ jobs:
               --scale worker=8 \
               --scale=firefox=4 \
               --scale=chrome=4
+            echo "Container status"
+            docker-compose -f docker-compose-parallel-browser-tests.yml ps --all
       - run:
           name: Attach test loader and create test tasks
           command: |
             set -xe
+            echo "Container status"
+            docker-compose -f docker-compose-parallel-browser-tests.yml ps --all
+            echo "Starting test loader..."
             docker-compose \
               --file docker-compose-parallel-browser-tests-loader.yml \
               --project-name pbt \
@@ -800,6 +805,9 @@ jobs:
           name: Stop containers
           command: |
             set -xe
+            echo "Container status"
+            docker-compose -f docker-compose-parallel-browser-tests.yml ps --all
+            echo "Stopping containers..."
             docker-compose \
               --file docker-compose-parallel-browser-tests.yml \
               --project-name pbt \
