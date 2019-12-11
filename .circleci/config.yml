@@ -759,7 +759,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Java as Allure requires it to generate an HTML report
+          name: Install JRE as it is required by Allure to generate an HTML report
           command: |
             sudo apt -qq install -y default-jre
             java -version
@@ -841,7 +841,7 @@ jobs:
             make results
             make report
       - run:
-          name: Stop containers
+          name: Stop and remove all containers, networks, images and volumes
           when: always
           command: |
             set -e
@@ -851,7 +851,7 @@ jobs:
             docker-compose \
               --file docker-compose-parallel-browser-tests.yml \
               --project-name pbt \
-              stop
+              down
       - store_artifacts:
           path: /home/circleci/directory-tests/results/
       - store_artifacts:
