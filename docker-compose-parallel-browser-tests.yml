@@ -129,7 +129,7 @@ services:
     env_file: ./docker/.env_without_export
     environment:
       PYTHONPATH: "/home/celery/"
-      FEATURE_DIR: "sso"
+      FEATURE_DIR: "domestic"
     user: celery
     working_dir: /home/celery/
     restart: always
