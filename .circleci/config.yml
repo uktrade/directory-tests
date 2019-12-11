@@ -807,6 +807,14 @@ jobs:
               up \
               --quiet-pull
       - run:
+          name: Print worker logs
+          when: always
+          command: |
+            set -e
+            docker ps -a --format "table {{.Names}}" | grep worker | sort | while IFS=$'\r' read -r container_name ; do
+              docker logs ${container_name}
+            done
+      - run:
           name: Fetch Allure test results
           when: always
           command: |
