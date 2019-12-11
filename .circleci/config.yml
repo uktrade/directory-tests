@@ -822,6 +822,7 @@ jobs:
             make report
       - run:
           name: Stop containers
+          when: always
           command: |
             set -xe
             echo "Container status"
