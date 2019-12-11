@@ -788,13 +788,13 @@ jobs:
               --scale=firefox=4 \
               --scale=chrome=4
             echo "Container status"
-            docker-compose -f docker-compose-parallel-browser-tests.yml ps --all
+            docker ps -a | sort
       - run:
           name: Attach test loader and create test tasks
           command: |
             set -e
             echo "Container status"
-            docker-compose -f docker-compose-parallel-browser-tests.yml ps --all
+            docker ps -a | sort
             echo "Starting test loader..."
             docker-compose \
               --file docker-compose-parallel-browser-tests-loader.yml \
@@ -806,6 +806,8 @@ jobs:
           when: always
           command: |
             set -e
+            echo "Container status"
+            docker ps -a | sort
             echo "List of worker containers:"
             docker ps -a --format "table {{.Names}}" | grep worker
             echo "Fetching Allure test results from all of them..."
@@ -826,7 +828,7 @@ jobs:
           command: |
             set -e
             echo "Container status"
-            docker-compose -f docker-compose-parallel-browser-tests.yml ps --all
+            docker ps -a | sort
             echo "Stopping containers..."
             docker-compose \
               --file docker-compose-parallel-browser-tests.yml \
