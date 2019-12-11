@@ -802,17 +802,6 @@ jobs:
               up \
               --quiet-pull
       - run:
-          name: Stop containers
-          command: |
-            set -xe
-            echo "Container status"
-            docker-compose -f docker-compose-parallel-browser-tests.yml ps --all
-            echo "Stopping containers..."
-            docker-compose \
-              --file docker-compose-parallel-browser-tests.yml \
-              --project-name pbt \
-              stop
-      - run:
           name: Fetch Allure test results
           when: always
           command: |
@@ -831,6 +820,17 @@ jobs:
             . venv/bin/activate
             make results
             make report
+      - run:
+          name: Stop containers
+          command: |
+            set -xe
+            echo "Container status"
+            docker-compose -f docker-compose-parallel-browser-tests.yml ps --all
+            echo "Stopping containers..."
+            docker-compose \
+              --file docker-compose-parallel-browser-tests.yml \
+              --project-name pbt \
+              stop
       - store_artifacts:
           path: /home/celery/results/
       - store_artifacts:
