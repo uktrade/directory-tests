@@ -19,9 +19,7 @@ PAGE_TITLE = "Business profile - great.gov.uk"
 SELECTORS = {
     "hero": {
         "hero": Selector(By.CSS_SELECTOR, "#content > section.great-hero-with-cta"),
-        "start now": Selector(
-            By.CSS_SELECTOR, "#content > section[class$=hero-with-cta] a"
-        ),
+        "start now": Selector(By.CSS_SELECTOR, "#content section:first-of-type a"),
     }
 }
 SELECTORS.update(common_selectors.DOMESTIC_HEADER)
