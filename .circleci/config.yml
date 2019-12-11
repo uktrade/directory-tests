@@ -840,9 +840,9 @@ jobs:
               --project-name pbt \
               stop
       - store_artifacts:
-          path: /home/celery/results/
+          path: /home/celery/directory-tests/results/
       - store_artifacts:
-          path: /home/celery/report/
+          path: /home/celery/directory-tests/report/
 
 workflows:
   version: 2
