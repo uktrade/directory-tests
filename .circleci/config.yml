@@ -788,13 +788,13 @@ jobs:
               --scale=firefox=4 \
               --scale=chrome=4
             echo "Container status"
-            docker ps -a | sort
+            docker ps -a --format "table {{.Names}}\t{{.ID}}\t{{.Status}}\t{{.CreatedAt}}\t{{.Image}}\t{{.Ports}}"
       - run:
           name: Attach test loader and create test tasks
           command: |
             set -e
             echo "Container status"
-            docker ps -a | sort
+            docker ps -a --format "table {{.Names}}\t{{.ID}}\t{{.Status}}\t{{.CreatedAt}}\t{{.Image}}\t{{.Ports}}"
             echo "Starting test loader..."
             docker-compose \
               --file docker-compose-parallel-browser-tests-loader.yml \
@@ -807,9 +807,7 @@ jobs:
           command: |
             set -e
             echo "Container status"
-            docker ps -a | sort
-            echo "List of worker containers:"
-            docker ps -a --format "table {{.Names}}" | grep worker | sort
+            docker ps -a --format "table {{.Names}}\t{{.ID}}\t{{.Status}}\t{{.CreatedAt}}\t{{.Image}}\t{{.Ports}}"
             echo "Fetching Allure test results from all of them..."
             docker ps -a --format "table {{.Names}}" | grep worker | sort | while IFS=$'\r' read -r container_name ; do
               docker exec ${container_name} [ -d "/home/celery/chrome_results" ] \
@@ -829,7 +827,7 @@ jobs:
           command: |
             set -e
             echo "Container status"
-            docker ps -a | sort
+            docker ps -a --format "table {{.Names}}\t{{.ID}}\t{{.Status}}\t{{.CreatedAt}}\t{{.Image}}\t{{.Ports}}"
             echo "Stopping containers..."
             docker-compose \
               --file docker-compose-parallel-browser-tests.yml \
