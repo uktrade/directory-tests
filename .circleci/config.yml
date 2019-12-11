@@ -819,6 +819,7 @@ jobs:
             done
             . venv/bin/activate
             cp ./parallel_browser_tests/makefile .
+            cp ./parallel_browser_tests/update_results.py .
             make results
             make report
       - run:
