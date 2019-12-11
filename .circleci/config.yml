@@ -780,7 +780,7 @@ jobs:
             python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
       - setup_remote_docker
       - run:
-          name: Start containers
+          name: Start Selenium hub, Chrome, Firefox, Redis & worker containers
           command: |
             set -e
             docker-compose \
@@ -795,7 +795,7 @@ jobs:
             echo "Container status"
             docker ps -a --format "table {{.Names}}\t{{.ID}}\t{{.Status}}\t{{.CreatedAt}}\t{{.Image}}\t{{.Ports}}"
       - run:
-          name: Attach test loader and create test tasks
+          name: Start test loader to create test tasks
           command: |
             set -e
             echo "Container status"
@@ -827,10 +827,6 @@ jobs:
             . venv/bin/activate
             make results
             make report
-            pwd
-            ls -la
-            ls -la ./results/
-            ls -la ./report/
       - run:
           name: Stop containers
           when: always
@@ -844,9 +840,9 @@ jobs:
               --project-name pbt \
               stop
       - store_artifacts:
-          path: /home/celery/directory-tests/results/
+          path: /home/circleci/directory-tests/results/
       - store_artifacts:
-          path: /home/celery/directory-tests/report/
+          path: /home/circleci/directory-tests/report/
 
 workflows:
   version: 2
