@@ -23,6 +23,7 @@ from typing import Dict
 from behave.__main__ import main as behave_main
 from docopt import docopt
 
+import redis
 from celery import Celery, states
 from celery.utils.log import get_task_logger
 
@@ -122,6 +123,13 @@ def get_task_stats() -> tuple:
     return active, reserved
 
 
+def get_redis_counter() -> int:
+    connection = redis.Redis("redis")
+    length = connection.llen("behave")
+    print(f"Currently there are {length} task in 'behave' queue")
+    return length
+
+
 if __name__ == "__main__":
     arguments = docopt(__doc__, version="env_writer 1.0")
     browser = arguments["--browser"]
@@ -136,7 +144,9 @@ if __name__ == "__main__":
         counter = 0
         active, reserved = get_task_stats()
         while active != 0 and reserved != 0 and counter < max_repetitions:
+            get_redis_counter()
             print(f"{get_datetime()} - Task stats: active={active} reserved={reserved}")
             counter += 1
             time.sleep(5)
+            active, reserved = get_task_stats()
         print(f"{get_datetime()} - There are no more tests to run.")
