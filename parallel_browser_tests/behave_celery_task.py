@@ -98,7 +98,7 @@ def delegate_test(self, browser: str, scenario: str):
         "HUB_URL": "http://selenium-hub:4444/wd/hub",
         "BROWSER_ENVIRONMENT": "parallel",
         "HEADLESS": "true",
-        "AUTO_RETRY": "false",
+        "AUTO_RETRY": "true",
         "BROWSER": browser,
         "ALLURE_INDENT_OUTPUT": "2",
         "TAKE_SCREENSHOTS": "true",
