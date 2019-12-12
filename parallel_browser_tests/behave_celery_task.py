@@ -38,6 +38,8 @@ app.conf.task_default_queue = QUEUE_NAME
 # https://docs.celeryproject.org/en/latest/userguide/optimizing.html#optimizing-prefetch-limit
 app.conf.task_time_limit = 300
 app.conf.worker_concurrency = 1
+# https://stackoverflow.com/a/56039569
+app.conf.worker_prefetch_multiplier = 1
 app.conf.worker_send_task_events = True
 
 logger = get_task_logger(__name__)
