@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "klank": "^0.0.5",
+    "klank": "^0.0.5"
   },
   "scripts": {
     "klank": "klank artifact/index.html"
