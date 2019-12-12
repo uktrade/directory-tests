@@ -3,6 +3,6 @@
     "klank": "^0.0.5"
   },
   "scripts": {
-    "klank": "klank artifact/index.html"
+    "klank": "klank /home/circleci/directory-tests/report/index.html"
   }
 }
