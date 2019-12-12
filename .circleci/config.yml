@@ -809,6 +809,17 @@ jobs:
               up \
               --quiet-pull
       - run:
+          name: Print browser logs
+          when: always
+          command: |
+            set -e
+            RED='\033[0;31m'
+            NC='\033[0m' # No Color
+            docker ps -a --format "table {{.Names}}" | grep "chrome\|firefox" | sort | while IFS=$'\r' read -r container_name ; do
+              echo -e "Logs from ${RED}${container_name}${NC}"
+              docker logs ${container_name}
+            done
+      - run:
           name: Print worker logs
           when: always
           command: |
