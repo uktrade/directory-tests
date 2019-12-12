@@ -142,8 +142,8 @@ services:
     command: [celery,
               worker,
               --app=behave_celery_task.app,
-              --loglevel=INFO,
-              -O fair]
+              --loglevel=INFO
+              ]
 
 networks:
   grid:
