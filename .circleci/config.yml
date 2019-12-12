@@ -814,6 +814,7 @@ jobs:
           command: |
             set -e
             docker ps -a --format "table {{.Names}}" | grep worker | sort | while IFS=$'\r' read -r container_name ; do
+              echo "Logs from ${container_name}"
               docker logs ${container_name}
             done
       - run:
