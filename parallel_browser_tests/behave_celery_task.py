@@ -41,6 +41,7 @@ app.conf.worker_concurrency = 1
 # https://stackoverflow.com/a/56039569
 app.conf.worker_prefetch_multiplier = 1
 app.conf.worker_send_task_events = True
+app.conf.result_backend = "redis://redis@redis:6379//"
 
 logger = get_task_logger(__name__)
 
