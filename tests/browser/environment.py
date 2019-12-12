@@ -52,11 +52,12 @@ def before_feature(context: Context, feature: Feature):
 def before_scenario(context: Context, scenario: Scenario):
     logging.debug(f"Starting scenario: {scenario.name}")
     context.scenario_data = initialize_scenario_data()
+    session_name = f"{scenario.feature.name} -> {scenario.name}"
     if BROWSER_RESTART_POLICY == "scenario":
-        context.driver = start_driver_session(scenario.name, DRIVER_CAPABILITIES)
+        context.driver = start_driver_session(session_name, DRIVER_CAPABILITIES)
     if BROWSER_RESTART_POLICY == "feature":
         if (not context.driver) or not is_driver_responsive(context.driver):
-            context.driver = start_driver_session(scenario.name, DRIVER_CAPABILITIES)
+            context.driver = start_driver_session(session_name, DRIVER_CAPABILITIES)
 
 
 def before_step(context: Context, step: Step):
