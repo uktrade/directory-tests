@@ -36,6 +36,7 @@ app.conf.task_default_queue = QUEUE_NAME
 app.conf.broker_transport_options = {"visibility_timeout": 3600}
 app.conf.send_events = True
 app.conf.send_task_sent_event = True
+app.conf["worker_prefetch_multiplier"] = 1  # see https://stackoverflow.com/a/56039569
 
 logger = get_task_logger(__name__)
 
