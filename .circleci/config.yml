@@ -860,6 +860,7 @@ jobs:
           name: Push repot link to Slack
           command: |
             set -e
+            . venv/bin/activate
             yarn klank
 
 workflows:
