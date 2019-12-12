@@ -3,6 +3,6 @@
     "moxci": "^0.0.1"
   },
   "scripts": {
-    "klank": "klank /home/circleci/directory-tests/report/index.html"
+    "klank": "klank artifact/index.html"
   }
 }
