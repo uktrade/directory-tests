@@ -33,7 +33,7 @@ REPLACE_CHARS = ("Scenario: ", "Scenario Outline: ", "\r")
 
 app = Celery("tasks", broker="redis://redis@redis:6379//")
 app.conf.broker_transport_options = {"visibility_timeout": 3600}
-app.conf.task_acks_late = True
+app.conf.task_acks_late = False
 app.conf.task_default_queue = QUEUE_NAME
 # https://docs.celeryproject.org/en/latest/userguide/optimizing.html#optimizing-prefetch-limit
 app.conf.task_time_limit = 300
