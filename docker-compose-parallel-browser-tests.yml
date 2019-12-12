@@ -129,6 +129,7 @@ services:
     env_file: ./docker/.env_without_export
     environment:
       PYTHONPATH: "/home/celery/"
+      BROWSER_RESTART_POLICY: "scenario"
     user: celery
     working_dir: /home/celery/
     restart: always
