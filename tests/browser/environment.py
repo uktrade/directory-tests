@@ -7,18 +7,12 @@ from behave.model import Feature, Scenario, Step
 from behave.runner import Context
 
 from directory_tests_shared.pdf import NoPDFMinerLogEntriesFilter
-from directory_tests_shared.settings import (
-    AUTO_RETRY,
-    BROWSER_ENVIRONMENT,
-    BROWSER_RESTART_POLICY,
-)
+from directory_tests_shared.settings import AUTO_RETRY, BROWSER_ENVIRONMENT
 from pages import sso
 from pages.common_actions import initialize_scenario_data
 from utils.browser import (
     clear_driver_cookies,
-    flag_browserstack_session_as_failed,
     get_driver_capabilities,
-    is_driver_responsive,
     start_driver_session,
     terminate_driver,
 )
@@ -45,19 +39,13 @@ def before_feature(context: Context, feature: Feature):
     if AUTO_RETRY:
         for scenario in feature.scenarios:
             patch_scenario_with_autoretry(scenario, max_attempts=2)
-    if BROWSER_RESTART_POLICY == "feature":
-        context.driver = start_driver_session(feature.name, DRIVER_CAPABILITIES)
 
 
 def before_scenario(context: Context, scenario: Scenario):
     logging.debug(f"Starting scenario: {scenario.name}")
     context.scenario_data = initialize_scenario_data()
     session_name = f"{scenario.feature.name} -> {scenario.name}"
-    if BROWSER_RESTART_POLICY == "scenario":
-        context.driver = start_driver_session(session_name, DRIVER_CAPABILITIES)
-    if BROWSER_RESTART_POLICY == "feature":
-        if (not context.driver) or not is_driver_responsive(context.driver):
-            context.driver = start_driver_session(session_name, DRIVER_CAPABILITIES)
+    context.driver = start_driver_session(session_name, DRIVER_CAPABILITIES)
 
 
 def before_step(context: Context, step: Step):
@@ -82,48 +70,16 @@ def after_scenario(context: Context, scenario: Scenario):
             sso.common.delete_supplier_data_from_sso(actor.email)
 
     if not hasattr(context, "driver"):
+        logging.debug(
+            f"Finished scenario: {round(scenario.duration, 3)} → {scenario.name}"
+        )
         return
 
     driver = getattr(context, "driver")
 
     clear_driver_cookies(driver)
 
-    if BROWSER_RESTART_POLICY == "scenario":
-        if scenario.status == "failed" and BROWSER_ENVIRONMENT == "remote":
-            session_id = driver.session_id
-            reason = f"Scenario: '{scenario.name}' failed: {scenario.exception}"
-            flag_browserstack_session_as_failed(session_id, reason)
-        terminate_driver(driver)
-
-    if BROWSER_RESTART_POLICY == "feature" and scenario.status == "failed":
-        if not is_driver_responsive(driver) and BROWSER_ENVIRONMENT == "remote":
-            session_id = driver.session_id
-            reason = f"Scenario: '{scenario.name}' failed: {scenario.exception}"
-            flag_browserstack_session_as_failed(session_id, reason)
-            terminate_driver(driver)
     logging.debug(f"Finished scenario: {round(scenario.duration, 3)} → {scenario.name}")
-
-
-def after_feature(context: Context, feature: Feature):
-    if BROWSER_RESTART_POLICY == "feature":
-        if hasattr(context, "driver"):
-            driver = context.driver
-            if (
-                driver
-                and feature.status == "failed"
-                and BROWSER_ENVIRONMENT == "remote"
-            ):
-                scenarios = feature.scenarios
-                failed = sum(1 for scenario in scenarios if scenario.status == "failed")
-                session_id = driver.session_id
-                reason = (
-                    f"{failed} out of {len(feature.scenarios)} scenarios in "
-                    f"'{feature.name}' failed"
-                )
-                flag_browserstack_session_as_failed(session_id, reason)
-            terminate_driver(driver)
-        else:
-            logging.warning(f"context.driver == None after '{feature.name}'")
 
 
 def after_all(context: Context):
