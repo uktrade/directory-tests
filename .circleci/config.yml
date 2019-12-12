@@ -797,7 +797,7 @@ jobs:
             echo "Status of all containers"
             docker ps -a --format "table {{.Names}}\t{{.ID}}\t{{.Status}}\t{{.CreatedAt}}\t{{.Image}}\t{{.Ports}}"
       - run:
-          name: Start test loader to create test tasks
+          name: Create test tasks & monitor the queue
           command: |
             set -e
             echo "Status of all containers"
@@ -813,8 +813,10 @@ jobs:
           when: always
           command: |
             set -e
+            RED='\033[0;31m'
+            NC='\033[0m' # No Color
             docker ps -a --format "table {{.Names}}" | grep worker | sort | while IFS=$'\r' read -r container_name ; do
-              echo "Logs from ${container_name}"
+              echo -e "Logs from ${RED}${container_name}${NC}"
               docker logs ${container_name}
             done
       - run:
