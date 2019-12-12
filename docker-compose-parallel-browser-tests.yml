@@ -144,7 +144,7 @@ services:
               --app=behave_celery_task.app,
               --loglevel=INFO,
               --task-events,
-              --time-limit=180,
+              --time-limit=300,
               --queues=behave,
               --concurrency=1,
               -O fair]
