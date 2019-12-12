@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
-"""A Celery task to run Behave scenario
+"""Create Celery tasks which tell workers which Behave scenarios they have to run
 
 Usage:
-  behave_celery_task.py [--browser=chrome | --browser=firefox] [--scenario="name"]
+  behave_celery_task.py (--create-tasks | --monitor)
   behave_celery_task.py (-h | --help)
   behave_celery_task.py --version
 
 Options:
-  -h --help             Show this screen.
-  --browser=BROWSER     Specify browser name.
-  --scenario="name"     Specify scenario to run.
-  --version             Show version.
+  -h --help         Show this screen.
+  --create-tasks    Create Celery tasks to run Behave scenarios in Chrome & Firefox
+  --monitor         Monitor Redis queue
+  --version         Show version.
 """
 import contextlib
 import io
@@ -117,13 +117,25 @@ def get_redis_counter() -> int:
 
 if __name__ == "__main__":
     arguments = docopt(__doc__, version="env_writer 1.0")
-    browser = arguments["--browser"]
-    scenario = arguments["--scenario"]
+    create_tasks = arguments["--create-tasks"]
+    monitor = arguments["--monitor"]
 
-    if browser and scenario:
-        print(f"{get_datetime()} - Adding task to run '{scenario}' in {browser}")
-        delegate_test.delay(browser=browser, scenario=scenario)
-    else:
+    if create_tasks:
+        with open("scenario_titles.txt", "r") as file:
+            scenario_titles = file.readlines()
+            number_of_scenarios = len(scenario_titles)
+            start = time.time()
+            for title in scenario_titles:
+                title = title.strip()
+                print(title)
+                delegate_test.delay(browser="chrome", scenario=title)
+                delegate_test.delay(browser="firefox", scenario=title)
+            print(
+                f"It took {round(time.time() - start, 4)}s to create "
+                f"{2 * number_of_scenarios} Celery tasks to run {number_of_scenarios} "
+                f"scenarios in Chrome & Firefox"
+            )
+    elif monitor:
         print(f"{get_datetime()} - Monitoring queue...")
         wait_time = 5
         max_repetitions = 20
@@ -154,3 +166,5 @@ if __name__ == "__main__":
             )
         else:
             print(f"{get_datetime()} - Hooray! There are no more tests to run.")
+    else:
+        raise KeyError

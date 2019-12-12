@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 
-PYTHONPATH=. behave --dry-run --no-source --no-summary --no-snippets --tags=~@wip --tags=~@fixme --tags=~@skip --format=mini features/ | grep -v "Supplied path\|Trying base directory" | while IFS=$'\r' read -r line ; do
-  python3 behave_celery_task.py --browser="chrome" --scenario="${line}"
-  python3 behave_celery_task.py --browser="firefox" --scenario="${line}"
-done
+PYTHONPATH=. behave \
+    --dry-run \
+    --no-source \
+    --no-summary \
+    --no-snippets \
+    --tags=~@wip \
+    --tags=~@fixme \
+    --tags=~@skip \
+    --format=mini \
+    features/ \
+    | grep -v "Supplied path\|Trying base directory" > scenario_titles.txt
 
-# print stats until there are tests to execute
-python3 behave_celery_task.py
+python3 behave_celery_task.py --create-tasks
+python3 behave_celery_task.py --monitor
