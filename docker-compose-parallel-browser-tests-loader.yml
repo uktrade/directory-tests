@@ -9,7 +9,6 @@ services:
     env_file: ./docker/.env_without_export
     environment:
       PYTHONPATH: "/home/celery/"
-      FEATURE_DIR: "domestic"
     user: celery
     networks:
       - grid
