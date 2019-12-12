@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "moxci": "^0.0.1"
+    "klank": "^0.0.5",
   },
   "scripts": {
     "klank": "klank artifact/index.html"
