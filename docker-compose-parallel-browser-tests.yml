@@ -142,7 +142,7 @@ services:
     command: [celery,
               worker,
               --app=behave_celery_task.app,
-              --loglevel=INFO
+              --loglevel=DEBUG
               ]
 
 networks:
