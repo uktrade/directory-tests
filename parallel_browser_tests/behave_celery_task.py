@@ -146,7 +146,7 @@ if __name__ == "__main__":
     elif monitor:
         print(f"{get_datetime()} - Monitoring queue...")
         wait_time = 5
-        max_repetitions = 20
+        max_repetitions = 65
         counter = 0
         list_of_task_numbers = []
         remaining_tasks = get_redis_counter()
@@ -158,7 +158,6 @@ if __name__ == "__main__":
             counter += 1
             time.sleep(wait_time)
             remaining_tasks = get_redis_counter()
-            print(f"{get_datetime()} - list_of_task_numbers -> {list_of_task_numbers}")
             if list(set(list_of_task_numbers))[0] == remaining_tasks:
                 list_of_task_numbers.append(remaining_tasks)
             else:
