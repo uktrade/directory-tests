@@ -853,8 +853,6 @@ jobs:
               --project-name pbt \
               down
       - store_artifacts:
-          path: /home/circleci/directory-tests/results/
-      - store_artifacts:
           path: /home/circleci/directory-tests/report/
 
 workflows:
