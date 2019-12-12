@@ -82,10 +82,10 @@ def set_env(environ: Dict[str, str]):
 def delegate_test(self, browser: str, scenario: str):
     args_list = [
         f"features/",
-        "--no-skipped",
         "--format=allure_behave.formatter:AllureFormatter",
         f"--outfile={browser}_results/",
         "--format=pretty",
+        "--no-skipped",
         "--logging-filter=-root",
         "--tags=~@wip",
         "--tags=~@fixme",
