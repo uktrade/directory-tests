@@ -139,7 +139,15 @@ services:
       - firefox
     networks:
       - grid
-    command: [celery, worker, --app=behave_celery_task.app, --loglevel=INFO, --task-events, --time-limit=180, --queues=behave, --concurrency=1, -O fair]
+    command: [celery,
+              worker,
+              --app=behave_celery_task.app,
+              --loglevel=INFO,
+              --task-events,
+              --time-limit=180,
+              --queues=behave,
+              --concurrency=1,
+              -O fair]
 
 networks:
   grid:
