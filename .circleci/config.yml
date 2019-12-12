@@ -773,7 +773,7 @@ jobs:
             nodeenv --python-virtualenv
             npm install -g allure-commandline@2.13.0
             npm install -g yarn@1.21.1
-            yarn add -D klank
+            yarn add -D klank@0.0.5
       - run:
           name: Generate docker environment file
           command: |
@@ -865,6 +865,7 @@ jobs:
             set -e
             . venv/bin/activate
             nodeenv --python-virtualenv
+            export CIRCLE_PULL_REQUEST=none
             yarn klank
 
 workflows:
