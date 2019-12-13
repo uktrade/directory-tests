@@ -14,6 +14,7 @@ from utils.browser import (
     clear_driver_cookies,
     get_driver_capabilities,
     start_driver_session,
+    terminate_driver,
 )
 
 DRIVER_CAPABILITIES = get_driver_capabilities()
@@ -80,3 +81,8 @@ def after_scenario(context: Context, scenario: Scenario):
     clear_driver_cookies(driver)
 
     logging.debug(f"Finished scenario: {round(scenario.duration, 3)} → {scenario.name}")
+
+
+def after_all(context: Context):
+    if hasattr(context, "driver"):
+        terminate_driver(context.driver)
