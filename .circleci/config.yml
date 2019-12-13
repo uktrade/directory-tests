@@ -891,12 +891,13 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install JRE as it is required by Allure to generate an HTML report
+          name: Run tests
           command: |
+            cd tests/browser
             python3 -m venv venv
             . venv/bin/activate
             pip install --quiet --upgrade pip
-            pip install -r requirements_browser.txt
+            pip install --quiet -r requirements_browser.txt
             PYTHONPATH=. behave \
               --dry-run \
               --no-source \
