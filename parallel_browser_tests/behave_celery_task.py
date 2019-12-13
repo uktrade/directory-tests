@@ -68,7 +68,7 @@ def set_env(environ: Dict[str, str]):
 )
 def delegate_test(self, browser: str, scenario: str):
     args_list = [
-        f"features/domestic/header_footer.feature/",
+        f"features/",
         "--format=allure_behave.formatter:AllureFormatter",
         f"--outfile={browser}_results/",
         "--format=pretty",
