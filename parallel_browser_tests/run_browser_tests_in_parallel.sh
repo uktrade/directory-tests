@@ -9,7 +9,7 @@ PYTHONPATH=. behave \
     --tags=~@fixme \
     --tags=~@skip \
     --format=mini \
-    features/ \
+    features/domestic/header_footer.feature \
     | grep -v "Supplied path\|Trying base directory" > scenario_titles.txt
 
 python3 behave_celery_task.py --create-tasks

@@ -36,7 +36,7 @@ app.conf.broker_transport_options = {"visibility_timeout": 3600}
 app.conf.task_acks_late = True
 app.conf.task_default_queue = QUEUE_NAME
 # https://docs.celeryproject.org/en/latest/userguide/optimizing.html#optimizing-prefetch-limit
-app.conf.task_time_limit = 300
+app.conf.task_time_limit = 60
 app.conf.worker_concurrency = 1
 # https://stackoverflow.com/a/56039569
 app.conf.worker_prefetch_multiplier = 1
@@ -81,7 +81,7 @@ def set_env(environ: Dict[str, str]):
 )
 def delegate_test(self, browser: str, scenario: str):
     args_list = [
-        f"features/",
+        f"features/domestic/header_footer.feature/",
         "--format=allure_behave.formatter:AllureFormatter",
         f"--outfile={browser}_results/",
         "--format=pretty",
