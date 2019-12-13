@@ -893,11 +893,11 @@ jobs:
       - run:
           name: Run tests
           command: |
-            cd tests/browser
             python3 -m venv venv
             . venv/bin/activate
             pip install --quiet --upgrade pip
             pip install --quiet -r requirements_browser.txt
+            cd tests/browser
             PYTHONPATH=. behave \
               --dry-run \
               --no-source \
