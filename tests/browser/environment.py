@@ -10,12 +10,7 @@ from directory_tests_shared.pdf import NoPDFMinerLogEntriesFilter
 from directory_tests_shared.settings import AUTO_RETRY, BROWSER_ENVIRONMENT
 from pages import sso
 from pages.common_actions import initialize_scenario_data
-from utils.browser import (
-    clear_driver_cookies,
-    get_driver_capabilities,
-    start_driver_session,
-    terminate_driver,
-)
+from utils.browser import get_driver_capabilities, start_driver_session
 
 DRIVER_CAPABILITIES = get_driver_capabilities()
 
@@ -69,20 +64,5 @@ def after_scenario(context: Context, scenario: Scenario):
         if actor.registered:
             sso.common.delete_supplier_data_from_sso(actor.email)
 
-    if not hasattr(context, "driver"):
-        logging.error(
-            f"No driver! Finished scenario: {round(scenario.duration, 3)} → "
-            f"{scenario.name}"
-        )
-        return
-
-    driver = getattr(context, "driver")
-
-    clear_driver_cookies(driver)
-
     logging.debug(f"Finished scenario: {round(scenario.duration, 3)} → {scenario.name}")
-
-
-def after_all(context: Context):
-    if hasattr(context, "driver"):
-        terminate_driver(context.driver)
+    context.driver.quit()

@@ -20,15 +20,15 @@ REPLACE_CHARS = ("Scenario: ", "Scenario Outline: ", "\r")
 
 app = Celery("tasks", broker="redis://redis@redis:6379/0")
 app.conf.broker_transport_options = {"visibility_timeout": 3600}
-app.conf.task_acks_late = True
+# app.conf.task_acks_late = True
 app.conf.task_default_queue = QUEUE_NAME
 # https://docs.celeryproject.org/en/latest/userguide/optimizing.html#optimizing-prefetch-limit
-app.conf.task_time_limit = 60
-app.conf.worker_concurrency = 1
+# app.conf.task_time_limit = 60
+# app.conf.worker_concurrency = 1
 # https://stackoverflow.com/a/56039569
-app.conf.worker_prefetch_multiplier = 1
-app.conf.worker_send_task_events = True
-app.conf.result_backend = "redis://redis@redis:6379/0"
+# app.conf.worker_prefetch_multiplier = 1
+# app.conf.worker_send_task_events = True
+# app.conf.result_backend = "redis://redis@redis:6379/0"
 
 logger = get_task_logger(__name__)
 
@@ -60,11 +60,11 @@ def set_env(environ: Dict[str, str]):
 
 @app.task(
     bind=True,
-    autoretry_for=(),
-    broker_pool_limit=1,
-    ignore_result=False,
+    # autoretry_for=(),
+    # broker_pool_limit=1,
+    # ignore_result=False,
     name=TASK_NAME,
-    queue=QUEUE_NAME,
+    # queue=QUEUE_NAME,
 )
 def delegate_test(self, browser: str, scenario: str):
     args_list = [
