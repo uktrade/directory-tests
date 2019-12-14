@@ -921,7 +921,7 @@ jobs:
               PYTHONPATH=. behave features/ \
               --format=allure_behave.formatter:AllureFormatter \
               --outfile={browser}_results/ \
-              --format=pretty \
+              --format=progress3 \
               --no-skipped \
               --tags=~@wip \
               --tags=~@fixme \
