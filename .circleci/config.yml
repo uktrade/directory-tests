@@ -886,7 +886,6 @@ jobs:
     parallelism: 4
     environment:
       TEST_ENV: "dev"
-      BROWSER: "chrome"
       AUTO_RETRY: "false"
     steps:
       - checkout
@@ -917,10 +916,10 @@ jobs:
               | circleci tests split > /tmp/tests-to-run
 
             cat /tmp/tests-to-run | while IFS=$'\r' read -r title ; do
-              echo "Added task for scenario: '${title}'"
-              PYTHONPATH=. behave features/ \
+              echo "Chrome will run: '${title}'"
+              PYTHONPATH=. BROWSER=chrome behave features/ \
               --format=allure_behave.formatter:AllureFormatter \
-              --outfile={browser}_results/ \
+              --outfile=chrome_results/ \
               --format=progress3 \
               --no-skipped \
               --tags=~@wip \
@@ -928,13 +927,32 @@ jobs:
               --tags=~@skip \
               --tags=~@stage-only \
               --name "${title}" && {
-                echo "Pass: ${title}"
+                echo "Chrome Pass: ${title}"
               } || {
-                echo "Failed: ${title}"
+                echo "Chrome Failed: ${title}"
+              }
+              echo "Firefox will run: '${title}'"
+              PYTHONPATH=. BROWSER=firefox behave features/ \
+              --format=allure_behave.formatter:AllureFormatter \
+              --outfile=firefox_results/ \
+              --format=progress3 \
+              --no-skipped \
+              --tags=~@wip \
+              --tags=~@fixme \
+              --tags=~@skip \
+              --tags=~@stage-only \
+              --name "${title}" && {
+                echo "Firefox Pass: ${title}"
+              } || {
+                echo "Firefox Failed: ${title}"
               }
             done
             pwd
             ls -la
+      - persist_to_workspace:
+        root: /tmp/dir
+        paths:
+        - /home/circleci/directory-tests/tests/browser
       - run:
           name: Update Allure result files and generate an Allure report
           when: always
