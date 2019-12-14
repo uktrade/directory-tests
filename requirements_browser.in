@@ -1,4 +1,5 @@
 ./directory_tests_shared/
+allure-behave
 beautifulsoup4
 behave
 datadiff
