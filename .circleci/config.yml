@@ -952,7 +952,7 @@ jobs:
       - persist_to_workspace:
           root: /home/circleci/directory-tests/tests/browser
           paths:
-          - /home/circleci/directory-tests/tests/browser
+          - results/*
       - run:
           name: Update Allure result files and generate an Allure report
           when: always
