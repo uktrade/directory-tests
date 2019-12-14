@@ -933,6 +933,32 @@ jobs:
                 echo "Failed: ${title}"
               }
             done
+            pwd
+            ls -la
+      - run:
+          name: Update Allure result files and generate an Allure report
+          when: always
+          command: |
+            set -e
+            . venv/bin/activate
+            source ./docker/.env_with_export
+            export PATH=$PATH:$HOME/bin
+            cd tests/browser
+            make results
+            make report
+      - store_artifacts:
+          path: /home/circleci/directory-tests/report/
+      - run:
+          name: Push repot link to Slack
+          command: |
+            set -e
+            . venv/bin/activate
+            source ./docker/.env_with_export
+            export PATH=$PATH:$HOME/bin
+            cd tests/browser
+            nodeenv --python-virtualenv
+            export CIRCLE_PULL_REQUEST=none
+            yarn klank
 
 workflows:
   version: 2
