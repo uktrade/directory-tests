@@ -897,6 +897,9 @@ jobs:
             . venv/bin/activate
             pip install --quiet --upgrade pip
             pip install --quiet -r requirements_browser.txt
+            python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
+            source ./docker/.env_with_export
+            export PATH=$PATH:$HOME/bin
             cd tests/browser
             PYTHONPATH=. behave \
               --dry-run \
