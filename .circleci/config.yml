@@ -883,7 +883,7 @@ jobs:
     docker:
       - image: circleci/python:3.8.0-node-browsers
     working_directory: ~/directory-tests
-    parallelism: 4
+    parallelism: 8
     environment:
       TEST_ENV: "dev"
       AUTO_RETRY: "true"
@@ -920,7 +920,7 @@ jobs:
               --tags=~@eu-exit \
               ${TAGS} \
               --format=mini \
-              features/domestic/header_footer.feature \
+              features/ \
               | grep -v "Supplied path\|Trying base directory" > scenario_titles.txt
 
             # cat scenario_titles.txt | circleci tests split > /tmp/tests-to-run
