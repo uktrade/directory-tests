@@ -954,7 +954,11 @@ jobs:
             . venv/bin/activate
             source ./docker/.env_with_export
             export PATH=$PATH:$HOME/bin
+            pwd
+            ls -la
             cd tests/browser
+            pwd
+            ls -la
             make results
             make report
       - store_artifacts:
