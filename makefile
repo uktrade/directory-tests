@@ -219,4 +219,19 @@ find_duplicated_scenario_names:
 	@diff -u <(behave $(ARGUMENTS) --dry --no-source --no-summary --no-snippets | grep 'Scenario' | sort) \
 		<(behave $(ARGUMENTS) --dry --no-source --no-summary --no-snippets | grep 'Scenario' | sort -u)
 
-.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests
+results:
+	./update_results.py chrome_0_results Chrome
+	./update_results.py firefox_1_results Firefox
+	./update_results.py chrome_2_results Chrome
+	./update_results.py firefox_3_results Firefox
+	@rm -fr results/
+	@mkdir results
+	@mv chrome_0_results/* results/
+	@mv firefox_1_results/* results/
+	@mv chrome_2_results/* results/
+	@mv firefox_3_results/* results/
+
+report:
+	@allure generate --clean --output ./report results/
+
+.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests results report

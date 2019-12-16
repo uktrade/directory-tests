@@ -952,8 +952,25 @@ jobs:
       - image: circleci/python:3.8.0-node-browsers
     working_directory: ~/directory-tests
     steps:
+      - run:
+          name: Install JRE as it is required by Allure to generate an HTML report
+          command: |
+            sudo apt -qq install -y default-jre
+            java -version
+      - checkout
       - attach_workspace:
-          at: tests/browser/
+          at: ./
+      - run:
+          name: Create virtualenv and install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install --quiet --upgrade pip
+            pip install --quiet docopt nodeenv
+            nodeenv --python-virtualenv
+            npm install -g allure-commandline@2.13.0
+            npm install -g yarn@1.21.1
+            yarn add -D klank@0.0.5
       - run:
           name: Update Allure result files and generate an Allure report
           when: always
@@ -961,25 +978,11 @@ jobs:
             set -e
             pwd
             ls -la
-            ls -la tests/browser/
-            ls -la tests/browser/chrome_0_results/
-            ls -la tests/browser/chrome_2_results/
-            ls -la tests/browser/firefox_1_results/
-            ls -la tests/browser/firefox_3_results/
-            python3 -m venv venv
+            ls -la chrome_0_results/
+            ls -la chrome_2_results/
+            ls -la firefox_1_results/
+            ls -la firefox_3_results/
             . venv/bin/activate
-            pip install --quiet --upgrade pip
-            pip install --quiet -r requirements_browser.txt
-            python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
-            source ./docker/.env_with_export
-            export PATH=$PATH:$HOME/bin
-            cd tests/browser
-            if [ $(expr ${CIRCLE_NODE_INDEX} % 2) = 0 ];
-            then
-                export BROWSER="chrome";
-            else
-                export BROWSER="firefox";
-            fi
             make results
             make report
       - store_artifacts:
