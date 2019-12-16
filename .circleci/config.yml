@@ -886,7 +886,7 @@ jobs:
     parallelism: 4
     environment:
       TEST_ENV: "dev"
-      AUTO_RETRY: "false"
+      AUTO_RETRY: "true"
     steps:
       - checkout
       - run:
