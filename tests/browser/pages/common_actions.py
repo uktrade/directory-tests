@@ -10,8 +10,6 @@ import traceback
 import uuid
 from collections import defaultdict, namedtuple
 from contextlib import contextmanager
-from datetime import datetime
-from os import path
 from types import ModuleType
 from typing import Dict, List, Union
 from urllib.parse import urlparse
@@ -34,11 +32,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 import allure
-from directory_tests_shared.settings import (
-    BARRED_USERS,
-    BROWSER_ENVIRONMENT,
-    TAKE_SCREENSHOTS,
-)
+from directory_tests_shared.settings import BARRED_USERS, TAKE_SCREENSHOTS
 from directory_tests_shared.utils import extract_attributes_by_css
 from pages import ElementType
 
@@ -300,44 +294,28 @@ def avoid_browser_stack_idle_timeout_exception(driver: WebDriver):
 @retry(stop_max_attempt_number=3)
 def take_screenshot(driver: WebDriver, page_name: str):
     """Will take a screenshot of current page."""
-    if not isinstance(driver, WebDriver):
-        logging.debug("Taking screenshots in non-browser executor is not possible")
-        return
     if TAKE_SCREENSHOTS:
-        if BROWSER_ENVIRONMENT == "parallel":
-            # Ref: https://stackoverflow.com/a/52572919/
-            original_size = driver.get_window_size()
-            required_width = driver.execute_script(
-                "return document.body.parentNode.scrollWidth"
-            )
-            required_height = driver.execute_script(
-                "return document.body.parentNode.scrollHeight"
-            )
-            driver.set_window_size(required_width, required_height)
+        # Ref: https://stackoverflow.com/a/52572919/
+        original_size = driver.get_window_size()
+        required_width = driver.execute_script(
+            "return document.body.parentNode.scrollWidth"
+        )
+        required_height = driver.execute_script(
+            "return document.body.parentNode.scrollHeight"
+        )
+        driver.set_window_size(required_width, required_height)
 
-            element = driver.find_element_by_tag_name("body")
-            screenshot = element.screenshot_as_png
-            allure.attach(
-                screenshot,
-                name="screenshot.png",
-                attachment_type=allure.attachment_type.PNG,
-            )
-            driver.set_window_size(original_size["width"], original_size["height"])
-        else:
-            session_id = driver.session_id
-            browser = driver.capabilities.get("browserName", "unknown_browser")
-            version = driver.capabilities.get("version", "unknown_version")
-            platform = driver.capabilities.get("platform", "unknown_platform")
-            stamp = datetime.isoformat(datetime.utcnow())
-            filename = (
-                f"{stamp}-{page_name}-{browser}-{version}-{platform}-{session_id}.png"
-            )
-            file_path = path.abspath(path.join("screenshots", filename))
-            driver.save_screenshot(file_path)
-            logging.debug(f"Screenshot of {page_name} page saved in: {filename}")
+        element = driver.find_element_by_tag_name("body")
+        screenshot = element.screenshot_as_png
+        allure.attach(
+            screenshot,
+            name="screenshot.png",
+            attachment_type=allure.attachment_type.PNG,
+        )
+        driver.set_window_size(original_size["width"], original_size["height"])
     else:
         logging.debug(
-            f"Taking screenshots is disabled on '{page_name}'. In order to turn it on "
+            f"Taking screenshots is disabled. In order to turn it on "
             f"please set an environment variable TAKE_SCREENSHOTS=true"
         )
 
