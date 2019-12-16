@@ -922,6 +922,9 @@ jobs:
             cat scenario_titles.txt \
               | circleci tests split --total $(expr ${CIRCLE_NODE_TOTAL} / 2) > /tmp/tests-to-run
 
+            echo "Current instance of Chrome is going to run `cat scenario_titles.txt | wc -l` scenarios:"
+            cat /tmp/tests-to-run
+
             cat /tmp/tests-to-run | while IFS=$'\r' read -r title ; do
               echo "${BROWSER} will run: '${title}'"
               PYTHONPATH=. behave features/ \
