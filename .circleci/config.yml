@@ -930,9 +930,9 @@ jobs:
             # as half of nodes run tests in Chrome & the other half in Firefox
             split -d --suffix-length=1 --lines ${SPLIT_AFTER_LINES} scenario_titles.txt tests-to-run
 
-            SPLIT_FILE_SUFFIX=$(( ${CIRCLE_NODE_INDEX} % $(( ${CIRCLE_NODE_TOTAL} / 2)) ))
+            SPLIT_FILE_SUFFIX=$(( ${CIRCLE_NODE_INDEX} / 2 ))
 
-            echo "Current instance of Chrome is going to run `cat tests-to-run${SPLIT_FILE_SUFFIX} | wc -l` scenarios:"
+            echo "Current instance of ${BROWSER} is going to run `cat tests-to-run${SPLIT_FILE_SUFFIX} | wc -l` scenarios:"
             cat tests-to-run${SPLIT_FILE_SUFFIX}
 
             cat tests-to-run${SPLIT_FILE_SUFFIX} | while IFS=$'\r' read -r title ; do
