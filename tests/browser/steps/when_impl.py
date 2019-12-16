@@ -47,6 +47,7 @@ from pages.common_actions import (
     go_to_url,
     scroll_to,
     selenium_action,
+    take_screenshot,
     try_alternative_click_on_exception,
     unauthenticated_actor,
     untick_selected_checkboxes,
@@ -164,6 +165,7 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     logging.debug(
         f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> " f"{page}"
     )
+    take_screenshot(context.driver, page_name)
 
 
 def articles_open_any(context: Context, actor_alias: str):
