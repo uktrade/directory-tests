@@ -959,11 +959,20 @@ jobs:
           when: always
           command: |
             set -e
-            . venv/bin/activate
-            source ./docker/.env_with_export
-            export PATH=$PATH:$HOME/bin
             pwd
             ll -la
+            ll -la tests/browser/
+            ll -la tests/browser/chrome_0_results/
+            ll -la tests/browser/chrome_2_results/
+            ll -la tests/browser/firefox_1_results/
+            ll -la tests/browser/firefox_3_results/
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install --quiet --upgrade pip
+            pip install --quiet -r requirements_browser.txt
+            python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
+            source ./docker/.env_with_export
+            export PATH=$PATH:$HOME/bin
             cd tests/browser
             if [ $(expr ${CIRCLE_NODE_INDEX} % 2) = 0 ];
             then
@@ -971,12 +980,6 @@ jobs:
             else
                 export BROWSER="firefox";
             fi
-            pwd
-            ll -la
-            ll -la chrome_0_results/
-            ll -la chrome_2_results/
-            ll -la firefox_1_results/
-            ll -la firefox_3_results/
             make results
             make report
       - store_artifacts:
