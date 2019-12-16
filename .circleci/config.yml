@@ -899,6 +899,13 @@ jobs:
             python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
             source ./docker/.env_with_export
             export PATH=$PATH:$HOME/bin
+            if [ $(echo "${CIRCLE_NODE_INDEX} % 2" | bc) = 0 ];
+            then
+                export BROWSER="chrome";
+            else
+                export BROWSER="firefox";
+            fi
+
             cd tests/browser
             PYTHONPATH=. behave \
               --dry-run \
@@ -916,10 +923,10 @@ jobs:
               | circleci tests split > /tmp/tests-to-run
 
             cat /tmp/tests-to-run | while IFS=$'\r' read -r title ; do
-              echo "Chrome will run: '${title}'"
-              PYTHONPATH=. BROWSER=chrome behave features/ \
+              echo "${BROWSER} will run: '${title}'"
+              PYTHONPATH=. behave features/ \
               --format=allure_behave.formatter:AllureFormatter \
-              --outfile=chrome_results/ \
+              --outfile=${BROWSER}_results/ \
               --format=progress3 \
               --no-skipped \
               --tags=~@wip \
@@ -927,32 +934,18 @@ jobs:
               --tags=~@skip \
               --tags=~@stage-only \
               --name "${title}" && {
-                echo "Chrome Pass: ${title}"
+                echo "${BROWSER} passed: ${title}"
               } || {
-                echo "Chrome Failed: ${title}"
-              }
-              echo "Firefox will run: '${title}'"
-              PYTHONPATH=. BROWSER=firefox behave features/ \
-              --format=allure_behave.formatter:AllureFormatter \
-              --outfile=firefox_results/ \
-              --format=progress3 \
-              --no-skipped \
-              --tags=~@wip \
-              --tags=~@fixme \
-              --tags=~@skip \
-              --tags=~@stage-only \
-              --name "${title}" && {
-                echo "Firefox Pass: ${title}"
-              } || {
-                echo "Firefox Failed: ${title}"
+                echo "${BROWSER} failed: ${title}"
               }
             done
             pwd
             ls -la
       - persist_to_workspace:
-          root: /home/circleci/directory-tests/tests/browser
+          root: /tmp/workspace
           paths:
-          - results/*
+            - tests/browser/chrome_results/*
+            - tests/browser/firefox_results/*
       - run:
           name: Update Allure result files and generate an Allure report
           when: always
