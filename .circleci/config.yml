@@ -923,13 +923,19 @@ jobs:
               features/domestic/header_footer.feature \
               | grep -v "Supplied path\|Trying base directory" > scenario_titles.txt
 
-            cat scenario_titles.txt \
-              | circleci tests split > /tmp/tests-to-run
+            # cat scenario_titles.txt | circleci tests split > /tmp/tests-to-run
+            # calculate number of lines after which list of scenarios will be split
+            SPLIT_AFTER_LINES=$(( $(wc -l < scenario_titles.txt) / $((${CIRCLE_NODE_TOTAL} / 2)) ))
+            # split list of scenarios into equal parts (equal to half on number of nodes)
+            # as half of nodes run tests in Chrome & the other half in Firefox
+            split -d --suffix-length=1 --lines ${SPLIT_AFTER_LINES} scenario_titles.txt tests-to-run
 
-            echo "Current instance of Chrome is going to run `cat /tmp/tests-to-run | wc -l` scenarios:"
-            cat /tmp/tests-to-run
+            SPLIT_FILE_SUFFIX=$(( ${CIRCLE_NODE_INDEX} % $(( ${CIRCLE_NODE_TOTAL} / 2)) ))
 
-            cat /tmp/tests-to-run | while IFS=$'\r' read -r title ; do
+            echo "Current instance of Chrome is going to run `cat tests-to-run${SPLIT_FILE_SUFFIX} | wc -l` scenarios:"
+            cat tests-to-run${SPLIT_FILE_SUFFIX}
+
+            cat tests-to-run${SPLIT_FILE_SUFFIX} | while IFS=$'\r' read -r title ; do
               echo "${BROWSER} will run: '${title}'"
               PYTHONPATH=. behave features/ \
               --format=allure_behave.formatter:AllureFormatter \
