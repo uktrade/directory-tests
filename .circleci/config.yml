@@ -992,9 +992,6 @@ jobs:
           command: |
             set -e
             . venv/bin/activate
-            source ./docker/.env_with_export
-            export PATH=$PATH:$HOME/bin
-            cd tests/browser
             nodeenv --python-virtualenv
             export CIRCLE_PULL_REQUEST=none
             yarn klank
