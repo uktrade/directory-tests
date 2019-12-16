@@ -942,10 +942,10 @@ jobs:
             pwd
             ls -la
       - persist_to_workspace:
-          root: /tmp/workspace
+          root: tests/browser/
           paths:
-            - tests/browser/chrome_results/*
-            - tests/browser/firefox_results/*
+            - chrome_results/*
+            - firefox_results/*
       - run:
           name: Update Allure result files and generate an Allure report
           when: always
