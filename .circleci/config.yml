@@ -960,12 +960,12 @@ jobs:
           command: |
             set -e
             pwd
-            ll -la
-            ll -la tests/browser/
-            ll -la tests/browser/chrome_0_results/
-            ll -la tests/browser/chrome_2_results/
-            ll -la tests/browser/firefox_1_results/
-            ll -la tests/browser/firefox_3_results/
+            ls -la
+            ls -la tests/browser/
+            ls -la tests/browser/chrome_0_results/
+            ls -la tests/browser/chrome_2_results/
+            ls -la tests/browser/firefox_1_results/
+            ls -la tests/browser/firefox_3_results/
             python3 -m venv venv
             . venv/bin/activate
             pip install --quiet --upgrade pip
