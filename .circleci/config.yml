@@ -948,6 +948,9 @@ jobs:
             - firefox_?_results/*
 
   merge_results_and_generate_report:
+    docker:
+      - image: circleci/python:3.8.0-node-browsers
+    working_directory: ~/directory-tests
     steps:
       - attach_workspace:
           at: tests/browser/
