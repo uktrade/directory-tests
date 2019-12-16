@@ -899,7 +899,7 @@ jobs:
             python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
             source ./docker/.env_with_export
             export PATH=$PATH:$HOME/bin
-            if [ $(echo "${CIRCLE_NODE_INDEX} % 2" | bc) = 0 ];
+            if [ $(expr ${CIRCLE_NODE_INDEX} % 2) = 0 ];
             then
                 export BROWSER="chrome";
             else
