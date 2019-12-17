@@ -809,7 +809,7 @@ jobs:
               echo "${BROWSER} will run: '${title}'"
               PYTHONPATH=. behave features/ \
               --format=allure_behave.formatter:AllureFormatter \
-              --outfile=${BROWSER}_${CIRCLE_NODE_INDEX}_results/ \
+              --outfile=results_${BROWSER}_${CIRCLE_NODE_INDEX}/ \
               --format=progress3 \
               --no-skipped \
               --tags=~@wip \
@@ -828,7 +828,7 @@ jobs:
       - persist_to_workspace:
           root: tests/browser/
           paths:
-            - ./*_results/*
+            - results_*/*
 
   merge_results_and_generate_report:
     docker:
