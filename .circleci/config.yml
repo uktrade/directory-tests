@@ -824,11 +824,12 @@ jobs:
               }
             done
             pwd
-            ls -la
+            echo "Allure result files in results_${BROWSER}_${CIRCLE_NODE_INDEX}/"
+            ls -la results_${BROWSER}_${CIRCLE_NODE_INDEX}/
       - persist_to_workspace:
-          root: tests/browser/
+          root: .
           paths:
-            - results_*/*
+            - .
 
   merge_results_and_generate_report:
     docker:
