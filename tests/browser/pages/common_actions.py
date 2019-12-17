@@ -323,7 +323,7 @@ def take_screenshot(driver: WebDriver, page_name: str):
         allure.attach(
             screenshot_jpg,
             name="screenshot.jpg",
-            attachment_type=allure.attachment_type.jpg,
+            attachment_type=allure.attachment_type.JPG,
         )
         driver.set_window_size(original_size["width"], original_size["height"])
     else:
