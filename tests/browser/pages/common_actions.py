@@ -303,7 +303,7 @@ def convert_png_to_jpg(screenshot_png: bytes):
 
 
 @retry(stop_max_attempt_number=3)
-def take_screenshot(driver: WebDriver, page_name: str):
+def take_screenshot(driver: WebDriver, page_name: str = None):
     """Will take a screenshot of current page."""
     if TAKE_SCREENSHOTS:
         # Ref: https://stackoverflow.com/a/52572919/
@@ -320,9 +320,11 @@ def take_screenshot(driver: WebDriver, page_name: str):
         screenshot_png = element.screenshot_as_png
         screenshot_jpg = convert_png_to_jpg(screenshot_png)
 
+        if page_name:
+            page_name = page_name.lower().replace(" ", "_")[0:200]
         allure.attach(
             screenshot_jpg,
-            name="screenshot.jpg",
+            name=page_name or "screenshot.jpg",
             attachment_type=allure.attachment_type.JPG,
         )
         driver.set_window_size(original_size["width"], original_size["height"])
