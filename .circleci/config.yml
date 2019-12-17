@@ -827,8 +827,7 @@ jobs:
       - persist_to_workspace:
           root: tests/browser/
           paths:
-            - chrome_?_results/*
-            - firefox_?_results/*
+            - ./*_results/*
 
   merge_results_and_generate_report:
     docker:
