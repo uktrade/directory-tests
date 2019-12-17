@@ -39,6 +39,7 @@ parse-type==0.5.2         # via behave
 parse==1.12.1             # via behave, parse-type
 parsel==1.5.2             # via scrapy
 pdfminer2==20151206
+pillow==6.2.1
 pluggy==0.13.1            # via allure-python-commons
 protego==0.1.15           # via scrapy
 pyasn1-modules==0.2.7     # via service-identity

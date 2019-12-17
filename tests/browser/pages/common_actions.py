@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Common PageObject actions."""
 import hashlib
+import io
 import logging
 import random
 import string
@@ -10,6 +11,7 @@ import traceback
 import uuid
 from collections import defaultdict, namedtuple
 from contextlib import contextmanager
+from io import BytesIO
 from types import ModuleType
 from typing import Dict, List, Union
 from urllib.parse import urlparse
@@ -35,6 +37,7 @@ import allure
 from directory_tests_shared.settings import BARRED_USERS, TAKE_SCREENSHOTS
 from directory_tests_shared.utils import extract_attributes_by_css
 from pages import ElementType
+from PIL import Image
 
 ScenarioData = namedtuple("ScenarioData", ["actors"])
 Actor = namedtuple(
@@ -291,6 +294,14 @@ def avoid_browser_stack_idle_timeout_exception(driver: WebDriver):
     driver.execute_script(actions[action])
 
 
+def convert_png_to_jpg(screenshot_png: bytes):
+    raw_image = Image.open(io.BytesIO(screenshot_png))
+    image = raw_image.convert("RGB")
+    with BytesIO() as f:
+        image.save(f, format="JPEG", quality=90)
+        return f.getvalue()
+
+
 @retry(stop_max_attempt_number=3)
 def take_screenshot(driver: WebDriver, page_name: str):
     """Will take a screenshot of current page."""
@@ -306,11 +317,13 @@ def take_screenshot(driver: WebDriver, page_name: str):
         driver.set_window_size(required_width, required_height)
 
         element = driver.find_element_by_tag_name("body")
-        screenshot = element.screenshot_as_png
+        screenshot_png = element.screenshot_as_png
+        screenshot_jpg = convert_png_to_jpg(screenshot_png)
+
         allure.attach(
-            screenshot,
-            name="screenshot.png",
-            attachment_type=allure.attachment_type.PNG,
+            screenshot_jpg,
+            name="screenshot.jpg",
+            attachment_type=allure.attachment_type.jpg,
         )
         driver.set_window_size(original_size["width"], original_size["height"])
     else:
