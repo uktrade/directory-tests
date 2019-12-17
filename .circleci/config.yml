@@ -813,7 +813,6 @@ jobs:
               PYTHONPATH=. behave features/ \
               --format=allure_behave.formatter:AllureFormatter \
               --outfile=results_${BROWSER}_${CIRCLE_NODE_INDEX}/ \
-              --format=progress3 \
               --no-skipped \
               --tags=~@wip \
               --tags=~@fixme \
