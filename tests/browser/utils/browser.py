@@ -73,13 +73,6 @@ CAPABILITIES_TEMPLATES = {
             },
         },
     },
-    "parallel": {
-        "common_capabilities": {"desktop": {}},
-        "browser_capabilities": {
-            "chrome": {"browserName": "chrome"},
-            "firefox": {"browserName": "firefox"},
-        },
-    },
 }
 
 
@@ -164,7 +157,6 @@ def start_driver_session(session_name: str, capabilities: dict) -> WebDriver:
             options.add_argument("--start-maximized")
             options.add_argument("--disable-extensions")
             options.add_argument("--no-sandbox")
-            options.add_argument("--disable-dev-shm-usage")
         elif browser_name == "firefox":
             from selenium.webdriver.firefox.options import Options
 
@@ -190,7 +182,9 @@ def start_driver_session(session_name: str, capabilities: dict) -> WebDriver:
             logging.warning("Set window size to 1600x1200")
         except WebDriverException:
             logging.warning("Failed to set window size, will continue as is")
-    logging.debug(f"Browser Capabilities: {driver.capabilities}")
+    message = f"Browser capabilities: {driver.capabilities}"
+    logging.debug(message)
+    print(message)
 
     return driver
 
