@@ -759,6 +759,7 @@ jobs:
       AUTO_RETRY: "true"
       TAKE_SCREENSHOTS: "true"
       TAGS: "--tags=~@stage-only --tags=~@uat-only"
+      BROWSER_ENVIRONMENT: "local"
     steps:
       - checkout
       - run:
