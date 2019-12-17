@@ -793,6 +793,7 @@ jobs:
               features/ \
               | grep -v "Supplied path\|Trying base directory" > scenario_titles.txt
 
+            echo "Found `wc -l < scenario_titles.txt` scenarios to run"
             # cat scenario_titles.txt | circleci tests split > /tmp/tests-to-run
             # calculate number of lines after which list of scenarios will be split
             SPLIT_AFTER_LINES=$(( $(wc -l < scenario_titles.txt) / $((${CIRCLE_NODE_TOTAL} / 2)) ))
@@ -865,6 +866,7 @@ jobs:
             . venv/bin/activate
             make results
             make report
+            tar cfj raw_allure_results.tar.bz2 results_*
       - store_artifacts:
           path: /home/circleci/directory-tests/report/
       - run:
@@ -875,6 +877,9 @@ jobs:
             nodeenv --python-virtualenv
             export CIRCLE_PULL_REQUEST=none
             yarn klank
+      - store_artifacts:
+          path: /home/circleci/directory-tests/raw_allure_results.tar.bz2
+          destination: raw_allure_results.tar.bz2
 
 
 workflows:
