@@ -823,7 +823,6 @@ jobs:
                 echo "${BROWSER} failed: ${title}"
               }
             done
-            pwd
             ls -la
       - persist_to_workspace:
           root: tests/browser/
@@ -860,12 +859,7 @@ jobs:
           when: always
           command: |
             set -e
-            pwd
             ls -la
-            ls -la chrome_0_results/
-            ls -la chrome_2_results/
-            ls -la firefox_1_results/
-            ls -la firefox_3_results/
             . venv/bin/activate
             make results
             make report
