@@ -810,11 +810,13 @@ jobs:
             cat tests-to-run${SPLIT_FILE_SUFFIX}
 
             cat tests-to-run${SPLIT_FILE_SUFFIX} | while IFS=$'\r' read -r title ; do
-              echo "${BROWSER} will run: '${title}'"
+              echo "${BROWSER} run: '${title}'"
               PYTHONPATH=. behave features/ \
               --format=allure_behave.formatter:AllureFormatter \
               --outfile=results_${BROWSER}_${CIRCLE_NODE_INDEX}/ \
               --no-skipped \
+              --no-source \
+              --no-summary \
               --tags=~@wip \
               --tags=~@fixme \
               --tags=~@skip \
