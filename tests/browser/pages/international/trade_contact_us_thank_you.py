@@ -9,13 +9,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
 from pages import common_selectors
-from pages.common_actions import (
-    Selector,
-    check_for_sections,
-    check_url,
-    go_to_url,
-    take_screenshot,
-)
+from pages.common_actions import Selector, check_for_sections, check_url, go_to_url
 
 NAME = "Find a UK business partner"
 SERVICE = Service.INTERNATIONAL
@@ -44,7 +38,6 @@ def should_be_here(driver: WebDriver, *, company_number: str = None):
     else:
         url = URL.format(company_number="07399608")
     check_url(driver, url, exact_match=False)
-    take_screenshot(driver, NAME)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 

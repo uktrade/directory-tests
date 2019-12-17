@@ -20,7 +20,6 @@ from pages.common_actions import (
     go_to_url,
     pick_option,
     submit_form,
-    take_screenshot,
     tick_captcha_checkbox,
 )
 from pages.common_autocomplete_callbacks import js_country_select
@@ -80,7 +79,6 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, PAGE_TITLE)
     check_url(driver, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 

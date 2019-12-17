@@ -7,7 +7,7 @@ from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
 from directory_tests_shared.utils import check_url_path_matches_template
 from pages import common_selectors
-from pages.common_actions import Selector, go_to_url, take_screenshot
+from pages.common_actions import Selector, go_to_url
 from pages.domestic import actions as domestic_actions
 
 NAME = "Markets"
@@ -65,7 +65,6 @@ def visit(driver: WebDriver, *, page_name: str = None):
 
 
 def should_be_here(driver: WebDriver, *, page_name: str = None):
-    take_screenshot(driver, NAME)
     check_url_path_matches_template(URL, driver.current_url)
 
 

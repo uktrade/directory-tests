@@ -98,7 +98,6 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, PAGE_TITLE)
     check_url(driver, URL)
     logging.debug("All expected elements are visible on '%s' page", PAGE_TITLE)
 
