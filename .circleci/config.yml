@@ -860,9 +860,8 @@ jobs:
           when: always
           command: |
             set -e
+            mv tests/browser/results* .
             ls -la
-            ls -la tests/browser
-            mv -fr tests/browser/results* .
             . venv/bin/activate
             make results
             make report
