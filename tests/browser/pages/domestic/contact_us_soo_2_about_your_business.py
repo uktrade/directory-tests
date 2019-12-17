@@ -19,7 +19,6 @@ from pages.common_actions import (
     fill_out_input_fields,
     find_element,
     submit_form,
-    take_screenshot,
 )
 from pages.domestic import contact_us_soo_3_about_your_products
 
@@ -81,7 +80,6 @@ PREPOPULATED_FORM_FIELDS = {
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL)
 
 

@@ -92,7 +92,6 @@ SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 def should_be_here(driver: WebDriver):
     show_filters(driver)
-    take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 

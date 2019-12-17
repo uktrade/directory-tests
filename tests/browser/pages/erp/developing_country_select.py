@@ -20,7 +20,6 @@ from pages.common_actions import (
     go_to_url,
     pick_one_option_and_submit,
     submit_form,
-    take_screenshot,
 )
 from pages.erp import product_search
 from pages.erp.autocomplete_callbacks import autocomplete_country
@@ -61,7 +60,6 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL)
 
 

@@ -21,7 +21,6 @@ from pages.common_actions import (
     find_elements_of_type,
     go_to_url,
     submit_form,
-    take_screenshot,
 )
 from pages.profile import enrol_enter_your_business_details_step_2
 from pages.profile.autocomplete_callbacks import enrol_autocomplete_company_name
@@ -83,7 +82,6 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
     msg = f"Got 404 on {driver.current_url}"
     assert "This page cannot be found" not in driver.page_source, msg

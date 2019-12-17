@@ -16,7 +16,6 @@ from pages.common_actions import (
     check_url,
     fill_out_input_fields,
     submit_form,
-    take_screenshot,
 )
 from pages.erp import uk_importer_are_goods_used_to_make_something_else
 from pages.erp.autocomplete_callbacks import autocomplete_country
@@ -53,7 +52,6 @@ SELECTORS.update(common_selectors.ERP_FOOTER)
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
 
 

@@ -5,7 +5,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
 from directory_tests_shared.utils import check_url_path_matches_template
-from pages.common_actions import go_to_url, take_screenshot
+from pages.common_actions import go_to_url
 
 NAME = "Brexit related article"
 SERVICE = Service.GOVUK
@@ -34,5 +34,4 @@ def visit(driver: WebDriver, *, page_name: str = None):
 
 
 def should_be_here(driver: WebDriver, *, page_name: str = None):
-    take_screenshot(driver, NAME)
     check_url_path_matches_template(URL, driver.current_url)

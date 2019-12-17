@@ -22,7 +22,6 @@ from pages.common_actions import (
     pick_one_option_and_submit,
     pick_option,
     submit_form,
-    take_screenshot,
 )
 from pages.erp import sales_volumes
 
@@ -69,7 +68,6 @@ SELECTORS.update(common_selectors.ERP_FOOTER)
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
 
 

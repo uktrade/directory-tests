@@ -11,7 +11,6 @@ from pages.common_actions import (
     assertion_msg,
     check_for_expected_sections_elements,
     find_element,
-    take_screenshot,
 )
 
 NAME = "Share on Twitter"
@@ -25,7 +24,6 @@ SELECTORS = {"general": {"message_box": MESSAGE_BOX}}
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_for_expected_sections_elements(driver, SELECTORS)
 
 

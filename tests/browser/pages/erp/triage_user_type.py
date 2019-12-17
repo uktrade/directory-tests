@@ -16,7 +16,6 @@ from pages.common_actions import (
     check_url,
     go_to_url,
     pick_one_option_and_submit,
-    take_screenshot,
 )
 from pages.erp import (
     developing_country_select,
@@ -71,7 +70,6 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL)
 
 

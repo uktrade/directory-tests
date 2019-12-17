@@ -19,7 +19,6 @@ from pages.common_actions import (
     fill_out_textarea_fields,
     go_to_url,
     submit_form,
-    take_screenshot,
     tick_captcha_checkbox,
     tick_checkboxes,
 )
@@ -54,7 +53,6 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver, *, page_name: str = None):
-    take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
 
 

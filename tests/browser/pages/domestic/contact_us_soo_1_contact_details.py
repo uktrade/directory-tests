@@ -20,7 +20,6 @@ from pages.common_actions import (
     find_element,
     go_to_url,
     submit_form,
-    take_screenshot,
     tick_checkboxes,
 )
 from pages.domestic import contact_us_soo_2_about_your_business
@@ -67,7 +66,6 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url_path_matches_template(URL, driver.current_url)
 
 

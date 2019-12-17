@@ -18,7 +18,6 @@ from pages.common_actions import (
     check_url,
     fill_out_input_fields,
     submit_form,
-    take_screenshot,
 )
 from pages.domestic import contact_us_soo_4_your_experience
 
@@ -61,7 +60,6 @@ SELECTORS.update(common_selectors.DOMESTIC_FOOTER)
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL)
 
 

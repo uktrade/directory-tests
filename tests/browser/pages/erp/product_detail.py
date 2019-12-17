@@ -7,7 +7,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
 from pages import common_selectors
-from pages.common_actions import check_for_sections, check_url, take_screenshot
+from pages.common_actions import check_for_sections, check_url
 
 NAME = "Product detail"
 SERVICE = Service.ERP
@@ -32,7 +32,6 @@ SELECTORS.update(common_selectors.ERP_FOOTER)
 
 
 def should_be_here(driver: WebDriver, *, page_name: str = None):
-    take_screenshot(driver, page_name or NAME)
     url = SubURLs[page_name]
     check_url(driver, url, exact_match=False)
 

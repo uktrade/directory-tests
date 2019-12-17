@@ -18,7 +18,6 @@ from pages.common_actions import (
     fill_out_input_fields,
     pick_option,
     submit_form,
-    take_screenshot,
 )
 from pages.erp import summary
 
@@ -62,7 +61,6 @@ SELECTORS.update(common_selectors.ERP_FOOTER)
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
 
 

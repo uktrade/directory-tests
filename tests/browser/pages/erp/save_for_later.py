@@ -17,7 +17,6 @@ from pages.common_actions import (
     fill_out_input_fields,
     go_to_url,
     submit_form,
-    take_screenshot,
 )
 from pages.erp import save_for_later_progress_saved
 
@@ -52,7 +51,6 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
 
 

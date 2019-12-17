@@ -156,6 +156,7 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
         assert "Access denied" not in context.driver.page_source, error
     check_for_errors(context.driver.page_source, context.driver.current_url)
     has_action(page, "should_be_here")
+    take_screenshot(context.driver, page_name)
     if hasattr(page, "SubURLs"):
         special_page_name = page_name.split(" - ")[1].lower()
         page.should_be_here(context.driver, page_name=special_page_name)
@@ -165,7 +166,6 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     logging.debug(
         f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> " f"{page}"
     )
-    take_screenshot(context.driver, page_name)
 
 
 def articles_open_any(context: Context, actor_alias: str):
