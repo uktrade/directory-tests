@@ -753,7 +753,7 @@ jobs:
     docker:
       - image: circleci/python:3.8.0-node-browsers
     working_directory: ~/directory-tests
-    parallelism: 8
+    parallelism: 16
     environment:
       TEST_ENV: "dev"
       AUTO_RETRY: "true"

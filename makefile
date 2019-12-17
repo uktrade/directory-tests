@@ -224,12 +224,36 @@ results:
 	./update_results.py firefox_1_results Firefox
 	./update_results.py chrome_2_results Chrome
 	./update_results.py firefox_3_results Firefox
+	./update_results.py chrome_4_results Chrome
+	./update_results.py firefox_5_results Firefox
+	./update_results.py chrome_6_results Chrome
+	./update_results.py firefox_7_results Firefox
+	./update_results.py chrome_8_results Chrome
+	./update_results.py firefox_9_results Firefox
+	./update_results.py chrome_10_results Chrome
+	./update_results.py firefox_11_results Firefox
+	./update_results.py chrome_12_results Chrome
+	./update_results.py firefox_13_results Firefox
+	./update_results.py chrome_14_results Chrome
+	./update_results.py firefox_15_results Firefox
 	@rm -fr results/
 	@mkdir results
 	@mv chrome_0_results/* results/
 	@mv firefox_1_results/* results/
 	@mv chrome_2_results/* results/
 	@mv firefox_3_results/* results/
+	@mv chrome_4_results/* results/
+	@mv firefox_5_results/* results/
+	@mv chrome_6_results/* results/
+	@mv firefox_7_results/* results/
+	@mv chrome_8_results/* results/
+	@mv firefox_9_results/* results/
+	@mv chrome_10_results/* results/
+	@mv firefox_11_results/* results/
+	@mv chrome_12_results/* results/
+	@mv firefox_13_results/* results/
+	@mv chrome_14_results/* results/
+	@mv firefox_15_results/* results/
 
 report:
 	@allure generate --clean --output ./report results/
