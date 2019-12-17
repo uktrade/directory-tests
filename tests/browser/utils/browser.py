@@ -167,7 +167,7 @@ def start_driver_session(session_name: str, capabilities: dict) -> WebDriver:
                 options.add_argument("--window-size=1920x2200")
                 options.add_argument("--safe-mode")
 
-        print(
+        logging.debug(
             f"Starting local instance of {browser_name} with options: {options.arguments}"
         )
         driver = drivers[browser_name](options=options)
@@ -183,9 +183,7 @@ def start_driver_session(session_name: str, capabilities: dict) -> WebDriver:
             logging.warning("Set window size to 1600x1200")
         except WebDriverException:
             logging.warning("Failed to set window size, will continue as is")
-    message = f"Browser capabilities: {driver.capabilities}"
-    logging.debug(message)
-    print(message)
+    logging.debug(f"Browser capabilities: {driver.capabilities}")
 
     return driver
 
