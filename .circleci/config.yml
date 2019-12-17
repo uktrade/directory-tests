@@ -826,9 +826,7 @@ jobs:
                 echo "${BROWSER} failed: ${title}"
               }
             done
-            pwd
-            echo "Allure result files in results_${BROWSER}_${CIRCLE_NODE_INDEX}/"
-            ls -la results_${BROWSER}_${CIRCLE_NODE_INDEX}/
+            echo "Found `ls -la results_${BROWSER}_${CIRCLE_NODE_INDEX}/*.json | wc -l` JSON Allure result files in results_${BROWSER}_${CIRCLE_NODE_INDEX}/"
       - persist_to_workspace:
           root: .
           paths:
@@ -865,7 +863,7 @@ jobs:
             set -e
             mv tests/browser/results* .
             tar cfj raw_allure_results.tar.bz2 results_*
-            ls -la
+            ls -lad results*
             . venv/bin/activate
             make results
             make report
