@@ -6,6 +6,7 @@ from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
 from behave.model import Feature, Scenario, Step
 from behave.runner import Context
 
+from directory_tests_shared.pdf import NoPDFMinerLogEntriesFilter
 from directory_tests_shared.settings import AUTO_RETRY
 from pages import sso
 from pages.common_actions import initialize_scenario_data
@@ -16,8 +17,10 @@ DRIVER_CAPABILITIES = get_driver_capabilities()
 
 def before_all(context: Context):
     context.driver_capabilities = DRIVER_CAPABILITIES
-    print(f"CAPABILITIES: {DRIVER_CAPABILITIES}")
-    logging.debug(f"CAPABILITIES: {DRIVER_CAPABILITIES}")
+
+    context.config.setup_logging(configfile=".behave_logging")
+    logger = logging.getLogger()
+    logger.addFilter(NoPDFMinerLogEntriesFilter())
 
 
 def before_feature(context: Context, feature: Feature):
