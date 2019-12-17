@@ -760,6 +760,7 @@ jobs:
       TAKE_SCREENSHOTS: "true"
       TAGS: "--tags=~@stage-only --tags=~@uat-only"
       BROWSER_ENVIRONMENT: "local"
+      BROWSER_HEADLESS: "true"
     steps:
       - checkout
       - run:
