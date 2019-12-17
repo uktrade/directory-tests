@@ -790,7 +790,7 @@ jobs:
               --tags=~@eu-exit \
               ${TAGS} \
               --format=mini \
-              features/ \
+              features/invest/ \
               | grep -v "Supplied path\|Trying base directory" > scenario_titles.txt
 
             # cat scenario_titles.txt | circleci tests split > /tmp/tests-to-run
@@ -823,6 +823,7 @@ jobs:
                 echo "${BROWSER} failed: ${title}"
               }
             done
+            pwd
             ls -la
       - persist_to_workspace:
           root: tests/browser/
