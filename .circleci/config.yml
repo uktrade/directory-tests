@@ -861,6 +861,8 @@ jobs:
           command: |
             set -e
             ls -la
+            ls -la tests/browser
+            mv -fr tests/browser/results* .
             . venv/bin/activate
             make results
             make report
