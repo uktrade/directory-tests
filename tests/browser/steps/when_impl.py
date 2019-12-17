@@ -148,18 +148,24 @@ def set_small_screen(context: Context):
 
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
-    if "Access denied" in context.driver.page_source:
-        logging.debug(f"Trying to re-authenticate on '{page_name}'' {page.URL}")
+    if "access denied" in context.driver.page_source.lower():
+        logging.debug(f"Trying to re-authenticate on '{page_name}' {page.URL}")
         generic_set_basic_auth_creds(context, page_name)
         context.driver.get(page.URL)
         error = f"Got blocked again on {context.driver.current_url}"
-        assert "Access denied" not in context.driver.page_source, error
+        assert "access denied" not in context.driver.page_source.lower(), error
     check_for_errors(context.driver.page_source, context.driver.current_url)
     has_action(page, "should_be_here")
     take_screenshot(context.driver, page_name)
     if hasattr(page, "SubURLs"):
         special_page_name = page_name.split(" - ")[1].lower()
-        page.should_be_here(context.driver, page_name=special_page_name)
+        if signature(page.should_be_here).parameters.get("page_name"):
+            page.should_be_here(context.driver, page_name=special_page_name)
+        else:
+            raise TypeError(
+                f"{page.__name__}.should_be_here() doesn't accept 'page_name' keyword "
+                f"argument but it should as this Page Object has 'SubURLs' attribute."
+            )
     else:
         page.should_be_here(context.driver)
     update_actor(context, actor_alias, visited_page=page)
