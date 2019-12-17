@@ -139,6 +139,7 @@ def visit_page(context: Context, actor_alias: str, page_name: str):
 
     check_for_errors(context.driver.page_source, context.driver.current_url)
     update_actor(context, actor_alias, visited_page=page)
+    take_screenshot(context.driver, page_name)
 
 
 def set_small_screen(context: Context):
