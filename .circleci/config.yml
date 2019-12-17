@@ -786,6 +786,7 @@ jobs:
               --no-source \
               --no-summary \
               --no-snippets \
+              --no-skipped \
               --tags=~@wip \
               --tags=~@fixme \
               --tags=~@skip \
