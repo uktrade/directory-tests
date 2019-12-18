@@ -11,6 +11,7 @@ certifi==2019.11.28       # via geventhttpclient-wheels, requests
 cffi==1.13.2              # via cryptography
 chardet==3.0.4            # via requests
 click==7.0                # via flask
+configargparse==0.15.1    # via locustio
 constantly==15.1.0        # via twisted
 cryptography==2.8         # via pyopenssl, scrapy, service-identity
 cssselect==1.1.0          # via parsel, scrapy
@@ -33,7 +34,7 @@ idna==2.8                 # via hyperlink, requests
 incremental==17.5.0       # via twisted
 itsdangerous==1.1.0       # via flask
 jinja2==2.10.3            # via flask
-locustio==0.13.2
+locustio==0.13.5
 lxml==4.4.2               # via parsel, scrapy
 markupsafe==1.1.1         # via jinja2
 mohawk==0.3.4             # via sigauth
@@ -69,4 +70,4 @@ werkzeug==0.16.0          # via flask
 zope.interface==4.7.1     # via scrapy, twisted
 
 # The following packages are considered to be unsafe in a requirements file:
-# setuptools
+# setuptools==42.0.2        # via pyhamcrest, zope.interface
