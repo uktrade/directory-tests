@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from locust import HttpLocust, TaskSet, task
+from locust import HttpLocust, TaskSet, between, task
 
 from directory_tests_shared import URLs, settings
 from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
@@ -16,5 +16,4 @@ class FABTasks(TaskSet):
 class FAB(HttpLocust):
     host = settings.FIND_A_BUYER_URL
     task_set = FABTasks
-    min_wait = settings.LOCUST_MIN_WAIT
-    max_wait = settings.LOCUST_MAX_WAIT
+    wait_time = between(settings.LOCUST_MIN_WAIT, settings.LOCUST_MAX_WAIT)

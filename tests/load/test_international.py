@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from random import choice
 
-from locust import HttpLocust, TaskSet, task
+from locust import HttpLocust, TaskSet, between, task
 
 from directory_tests_shared import URLs, settings
 from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
@@ -70,5 +70,4 @@ class InternationalTasks(TaskSet):
 class International(HttpLocust):
     host = settings.INTERNATIONAL_URL
     task_set = InternationalTasks
-    min_wait = settings.LOCUST_MIN_WAIT
-    max_wait = settings.LOCUST_MAX_WAIT
+    wait_time = between(settings.LOCUST_MIN_WAIT, settings.LOCUST_MAX_WAIT)

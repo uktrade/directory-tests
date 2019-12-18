@@ -2,7 +2,7 @@
 from collections import namedtuple
 from random import choice, randint
 
-from locust import TaskSet, task
+from locust import TaskSet, between, task
 
 from directory_constants.cms import EXPORT_READINESS, FIND_A_SUPPLIER, INVEST
 from directory_tests_shared import URLs, settings
@@ -68,5 +68,4 @@ class CMSTasks(TaskSet):
 class CMS(CMSAPIAuthClientMixin):
     host = settings.CMS_API_URL
     task_set = CMSTasks
-    min_wait = settings.LOCUST_MIN_WAIT
-    max_wait = settings.LOCUST_MAX_WAIT
+    wait_time = between(settings.LOCUST_MIN_WAIT, settings.LOCUST_MAX_WAIT)
