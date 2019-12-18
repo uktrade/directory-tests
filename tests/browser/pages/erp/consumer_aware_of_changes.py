@@ -21,7 +21,6 @@ from pages.common_actions import (
     fill_out_textarea_fields,
     pick_one_option_and_submit,
     submit_form,
-    take_screenshot,
     tick_checkboxes,
 )
 from pages.erp import consumer_other_changes_after_brexit
@@ -115,7 +114,6 @@ SELECTORS.update(common_selectors.ERP_FOOTER)
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
 
 

@@ -8,13 +8,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
 from pages import ElementType
-from pages.common_actions import (
-    Selector,
-    check_for_sections,
-    check_url,
-    go_to_url,
-    take_screenshot,
-)
+from pages.common_actions import Selector, check_for_sections, check_url, go_to_url
 
 NAME = "Account created"
 NAMES = [
@@ -58,7 +52,6 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver, *, page_name: str = None):
-    take_screenshot(driver, NAME)
     url = SubURLs[page_name.lower()] if page_name else URL
     check_url(driver, url, exact_match=False)
     msg = f"Got 404 on {driver.current_url}"

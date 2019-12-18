@@ -15,7 +15,6 @@ from pages.common_actions import (
     check_url,
     find_element,
     go_to_url,
-    take_screenshot,
 )
 
 NAME = "landing"
@@ -98,7 +97,6 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, PAGE_TITLE)
     check_url(driver, URL)
     logging.debug("All expected elements are visible on '%s' page", PAGE_TITLE)
 
@@ -119,7 +117,6 @@ def open_industry(driver: WebDriver, industry_name: str):
         driver, selector, element_name="Industry card", wait_for_it=False
     )
     industry_link.click()
-    take_screenshot(driver, PAGE_TITLE + " after opening " + industry_name)
 
 
 def open_guide(driver: WebDriver, guide_name: str):
@@ -128,4 +125,3 @@ def open_guide(driver: WebDriver, guide_name: str):
     logging.debug("Looking for: {}".format(guide_name))
     guide = find_element(driver, selector, element_name="Guide card", wait_for_it=False)
     guide.click()
-    take_screenshot(driver, PAGE_TITLE + " after opening " + guide_name)

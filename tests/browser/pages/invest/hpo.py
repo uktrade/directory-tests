@@ -16,7 +16,6 @@ from pages.common_actions import (
     check_if_element_is_not_visible,
     check_url,
     go_to_url,
-    take_screenshot,
 )
 
 NAME = "HPO"
@@ -162,7 +161,6 @@ def visit(driver: WebDriver, *, page_name: str = None):
 
 
 def should_be_here(driver: WebDriver, *, page_name: str):
-    take_screenshot(driver, PAGE_TITLE)
     url = SubURLs[page_name] if page_name else URL
     check_url(driver, url)
     logging.debug("All expected elements are visible on '%s' page", PAGE_TITLE)

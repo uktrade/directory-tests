@@ -196,6 +196,74 @@ step_generate_allure_report_for_browser_tests: &step_generate_allure_report_for_
         }
       }
 
+step_run_browser_tests_in_parallel: &step_run_browser_tests_in_parallel
+  run:
+    name: Run tests
+    command: |
+      python3 -m venv venv
+      . venv/bin/activate
+      pip install --quiet --upgrade pip
+      pip install --quiet -r requirements_browser.txt
+      python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
+      source ./docker/.env_with_export
+      export PATH=$PATH:$HOME/bin
+      if [ $(( ${CIRCLE_NODE_INDEX} % 2 )) = 0 ];
+      then
+          export BROWSER="chrome";
+      else
+          export BROWSER="firefox";
+      fi
+
+      cd tests/browser
+      PYTHONPATH=. behave \
+        --dry-run \
+        --no-source \
+        --no-summary \
+        --no-snippets \
+        --no-skipped \
+        --tags=~@wip \
+        --tags=~@fixme \
+        --tags=~@skip \
+        --tags=~@eu-exit \
+        ${TAGS} \
+        --format=mini \
+        features/ \
+        | grep -v "Supplied path\|Trying base directory" > scenario_titles.txt
+
+      echo "Found `wc -l < scenario_titles.txt` scenarios to run"
+      # cat scenario_titles.txt | circleci tests split > /tmp/tests-to-run
+      # calculate number of lines after which list of scenarios will be split
+      SPLIT_AFTER_LINES=$(( $(wc -l < scenario_titles.txt) / $((${CIRCLE_NODE_TOTAL} / 2)) ))
+      # split list of scenarios into equal parts (equal to half on number of nodes)
+      # as half of nodes run tests in Chrome & the other half in Firefox
+      split -d --suffix-length=1 --lines ${SPLIT_AFTER_LINES} scenario_titles.txt tests-to-run
+
+      SPLIT_FILE_SUFFIX=$(( ${CIRCLE_NODE_INDEX} / 2 ))
+
+      echo "Current instance of ${BROWSER} is going to run `cat tests-to-run${SPLIT_FILE_SUFFIX} | wc -l` scenarios:"
+      cat tests-to-run${SPLIT_FILE_SUFFIX}
+
+      cat tests-to-run${SPLIT_FILE_SUFFIX} | while IFS=$'\r' read -r title ; do
+        echo "${BROWSER} run: '${title}'"
+        PYTHONPATH=. behave features/ \
+        --format=allure_behave.formatter:AllureFormatter \
+        --outfile=results_${BROWSER}_${CIRCLE_NODE_INDEX}/ \
+        --no-skipped \
+        --no-source \
+        --no-summary \
+        --tags=~@wip \
+        --tags=~@fixme \
+        --tags=~@skip \
+        --tags=~@eu-exit \
+        ${TAGS} \
+        --name "${title}" && {
+          echo "${BROWSER} passed: ${title}"
+        } || {
+          echo "${BROWSER} failed: ${title}"
+        }
+      done
+      echo "Found `ls -la results_${BROWSER}_${CIRCLE_NODE_INDEX}/*.json | wc -l` JSON Allure result files in results_${BROWSER}_${CIRCLE_NODE_INDEX}/"
+
 
 # Lists of steps
 steps_setup_env_for_smoke_tests: &steps_setup_env_for_smoke_tests
@@ -749,18 +817,124 @@ jobs:
     ]
 
 
+  dev_parallel_browser_tests_using_circleci:
+    docker:
+      - image: circleci/python:3.8.0-node-browsers
+    working_directory: ~/directory-tests
+    parallelism: 16
+    environment:
+      TEST_ENV: "dev"
+      AUTO_RETRY: "true"
+      TAKE_SCREENSHOTS: "true"
+      TAGS: "--tags=~@stage-only --tags=~@uat-only"
+      BROWSER_ENVIRONMENT: "local"
+      BROWSER_HEADLESS: "true"
+    steps:
+      - checkout
+      - *step_run_browser_tests_in_parallel
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+
+  stage_parallel_browser_tests_using_circleci:
+    docker:
+      - image: circleci/python:3.8.0-node-browsers
+    working_directory: ~/directory-tests
+    parallelism: 16
+    environment:
+      TEST_ENV: "stage"
+      AUTO_RETRY: "true"
+      TAKE_SCREENSHOTS: "true"
+      TAGS: "--tags=~@dev-only --tags=~@uat-only"
+      BROWSER_ENVIRONMENT: "local"
+      BROWSER_HEADLESS: "true"
+    steps:
+      - checkout
+      - *step_run_browser_tests_in_parallel
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+
+  uat_parallel_browser_tests_using_circleci:
+    docker:
+      - image: circleci/python:3.8.0-node-browsers
+    working_directory: ~/directory-tests
+    parallelism: 16
+    environment:
+      TEST_ENV: "uat"
+      AUTO_RETRY: "true"
+      TAKE_SCREENSHOTS: "true"
+      TAGS: "--tags=~@stage-only"
+      BROWSER_ENVIRONMENT: "local"
+      BROWSER_HEADLESS: "true"
+    steps:
+      - checkout
+      - *step_run_browser_tests_in_parallel
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  merge_results_and_generate_report:
+    docker:
+      - image: circleci/python:3.8.0-node-browsers
+    working_directory: ~/directory-tests
+    steps:
+      - run:
+          name: Install JRE as it is required by Allure to generate an HTML report
+          command: |
+            sudo apt -qq install -y default-jre
+            java -version
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Create virtualenv and install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install --quiet --upgrade pip
+            pip install --quiet docopt nodeenv
+            nodeenv --python-virtualenv
+            npm install -g allure-commandline@2.13.0
+            npm install -g yarn@1.21.1
+            yarn add -D klank@0.0.5
+      - run:
+          name: Update Allure result files and generate an Allure report
+          when: always
+          command: |
+            set -e
+            mv tests/browser/results* .
+            ls -lad results*
+            . venv/bin/activate
+            make results
+            make report
+      - store_artifacts:
+          path: /home/circleci/directory-tests/report/
+      - run:
+          name: Push repot link to Slack
+          command: |
+            set -e
+            . venv/bin/activate
+            nodeenv --python-virtualenv
+            export CIRCLE_PULL_REQUEST=none
+            yarn klank
+
+
 workflows:
   version: 2
 
-  run_smoke_all_functional_and_selected_browser_tests_on_dev:
+  run_smoke_and_functional_tests_on_dev_ad_hoc:
     jobs:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
-      - setup_env_for_browser_tests
       - delete_test_data_dev:
           requires:
             - setup_env_for_functional_tests
-            - setup_env_for_browser_tests
       - smoke_tests_dev:
           requires:
             - setup_env_for_smoke_tests
@@ -776,22 +950,14 @@ workflows:
       - func_sud_test_dev:
           requires:
             - delete_test_data_dev
-      - browser_selected_chrome_dev:
-          requires:
-            - delete_test_data_dev
-      - browser_selected_firefox_dev:
-          requires:
-            - delete_test_data_dev
 
-  run_smoke_all_functional_and_selected_browser_tests_on_stage:
+  run_smoke_and_functional_on_stage_ad_hoc:
     jobs:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
-      - setup_env_for_browser_tests
       - delete_test_data_stage:
           requires:
             - setup_env_for_functional_tests
-            - setup_env_for_browser_tests
       - smoke_tests_stage:
           requires:
             - setup_env_for_smoke_tests
@@ -807,22 +973,14 @@ workflows:
       - func_sud_test_stage:
           requires:
             - delete_test_data_stage
-      - browser_selected_chrome_stage:
-          requires:
-            - delete_test_data_stage
-      - browser_selected_firefox_stage:
-          requires:
-            - delete_test_data_stage
 
-  run_smoke_all_functional_and_selected_browser_tests_on_uat:
+  run_smoke_and_functional_on_uat_ad_hoc:
     jobs:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
-      - setup_env_for_browser_tests
       - delete_test_data_uat:
           requires:
             - setup_env_for_functional_tests
-            - setup_env_for_browser_tests
       - smoke_tests_uat:
           requires:
             - setup_env_for_smoke_tests
@@ -836,12 +994,6 @@ workflows:
           requires:
             - delete_test_data_uat
       - func_sud_test_uat:
-          requires:
-            - delete_test_data_uat
-      - browser_selected_chrome_uat:
-          requires:
-            - delete_test_data_uat
-      - browser_selected_firefox_uat:
           requires:
             - delete_test_data_uat
 
@@ -962,7 +1114,7 @@ workflows:
           requires:
             - setup_env_for_load_tests
 
-  run_all_tests_on_dev:
+  run_smoke_and_functional_tests_on_dev:
     triggers:
     - schedule:
         cron: "0 5 * * 1-5"
@@ -972,11 +1124,9 @@ workflows:
     jobs:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
-      - setup_env_for_browser_tests
       - delete_test_data_dev:
           requires:
             - setup_env_for_functional_tests
-            - setup_env_for_browser_tests
       - smoke_tests_dev:
           requires:
             - setup_env_for_smoke_tests
@@ -992,14 +1142,8 @@ workflows:
       - func_sud_test_dev:
           requires:
             - delete_test_data_dev
-      - browser_all_chrome_dev:
-          requires:
-            - delete_test_data_dev
-      - browser_all_firefox_dev:
-          requires:
-            - delete_test_data_dev
 
-  run_all_tests_on_stage:
+  run_smoke_and_functional_tests_on_stage:
     triggers:
     - schedule:
         cron: "0 9 * * 1-5"
@@ -1009,11 +1153,9 @@ workflows:
     jobs:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
-      - setup_env_for_browser_tests
       - delete_test_data_stage:
           requires:
             - setup_env_for_functional_tests
-            - setup_env_for_browser_tests
       - smoke_tests_stage:
           requires:
             - setup_env_for_smoke_tests
@@ -1029,14 +1171,8 @@ workflows:
       - func_sud_test_stage:
           requires:
             - delete_test_data_stage
-      - browser_all_chrome_stage:
-          requires:
-            - delete_test_data_stage
-      - browser_all_firefox_stage:
-          requires:
-            - delete_test_data_stage
 
-  run_all_tests_on_uat:
+  run_smoke_and_functional_tests_on_uat:
     triggers:
       - schedule:
           cron: "0 18 * * 1-5"
@@ -1046,11 +1182,9 @@ workflows:
     jobs:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
-      - setup_env_for_browser_tests
       - delete_test_data_uat:
           requires:
             - setup_env_for_functional_tests
-            - setup_env_for_browser_tests
       - smoke_tests_uat:
           requires:
             - setup_env_for_smoke_tests
@@ -1066,9 +1200,45 @@ workflows:
       - func_sud_test_uat:
           requires:
             - delete_test_data_uat
-      #- browser_all_chrome_uat:
-          #requires:
-            #- delete_test_data_uat
-      #- browser_all_firefox_uat:
-          #requires:
-            #- delete_test_data_uat
+
+
+  run_browser_tests_in_parallel_in_dev:
+    triggers:
+      - schedule:
+          cron: "0 7 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - dev_parallel_browser_tests_using_circleci
+      - merge_results_and_generate_report:
+          requires:
+            - dev_parallel_browser_tests_using_circleci
+
+
+  run_browser_tests_in_parallel_in_stage:
+    triggers:
+      - schedule:
+          cron: "0 6 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - stage_parallel_browser_tests_using_circleci
+      - merge_results_and_generate_report:
+          requires:
+            - stage_parallel_browser_tests_using_circleci
+
+
+  run_browser_tests_in_parallel_in_uat:
+    triggers:
+      - schedule:
+          cron: "0 5 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - uat_parallel_browser_tests_using_circleci
+      - merge_results_and_generate_report:
+          requires:
+            - uat_parallel_browser_tests_using_circleci

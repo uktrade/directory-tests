@@ -20,7 +20,6 @@ from pages.common_actions import (
     find_elements,
     find_selector_by_name,
     submit_form,
-    take_screenshot,
 )
 from pages.erp import summary
 from pages.erp.autocomplete_callbacks import autocomplete_uk_region
@@ -77,7 +76,6 @@ SELECTED_REGIONS = Selector(
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
 
 

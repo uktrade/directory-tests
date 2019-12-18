@@ -8,7 +8,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
 from pages import ElementType
-from pages.common_actions import Selector, check_url, take_screenshot
+from pages.common_actions import Selector, check_url
 
 NAME = "Empty Search results"
 SERVICE = Service.DOMESTIC
@@ -29,6 +29,5 @@ SELECTORS = {
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", NAME)

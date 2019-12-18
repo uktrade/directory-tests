@@ -22,7 +22,6 @@ from pages.common_actions import (
     go_to_url,
     pick_option,
     submit_form,
-    take_screenshot,
 )
 from pages.profile import enrol_enter_your_business_details_step_2
 from pages.profile.autocomplete_callbacks import enrol_autocomplete_company_name
@@ -77,7 +76,6 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL)
 
 

@@ -14,7 +14,6 @@ from pages.common_actions import (
     check_url,
     find_elements,
     go_to_url,
-    take_screenshot,
 )
 
 NAME = "Updates for non UK companies on EU Exit"
@@ -60,7 +59,6 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
 
 

@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "klank": "^0.0.5"
+  },
+  "scripts": {
+    "klank": "klank index.html"
+  }
+}

@@ -8,7 +8,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
 from pages import common_selectors
-from pages.common_actions import Selector, check_url, find_elements, take_screenshot
+from pages.common_actions import Selector, check_url, find_elements
 
 NAME = "International EU Exit news"
 SERVICE = Service.INTERNATIONAL
@@ -62,7 +62,6 @@ SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
 
 

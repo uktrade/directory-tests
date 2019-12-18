@@ -26,8 +26,7 @@ Feature: Domestic - Great site search
       | specific        | phrase      |
       | Home            | Food        |
       | Advice landing  | Transport   |
-      | Markets listing | Steel       |
-      | Services        | Manufacture |
+      | Markets listing | Export      |
 
 
   @bug

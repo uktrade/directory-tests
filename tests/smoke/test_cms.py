@@ -20,28 +20,29 @@ SKIPPED_PAGE_TYPES = [
 ]
 if "dev" in CMS_API_URL:
     SKIPPED_PAGE_TYPES += [
-        "export_readiness.homepage",  # 500 ISE
-        "great_international.capitalinvestopportunitypage",  # 502 timeout
-        # ignore sub-sector pages as they're behind a feature flag
-        # and are used to categorise capital invest opportunities
-        # so come up as a filter on the opportunity listing page
-        "great_international.internationalsectorpage",
-        "great_international.internationalsubsectorpage",
-        "great_international.internationaltopiclandingpage",
-        "great_international.aboutuklandingpage",
-        "great_international.capitalinvestopportunitylistingpage",
-        "great_international.internationaltradeindustrycontactpage",
-        "great_international.aboutditlandingpage",
+        # "export_readiness.homepage",  # 500 ISE
+        # "great_international.capitalinvestopportunitypage",  # 502 timeout
+        # # ignore sub-sector pages as they're behind a feature flag
+        # # and are used to categorise capital invest opportunities
+        # # so come up as a filter on the opportunity listing page
+        # "great_international.internationalsectorpage",
+        # "great_international.internationalsubsectorpage",
+        # "great_international.internationaltopiclandingpage",
+        # "great_international.aboutuklandingpage",
+        # "great_international.capitalinvestopportunitylistingpage",
+        # "great_international.internationaltradeindustrycontactpage",
+        # "great_international.aboutditlandingpage",
     ]
 if "staging" in CMS_API_URL:
     SKIPPED_PAGE_TYPES += [
-        "export_readiness.articlelistingpage",  # 500 ISE
-        "great_international.internationalarticlepage",  # 500 ISE
-        "great_international.internationalcampaignpage",  # 500 ISE
+        # "export_readiness.articlelistingpage",  # 500 ISE
+        # "export_readiness.sitepolicypages",  # 500 ISE
+        # "great_international.internationalarticlepage",  # 500 ISE
+        # "great_international.internationalcampaignpage",  # 500 ISE
     ]
 if "uat" in CMS_API_URL:
     SKIPPED_PAGE_TYPES += [
-        "great_international.baseinternationalsectorpage"  # 400 not found
+        # "great_international.baseinternationalsectorpage"  # 400 not found
     ]
 
 ALL_PAGE_TYPES = get_pages_types(skip=SKIPPED_PAGE_TYPES)

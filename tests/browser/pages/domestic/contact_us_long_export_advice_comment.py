@@ -16,7 +16,6 @@ from pages.common_actions import (
     fill_out_textarea_fields,
     go_to_url,
     submit_form,
-    take_screenshot,
 )
 from pages.domestic import contact_us_long_export_advice_personal
 
@@ -45,7 +44,6 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL)
 
 

@@ -8,13 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared.enums import PageType, Service
-from pages.common_actions import (
-    Selector,
-    assertion_msg,
-    check_title,
-    find_element,
-    take_screenshot,
-)
+from pages.common_actions import Selector, assertion_msg, check_title, find_element
 
 NAME = "Share on LinkedIn"
 SERVICE = Service.LINKEDIN
@@ -28,7 +22,6 @@ SELECTORS = {}
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_title(driver, PAGE_TITLE, exact_match=False)
 
 

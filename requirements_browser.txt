@@ -5,7 +5,9 @@
 #    pip-compile requirements_browser.in
 #
 ./directory_tests_shared/
-attrs==19.3.0             # via automat, service-identity, twisted
+allure-behave==2.8.6
+allure-python-commons==2.8.6  # via allure-behave
+attrs==19.3.0             # via allure-python-commons, automat, service-identity, twisted
 automat==0.8.0            # via twisted
 beautifulsoup4==4.8.1
 behave==1.2.6
@@ -37,6 +39,8 @@ parse-type==0.5.2         # via behave
 parse==1.12.1             # via behave, parse-type
 parsel==1.5.2             # via scrapy
 pdfminer2==20151206
+pillow==6.2.1
+pluggy==0.13.1            # via allure-python-commons
 protego==0.1.15           # via scrapy
 pyasn1-modules==0.2.7     # via service-identity
 pyasn1==0.4.8             # via pyasn1-modules, service-identity
@@ -53,7 +57,7 @@ scrapy==1.8.0
 selenium==3.141.0
 service-identity==18.1.0  # via scrapy
 sigauth==4.1.1
-six==1.13.0               # via automat, behave, cryptography, mohawk, parse-type, parsel, pdfminer2, protego, pyhamcrest, pyopenssl, retrying, scrapy, w3lib
+six==1.13.0               # via allure-python-commons, automat, behave, cryptography, mohawk, parse-type, parsel, pdfminer2, protego, pyhamcrest, pyopenssl, retrying, scrapy, w3lib
 soupsieve==1.9.5          # via beautifulsoup4
 sqlparse==0.3.0           # via django
 termcolor==1.1.0
@@ -64,4 +68,4 @@ xmltodict==0.12.0
 zope.interface==4.7.1     # via scrapy, twisted
 
 # The following packages are considered to be unsafe in a requirements file:
-# setuptools
+# setuptools==42.0.2        # via pyhamcrest, zope.interface

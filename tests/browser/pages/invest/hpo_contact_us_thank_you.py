@@ -9,12 +9,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
 from pages import common_selectors
-from pages.common_actions import (
-    Selector,
-    check_for_sections,
-    check_url,
-    take_screenshot,
-)
+from pages.common_actions import Selector, check_for_sections, check_url
 
 NAME = "Thank you for your enquiry"
 NAMES = ["Advanced food production", "Lightweight structures", "Rail infrastructure"]
@@ -50,7 +45,6 @@ SELECTORS.update(common_selectors.INVEST_FOOTER)
 
 
 def should_be_here(driver: WebDriver, *, page_name: str):
-    take_screenshot(driver, PAGE_TITLE)
     check_url(driver, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 

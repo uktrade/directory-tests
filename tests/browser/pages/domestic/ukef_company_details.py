@@ -18,7 +18,6 @@ from pages.common_actions import (
     go_to_url,
     pick_option,
     submit_form,
-    take_screenshot,
     tick_checkboxes,
 )
 
@@ -94,7 +93,6 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 

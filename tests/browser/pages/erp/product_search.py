@@ -23,7 +23,6 @@ from pages.common_actions import (
     find_selector_by_name,
     go_to_url,
     is_element_present,
-    take_screenshot,
     wait_for_page_load_after_action,
 )
 from pages.erp import product_detail
@@ -64,7 +63,6 @@ def visit(driver: WebDriver, *, page_name: str = None):
 
 
 def should_be_here(driver: WebDriver, *, page_name: str = None):
-    take_screenshot(driver, page_name or NAME)
     url = SubURLs[page_name]
     check_url(driver, url, exact_match=False)
 

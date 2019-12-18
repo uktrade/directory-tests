@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Common PageObject actions."""
 import hashlib
+import io
 import logging
 import random
 import string
@@ -10,8 +11,7 @@ import traceback
 import uuid
 from collections import defaultdict, namedtuple
 from contextlib import contextmanager
-from datetime import datetime
-from os import path
+from io import BytesIO
 from types import ModuleType
 from typing import Dict, List, Union
 from urllib.parse import urlparse
@@ -33,9 +33,11 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
-from directory_tests_shared.settings import BARRED_USERS, TAKE_SCREENSHOTS
+import allure
+from directory_tests_shared.settings import BARRED_USERS, BROWSER, TAKE_SCREENSHOTS
 from directory_tests_shared.utils import extract_attributes_by_css
 from pages import ElementType
+from PIL import Image
 
 ScenarioData = namedtuple("ScenarioData", ["actors"])
 Actor = namedtuple(
@@ -292,27 +294,122 @@ def avoid_browser_stack_idle_timeout_exception(driver: WebDriver):
     driver.execute_script(actions[action])
 
 
-@retry(stop_max_attempt_number=3)
-def take_screenshot(driver: WebDriver, page_name: str):
-    """Will take a screenshot of current page."""
-    if not isinstance(driver, WebDriver):
-        logging.debug("Taking screenshots in non-browser executor is not possible")
-        return
-    if TAKE_SCREENSHOTS:
-        session_id = driver.session_id
-        browser = driver.capabilities.get("browserName", "unknown_browser")
-        version = driver.capabilities.get("version", "unknown_version")
-        platform = driver.capabilities.get("platform", "unknown_platform")
-        stamp = datetime.isoformat(datetime.utcnow())
-        filename = (
-            f"{stamp}-{page_name}-{browser}-{version}-{platform}-{session_id}.png"
+def convert_png_to_jpg(screenshot_png: bytes):
+    raw_image = Image.open(io.BytesIO(screenshot_png))
+    image = raw_image.convert("RGB")
+    with BytesIO() as f:
+        image.save(f, format="JPEG", quality=90)
+        return f.getvalue()
+
+
+def fullpage_screenshot(driver):
+    """A fullscreen screenshot workaround for Chrome driver:
+
+    This script uses a simplified version of the one here:
+    https://snipt.net/restrada/python-selenium-workaround-for-full-page-screenshot-using-chromedriver-2x/
+    It contains the *crucial* correction added in the comments by Jason Coutu.
+
+    SRC: https://stackoverflow.com/q/41721734
+    """
+    logging.debug("Starting chrome full page screenshot workaround ...")
+
+    total_width = driver.execute_script("return document.body.offsetWidth")
+    total_height = driver.execute_script("return document.body.parentNode.scrollHeight")
+    viewport_width = driver.execute_script("return document.body.clientWidth")
+    viewport_height = driver.execute_script("return window.innerHeight")
+    logging.debug(
+        f"Total: ({total_width}, {total_height}), "
+        f"Viewport: ({viewport_width},{viewport_height})"
+    )
+    rectangles = []
+
+    i = 0
+    while i < total_height:
+        ii = 0
+        top_height = i + viewport_height
+
+        if top_height > total_height:
+            top_height = total_height
+
+        while ii < total_width:
+            top_width = ii + viewport_width
+
+            if top_width > total_width:
+                top_width = total_width
+
+            logging.debug(f"Appending rectangle ({ii},{i},{top_width},{top_height})")
+            rectangles.append((ii, i, top_width, top_height))
+
+            ii = ii + viewport_width
+
+        i = i + viewport_height
+
+    stitched_image = Image.new("RGB", (total_width, total_height))
+    previous = None
+    part = 0
+
+    for rectangle in rectangles:
+        if previous is not None:
+            driver.execute_script(f"window.scrollTo({rectangle[0]}, {rectangle[1]})")
+            logging.debug(f"Scrolled To ({rectangle[0]},{rectangle[1]})")
+            time.sleep(0.2)
+
+        screenshot_png = driver.get_screenshot_as_png()
+        screenshot = Image.open(io.BytesIO(screenshot_png))
+
+        if rectangle[1] + viewport_height > total_height:
+            offset = (rectangle[0], total_height - viewport_height)
+        else:
+            offset = (rectangle[0], rectangle[1])
+
+        logging.debug(
+            f"Adding to stitched image with offset ({offset[0]}, {offset[1]})"
         )
-        file_path = path.abspath(path.join("screenshots", filename))
-        driver.save_screenshot(file_path)
-        logging.debug(f"Screenshot of {page_name} page saved in: {filename}")
+        stitched_image.paste(screenshot, offset)
+
+        del screenshot
+        part = part + 1
+        previous = rectangle
+
+    logging.debug("Finishing chrome full page screenshot workaround...")
+    with BytesIO() as f:
+        stitched_image.save(f, format="JPEG", quality=90)
+        return f.getvalue()
+
+
+@retry(stop_max_attempt_number=3)
+def take_screenshot(driver: WebDriver, page_name: str = None):
+    """Will take a screenshot of current page."""
+    if TAKE_SCREENSHOTS:
+        if BROWSER == "firefox":
+            # Ref: https://stackoverflow.com/a/52572919/
+            original_size = driver.get_window_size()
+            required_width = driver.execute_script(
+                "return document.body.parentNode.scrollWidth"
+            )
+            required_height = driver.execute_script(
+                "return document.body.parentNode.scrollHeight"
+            )
+            driver.set_window_size(required_width, required_height)
+
+            element = driver.find_element_by_tag_name("body")
+            screenshot_png = element.screenshot_as_png
+            screenshot_jpg = convert_png_to_jpg(screenshot_png)
+        elif BROWSER == "chrome":
+            screenshot_jpg = fullpage_screenshot(driver)
+
+        if page_name:
+            page_name = page_name.lower().replace(" ", "_")[0:200]
+        allure.attach(
+            screenshot_jpg,
+            name=page_name or "screenshot.jpg",
+            attachment_type=allure.attachment_type.JPG,
+        )
+        if BROWSER == "firefox":
+            driver.set_window_size(original_size["width"], original_size["height"])
     else:
         logging.debug(
-            f"Taking screenshots is disabled on '{page_name}'. In order to turn it on "
+            f"Taking screenshots is disabled. In order to turn it on "
             f"please set an environment variable TAKE_SCREENSHOTS=true"
         )
 

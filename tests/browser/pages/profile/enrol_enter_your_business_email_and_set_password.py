@@ -18,7 +18,6 @@ from pages.common_actions import (
     fill_out_input_fields,
     go_to_url,
     submit_form,
-    take_screenshot,
     tick_captcha_checkbox,
     tick_checkboxes,
 )
@@ -68,7 +67,6 @@ def visit(driver: WebDriver):
 
 
 def should_be_here(driver: WebDriver):
-    take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
     msg = f"Got 404 on {driver.current_url}"
     assert "This page cannot be found" not in driver.page_source, msg

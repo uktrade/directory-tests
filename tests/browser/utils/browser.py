@@ -153,7 +153,8 @@ def start_driver_session(session_name: str, capabilities: dict) -> WebDriver:
             options = Options()
             if BROWSER_HEADLESS:
                 options.add_argument("--headless")
-                options.add_argument("--window-size=1600x2200")
+                options.add_argument("--window-size=1920x2200")
+                options.add_argument("--disable-gpu")
             options.add_argument("--start-maximized")
             options.add_argument("--disable-extensions")
             options.add_argument("--no-sandbox")
@@ -163,9 +164,10 @@ def start_driver_session(session_name: str, capabilities: dict) -> WebDriver:
             options = Options()
             if BROWSER_HEADLESS:
                 options.add_argument("--headless")
-                options.add_argument("--window-size=1600x2200")
+                options.add_argument("--window-size=1920x2200")
+                options.add_argument("--safe-mode")
 
-        print(
+        logging.debug(
             f"Starting local instance of {browser_name} with options: {options.arguments}"
         )
         driver = drivers[browser_name](options=options)
@@ -181,7 +183,7 @@ def start_driver_session(session_name: str, capabilities: dict) -> WebDriver:
             logging.warning("Set window size to 1600x1200")
         except WebDriverException:
             logging.warning("Failed to set window size, will continue as is")
-    logging.debug(f"Browser Capabilities: {driver.capabilities}")
+    logging.debug(f"Browser capabilities: {driver.capabilities}")
 
     return driver
 

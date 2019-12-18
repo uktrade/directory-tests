@@ -1,4 +1,5 @@
 ./directory_tests_shared/
+allure-behave
 beautifulsoup4
 behave
 datadiff
@@ -8,6 +9,7 @@ directory-sso-api-client
 docopt
 nodeenv
 notifications-python-client
+pillow
 requests
 retrying
 selenium

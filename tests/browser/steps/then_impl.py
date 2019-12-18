@@ -45,6 +45,7 @@ from pages.common_actions import (
     get_actor,
     get_full_page_name,
     get_last_visited_page,
+    take_screenshot,
     update_actor,
 )
 from pages.domestic import contact_us_office_finder_search_results
@@ -65,14 +66,15 @@ from utils.gtm import (
 
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
-    if "Access denied" in context.driver.page_source:
-        logging.debug(f"Trying to re-authenticate on '{page_name}'' {page.URL}")
+    if "access denied" in context.driver.page_source.lower():
+        logging.debug(f"Trying to re-authenticate on '{page_name}' {page.URL}")
         generic_set_basic_auth_creds(context, page_name)
         context.driver.get(page.URL)
         error = f"Got blocked again on {context.driver.current_url}"
-        assert "Access denied" not in context.driver.page_source, error
+        assert "access denied" not in context.driver.page_source.lower(), error
     check_for_errors(context.driver.page_source, context.driver.current_url)
     has_action(page, "should_be_here")
+    take_screenshot(context.driver, page_name)
     if hasattr(page, "SubURLs"):
         special_page_name = page_name.split(" - ")[1].lower()
         if signature(page.should_be_here).parameters.get("page_name"):
