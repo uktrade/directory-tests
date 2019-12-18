@@ -21,6 +21,7 @@ from directory_constants import cms as SERVICE_NAMES
 from directory_tests_shared import URLs
 from directory_tests_shared.clients import CMS_API_CLIENT
 from directory_tests_shared.settings import CMS_API_KEY, CMS_API_SENDER_ID, CMS_API_URL
+from directory_tests_shared.utils import red
 
 
 class AsyncDirectoryCMSClient(DirectoryCMSClient):
@@ -221,9 +222,15 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
     relative_url = URLs.CMS_API_PAGES.relative
     endpoint = f"{relative_url}?type={page_type}"
     print(f"Fetching a list of pages for type: {page_type}")
-    response = CMS_API_CLIENT.get(endpoint)
+    try:
+        response = CMS_API_CLIENT.get(endpoint)
+    except requests.exceptions.ReadTimeout:
+        red(f"CMS API timed out for {page_type}")
+        return [], 0
     total_response_time = response.elapsed.total_seconds()
-    assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
+    if response.status_code != HTTP_200_OK:
+        red(f"CMS API returned {response.status_code} for {page_type}")
+        return [], 0
 
     # get all page ids from the response
     content = response.json()
