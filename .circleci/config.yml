@@ -443,7 +443,7 @@ steps_run_parallel_browser_tests: &steps_run_parallel_browser_tests
   steps:
     - *step_restore_cached_browser_tests_requirements
     - *step_prepare_list_of_scenarios_to_run_by_parallel_browser_tests
-    - *step_run_browser_tests_in_parallel
+    - *step_run_browser_tests_in_parallel_new
     - persist_to_workspace:
         root: .
         paths:
