@@ -215,6 +215,7 @@ step_run_browser_tests_in_parallel: &step_run_browser_tests_in_parallel
         }
       done
       echo "Found `ls -la results_${BROWSER}_${CIRCLE_NODE_INDEX}/*.json | wc -l` JSON Allure result files in results_${BROWSER}_${CIRCLE_NODE_INDEX}/"
+      echo "Found `ls -la junit_reports_${BROWSER}_${CIRCLE_NODE_INDEX}/*.xml | wc -l` JUnit XML result files in junit_reports_${BROWSER}_${CIRCLE_NODE_INDEX}/"
 
 
 step_run_load_tests: &step_run_load_tests
@@ -250,6 +251,7 @@ step_merge_junit_xml_reports_from_parallel_browser_tests: &step_merge_junit_xml_
       cd ./tests/browser/
       mkdir junit_report
       mv junit_reports_* junit_report/
+      ls -la junit_report/
       junit-merge --recursive --dir junit_report/ --out ./junit_report/merged.xml
       rm -fr junit_report/junit_reports_*
       cd ../../
