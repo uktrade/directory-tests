@@ -43,18 +43,6 @@ step_install_requirements_for_functional_tests: &step_install_requirements_for_f
       nodeenv -p
       npm install -g junit-merge@1.2.3
 
-step_install_requirements_for_browser_tests: &step_install_requirements_for_browser_tests
-  run:
-    name: Create virtualenv and install dependencies
-    command: |
-      python3 -m venv venv
-      . venv/bin/activate
-      pip install --quiet --upgrade pip
-      pip install --quiet -r requirements_browser.txt
-      nodeenv -p
-      npm install -g junit-merge@2.0.0
-      npm install -g allure-commandline@2.13.0
-
 step_install_requirements_for_parallel_browser_tests: &step_install_requirements_for_parallel_browser_tests
   run:
     name: Create virtualenv and install dependencies
@@ -91,7 +79,7 @@ step_prepare_list_of_scenarios_to_run_by_parallel_browser_tests: &step_prepare_l
         --tags=~@eu-exit \
         ${TAGS} \
         --format=mini \
-        features/invest/ \
+        features/ \
         | grep -v "Supplied path\|Trying base directory" > scenario_titles.txt
 
 step_install_requirements_for_load_tests: &step_install_requirements_for_load_tests
@@ -178,17 +166,7 @@ step_delete_test_data: &step_delete_test_data
       export PATH=$PATH:$HOME/bin
       ./delete_test_data.py
 
-step_run_browser_tests: &step_run_browser_tests
-  run:
-    name: Run all functional scenarios
-    command: |
-      . venv/bin/activate
-      python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
-      source ./docker/.env_with_export;
-      export PATH=$PATH:$HOME/bin
-      BROWSER=${BROWSER} TAGS="${TAGS}" make browserstack
-
-step_run_browser_tests_in_parallel_new: &step_run_browser_tests_in_parallel_new
+step_run_browser_tests_in_parallel: &step_run_browser_tests_in_parallel
   run:
     name: Run browser tests in parallel
     command: |
@@ -261,19 +239,7 @@ step_merge_junit_xml_reports_from_functional_tests: &step_merge_junit_xml_report
       cd ../../../
       ./print_error_summary.py --report ./tests/functional/reports/merged.xml
 
-step_merge_junit_xml_reports_from_browser_tests: &step_merge_junit_xml_reports_from_browser_tests
-  run:
-    name: Merge JUnit XML reports & print errors summary
-    when: always
-    command: |
-      python3 -m venv venv
-      . venv/bin/activate
-      cd ./tests/browser/reports
-      junit-merge *.xml -o merged.xml
-      ls *.xml | grep -v merged.xml | xargs rm
-      cd ../../../
-      ./print_error_summary.py --report ./tests/browser/reports/merged.xml
-
+# this step requires Java 8+ to work.
 step_merge_junit_xml_reports_from_parallel_browser_tests: &step_merge_junit_xml_reports_from_parallel_browser_tests
   run:
     name: Merge JUnit XML reports & print errors summary
@@ -289,90 +255,6 @@ step_merge_junit_xml_reports_from_parallel_browser_tests: &step_merge_junit_xml_
       cd ../../
       ./print_error_summary.py --report ./tests/browser/junit_report/merged.xml
 
-# this step requires Java 8+ to work.
-step_generate_allure_report_for_browser_tests: &step_generate_allure_report_for_browser_tests
-  run:
-    name: Generate a standaole Allure report from a JUnit XML Browser tests reports
-    when: always
-    command: |
-      python3 -m venv venv
-      . venv/bin/activate
-      cd ./tests/browser
-      allure generate ./reports && {
-        mv allure-report/* reports/ && {
-          rm -fr allure-report/
-        }
-      }
-
-step_run_browser_tests_in_parallel: &step_run_browser_tests_in_parallel
-  run:
-    name: Run tests
-    command: |
-      python3 -m venv venv
-      . venv/bin/activate
-      pip install --quiet --upgrade pip
-      pip install --quiet -r requirements_browser.txt
-      source ./docker/.env_with_export
-      export PATH=$PATH:$HOME/bin
-      if [ $(( ${CIRCLE_NODE_INDEX} % 2 )) = 0 ];
-      then
-          export BROWSER="chrome";
-      else
-          export BROWSER="firefox";
-      fi
-
-      cd tests/browser
-      PYTHONPATH=. behave \
-        --dry-run \
-        --no-source \
-        --no-summary \
-        --no-snippets \
-        --no-skipped \
-        --tags=~@wip \
-        --tags=~@fixme \
-        --tags=~@skip \
-        --tags=~@eu-exit \
-        ${TAGS} \
-        --format=mini \
-        features/ \
-        | grep -v "Supplied path\|Trying base directory" > scenario_titles.txt
-
-      echo "Found `wc -l < scenario_titles.txt` scenarios to run"
-      # cat scenario_titles.txt | circleci tests split > /tmp/tests-to-run
-      # calculate number of lines after which list of scenarios will be split
-      SPLIT_AFTER_LINES=$(( $(wc -l < scenario_titles.txt) / $((${CIRCLE_NODE_TOTAL} / 2)) ))
-      # split list of scenarios into equal parts (equal to half on number of nodes)
-      # as half of nodes run tests in Chrome & the other half in Firefox
-      split -d --suffix-length=1 --lines ${SPLIT_AFTER_LINES} scenario_titles.txt tests-to-run
-
-      SPLIT_FILE_SUFFIX=$(( ${CIRCLE_NODE_INDEX} / 2 ))
-
-      echo "Current instance of ${BROWSER} is going to run `cat tests-to-run${SPLIT_FILE_SUFFIX} | wc -l` scenarios:"
-      cat tests-to-run${SPLIT_FILE_SUFFIX}
-
-      cat tests-to-run${SPLIT_FILE_SUFFIX} | while IFS=$'\r' read -r title ; do
-        echo "${BROWSER} run: '${title}'"
-        PYTHONPATH=. behave features/ \
-        --format=allure_behave.formatter:AllureFormatter \
-        --outfile=results_${BROWSER}_${CIRCLE_NODE_INDEX}/ \
-        --no-skipped \
-        --no-source \
-        --no-summary \
-        --junit \
-        --junit-directory=./junit_reports_${BROWSER}_${CIRCLE_NODE_INDEX}/ \
-        --tags=~@wip \
-        --tags=~@fixme \
-        --tags=~@skip \
-        --tags=~@eu-exit \
-        ${TAGS} \
-        --name "${title}" && {
-          echo "${BROWSER} passed: ${title}"
-        } || {
-          echo "${BROWSER} failed: ${title}"
-        }
-      done
-      echo "Found `ls -la results_${BROWSER}_${CIRCLE_NODE_INDEX}/*.json | wc -l` JSON Allure result files in results_${BROWSER}_${CIRCLE_NODE_INDEX}/"
-
 
 # Lists of steps
 steps_setup_env_for_smoke_tests: &steps_setup_env_for_smoke_tests
@@ -386,12 +268,6 @@ steps_setup_env_for_functional_tests: &steps_setup_env_for_functional_tests
     - *step_checkout_repo
     - *step_install_requirements_for_functional_tests
     - *step_cache_functional_tests_requirements
-
-steps_setup_env_for_browser_tests: &steps_setup_env_for_browser_tests
-  steps:
-    - *step_checkout_repo
-    - *step_install_requirements_for_browser_tests
-    - *step_cache_browser_tests_requirements
 
 steps_setup_env_for_parallel_browser_tests_using_circleci: &steps_setup_env_for_parallel_browser_tests_using_circleci
   steps:
@@ -429,21 +305,11 @@ steps_delete_test_data: &steps_delete_test_data
     - *step_restore_cached_functional_tests_requirements
     - *step_delete_test_data
 
-steps_run_browser_tests: &steps_run_browser_tests
-  steps:
-    - *step_restore_cached_browser_tests_requirements
-    - *step_run_browser_tests
-    - *step_merge_junit_xml_reports_from_browser_tests
-    - store_test_results:
-        path: ./tests/browser/reports
-    - store_artifacts:
-        path: ./tests/browser/reports
-
 steps_run_parallel_browser_tests: &steps_run_parallel_browser_tests
   steps:
     - *step_restore_cached_browser_tests_requirements
     - *step_prepare_list_of_scenarios_to_run_by_parallel_browser_tests
-    - *step_run_browser_tests_in_parallel_new
+    - *step_run_browser_tests_in_parallel
     - persist_to_workspace:
         root: .
         paths:
@@ -469,13 +335,6 @@ jobs:
     <<: [
     *machine_python3,
     *steps_setup_env_for_functional_tests,
-    ]
-
-  setup_env_for_browser_tests:
-    working_directory: ~/directory-tests
-    <<: [
-    *machine_python3,
-    *steps_setup_env_for_browser_tests,
     ]
 
   setup_env_for_load_tests:
@@ -681,138 +540,6 @@ jobs:
     *steps_delete_test_data,
     ]
 
-  browser_all_chrome_dev:
-    working_directory: ~/directory-tests
-    environment:
-      TEST_ENV: "dev"
-      BROWSER: "chrome"
-      TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@eu-exit --tags=~@skip"
-    <<: [
-    *machine_python3,
-    *steps_run_browser_tests,
-    ]
-
-  browser_all_firefox_dev:
-    working_directory: ~/directory-tests
-    environment:
-      TEST_ENV: "dev"
-      BROWSER: "firefox"
-      TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@eu-exit --tags=~@skip --tags=~@skip-in-firefox"
-    <<: [
-    *machine_python3,
-    *steps_run_browser_tests,
-    ]
-
-  browser_selected_chrome_dev:
-    working_directory: ~/directory-tests
-    environment:
-      TEST_ENV: "dev"
-      BROWSER: "chrome"
-      TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@full --tags=~@eu-exit --tags=~@skip"
-    <<: [
-    *machine_python3,
-    *steps_run_browser_tests,
-    ]
-
-  browser_selected_firefox_dev:
-    working_directory: ~/directory-tests
-    environment:
-      TEST_ENV: "dev"
-      BROWSER: "firefox"
-      TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@full --tags=~@eu-exit --tags=~@skip --tags=~@skip-in-firefox"
-    <<: [
-    *machine_python3,
-    *steps_run_browser_tests,
-    ]
-
-  browser_all_chrome_stage:
-    working_directory: ~/directory-tests
-    environment:
-      TEST_ENV: "stage"
-      BROWSER: "chrome"
-      TAGS: "--tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@skip"
-    <<: [
-    *machine_python3,
-    *steps_run_browser_tests,
-    ]
-
-  browser_all_firefox_stage:
-    working_directory: ~/directory-tests
-    environment:
-      TEST_ENV: "stage"
-      BROWSER: "firefox"
-      TAGS: "--tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@skip --tags=~@skip-in-firefox"
-    <<: [
-    *machine_python3,
-    *steps_run_browser_tests,
-    ]
-
-  browser_selected_chrome_stage:
-    working_directory: ~/directory-tests
-    environment:
-      TEST_ENV: "stage"
-      BROWSER: "chrome"
-      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@skip"
-    <<: [
-    *machine_python3,
-    *steps_run_browser_tests,
-    ]
-
-  browser_selected_firefox_stage:
-    working_directory: ~/directory-tests
-    environment:
-      TEST_ENV: "stage"
-      BROWSER: "firefox"
-      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@skip --tags=~@skip-in-firefox"
-    <<: [
-    *machine_python3,
-    *steps_run_browser_tests,
-    ]
-
-  browser_all_chrome_uat:
-    working_directory: ~/directory-tests
-    environment:
-      TEST_ENV: "uat"
-      BROWSER: "chrome"
-      TAGS: "--tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@skip"
-    <<: [
-    *machine_python3,
-    *steps_run_browser_tests,
-    ]
-
-  browser_all_firefox_uat:
-    working_directory: ~/directory-tests
-    environment:
-      TEST_ENV: "uat"
-      BROWSER: "firefox"
-      TAGS: "--tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@skip --tags=~@skip-in-firefox"
-    <<: [
-    *machine_python3,
-    *steps_run_browser_tests,
-    ]
-
-  browser_selected_chrome_uat:
-    working_directory: ~/directory-tests
-    environment:
-      TEST_ENV: "uat"
-      BROWSER: "chrome"
-      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@skip"
-    <<: [
-    *machine_python3,
-    *steps_run_browser_tests,
-    ]
-
-  browser_selected_firefox_uat:
-    working_directory: ~/directory-tests
-    environment:
-      TEST_ENV: "uat"
-      BROWSER: "firefox"
-      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@skip --tags=~@skip-in-firefox"
-    <<: [
-    *machine_python3,
-    *steps_run_browser_tests,
-    ]
-
   load_cms_tests_stage:
     working_directory: ~/directory-tests
     environment:
@@ -948,7 +675,7 @@ jobs:
     *steps_run_load_tests,
     ]
 
-  dev_parallel_browser_tests_using_circleci_new:
+  dev_parallel_browser_tests_using_circleci:
     working_directory: ~/directory-tests
     parallelism: 16
     environment:
@@ -963,29 +690,7 @@ jobs:
     *steps_run_parallel_browser_tests,
     ]
 
-  dev_parallel_browser_tests_using_circleci:
-    docker:
-      - image: circleci/python:3.8.0-node-browsers
-    working_directory: ~/directory-tests
-    parallelism: 16
-    environment:
-      TEST_ENV: "dev"
-      AUTO_RETRY: "true"
-      TAKE_SCREENSHOTS: "true"
-      TAGS: "--tags=~@stage-only --tags=~@uat-only"
-      BROWSER_ENVIRONMENT: "local"
-      BROWSER_HEADLESS: "true"
-    steps:
-      - checkout
-      - *step_run_browser_tests_in_parallel
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
-
   stage_parallel_browser_tests_using_circleci:
-    docker:
-      - image: circleci/python:3.8.0-node-browsers
     working_directory: ~/directory-tests
     parallelism: 16
     environment:
@@ -995,18 +700,12 @@ jobs:
       TAGS: "--tags=~@dev-only --tags=~@uat-only"
       BROWSER_ENVIRONMENT: "local"
       BROWSER_HEADLESS: "true"
-    steps:
-      - checkout
-      - *step_run_browser_tests_in_parallel
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
-
+    <<: [
+    *machine_python3_node_browsers,
+    *steps_run_parallel_browser_tests,
+    ]
 
   uat_parallel_browser_tests_using_circleci:
-    docker:
-      - image: circleci/python:3.8.0-node-browsers
     working_directory: ~/directory-tests
     parallelism: 16
     environment:
@@ -1016,13 +715,10 @@ jobs:
       TAGS: "--tags=~@stage-only"
       BROWSER_ENVIRONMENT: "local"
       BROWSER_HEADLESS: "true"
-    steps:
-      - checkout
-      - *step_run_browser_tests_in_parallel
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
+    <<: [
+    *machine_python3_node_browsers,
+    *steps_run_parallel_browser_tests,
+    ]
 
   merge_allure_results_and_generate_report:
     docker:
@@ -1379,8 +1075,14 @@ workflows:
             branches:
               only: master
     jobs:
-      - dev_parallel_browser_tests_using_circleci
+      - setup_env_for_parallel_browser_tests_using_circleci
+      - dev_parallel_browser_tests_using_circleci:
+          requires:
+            - setup_env_for_parallel_browser_tests_using_circleci
       - merge_allure_results_and_generate_report:
+          requires:
+            - dev_parallel_browser_tests_using_circleci
+      - merge_junit_results_from_parallel_browser_tests:
           requires:
             - dev_parallel_browser_tests_using_circleci
 
@@ -1393,8 +1095,14 @@ workflows:
             branches:
               only: master
     jobs:
-      - stage_parallel_browser_tests_using_circleci
+      - setup_env_for_parallel_browser_tests_using_circleci
+      - stage_parallel_browser_tests_using_circleci:
+          requires:
+            - setup_env_for_parallel_browser_tests_using_circleci
       - merge_allure_results_and_generate_report:
+          requires:
+            - stage_parallel_browser_tests_using_circleci
+      - merge_junit_results_from_parallel_browser_tests:
           requires:
             - stage_parallel_browser_tests_using_circleci
 
@@ -1407,8 +1115,14 @@ workflows:
             branches:
               only: master
     jobs:
-      - uat_parallel_browser_tests_using_circleci
+      - setup_env_for_parallel_browser_tests_using_circleci
+      - uat_parallel_browser_tests_using_circleci:
+          requires:
+            - setup_env_for_parallel_browser_tests_using_circleci
       - merge_allure_results_and_generate_report:
+          requires:
+            - uat_parallel_browser_tests_using_circleci
+      - merge_junit_results_from_parallel_browser_tests:
           requires:
             - uat_parallel_browser_tests_using_circleci
 
@@ -1416,12 +1130,40 @@ workflows:
   run_browser_tests_in_parallel_in_dev_ad_hoc:
     jobs:
       - setup_env_for_parallel_browser_tests_using_circleci
-      - dev_parallel_browser_tests_using_circleci_new:
+      - dev_parallel_browser_tests_using_circleci:
           requires:
             - setup_env_for_parallel_browser_tests_using_circleci
       - merge_allure_results_and_generate_report:
           requires:
-            - dev_parallel_browser_tests_using_circleci_new
+            - dev_parallel_browser_tests_using_circleci
       - merge_junit_results_from_parallel_browser_tests:
           requires:
-            - dev_parallel_browser_tests_using_circleci_new
+            - dev_parallel_browser_tests_using_circleci
+
+
+  run_browser_tests_in_parallel_in_stage_ad_hoc:
+    jobs:
+      - setup_env_for_parallel_browser_tests_using_circleci
+      - stage_parallel_browser_tests_using_circleci:
+          requires:
+            - setup_env_for_parallel_browser_tests_using_circleci
+      - merge_allure_results_and_generate_report:
+          requires:
+            - stage_parallel_browser_tests_using_circleci
+      - merge_junit_results_from_parallel_browser_tests:
+          requires:
+            - stage_parallel_browser_tests_using_circleci
+
+
+  run_browser_tests_in_parallel_in_uat_ad_hoc:
+    jobs:
+      - setup_env_for_parallel_browser_tests_using_circleci
+      - uat_parallel_browser_tests_using_circleci:
+          requires:
+            - setup_env_for_parallel_browser_tests_using_circleci
+      - merge_allure_results_and_generate_report:
+          requires:
+            - uat_parallel_browser_tests_using_circleci
+      - merge_junit_results_from_parallel_browser_tests:
+          requires:
+            - uat_parallel_browser_tests_using_circleci
