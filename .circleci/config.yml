@@ -181,6 +181,20 @@ step_merge_junit_xml_reports_from_browser_tests: &step_merge_junit_xml_reports_f
       cd ../../../
       ./print_error_summary.py --report ./tests/browser/reports/merged.xml
 
+step_merge_junit_xml_reports_from_parallel_browser_tests: &step_merge_junit_xml_reports_from_parallel_browser_tests
+  run:
+    name: Merge JUnit XML reports & print errors summary
+    when: always
+    command: |
+      python3 -m venv venv
+      . venv/bin/activate
+      cd ./tests/browser/
+      mkdir junit_report
+      mv junit_reports_* junit_report/
+      junit-merge --recursive --dir junit_report/ --out ./junit_report/merged.xml
+      cd ../../
+      ./print_error_summary.py --report ./tests/browser/junit_report/merged.xml
+
 # this step requires Java 8+ to work.
 step_generate_allure_report_for_browser_tests: &step_generate_allure_report_for_browser_tests
   run:
@@ -251,6 +265,8 @@ step_run_browser_tests_in_parallel: &step_run_browser_tests_in_parallel
         --no-skipped \
         --no-source \
         --no-summary \
+        --junit \
+        --junit-directory=./junit_reports_${BROWSER}_${CIRCLE_NODE_INDEX}/ \
         --tags=~@wip \
         --tags=~@fixme \
         --tags=~@skip \
@@ -924,6 +940,27 @@ jobs:
             export CIRCLE_PULL_REQUEST=none
             yarn klank
 
+  merge_junit_results_from_parallel_browser_tests:
+    docker:
+      - image: circleci/python:3.8.0-node-browsers
+    working_directory: ~/directory-tests
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Create virtualenv and install node dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install --quiet --upgrade pip
+            pip install --quiet nodeenv
+            nodeenv --python-virtualenv
+            npm install -g junit-merge@2.0.0
+      - *step_merge_junit_xml_reports_from_parallel_browser_tests
+      - store_test_results:
+          path: ./tests/browser/junit_report
+
 
 workflows:
   version: 2
@@ -1242,3 +1279,14 @@ workflows:
       - merge_results_and_generate_report:
           requires:
             - uat_parallel_browser_tests_using_circleci
+
+
+  run_browser_tests_in_parallel_in_dev_ad_hoc:
+    jobs:
+      - dev_parallel_browser_tests_using_circleci
+      - merge_results_and_generate_report:
+          requires:
+            - dev_parallel_browser_tests_using_circleci
+      - merge_junit_results_from_parallel_browser_tests:
+          requires:
+            - dev_parallel_browser_tests_using_circleci
