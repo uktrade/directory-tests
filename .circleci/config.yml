@@ -79,7 +79,7 @@ step_prepare_list_of_scenarios_to_run_by_parallel_browser_tests: &step_prepare_l
         --tags=~@eu-exit \
         ${TAGS} \
         --format=mini \
-        features/ \
+        features/invest/ \
         | grep -v "Supplied path\|Trying base directory" > scenario_titles.txt
 
 step_install_requirements_for_load_tests: &step_install_requirements_for_load_tests
