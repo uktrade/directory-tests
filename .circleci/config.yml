@@ -192,6 +192,7 @@ step_merge_junit_xml_reports_from_parallel_browser_tests: &step_merge_junit_xml_
       mkdir junit_report
       mv junit_reports_* junit_report/
       junit-merge --recursive --dir junit_report/ --out ./junit_report/merged.xml
+      rm -fr junit_report/junit_reports_*
       cd ../../
       ./print_error_summary.py --report ./tests/browser/junit_report/merged.xml
 
@@ -959,7 +960,9 @@ jobs:
             npm install -g junit-merge@2.0.0
       - *step_merge_junit_xml_reports_from_parallel_browser_tests
       - store_test_results:
-          path: ./tests/browser/junit_report
+          path: ./tests/browser/junit_report/
+      - store_artifacts:
+          path: ./tests/browser/junit_report/
 
 
 workflows:
