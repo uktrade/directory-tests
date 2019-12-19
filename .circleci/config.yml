@@ -963,6 +963,7 @@ jobs:
           path: ./tests/browser/junit_report/
       - store_artifacts:
           path: ./tests/browser/junit_report/
+          destination: junit_report
 
 
 workflows:
