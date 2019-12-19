@@ -15,6 +15,9 @@ machine_python3: &machine_python3
   docker:
     - image: circleci/python:3.8.0
 
+machine_python3_node_browsers: &machine_python3_node_browsers
+  docker:
+    - image: circleci/python:3.8.0-node-browsers
 
 # Individual (shared) steps.
 step_checkout_repo: &step_checkout_repo
@@ -51,6 +54,45 @@ step_install_requirements_for_browser_tests: &step_install_requirements_for_brow
       nodeenv -p
       npm install -g junit-merge@2.0.0
       npm install -g allure-commandline@2.13.0
+
+step_install_requirements_for_parallel_browser_tests: &step_install_requirements_for_parallel_browser_tests
+  run:
+    name: Create virtualenv and install dependencies
+    command: |
+      python3 -m venv venv
+      . venv/bin/activate
+      pip install --quiet --upgrade pip
+      pip install --quiet -r requirements_browser.txt
+      python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
+
+step_prepare_list_of_scenarios_to_run_by_parallel_browser_tests: &step_prepare_list_of_scenarios_to_run_by_parallel_browser_tests
+  run:
+    name: Prepare a list of scenarios to run
+    command: |
+      . venv/bin/activate
+      source ./docker/.env_with_export
+      export PATH=$PATH:$HOME/bin
+      if [ $(( ${CIRCLE_NODE_INDEX} % 2 )) = 0 ];
+      then
+          export BROWSER="chrome";
+      else
+          export BROWSER="firefox";
+      fi
+      cd tests/browser
+      PYTHONPATH=. behave \
+        --dry-run \
+        --no-source \
+        --no-summary \
+        --no-snippets \
+        --no-skipped \
+        --tags=~@wip \
+        --tags=~@fixme \
+        --tags=~@skip \
+        --tags=~@eu-exit \
+        ${TAGS} \
+        --format=mini \
+        features/invest/ \
+        | grep -v "Supplied path\|Trying base directory" > scenario_titles.txt
 
 step_install_requirements_for_load_tests: &step_install_requirements_for_load_tests
   run:
@@ -145,6 +187,57 @@ step_run_browser_tests: &step_run_browser_tests
       source ./docker/.env_with_export;
       export PATH=$PATH:$HOME/bin
       BROWSER=${BROWSER} TAGS="${TAGS}" make browserstack
+
+step_run_browser_tests_in_parallel_new: &step_run_browser_tests_in_parallel_new
+  run:
+    name: Run browser tests in parallel
+    command: |
+      . venv/bin/activate
+      source ./docker/.env_with_export
+      export PATH=$PATH:$HOME/bin
+      if [ $(( ${CIRCLE_NODE_INDEX} % 2 )) = 0 ];
+      then
+          export BROWSER="chrome";
+      else
+          export BROWSER="firefox";
+      fi
+      cd tests/browser
+      echo "Found `wc -l < scenario_titles.txt` scenarios to run"
+      # cat scenario_titles.txt | circleci tests split > /tmp/tests-to-run
+      # calculate number of lines after which list of scenarios will be split
+      SPLIT_AFTER_LINES=$(( $(wc -l < scenario_titles.txt) / $((${CIRCLE_NODE_TOTAL} / 2)) ))
+      # split list of scenarios into equal parts (equal to half on number of nodes)
+      # as half of nodes run tests in Chrome & the other half in Firefox
+      split -d --suffix-length=1 --lines ${SPLIT_AFTER_LINES} scenario_titles.txt tests-to-run
+
+      SPLIT_FILE_SUFFIX=$(( ${CIRCLE_NODE_INDEX} / 2 ))
+
+      echo "Current instance of ${BROWSER} is going to run `cat tests-to-run${SPLIT_FILE_SUFFIX} | wc -l` scenarios:"
+      cat tests-to-run${SPLIT_FILE_SUFFIX}
+
+      cat tests-to-run${SPLIT_FILE_SUFFIX} | while IFS=$'\r' read -r title ; do
+        echo "${BROWSER} run: '${title}'"
+        PYTHONPATH=. behave features/ \
+        --format=allure_behave.formatter:AllureFormatter \
+        --outfile=results_${BROWSER}_${CIRCLE_NODE_INDEX}/ \
+        --no-skipped \
+        --no-source \
+        --no-summary \
+        --junit \
+        --junit-directory=./junit_reports_${BROWSER}_${CIRCLE_NODE_INDEX}/ \
+        --tags=~@wip \
+        --tags=~@fixme \
+        --tags=~@skip \
+        --tags=~@eu-exit \
+        ${TAGS} \
+        --name "${title}" && {
+          echo "${BROWSER} passed: ${title}"
+        } || {
+          echo "${BROWSER} failed: ${title}"
+        }
+      done
+      echo "Found `ls -la results_${BROWSER}_${CIRCLE_NODE_INDEX}/*.json | wc -l` JSON Allure result files in results_${BROWSER}_${CIRCLE_NODE_INDEX}/"
+
 
 step_run_load_tests: &step_run_load_tests
   run:
@@ -301,6 +394,13 @@ steps_setup_env_for_browser_tests: &steps_setup_env_for_browser_tests
     - *step_install_requirements_for_browser_tests
     - *step_cache_browser_tests_requirements
 
+steps_setup_env_for_parallel_browser_tests_using_circleci: &steps_setup_env_for_parallel_browser_tests_using_circleci
+  steps:
+    - *step_checkout_repo
+    - *step_install_requirements_for_parallel_browser_tests
+    - *step_prepare_list_of_scenarios_to_run_by_parallel_browser_tests
+    - *step_cache_browser_tests_requirements
+
 steps_setup_env_for_load_tests: &steps_setup_env_for_load_tests
   steps:
   - *step_checkout_repo
@@ -341,6 +441,15 @@ steps_run_browser_tests: &steps_run_browser_tests
     - store_artifacts:
         path: ./tests/browser/reports
 
+steps_run_parallel_browser_tests: &steps_run_parallel_browser_tests
+  steps:
+    - *step_restore_cached_browser_tests_requirements
+    - *step_run_browser_tests_in_parallel
+    - persist_to_workspace:
+        root: .
+        paths:
+          - .
+
 steps_run_load_tests: &steps_run_load_tests
   steps:
   - *step_restore_cached_load_tests_requirements
@@ -375,6 +484,13 @@ jobs:
     <<: [
     *machine_python3,
     *steps_setup_env_for_load_tests,
+    ]
+
+  setup_env_for_parallel_browser_tests_using_circleci:
+    working_directory: ~/directory-tests
+    <<: [
+    *machine_python3_node_browsers,
+    *steps_setup_env_for_parallel_browser_tests_using_circleci,
     ]
 
   smoke_tests_dev:
@@ -833,6 +949,20 @@ jobs:
     *steps_run_load_tests,
     ]
 
+  dev_parallel_browser_tests_using_circleci_new:
+    working_directory: ~/directory-tests
+    parallelism: 16
+    environment:
+      TEST_ENV: "dev"
+      AUTO_RETRY: "true"
+      TAKE_SCREENSHOTS: "true"
+      TAGS: "--tags=~@stage-only --tags=~@uat-only"
+      BROWSER_ENVIRONMENT: "local"
+      BROWSER_HEADLESS: "true"
+    <<: [
+    *machine_python3_node_browsers,
+    *steps_run_parallel_browser_tests,
+    ]
 
   dev_parallel_browser_tests_using_circleci:
     docker:
@@ -853,7 +983,6 @@ jobs:
           root: .
           paths:
             - .
-
 
   stage_parallel_browser_tests_using_circleci:
     docker:
@@ -1287,10 +1416,13 @@ workflows:
 
   run_browser_tests_in_parallel_in_dev_ad_hoc:
     jobs:
-      - dev_parallel_browser_tests_using_circleci
+      - setup_env_for_parallel_browser_tests_using_circleci
+      - dev_parallel_browser_tests_using_circleci_new:
+          requires:
+            - setup_env_for_parallel_browser_tests_using_circleci
       - merge_results_and_generate_report:
           requires:
-            - dev_parallel_browser_tests_using_circleci
+            - dev_parallel_browser_tests_using_circleci_new
       - merge_junit_results_from_parallel_browser_tests:
           requires:
-            - dev_parallel_browser_tests_using_circleci
+            - dev_parallel_browser_tests_using_circleci_new
