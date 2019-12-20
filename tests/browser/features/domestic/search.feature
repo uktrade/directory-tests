@@ -70,8 +70,7 @@ Feature: Domestic - Great site search
       | specific        | phrase      |
       | Home            | Food        |
       | Advice landing  | Transport   |
-      | Markets listing | Steel       |
-      | Services        | Manufacture |
+      | Markets listing | Water       |
 
 
   @XOT-760
@@ -86,6 +85,5 @@ Feature: Domestic - Great site search
     Examples: event, market, service and opportunity
       | specific        | first phrase | second phrase           |
       | Home            | Food         | Full food service       |
-      | Advice landing  | Transport    | Passenger transport     |
-      | Markets listing | Steel        | Market selection clinic |
-      | Services        | Manufacture  | Motor vehicles          |
+      | Advice landing  | Transport    | way                     |
+      | Markets listing | Water        | Market selection clinic |
