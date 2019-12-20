@@ -672,7 +672,7 @@ def scroll_to_element_if_not_visible(
     try:
         yield
     except TimeoutException as e:
-        if section & name:
+        if section and name:
             logging.debug(f"Scrolling/Moving focus to '{section} → {name}' element")
         logging.warning(
             f"Element is not visible, will scroll to it & check it's visibility: {e.msg}"
