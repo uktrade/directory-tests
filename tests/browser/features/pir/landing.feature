@@ -20,18 +20,18 @@ Feature: PIR - Landing page
   @dev-only
   @captcha
   @<value>
-  Scenario Outline: Buyers should be able to request a Perfect Fit Prospectus
+  Scenario Outline: Buyers should be able to request a Perfect Fit Prospectus for "<sector>" sector
     Given "Robert" visits the "PIR - Landing" page
 
     When "Robert" fills out and submits the form
       | field  | value   |
-      | sector | <value> |
+      | sector | <sector> |
 
     Then "Robert" should be on the "International - Thank you for requesting the Perfect Fit Prospectus" page
     And "Robert" should receive "The UK for your business – your tailored Perfect Fit Prospectus" confirmation email from "PIR"
 
     Examples: sector
-      | value              |
+      | sector             |
       | tech               |
       | automotive         |
       | creative-services  |
@@ -43,7 +43,7 @@ Feature: PIR - Landing page
   @contact-us
   @dev-only
   @captcha
-  Scenario: Buyers should be able to request a Perfect Fit Prospectus
+  Scenario: Buyers should be able to request a Perfect Fit Prospectus without specifying specific sector
     Given "Robert" visits the "PIR - Landing" page
 
     When "Robert" fills out and submits the form
