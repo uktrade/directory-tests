@@ -703,6 +703,7 @@ def domestic_open_random_advice_article(context: Context, actor_alias: str):
         add_actor(context, unauthenticated_actor(actor_alias))
     driver = context.driver
     domestic.advice_landing.visit(driver)
+    check_for_errors(driver.page_source, driver.current_url)
     advice_name = domestic.advice_landing.open_any_article(driver)
     article_name = domestic.advice_article_list.open_any_article(driver)
     domestic.advice_article.should_be_here(driver)
