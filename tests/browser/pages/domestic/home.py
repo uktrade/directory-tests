@@ -36,12 +36,8 @@ TYPE = PageType.HOME
 URL = URLs.DOMESTIC_LANDING_UK.absolute
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-PROMO_VIDEO = Selector(
-    By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open > div > video"
-)
-CLOSE_VIDEO = Selector(
-    By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open > button"
-)
+PROMO_VIDEO = Selector(By.CSS_SELECTOR, "div.video-container.Modal-Container video")
+CLOSE_VIDEO = Selector(By.ID, "campaign-section-videoplayer-close")
 VIDEO_MODAL_WINDOW = Selector(
     By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open"
 )
