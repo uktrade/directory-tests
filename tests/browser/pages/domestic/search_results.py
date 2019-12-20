@@ -27,11 +27,11 @@ SERVICE = Service.DOMESTIC
 TYPE = PageType.SEARCH_RESULTS
 URL = URLs.DOMESTIC_SEARCH.absolute
 
-PAGES = Selector(By.CSS_SELECTOR, "ul.navigation li")
+PAGES = Selector(By.CSS_SELECTOR, "ol.navigation li")
 PAGINATION = Selector(By.CSS_SELECTOR, "div.pagination")
 ACTIVE_PAGE = Selector(By.CSS_SELECTOR, ".pagination span.active")
 NEXT = Selector(By.CSS_SELECTOR, ".pagination a.pagination-next")
-PREVIOUS = Selector(By.CSS_SELECTOR, ".pagination a.pagination-previous")
+PREVIOUS = Selector(By.CSS_SELECTOR, "a.pagination-previous[rel=prev]")
 SUBMIT_BUTTON = Selector(
     By.CSS_SELECTOR, "#search-again-input ~ input[type=submit]", type=ElementType.BUTTON
 )
@@ -49,6 +49,7 @@ SELECTORS = {
         "search results": SEARCH_RESULTS,
         "next": NEXT,
     },
+    "consequent results": {"previous": PREVIOUS},
 }
 
 
