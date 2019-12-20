@@ -32,6 +32,7 @@ SubURLs = {
     NAME: URL,
     "filtered markets listing": URLs.DOMESTIC_MARKETS_FILTERED.absolute_template,
 }
+SubURLs = {key.lower(): val for key, val in SubURLs.items()}
 
 SELECTORS = {
     "form": {
