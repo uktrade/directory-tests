@@ -105,6 +105,7 @@ def random_operating_countries() -> str:
 
 
 def check_for_errors(source: str, url: str):
+    assert "Access Denied" not in source, f"Access denied → {url}"
     assert "404 Not Found" not in source, f"404 Not Found → {url}"
     assert "This page cannot be found" not in source, f"404 Not Found → {url}"
     assert "Internal Server Error" not in source, f"500 ISE → {url}"

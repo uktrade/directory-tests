@@ -3,7 +3,7 @@
 import logging
 import random
 from inspect import signature
-from types import MethodType
+from types import MethodType, ModuleType
 from typing import Dict
 from urllib.parse import urljoin, urlparse
 
@@ -96,6 +96,15 @@ def generic_set_basic_auth_creds(context: Context, page_name: str):
         assert "Access Denied" not in driver.page_source
 
 
+def revisit_page_on_access_denied(context: Context, page: ModuleType, page_name: str):
+    if "access denied" in context.driver.page_source.lower():
+        logging.debug(f"Trying to re-authenticate on '{page_name}' {page.URL}")
+        generic_set_basic_auth_creds(context, page_name)
+        context.driver.get(page.URL)
+        error = f"Got blocked again on {context.driver.current_url}"
+        assert "access denied" not in context.driver.page_source.lower(), error
+
+
 # BrowserStack times out after 60 seconds of inactivity
 # https://www.browserstack.com/automate/timeouts
 @retry(
@@ -137,6 +146,7 @@ def visit_page(context: Context, actor_alias: str, page_name: str):
         )
         page.visit(context.driver)
 
+    revisit_page_on_access_denied(context, page, page_name)
     check_for_errors(context.driver.page_source, context.driver.current_url)
     update_actor(context, actor_alias, visited_page=page)
     take_screenshot(context.driver, page_name)
