@@ -467,6 +467,7 @@ def selenium_action(driver: WebDriver, message: str, *args):
         e.args += (message,)
         _, _, tb = sys.exc_info()
         traceback.print_tb(tb)
+        take_screenshot(driver, message)
         raise
 
 
