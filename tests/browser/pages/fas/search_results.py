@@ -49,6 +49,8 @@ SELECTORS = {
             By.CSS_SELECTOR,
             "#checkbox-industry-expertise li input",
             type=ElementType.CHECKBOX,
+            is_visible=False,
+            alternative_visibility_check=True,
         ),
         "update results button": Selector(
             By.CSS_SELECTOR,
@@ -76,7 +78,13 @@ SELECTORS = {
         "industry": Selector(By.ID, "id_sector", type=ElementType.SELECT),
         "company name": Selector(By.ID, "id_company_name", type=ElementType.INPUT),
         "country": Selector(By.ID, "id_country", type=ElementType.SELECT),
-        "t&c": Selector(By.ID, "id_terms", type=ElementType.CHECKBOX),
+        "t&c": Selector(
+            By.ID,
+            "id_terms",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+            alternative_visibility_check=True,
+        ),
         "captcha": Selector(By.ID, "id_captcha"),
         "send": Selector(
             By.CSS_SELECTOR,
