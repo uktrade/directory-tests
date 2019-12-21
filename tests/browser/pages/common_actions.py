@@ -477,7 +477,7 @@ def wait_for_element_visibility(
     with selenium_action(
         driver,
         (
-            f"Element identified by '{element}' was not visible after waiting "
+            f"({element.tag_name}) Element identified by '{element}' was not visible after waiting "
             f"for {time_to_wait} seconds"
         ),
     ):
@@ -674,11 +674,17 @@ def scroll_to_element_if_not_visible(
     except TimeoutException as e:
         if section and name:
             logging.debug(f"Scrolling/Moving focus to '{section} → {name}' element")
-        logging.warning(
-            f"Element is not visible, will scroll to it & check it's visibility: {e.msg}"
-        )
+        else:
+            logging.warning(
+                f"Element is not visible, will scroll to it & check it's visibility: "
+                f"{e.msg}"
+            )
         scroll_to(driver, element)
-        assert element.is_displayed()
+        error = (
+            f"Element '{name or element.tag_name}' is not visible even after scrolling "
+            f"to it"
+        )
+        assert element.is_displayed(), error
 
 
 @contextmanager
