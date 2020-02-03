@@ -11,17 +11,17 @@ certifi==2019.11.28       # via geventhttpclient-wheels, requests
 cffi==1.13.2              # via cryptography
 chardet==3.0.4            # via requests
 click==7.0                # via flask
-configargparse==0.15.1    # via locustio
+configargparse==1.0       # via locustio
 constantly==15.1.0        # via twisted
 cryptography==2.8         # via pyopenssl, scrapy, service-identity
 cssselect==1.1.0          # via parsel, scrapy
-directory-api-client==21.0.0
+directory-api-client==21.0.1
 directory-client-core==6.1.0  # via directory-api-client, directory-cms-client, directory-sso-api-client
 directory-cms-client==11.1.0
-directory-constants==20.10.0
+directory-constants==20.11.0
 directory-sso-api-client==6.2.0
-django==2.2.8             # via directory-api-client, directory-client-core, directory-constants, sigauth
-djangorestframework==3.10.3  # via sigauth
+django==2.2.10            # via directory-api-client, directory-client-core, directory-constants, djangorestframework, sigauth
+djangorestframework==3.11.0  # via sigauth
 docopt==0.6.2
 envparse==0.2.0
 flask==1.1.1              # via locustio
@@ -33,23 +33,24 @@ hyperlink==19.0.0         # via twisted
 idna==2.8                 # via hyperlink, requests
 incremental==17.5.0       # via twisted
 itsdangerous==1.1.0       # via flask
-jinja2==2.10.3            # via flask
-locustio==0.13.5
-lxml==4.4.2               # via parsel, scrapy
+jinja2==2.11.1            # via flask
+locustio==0.14.4
+lxml==4.5.0               # via parsel, scrapy
 markupsafe==1.1.1         # via jinja2
 mohawk==0.3.4             # via sigauth
 monotonic==1.5            # via directory-client-core, notifications-python-client
 msgpack-python==0.5.6     # via locustio
-notifications-python-client==5.4.0
-parse==1.12.1
+notifications-python-client==5.5.1
+parse==1.14.0
 parsel==1.5.2             # via scrapy
 pdfminer2==20151206
-protego==0.1.15           # via scrapy
-pyasn1-modules==0.2.7     # via service-identity
+protego==0.1.16           # via scrapy
+psutil==5.6.7             # via locustio
+pyasn1-modules==0.2.8     # via service-identity
 pyasn1==0.4.8             # via pyasn1-modules, service-identity
 pycparser==2.19           # via cffi
 pydispatcher==2.0.5       # via scrapy
-pyhamcrest==1.9.0         # via twisted
+pyhamcrest==2.0.0         # via twisted
 pyjwt==1.7.1              # via notifications-python-client
 pyopenssl==19.1.0         # via scrapy
 pytz==2019.3              # via django
@@ -60,14 +61,14 @@ retrying==1.3.3
 scrapy==1.8.0
 service-identity==18.1.0  # via scrapy
 sigauth==4.1.1            # via directory-client-core
-six==1.13.0               # via automat, cryptography, geventhttpclient-wheels, locustio, mohawk, parsel, pdfminer2, protego, pyhamcrest, pyopenssl, retrying, scrapy, w3lib
+six==1.14.0               # via automat, cryptography, geventhttpclient-wheels, locustio, mohawk, parsel, pdfminer2, protego, pyopenssl, retrying, scrapy, w3lib
 sqlparse==0.3.0           # via django
 termcolor==1.1.0
 twisted==19.10.0          # via scrapy
-urllib3==1.25.7           # via requests
+urllib3==1.25.8           # via requests
 w3lib==1.21.0             # via directory-client-core, parsel, scrapy
-werkzeug==0.16.0          # via flask
+werkzeug==0.16.1          # via flask
 zope.interface==4.7.1     # via scrapy, twisted
 
 # The following packages are considered to be unsafe in a requirements file:
-# setuptools==42.0.2        # via pyhamcrest, zope.interface
+# setuptools==45.1.0        # via zope.interface
