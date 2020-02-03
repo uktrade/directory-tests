@@ -26,7 +26,7 @@ class InvestTasks(TaskSet):
     @task
     def hpo(self):
         hpo_urls = [
-            URLs.INVEST_HPO_FOOD_STAGING.absolute,
+            URLs.INVEST_HPO_FOOD.absolute,
             URLs.INVEST_HPO_LIGHTWEIGHT.absolute,
             URLs.INVEST_HPO_RAIL.absolute,
             URLs.INVEST_HPO_CONTACT.absolute,
