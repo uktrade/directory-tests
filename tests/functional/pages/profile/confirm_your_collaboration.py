@@ -44,7 +44,7 @@ def confirm(
     """Confirm the invitation for collaboration.
 
     Example invitation link:
-    https://dev.buyer.directory.uktrade.io/account/collaborate/accept/?invite_key=d1d04035-fb15-4bad-9903-452345234534
+    https://dev.buyer.directory.uktrade.digital/account/collaborate/accept/?invite_key=d1d04035-fb15-4bad-9903-452345234534
     """
     # in order to be redirected to the correct URL we have `unquote`
     # the form_action_value

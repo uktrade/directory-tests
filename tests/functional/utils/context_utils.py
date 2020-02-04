@@ -301,7 +301,7 @@ def random_password(*, length: int = 30):
 
 def random_email(alias: str) -> str:
     return (
-        f"test+{alias}{uuid4()}@directory.uktrade.io".replace("-", "")
+        f"test+{alias}{uuid4()}@directory.uktrade.digital".replace("-", "")
         .replace(" ", "")
         .lower()
     )

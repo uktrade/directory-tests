@@ -203,7 +203,7 @@ def unauthenticated_actor(alias: str) -> Actor:
         registration or signing-in.
     """
     email = (
-        "test+{}{}@directory.uktrade.io".format(alias, str(uuid.uuid4()))
+        "test+{}{}@directory.uktrade.digital".format(alias, str(uuid.uuid4()))
         .replace("-", "")
         .replace(" ", "")
         .lower()

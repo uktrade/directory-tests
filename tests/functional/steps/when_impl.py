@@ -107,7 +107,7 @@ def unauthenticated_supplier(supplier_alias: str) -> Actor:
     """
     session = Session()
     email = (
-        "test+{}{}@directory.uktrade.io".format(supplier_alias, str(uuid.uuid4()))
+        "test+{}{}@directory.uktrade.digital".format(supplier_alias, str(uuid.uuid4()))
         .replace("-", "")
         .replace(" ", "")
         .lower()
@@ -140,7 +140,7 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
     """
     session = Session()
     email = (
-        f"test+buyer_{buyer_alias}{str(uuid.uuid4())}@directory.uktrade.io".replace(
+        f"test+buyer_{buyer_alias}{str(uuid.uuid4())}@directory.uktrade.digital".replace(
             "-", ""
         )
         .replace(" ", "")
@@ -209,7 +209,7 @@ def fab_find_published_company(
     with assertion_msg("Expected to find at least 1 published company but got none!"):
         assert len(companies) > 0
     filtered_companies = [
-        c for c in companies if "@directory.uktrade.io" not in c["company_email"]
+        c for c in companies if "@directory.uktrade.digital" not in c["company_email"]
     ]
     company_dict = random.choice(filtered_companies)
     sectors = filter_out_legacy_industries(company_dict)
