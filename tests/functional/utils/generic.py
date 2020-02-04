@@ -21,6 +21,10 @@ from bs4 import BeautifulSoup
 from langdetect import DetectorFactory, detect_langs
 from requests import Response
 
+from directory_api_client.testapiclient import (
+    url_company_by_ch_id,
+    url_published_companies,
+)
 from directory_constants import choices
 from directory_tests_shared import URLs
 from directory_tests_shared.clients import (
@@ -798,7 +802,10 @@ def get_number_of_search_result_pages(response: Response) -> int:
 
 def get_company_by_id_or_title(number_or_title: str) -> dict:
     """Get email address associated with company."""
-    response = DIRECTORY_TEST_API_CLIENT.get_company_by_ch_id(number_or_title)
+    response = DIRECTORY_TEST_API_CLIENT.get(
+        url=url_company_by_ch_id.format(companies_house_number=number_or_title),
+        authenticator=BASIC_AUTHENTICATOR,
+    )
     return response.json() if response.status_code == 200 else None
 
 
@@ -807,7 +814,9 @@ def get_published_companies(context: Context) -> list:
 
     :return: a list of dictionaries with published companies
     """
-    response = DIRECTORY_TEST_API_CLIENT.get_published_companies()
+    response = DIRECTORY_TEST_API_CLIENT.get(
+        url=url_published_companies, authenticator=BASIC_AUTHENTICATOR
+    )
     context.response = response
     check_response(response, 200)
     return response.json()
@@ -820,8 +829,12 @@ def get_published_companies_with_n_sectors(
 
     :return: a list of dictionaries with matching published companies
     """
-    response = DIRECTORY_TEST_API_CLIENT.get_published_companies(
-        minimal_number_of_sectors=number_of_sectors
+    params = {}
+    if number_of_sectors:
+        params['"minimal_number_of_sectors"'] = number_of_sectors
+
+    response = DIRECTORY_TEST_API_CLIENT.get(
+        url=url_published_companies, params=params, authenticator=BASIC_AUTHENTICATOR
     )
     context.response = response
     check_response(response, 200)
@@ -833,7 +846,10 @@ def get_verification_code(context: Context, company_number: str):
 
     :return: verification code sent by post
     """
-    response = DIRECTORY_TEST_API_CLIENT.get_company_by_ch_id(company_number)
+    response = DIRECTORY_TEST_API_CLIENT.get(
+        url=url_company_by_ch_id.format(companies_house_number=company_number),
+        authenticator=BASIC_AUTHENTICATOR,
+    )
     context.response = response
     check_response(response, 200)
     verification_code = response.json()["letter_verification_code"]
@@ -847,7 +863,9 @@ def verify_non_ch_company(context: Context, company: Company):
         ch_id_or_name=company.title
     )
     data = {"verified_with_identity_check": True}
-    context.response = DIRECTORY_TEST_API_CLIENT.patch(url, data)
+    context.response = DIRECTORY_TEST_API_CLIENT.patch(
+        url, data, authenticator=BASIC_AUTHENTICATOR
+    )
     check_response(context.response, 204)
     logging.debug(
         f"Successfully flagged '{company.title}' as verified with identity check"
@@ -859,7 +877,10 @@ def is_verification_letter_sent(context: Context, company_number: str) -> bool:
 
     :return: True if letter was sent and False if it wasn't
     """
-    response = DIRECTORY_TEST_API_CLIENT.get_company_by_ch_id(company_number)
+    response = DIRECTORY_TEST_API_CLIENT.get(
+        url=url_company_by_ch_id.format(companies_house_number=company_number),
+        authenticator=BASIC_AUTHENTICATOR,
+    )
     context.response = response
     check_response(response, 200)
     result = response.json()["is_verification_letter_sent"]
@@ -867,7 +888,9 @@ def is_verification_letter_sent(context: Context, company_number: str) -> bool:
 
 
 def delete_supplier_data_from_sso(email_address: str, *, context: Context = None):
-    response = SSO_TEST_API_CLIENT.delete_user_by_email(email_address)
+    response = SSO_TEST_API_CLIENT.delete(
+        f"testapi/user-by-email/{email_address}/", authenticator=BASIC_AUTHENTICATOR
+    )
     if context:
         context.response = response
     if response.status_code == 204:
@@ -941,7 +964,10 @@ def delete_test_submissions_from_forms_api():
 
 
 def delete_supplier_data_from_dir(ch_id_or_name: str, *, context: Context = None):
-    response = DIRECTORY_TEST_API_CLIENT.delete_company_by_ch_id(ch_id_or_name)
+    response = DIRECTORY_TEST_API_CLIENT.delete(
+        url=url_company_by_ch_id.format(companies_house_number=ch_id_or_name),
+        authenticator=BASIC_AUTHENTICATOR,
+    )
     if context:
         context.response = response
     if response.status_code == 204:
@@ -965,8 +991,10 @@ def delete_supplier_data_from_dir(ch_id_or_name: str, *, context: Context = None
 
 
 def flag_sso_account_as_verified(context: Context, email_address: str):
-    response = SSO_TEST_API_CLIENT.flag_user_email_as_verified_or_not(
-        email_address, verified=True
+    response = SSO_TEST_API_CLIENT.patch(
+        url=f"testapi/user-by-email/{email_address}/",
+        data={"is_verified": True},
+        authenticator=BASIC_AUTHENTICATOR,
     )
     context.response = response
     check_response(response, 204)
@@ -983,7 +1011,9 @@ def filter_out_legacy_industries(company: dict) -> list:
 
 def create_test_isd_company(context: Context) -> dict:
     """Creates an unpublished test ISD company"""
-    response = DIRECTORY_TEST_API_CLIENT.post("testapi/isd_company/")
+    response = DIRECTORY_TEST_API_CLIENT.post(
+        "testapi/isd_company/", authenticator=BASIC_AUTHENTICATOR
+    )
     context.response = response
     check_response(response, 201)
     return response.json()
