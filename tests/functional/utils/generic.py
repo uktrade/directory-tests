@@ -27,8 +27,10 @@ from directory_tests_shared.clients import (
     DIRECTORY_TEST_API_CLIENT,
     FORMS_API_CLIENT,
     SSO_TEST_API_CLIENT,
+    BasicAuthenticator,
 )
 from directory_tests_shared.constants import SECTORS, TEST_IMAGES_DIR, JPEGs, PNGs
+from directory_tests_shared.settings import BASICAUTH_PASS, BASICAUTH_USER
 from directory_tests_shared.utils import (
     blue,
     extract_by_css,
@@ -64,6 +66,8 @@ ERROR_INDICATORS = [
     "required",
     "missing",
 ]
+
+BASIC_AUTHENTICATOR = BasicAuthenticator(BASICAUTH_USER, BASICAUTH_PASS)
 
 
 def decode_as_utf8(content):
@@ -877,7 +881,9 @@ def delete_supplier_data_from_sso(email_address: str, *, context: Context = None
 
 
 def delete_test_buyers_from_directory_api():
-    response = DIRECTORY_TEST_API_CLIENT.delete("testapi/test-buyers/")
+    response = DIRECTORY_TEST_API_CLIENT.delete(
+        "testapi/test-buyers/", authenticator=BASIC_AUTHENTICATOR
+    )
     with assertion_msg(
         f"Expected 204 or 404 from DIRECTORY-API but got:"
         f"{response.status_code} → {response.content}"
@@ -890,7 +896,9 @@ def delete_test_buyers_from_directory_api():
 
 
 def delete_test_companies_from_directory_api():
-    response = DIRECTORY_TEST_API_CLIENT.delete("testapi/test-companies/")
+    response = DIRECTORY_TEST_API_CLIENT.delete(
+        "testapi/test-companies/", authenticator=BASIC_AUTHENTICATOR
+    )
     with assertion_msg(
         f"Expected 204 or 404 from DIRECTORY-API but got:"
         f"{response.status_code} → {response.content}"
@@ -903,7 +911,9 @@ def delete_test_companies_from_directory_api():
 
 
 def delete_test_users_from_sso():
-    response = SSO_TEST_API_CLIENT.delete("testapi/test-users/")
+    response = SSO_TEST_API_CLIENT.delete(
+        "testapi/test-users/", authenticator=BASIC_AUTHENTICATOR
+    )
     with assertion_msg(
         f"Expected 204 or 404 from SSO-API but got: {response.status_code} → "
         f"{response.content}"
@@ -916,7 +926,9 @@ def delete_test_users_from_sso():
 
 
 def delete_test_submissions_from_forms_api():
-    response = FORMS_API_CLIENT.delete("testapi/test-submissions/")
+    response = FORMS_API_CLIENT.delete(
+        "testapi/test-submissions/", authenticator=BASIC_AUTHENTICATOR
+    )
     with assertion_msg(
         f"Expected 204 or 404 from FORMS-API but got: {response.status_code} → "
         f"{response.content}"

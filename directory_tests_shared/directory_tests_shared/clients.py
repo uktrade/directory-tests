@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import base64
+
 from notifications_python_client import NotificationsAPIClient
 
 from directory_api_client.testapiclient import DirectoryTestAPIClient
@@ -50,3 +52,10 @@ PIR_GOV_NOTIFY_CLIENT = NotificationsAPIClient(PIR_GOV_NOTIFY_API_KEY)
 SSO_TEST_API_CLIENT = DirectorySSOTestAPIClient(
     SSO_API_URL, SSO_API_KEY, SSO_API_SENDER_ID, SSO_API_DEFAULT_TIMEOUT
 )
+
+
+class BasicAuthenticator:
+    def __init__(self, username: str, password: str):
+        credentials = f"{username}:{password}"
+        encoded_credentials = base64.b64encode(credentials.encode("ascii"))
+        self.headers = {"Authorization": f"Basic {encoded_credentials.decode('ascii')}"}
