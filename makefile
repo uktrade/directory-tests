@@ -92,29 +92,29 @@ DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose rm && docker-compose pull
 
 DOCKER_SET_ENV_VARS_FOR_DEV := \
 	export DEV_DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com/; \
-	export DEV_CMS_API_URL=https://dev.cms.directory.uktrade.io/; \
+	export DEV_CMS_API_URL=https://dev.cms.directory.uktrade.digital/; \
 	export DEV_CONTACT_US_URL=https://contact-us.export.great.gov.uk/; \
-	export DEV_PROFILE_URL=https://dev.profile.uktrade.io/; \
+	export DEV_PROFILE_URL=https://dev.profile.uktrade.digital/; \
 	export DEV_SSO_API_URL=https://directory-sso-dev.herokuapp.com/; \
-	export DEV_SSO_URL=https://www.dev.sso.uktrade.io/; \
-	export DEV_FIND_A_BUYER_URL=https://dev.buyer.directory.uktrade.io/; \
-	export DEV_FIND_A_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io/; \
-	export DEV_DOMESTIC_URL=https://dev.exportreadiness.directory.uktrade.io/; \
-	export DEV_INVEST_URL=https://dev.invest.directory.uktrade.io/; \
-	export DEV_SOO_URL=https://selling-online-overseas.export.staging.uktrade.io/
+	export DEV_SSO_URL=https://www.dev.sso.uktrade.digital/; \
+	export DEV_FIND_A_BUYER_URL=https://dev.buyer.directory.uktrade.digital/; \
+	export DEV_FIND_A_SUPPLIER_URL=https://dev.supplier.directory.uktrade.digital/; \
+	export DEV_DOMESTIC_URL=https://dev.exportreadiness.directory.uktrade.digital/; \
+	export DEV_INVEST_URL=https://dev.invest.directory.uktrade.digital/; \
+	export DEV_SOO_URL=https://selling-online-overseas.export.staging.uktrade.digital/
 
 DOCKER_SET_ENV_VARS_FOR_STAGE := \
 	export STAGE_DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com/; \
-	export STAGE_CMS_API_URL=https://dev.cms.directory.uktrade.io/; \
+	export STAGE_CMS_API_URL=https://dev.cms.directory.uktrade.digital/; \
 	export STAGE_CONTACT_US_URL=https://contact-us.export.great.gov.uk/; \
-	export STAGE_PROFILE_URL=https://dev.profile.uktrade.io/; \
+	export STAGE_PROFILE_URL=https://dev.profile.uktrade.digital/; \
 	export STAGE_SSO_API_URL=https://directory-sso-dev.herokuapp.com/; \
-	export STAGE_SSO_URL=https://www.dev.sso.uktrade.io/; \
-	export STAGE_FIND_A_BUYER_URL=https://dev.buyer.directory.uktrade.io/; \
-	export STAGE_FIND_A_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io/; \
-	export STAGE_DOMESTIC_URL=https://dev.exportreadiness.directory.uktrade.io/; \
-	export STAGE_INVEST_URL=https://dev.invest.directory.uktrade.io/; \
-	export STAGE_SOO_URL=https://selling-online-overseas.export.staging.uktrade.io/
+	export STAGE_SSO_URL=https://www.dev.sso.uktrade.digital/; \
+	export STAGE_FIND_A_BUYER_URL=https://dev.buyer.directory.uktrade.digital/; \
+	export STAGE_FIND_A_SUPPLIER_URL=https://dev.supplier.directory.uktrade.digital/; \
+	export STAGE_DOMESTIC_URL=https://dev.exportreadiness.directory.uktrade.digital/; \
+	export STAGE_INVEST_URL=https://dev.invest.directory.uktrade.digital/; \
+	export STAGE_SOO_URL=https://selling-online-overseas.export.staging.uktrade.digital/
 
 DOCKER_REMOVE_ALL := \
 	docker ps -a | \
