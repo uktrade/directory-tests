@@ -21,10 +21,6 @@ from bs4 import BeautifulSoup
 from langdetect import DetectorFactory, detect_langs
 from requests import Response
 
-from directory_api_client.testapiclient import (
-    url_company_by_ch_id,
-    url_published_companies,
-)
 from directory_constants import choices
 from directory_tests_shared import URLs
 from directory_tests_shared.clients import (
@@ -32,6 +28,8 @@ from directory_tests_shared.clients import (
     FORMS_API_CLIENT,
     SSO_TEST_API_CLIENT,
     BasicAuthenticator,
+    url_company_by_ch_id,
+    url_published_companies,
 )
 from directory_tests_shared.constants import SECTORS, TEST_IMAGES_DIR, JPEGs, PNGs
 from directory_tests_shared.settings import BASICAUTH_PASS, BASICAUTH_USER

@@ -3,6 +3,8 @@ import base64
 
 from notifications_python_client import NotificationsAPIClient
 
+from directory_api_client.testapiclient import url_company_by_ch_id  # noqa
+from directory_api_client.testapiclient import url_published_companies  # noqa
 from directory_api_client.testapiclient import DirectoryTestAPIClient
 from directory_client_core.base import AbstractAPIClient
 from directory_cms_client.client import cms_api_client as CMS_API_CLIENT  # noqa
