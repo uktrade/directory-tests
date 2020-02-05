@@ -878,12 +878,12 @@ workflows:
         - setup_env_for_load_tests
 
   run_fas_load_tests_on_stage:
-#    triggers:
-#    - schedule:
-#        cron: "8 4 * * 1-5"
-#        filters:
-#          branches:
-#            only: master
+    triggers:
+    - schedule:
+        cron: "8 4 * * 1-5"
+        filters:
+          branches:
+            only: master
     jobs:
     - setup_env_for_load_tests
     - load_fas_tests_stage:
