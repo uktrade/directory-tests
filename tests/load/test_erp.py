@@ -101,7 +101,7 @@ class ERPTasks(TaskSet):
             "user-type-choice": random.choice(user_types),
         }
         data = {key: (None, value) for key, value in form_data.items()}
-        self.client.get(
+        self.client.post(
             url,
             headers=LOAD_TESTS_USER_AGENT,
             files=data,
