@@ -12,13 +12,9 @@ NAME = "Verify your email"
 TYPE = PageType.FORM
 URL = URLs.SSO_EMAIL_CONFIRM.absolute
 EXPECTED_STRINGS = [
-    "Verify your email address",
-    (
-        "We've sent you a confirmation email. Click on the link to verify your "
-        "email address."
-    ),
-    "Contact us",
-    "if you haven’t received the email within 10 minutes",
+    "We'll email you a confirmation code while creating your account",
+    "Make sure you have access to your email",
+    "Select your business type",
 ]
 
 
