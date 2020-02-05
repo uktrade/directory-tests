@@ -71,6 +71,4 @@ class FASTasks(TaskSet):
 class FAS(HttpLocust):
     host = settings.FIND_A_SUPPLIER_URL
     task_set = FASTasks
-
-
-wait_time = between(settings.LOCUST_MIN_WAIT, settings.LOCUST_MAX_WAIT)
+    wait_time = between(settings.LOCUST_MIN_WAIT, settings.LOCUST_MAX_WAIT)
