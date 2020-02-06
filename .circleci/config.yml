@@ -179,6 +179,10 @@ step_run_browser_tests_in_parallel: &step_run_browser_tests_in_parallel
       else
           export BROWSER="firefox";
       fi
+
+      echo "Saving environment variables that control test execution"
+      ./save_browser_env_vars.py
+
       cd tests/browser
       echo "Found `wc -l < scenario_titles.txt` scenarios to run"
       # cat scenario_titles.txt | circleci tests split > /tmp/tests-to-run
@@ -192,9 +196,6 @@ step_run_browser_tests_in_parallel: &step_run_browser_tests_in_parallel
 
       echo "Current instance of ${BROWSER} is going to run `cat tests-to-run${SPLIT_FILE_SUFFIX} | wc -l` scenarios:"
       cat tests-to-run${SPLIT_FILE_SUFFIX}
-
-      echo "Saving environment variables that control test execution"
-      ./save_browser_env_vars.py
 
       cat tests-to-run${SPLIT_FILE_SUFFIX} | while IFS=$'\r' read -r title ; do
         echo "${BROWSER} run: '${title}'"
