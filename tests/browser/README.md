@@ -41,6 +41,55 @@ Once that's done, remember to run `dev`, `stage` or `uat` command prior running 
 against desired environment.
 
 
+# Tags
+
+## Suite
+
+Annotate `Feature` with a `@allure.suite` tag so that scenarios are nicely grouped
+in the `SUITES` section in Allure report.
+
+```gherkin
+@allure.suite:SSO
+Feature: SSO - Sign in
+...
+```
+
+You can be more granular and use the same name as the `Feature`.
+Just remember to replace spaces with underscores.
+
+```gherkin
+@allure.suite:SSO_-_Sign_in
+Feature: SSO - Sign in
+...
+```
+
+## Severity
+
+Annotate `Scenario` or `Scenario Outline` with one of the following tags to define
+severity of an issue when this scenario fail:
+
+* `@blocker`
+* `@critical`
+* `@normal`
+* `@minor`
+* `@trivial`
+
+```gherkin
+@blocker
+Scenario: If this scenario fails, then it should block the release
+...
+```
+
+## Links
+
+```gherkin
+@allure.link:PROJECT-MANAGEMENT-TICKET-4321
+@allure.issue:BUG-TRACKER-ISSUE-1234
+Scenario: An example scenario with links to PM & Bug Tracking systems
+...
+```
+
+
 # Run scenarios locally with "behave" command
 
 You can also run the scenarios with `behave` command (defaults to Chrome):
