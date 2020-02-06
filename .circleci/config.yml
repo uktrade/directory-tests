@@ -739,6 +739,12 @@ jobs:
       - attach_workspace:
           at: ./
       - run:
+          name: Install Allure command line tool
+          command: |
+            wget https://github.com/allure-framework/allure2/releases/download/2.13.1/allure-commandline-2.13.1.zip -O allure.zip
+            unzip -q allure.zip
+            find . -maxdepth 1 -type d -name "allure*" -exec mv {} allure \;
+      - run:
           name: Create virtualenv and install dependencies
           command: |
             python3 -m venv venv
@@ -746,7 +752,6 @@ jobs:
             pip install --quiet --upgrade pip
             pip install --quiet docopt nodeenv
             nodeenv --python-virtualenv
-            npm install -g allure-commandline@2.13.0
             npm install -g yarn@1.21.1
             yarn add -D klank@0.0.5
       - run:
@@ -757,6 +762,7 @@ jobs:
             mv tests/browser/results* .
             ls -lad results*
             . venv/bin/activate
+            export PATH=$PATH:./allure/bin
             make results
             make report
       - store_artifacts:
