@@ -435,6 +435,7 @@ def profile_unpublish_profile_from_fas(context: Context, supplier_alias: str):
     profile.edit_company_profile.should_see_profile_is_verified(context.response)
 
 
+@retry(wait_fixed=3000, stop_max_attempt_number=3)
 def profile_view_published_profile(context: Context, supplier_alias: str):
     actor = get_actor(context, supplier_alias)
     session = actor.session
