@@ -1,6 +1,7 @@
 @ED-3190
 @industries-page
 @no-sso-email-verification-required
+@allure.suite:International
 Feature: INTL - Industries page
 
   Background:

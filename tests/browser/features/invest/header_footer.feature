@@ -1,4 +1,5 @@
 @header-footer
+@allure.suite:Invest
 Feature: Invest - Header-Footer
 
   Background:

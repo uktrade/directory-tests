@@ -1,6 +1,7 @@
 @ED-3183
 @ED-4259
 @no-sso-email-verification-required
+@allure.suite:International
 Feature: FAS - Search
 
   Background:

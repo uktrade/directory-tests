@@ -1,4 +1,5 @@
 @sso
+@allure.suite:SSO
 Feature: SSO - Sign in
 
   @bug

@@ -1,4 +1,5 @@
 @international-page
+@allure.suite:International
 Feature: INTL - Landing page
 
   Background:

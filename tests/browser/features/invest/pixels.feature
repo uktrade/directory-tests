@@ -1,4 +1,5 @@
 @pixels
+@allure.suite:Invest
 Feature: Invest - Pixels
 
   Background:

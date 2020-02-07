@@ -1,4 +1,5 @@
 @ukef
+@allure.suite:Domestic
 Feature: Domestic - UK Export Finance page & contact-us form
 
   Background:

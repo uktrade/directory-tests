@@ -1,5 +1,6 @@
 @landing-page
 @no-sso-email-verification-required
+@allure.suite:Invest
 Feature: Invest - landing page
 
   Background:

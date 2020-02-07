@@ -1,5 +1,6 @@
 @fas
 @header-footer
+@allure.suite:International
 Feature: FAS - Common header & Footer
 
   Background:

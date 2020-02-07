@@ -1,6 +1,7 @@
 @dev-only
 @erp
 @uk_business
+@allure.suite:ERP
 Feature: ERP - UK business
 
 

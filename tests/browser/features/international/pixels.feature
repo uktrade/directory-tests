@@ -1,4 +1,5 @@
 @pixels
+@allure.suite:International
 Feature: INTL - Pixels
 
   Background:

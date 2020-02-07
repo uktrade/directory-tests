@@ -1,5 +1,6 @@
 @gtm
 @pixels
+@allure.suite:PIR
 Feature: PIR - Google Tag Manager
 
   Background:

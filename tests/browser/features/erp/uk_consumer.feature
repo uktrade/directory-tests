@@ -2,6 +2,7 @@
 @erp
 @uk_consumer
 @TT-2047
+@allure.suite:ERP
 Feature: ERP - UK consumer
 
 

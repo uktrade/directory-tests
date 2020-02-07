@@ -1,3 +1,4 @@
+@allure.suite:Domestic
 Feature: Domestic - Header-Footer
 
   Background:

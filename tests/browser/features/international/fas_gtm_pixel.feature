@@ -1,5 +1,6 @@
 @gtm
 @pixels
+@allure.suite:International
 Feature: FAS - Google Tag Manager
 
   Background:

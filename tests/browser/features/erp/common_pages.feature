@@ -1,4 +1,5 @@
 @erp
+@allure.suite:ERP
 Feature: ERP - common pages
 
 

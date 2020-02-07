@@ -1,4 +1,5 @@
 @home-page
+@allure.suite:Domestic
 Feature: Domestic - Home Page
 
   Background:

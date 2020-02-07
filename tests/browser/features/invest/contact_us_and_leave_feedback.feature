@@ -1,4 +1,5 @@
 @contact-us
+@allure.suite:Invest
 Feature: Invest - Contact us and Leave feedback
 
   Background:

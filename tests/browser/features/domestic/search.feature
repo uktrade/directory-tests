@@ -1,4 +1,5 @@
 @search
+@allure.suite:Domestic
 Feature: Domestic - Great site search
 
   Background:

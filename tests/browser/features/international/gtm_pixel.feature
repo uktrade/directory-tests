@@ -1,6 +1,7 @@
 @wip
 @gtm
 @pixels
+@allure.suite:International
 Feature: INTL - Google Tag Manager
 
   Background:

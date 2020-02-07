@@ -1,3 +1,4 @@
+@allure.suite:SOO
 Feature: SOO - Search for marketplace
 
   Background:

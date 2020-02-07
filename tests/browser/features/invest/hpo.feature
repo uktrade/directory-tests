@@ -1,5 +1,6 @@
 @hpo
 @stage-only
+@allure.suite:Invest
 Feature: Invest - High Potential Opportunities
 
   Background:

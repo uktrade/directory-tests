@@ -1,5 +1,6 @@
 @contact-us
 @no-sso-email-verification-required
+@allure.suite:International
 Feature: FAS - Contact us
 
   Background:

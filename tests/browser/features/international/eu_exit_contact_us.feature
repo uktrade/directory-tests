@@ -1,5 +1,6 @@
 @international-page
 @contact-us
+@allure.suite:International
 Feature: INTL - Brexit help - Contact us
 
   Background:

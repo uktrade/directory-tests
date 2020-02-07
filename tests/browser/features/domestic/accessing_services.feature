@@ -1,4 +1,5 @@
 @services
+@allure.suite:Domestic
 Feature: Domestic - Accessing Services
 
   Background:

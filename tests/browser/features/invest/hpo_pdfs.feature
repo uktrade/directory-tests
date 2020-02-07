@@ -2,6 +2,7 @@
 @hpo
 @pdf
 @stage-only
+@allure.suite:Invest
 Feature: Invest - HPO PDFs sent after
 
   Background:

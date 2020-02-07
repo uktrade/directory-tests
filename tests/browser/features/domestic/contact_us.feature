@@ -1,4 +1,5 @@
 @contact-us
+@allure.suite:Domestic
 Feature: Domestic - Contact us
 
   Background:

@@ -1,3 +1,4 @@
+@allure.suite:SOO
 Feature: SOO - Apply via DIT
 
   Background:

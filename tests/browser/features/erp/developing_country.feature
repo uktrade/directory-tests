@@ -1,6 +1,7 @@
 @dev-only
 @erp
 @uk_consumer
+@allure.suite:ERP
 Feature: ERP - An exporter from developing country
 
 

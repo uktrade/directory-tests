@@ -1,6 +1,7 @@
 @ED-3580
 @fas-home-page
 @no-sso-email-verification-required
+@allure.suite:International
 Feature: FAS - Landing page
 
   Background:

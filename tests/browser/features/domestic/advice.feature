@@ -1,4 +1,5 @@
 @advice
+@allure.suite:Domestic
 Feature: Domestic - Advice articles
 
   Background:

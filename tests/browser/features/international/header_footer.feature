@@ -1,4 +1,5 @@
 @header-footer
+@allure.suite:International
 Feature: INTL - Header-Footer
 
   Background:

@@ -1,5 +1,6 @@
 @wip
 @ga360
+@allure.suite:Domestic
 Feature: Domestic - Google Analytics 360 Events
 
   Background:

@@ -1,5 +1,6 @@
 @sharing
 @social-media
+@allure.suite:Domestic
 Feature: Domestic - Sharing on Social Media and via emails
 
   Background:

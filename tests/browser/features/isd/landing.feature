@@ -1,4 +1,5 @@
 @isd
+@allure.suite:ISD
 Feature: ISD - Landing
 
   Background:

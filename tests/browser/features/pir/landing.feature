@@ -1,5 +1,6 @@
 @pir
 @no-sso-email-verification-required
+@allure.suite:PIR
 Feature: PIR - Landing page
 
   Background:

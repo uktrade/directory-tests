@@ -1,5 +1,6 @@
 @dev-only
 @regional-pages
+@allure.suite:International
 Feature: International - Regional pages
 
   Background:

@@ -1,5 +1,6 @@
 @wip
 @internationalisation
+@allure.suite:Invest
 Feature: Invest - Internationalisation
 
 

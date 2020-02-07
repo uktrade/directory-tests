@@ -1,5 +1,6 @@
 @gtm
 @pixels
+@allure.suite:Invest
 Feature: Invest - Google Tag Manager
 
   Background:
