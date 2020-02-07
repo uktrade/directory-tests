@@ -2,6 +2,9 @@
 @allure.suite:SSO
 Feature: SSO - Sign in
 
+  Background:
+    Given basic authentication is done for "SSO - Sign in" page
+
   @bug
   @TT-1778
   @fixed
