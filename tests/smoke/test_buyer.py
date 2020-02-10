@@ -10,11 +10,13 @@ from rest_framework.status import (
     HTTP_404_NOT_FOUND,
 )
 
+import allure
 from directory_tests_shared import URLs
 from directory_tests_shared.constants import COMPANIES
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
 
 
+@allure.issue("ED-3782", "ATM we're not caching inactive companies")
 @pytest.mark.skip(
     reason="ATM we're not caching inactive companies: see tickets: ED-3188, ED-3782"
 )

@@ -7,6 +7,7 @@ from rest_framework.status import (
 )
 from retrying import retry
 
+import allure
 from directory_tests_shared import URLs
 from directory_tests_shared.utils import is_500
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
@@ -17,6 +18,7 @@ def test_about_200(basic_auth):
     get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
 
 
+@allure.issue("TT-1298", "This url returns 500 ISE")
 @pytest.mark.skip(reason="BUG TT-1298 - this url returns 500 ISE")
 @pytest.mark.parametrize("url", [URLs.PROFILE_COMPANY_EDIT_SOCIAL_MEDIA.absolute])
 def test_302_redirects_for_anon_user_bug_tt_1298(url, basic_auth):
