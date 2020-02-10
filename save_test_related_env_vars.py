@@ -11,7 +11,7 @@ variables = {
     "PyTest_args": env.str("PYTEST_ARGS", default=None),
 }
 
-with open("./environment.properties", "w") as properties:
+with open("./results/environment.properties", "w") as properties:
     for key, var in variables.items():
         if var:
             line = f"{key} = {var}\n"
