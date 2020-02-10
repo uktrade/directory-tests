@@ -1,6 +1,7 @@
 @sso
 @dev-only
 @captcha
+@allure.suite:SSO
 Feature: SSO profile
 
 

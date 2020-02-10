@@ -1,4 +1,5 @@
 @profile
+@allure.suite:Profile
 Feature: Trade Profile
 
 

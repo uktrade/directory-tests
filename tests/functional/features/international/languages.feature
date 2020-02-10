@@ -1,4 +1,5 @@
 @international
+@allure.suite:International
 Feature: International - View pages in various languages
 
 

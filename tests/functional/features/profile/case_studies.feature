@@ -1,3 +1,4 @@
+@allure.suite:Profile
 Feature: Case Studies
 
 

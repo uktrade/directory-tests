@@ -1,5 +1,6 @@
 @wip
 @isd
+@allure.suite:ISD
 Feature: Investment Support Directory - Profiles
 
 

@@ -1,4 +1,5 @@
 @international
+@allure.suite:International
 Feature: International - Industry pages
 
 

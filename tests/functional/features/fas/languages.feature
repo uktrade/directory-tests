@@ -1,4 +1,5 @@
 @fas
+@allure.suite:FAS
 Feature: View FAS in various languages
 
 

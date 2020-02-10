@@ -1,5 +1,6 @@
 @admin
 @profile
+@allure.suite:Profile
 Feature: Profile - Admin
 
 

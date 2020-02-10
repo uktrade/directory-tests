@@ -3,6 +3,7 @@
 @TT-1057
 @fixed
 @multi-user
+@allure.suite:Profile
 Feature: Multi-user accounts
 
 

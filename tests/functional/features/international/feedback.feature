@@ -1,4 +1,5 @@
 @international
+@allure.suite:International
 Feature: Send feedback
 
 
