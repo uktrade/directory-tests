@@ -1,4 +1,5 @@
 -e ./directory_tests_shared/
+allure-pytest
 beautifulsoup4
 directory-cms-client
 directory-sso-api-client

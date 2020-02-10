@@ -72,7 +72,7 @@ rudimental_load_test_search:
 TEST_ENV ?= DEV
 
 smoke_tests:
-	pytest --capture=no --verbose --junitxml=tests/smoke/reports/smoke.xml tests/smoke $(PYTEST_ARGS)
+	pytest --capture=no --verbose --alluredir=tests/smoke/results/ --junitxml=tests/smoke/reports/smoke.xml tests/smoke $(PYTEST_ARGS)
 
 functional_tests:
 	behave -k --format progress3 --logging-filter=-root --stop --tags=~@wip --tags=~@skip --tags=~@fixme tests/functional/features ${TAGS}
