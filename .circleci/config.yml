@@ -414,14 +414,14 @@ jobs:
   setup_env_for_smoke_tests:
     working_directory: ~/directory-tests
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_setup_env_for_smoke_tests,
     ]
 
   setup_env_for_functional_tests:
     working_directory: ~/directory-tests
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_setup_env_for_functional_tests,
     ]
 
@@ -445,7 +445,7 @@ jobs:
       TEST_ENV: "dev"
       PYTEST_ARGS: '-m "not stage and not prod"'
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_smoke_tests,
     ]
 
@@ -455,7 +455,7 @@ jobs:
       TEST_ENV: "stage"
       PYTEST_ARGS: "-m 'not dev and not prod'"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_smoke_tests,
     ]
 
@@ -465,7 +465,7 @@ jobs:
       TEST_ENV: "uat"
       PYTEST_ARGS: "-m 'not dev and not prod'"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_smoke_tests,
     ]
 
@@ -476,7 +476,7 @@ jobs:
       FEATURE_DIR: "fas"
       TAGS: "--tags=~@stage-only --tags=~@uat-only"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_functional_tests,
     ]
 
@@ -487,7 +487,7 @@ jobs:
       FEATURE_DIR: "sso"
       TAGS: "--tags=~@stage-only --tags=~@uat-only"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_functional_tests,
     ]
 
@@ -498,7 +498,7 @@ jobs:
       FEATURE_DIR: "profile"
       TAGS: "--tags=~@stage-only --tags=~@uat-only"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_functional_tests,
     ]
 
@@ -509,7 +509,7 @@ jobs:
       FEATURE_DIR: "international"
       TAGS: "--tags=~@stage-only --tags=~@uat-only"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_functional_tests,
     ]
 
@@ -520,7 +520,7 @@ jobs:
       FEATURE_DIR: "fas"
       TAGS: "--tags=~@dev-only --tags=~@uat-only"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_functional_tests,
     ]
 
@@ -531,7 +531,7 @@ jobs:
       FEATURE_DIR: "sso"
       TAGS: "--tags=~@dev-only --tags=~@uat-only"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_functional_tests,
     ]
 
@@ -542,7 +542,7 @@ jobs:
       FEATURE_DIR: "profile"
       TAGS: "--tags=~@dev-only --tags=~@uat-only"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_functional_tests,
     ]
 
@@ -553,7 +553,7 @@ jobs:
       FEATURE_DIR: "international"
       TAGS: "--tags=~@dev-only --tags=~@uat-only"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_functional_tests,
     ]
 
@@ -564,7 +564,7 @@ jobs:
       FEATURE_DIR: "fas"
       TAGS: "--tags=~@stage-only"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_functional_tests,
     ]
 
@@ -575,7 +575,7 @@ jobs:
       FEATURE_DIR: "sso"
       TAGS: "--tags=~@stage-only"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_functional_tests,
     ]
 
@@ -586,7 +586,7 @@ jobs:
       FEATURE_DIR: "profile"
       TAGS: "--tags=~@stage-only"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_functional_tests,
     ]
 
@@ -597,7 +597,7 @@ jobs:
       FEATURE_DIR: "international"
       TAGS: "--tags=~@stage-only"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_functional_tests,
     ]
 
@@ -606,7 +606,7 @@ jobs:
     environment:
       TEST_ENV: "dev"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_delete_test_data,
     ]
 
@@ -615,7 +615,7 @@ jobs:
     environment:
       TEST_ENV: "stage"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_delete_test_data,
     ]
 
@@ -624,7 +624,7 @@ jobs:
     environment:
       TEST_ENV: "uat"
     <<: [
-    *machine_python3,
+    *machine_python3_node_browsers,
     *steps_delete_test_data,
     ]
 
