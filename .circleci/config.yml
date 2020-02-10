@@ -300,6 +300,7 @@ step_merge_junit_xml_reports_from_parallel_browser_tests: &step_merge_junit_xml_
     command: |
       python3 -m venv venv
       . venv/bin/activate
+      pip install --quiet --upgrade pip
       cd ./tests/browser/
       mkdir junit_report
       mv junit_reports_* junit_report/
@@ -837,12 +838,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: ./
-      - run:
-          name: Create virtualenv and install node dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install --quiet --upgrade pip
       - *step_merge_junit_xml_reports_from_parallel_browser_tests
       - store_test_results:
           path: ./tests/browser/junit_report/
