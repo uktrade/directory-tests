@@ -3,7 +3,7 @@
 from envparse import env
 
 variables = {
-    "Environment": env.str("TEST_ENV", default=None).upper(),
+    "Environment": env.str("TEST_ENV", default=None),
     "Automatically_retry_on_failures": env.str("AUTO_RETRY", default=None),
     "Take_screenshots": env.str("TAKE_SCREENSHOTS", default=None),
     "Tags": env.str("TAGS", default=None),
