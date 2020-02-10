@@ -223,9 +223,15 @@ find_duplicated_scenario_names:
 	@diff -u <(behave $(ARGUMENTS) --dry --no-source --no-summary --no-snippets | grep 'Scenario' | sort) \
 		<(behave $(ARGUMENTS) --dry --no-source --no-summary --no-snippets | grep 'Scenario' | sort -u)
 
-results:
+results_browser:
 	@for directory in $(shell find ./ -maxdepth 1 -iname "results_chrome_*" -type d -printf '%P\n') ; do echo "Processing results from $${directory}"; ./update_results.py "$${directory}" Chrome; mv ./$${directory}/* results/ | true; done
 	@for directory in $(shell find ./ -maxdepth 1 -iname "results_firefox_*" -type d -printf '%P\n') ; do echo "Processing results from $${directory}"; ./update_results.py "$${directory}" Firefox; mv ./$${directory}/* results/ | true; done
+
+results_functional:
+	@echo "Processing Allure results from functional FAS tests"; ./update_results.py "results_fas" FAS; mv ./results_fas/* results/ | true;
+	@echo "Processing Allure results from functional SSO tests"; ./update_results.py "results_sso" SSO; mv ./results_sso/* results/ | true;
+	@echo "Processing Allure results from functional Profile tests"; ./update_results.py "results_profile" Profile; mv ./results_sud/* results/ | true;
+	@echo "Processing Allure results from functional International tests"; ./update_results.py "results_international" International; mv ./results_international/* results/ | true;
 
 serve:
 	@echo Allure
@@ -237,4 +243,4 @@ report:
 	@allure --version
 	@allure generate --output ./report results/
 
-.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests results report
+.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests results_browser results_functional report
