@@ -8,6 +8,7 @@ variables = {
     "Take_screenshots": env.str("TAKE_SCREENSHOTS", default=None),
     "Tags": env.str("TAGS", default=None),
     "Run_tests_in_headless_mode": env.str("BROWSER_HEADLESS", default=None),
+    "PyTest_args": env.str("PYTEST_ARGS", default=None),
 }
 
 with open("./environment.properties", "w") as properties:
