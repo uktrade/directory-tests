@@ -779,61 +779,47 @@ jobs:
     <<: *machine_python3_node_browsers
     working_directory: ~/directory-tests
     steps:
-      - run:
-          name: Install JRE as it is required by Allure to generate an HTML report
-          command: |
-            sudo apt -qq install -y default-jre
-            java -version
-      - run:
-          name: Install moxci to send CircleCI notifacations to Slack
-          command: |
-            sudo npm install -g moxci@0.1.1
       - checkout
       - attach_workspace:
           at: ./
-      - run:
-          name: Install Allure command line tool
-          command: |
-            wget https://github.com/allure-framework/allure2/releases/download/2.13.1/allure-commandline-2.13.1.zip -O allure.zip
-            unzip -q allure.zip
-            find . -maxdepth 1 -type d -name "allure*" -exec mv {} allure \;
-      - run:
-          name: Create virtualenv and install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install --quiet --upgrade pip
-            pip install --quiet docopt
-      - run:
-          name: Update Allure result files and generate an Allure report
-          when: always
-          command: |
-            set -e
-            mv tests/browser/results* .
-            ls -lad results*
-            . venv/bin/activate
-            export PATH=$PATH:./allure/bin
-            make results
-            make report
-      - store_artifacts:
-          path: /home/circleci/directory-tests/report/
+      - *step_install_moxci
+      - *step_install_allure_cli
+      - *step_update_allure_result_files_generated_by_browser_tests
+      - *step_save_test_related_env_vars
+      - *step_make_allure_report
+      - *step_store_report_artificats
       - run:
           name: Push Allure report link to Slack with moxci
           command: |
             set -e
-            . venv/bin/activate
             export CIRCLE_PULL_REQUEST=none
             moxci -m "Latest report from Browser tests ran against `awk '/Environment/{print $3}' ./results/environment.properties`"
+
+  generate_allure_report_from_smoke_tests_and_send_link_to_slack_and_send_link_to_slack:
+    <<: *machine_python3_node_browsers
+    working_directory: ~/directory-tests
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - *step_install_moxci
+      - *step_install_allure_cli
+      - *step_save_test_related_env_vars
+      - *step_make_allure_report
+      - *step_store_report_artificats
+      - run:
+          name: Push Allure report link to Slack with moxci
+          command: |
+            set -e
+            export CIRCLE_PULL_REQUEST=none
+            moxci -m "Latest report from Smoke tests ran against `awk '/Environment/{print $3}' ./results/environment.properties`"
 
   merge_junit_results_from_parallel_browser_tests:
     docker:
       - image: circleci/python:3.8.0-node-browsers
     working_directory: ~/directory-tests
     steps:
-      - run:
-          name: Install an npm package to merge JUnit XML report files
-          command: |
-            sudo npm install -g junit-merge@2.0.0
+      - *step_install_junit_merge
       - checkout
       - attach_workspace:
           at: ./
