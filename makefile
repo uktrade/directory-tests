@@ -75,10 +75,10 @@ smoke_tests:
 	pytest --capture=no --verbose --alluredir=results/ --junitxml=tests/smoke/reports/smoke.xml tests/smoke $(PYTEST_ARGS)
 
 functional_tests:
-	behave -k --format progress3 --logging-filter=-root --stop --tags=~@wip --tags=~@skip --tags=~@fixme tests/functional/features ${TAGS}
+	behave --no-skipped --format progress3 --logging-filter=-root --stop --tags=~@wip --tags=~@skip --tags=~@fixme tests/functional/features ${TAGS}
 
 functional_tests_feature_dir:
-	behave -k --format progress3 --logging-filter=-root --tags=~@wip --tags=~@skip --tags=~@fixme tests/functional/features/${FEATURE_DIR} ${TAGS}
+	behave --no-skipped --format progress3 --logging-filter=-root --tags=~@wip --tags=~@skip --tags=~@fixme tests/functional/features/${FEATURE_DIR} ${TAGS}
 
 test: smoke_tests functional_tests load_test_minimal
 
