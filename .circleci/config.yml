@@ -45,6 +45,7 @@ step_install_requirements_for_functional_tests: &step_install_requirements_for_f
 step_install_requirements_for_parallel_browser_tests: &step_install_requirements_for_parallel_browser_tests
   run:
     name: Create virtualenv and install dependencies
+    when: always
     command: |
       python3 -m venv venv
       . venv/bin/activate
@@ -54,6 +55,7 @@ step_install_requirements_for_parallel_browser_tests: &step_install_requirements
 step_install_allure_cli: &step_install_allure_cli
   run:
     name: Install Allure command line tool
+    when: always
     command: |
       wget https://github.com/allure-framework/allure2/releases/download/2.13.1/allure-commandline-2.13.1.zip -O allure.zip
       unzip -q allure.zip
@@ -62,12 +64,14 @@ step_install_allure_cli: &step_install_allure_cli
 step_install_moxci: &step_install_moxci
   run:
     name: Install moxci to send CircleCI notifacations to Slack
+    when: always
     command: |
       sudo npm install -g moxci@0.1.1
 
 step_save_test_related_env_vars: &step_save_test_related_env_vars
   run:
     name: Saving environment variables that control test execution
+    when: always
     command: |
       . venv/bin/activate
       echo "Saving environment variables that control test execution"
@@ -76,6 +80,7 @@ step_save_test_related_env_vars: &step_save_test_related_env_vars
 step_make_allure_report: &step_make_allure_report
   run:
     name: Generate Allure report
+    when: always
     command: |
       export PATH=$PATH:./allure/bin
       make report
@@ -289,6 +294,7 @@ step_run_load_tests: &step_run_load_tests
       source ./docker/.env_with_export;
       NUM_CLIENTS=${NUM_CLIENTS} HATCH_RATE=${HATCH_RATE} RUN_TIME=${RUN_TIME} make rudimental_load_test_${SERVICE}
 
+# this step requires Java 8+ to work.
 step_merge_junit_xml_reports_from_functional_tests: &step_merge_junit_xml_reports_from_functional_tests
   run:
     name: Merge JUnit XML reports & print errors summary
@@ -805,6 +811,7 @@ jobs:
       - *step_store_report_artificats
       - run:
           name: Push Allure report link to Slack with moxci
+          when: always
           command: |
             set -e
             export CIRCLE_PULL_REQUEST=none
@@ -825,6 +832,7 @@ jobs:
       - *step_store_report_artificats
       - run:
           name: Push Allure report link to Slack with moxci
+          when: always
           command: |
             set -e
             export CIRCLE_PULL_REQUEST=none
@@ -844,6 +852,7 @@ jobs:
       - *step_store_report_artificats
       - run:
           name: Push Allure report link to Slack with moxci
+          when: always
           command: |
             set -e
             export CIRCLE_PULL_REQUEST=none
