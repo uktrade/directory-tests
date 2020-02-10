@@ -736,6 +736,10 @@ jobs:
           command: |
             sudo apt -qq install -y default-jre
             java -version
+      - run:
+          name: Install moxci to send CircleCI notifacations to Slack
+          command: |
+            sudo npm install -g moxci@0.1.1
       - checkout
       - attach_workspace:
           at: ./
@@ -752,7 +756,6 @@ jobs:
             . venv/bin/activate
             pip install --quiet --upgrade pip
             pip install --quiet docopt
-            npm install -g moxci@0.1.1
       - run:
           name: Update Allure result files and generate an Allure report
           when: always
@@ -767,7 +770,7 @@ jobs:
       - store_artifacts:
           path: /home/circleci/directory-tests/report/
       - run:
-          name: Push repot link to Slack
+          name: Push Allure report link to Slack with moxci
           command: |
             set -e
             . venv/bin/activate
@@ -779,6 +782,10 @@ jobs:
       - image: circleci/python:3.8.0-node-browsers
     working_directory: ~/directory-tests
     steps:
+      - run:
+          name: Install an npm package to merge JUnit XML report files
+          command: |
+            sudo npm install -g junit-merge@2.0.0
       - checkout
       - attach_workspace:
           at: ./
@@ -788,7 +795,6 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install --quiet --upgrade pip
-            npm install -g junit-merge@2.0.0
       - *step_merge_junit_xml_reports_from_parallel_browser_tests
       - store_test_results:
           path: ./tests/browser/junit_report/
