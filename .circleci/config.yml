@@ -106,6 +106,7 @@ step_update_allure_result_files_generated_by_functional_tests: &step_update_allu
 step_install_junit_merge: &step_install_junit_merge
   run:
     name: Install an npm package to merge JUnit XML report files
+    when: always
     command: |
       sudo npm install -g junit-merge@2.0.0
 
