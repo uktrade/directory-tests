@@ -775,9 +775,8 @@ jobs:
     *steps_run_parallel_browser_tests,
     ]
 
-    docker:
-      - image: circleci/python:3.8.0-node-browsers
   merge_browser_allure_results_and_generate_report:
+    <<: *machine_python3_node_browsers
     working_directory: ~/directory-tests
     steps:
       - run:
