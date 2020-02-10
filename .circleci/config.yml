@@ -87,7 +87,7 @@ step_make_allure_report: &step_make_allure_report
 
 step_store_report_artificats: &step_store_report_artificats
   store_artifacts:
-    path: /home/circleci/directory-tests/report/
+    path: /home/circleci/directory-tests/reports/
 
 step_update_allure_result_files_generated_by_browser_tests: &step_update_allure_result_files_generated_by_browser_tests
   run:
