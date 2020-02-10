@@ -775,7 +775,7 @@ jobs:
     *steps_run_parallel_browser_tests,
     ]
 
-  merge_browser_allure_results_and_generate_report:
+  merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
     <<: *machine_python3_node_browsers
     working_directory: ~/directory-tests
     steps:
@@ -795,7 +795,7 @@ jobs:
             export CIRCLE_PULL_REQUEST=none
             moxci -m "Latest report from Browser tests ran against `awk '/Environment/{print $3}' ./results/environment.properties`"
 
-  generate_allure_report_from_smoke_tests_and_send_link_to_slack_and_send_link_to_slack:
+  generate_allure_report_from_smoke_tests_and_send_link_to_slack:
     <<: *machine_python3_node_browsers
     working_directory: ~/directory-tests
     steps:
@@ -1138,7 +1138,7 @@ workflows:
       - dev_parallel_browser_tests_using_circleci:
           requires:
             - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_browser_allure_results_and_generate_report:
+      - merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
           requires:
             - dev_parallel_browser_tests_using_circleci
       - merge_junit_results_from_parallel_browser_tests:
@@ -1158,7 +1158,7 @@ workflows:
       - stage_parallel_browser_tests_using_circleci:
           requires:
             - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_browser_allure_results_and_generate_report:
+      - merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
           requires:
             - stage_parallel_browser_tests_using_circleci
       - merge_junit_results_from_parallel_browser_tests:
@@ -1178,7 +1178,7 @@ workflows:
       - uat_parallel_browser_tests_using_circleci:
           requires:
             - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_browser_allure_results_and_generate_report:
+      - merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
           requires:
             - uat_parallel_browser_tests_using_circleci
       - merge_junit_results_from_parallel_browser_tests:
@@ -1192,7 +1192,7 @@ workflows:
       - dev_parallel_browser_tests_using_circleci:
           requires:
             - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_browser_allure_results_and_generate_report:
+      - merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
           requires:
             - dev_parallel_browser_tests_using_circleci
       - merge_junit_results_from_parallel_browser_tests:
@@ -1206,7 +1206,7 @@ workflows:
       - stage_parallel_browser_tests_using_circleci:
           requires:
             - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_browser_allure_results_and_generate_report:
+      - merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
           requires:
             - stage_parallel_browser_tests_using_circleci
       - merge_junit_results_from_parallel_browser_tests:
@@ -1220,7 +1220,7 @@ workflows:
       - uat_parallel_browser_tests_using_circleci:
           requires:
             - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_browser_allure_results_and_generate_report:
+      - merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
           requires:
             - uat_parallel_browser_tests_using_circleci
       - merge_junit_results_from_parallel_browser_tests:
