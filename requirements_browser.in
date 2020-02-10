@@ -7,7 +7,6 @@ directory-api-client
 directory-cms-client
 directory-sso-api-client
 docopt
-nodeenv
 notifications-python-client
 pillow
 requests

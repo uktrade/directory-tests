@@ -33,7 +33,6 @@ incremental==17.5.0       # via twisted
 lxml==4.5.0               # via parsel, scrapy
 mohawk==0.3.4             # via sigauth
 monotonic==1.5            # via directory-client-core, notifications-python-client
-nodeenv==1.3.5
 notifications-python-client==5.5.1
 parse-type==0.5.2         # via behave
 parse==1.14.0             # via behave, parse-type
