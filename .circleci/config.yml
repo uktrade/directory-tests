@@ -13,7 +13,7 @@ load_run_time: &load_run_time
 # Machines configs
 machine_python3: &machine_python3
   docker:
-    - image: circleci/python:3.8.0
+    - image: circleci/python:3.8.0-node
 
 machine_python3_node_browsers: &machine_python3_node_browsers
   docker:
@@ -40,8 +40,7 @@ step_install_requirements_for_functional_tests: &step_install_requirements_for_f
       . venv/bin/activate
       pip install --quiet --upgrade pip
       pip install --quiet -r requirements_functional.txt
-      nodeenv -p
-      npm install -g junit-merge@1.2.3
+      sudo npm install -g junit-merge@2.0.0
 
 step_install_requirements_for_parallel_browser_tests: &step_install_requirements_for_parallel_browser_tests
   run:
@@ -349,6 +348,7 @@ steps_functional_tests: &steps_functional_tests
   steps:
     - *step_restore_cached_functional_tests_requirements
     - *step_run_functional_tests
+    - *step_install_junit_merge
     - *step_merge_junit_xml_reports_from_functional_tests
     - store_test_results:
         path: ./tests/functional/reports
