@@ -69,6 +69,7 @@ step_save_test_related_env_vars: &step_save_test_related_env_vars
   run:
     name: Saving environment variables that control test execution
     command: |
+      . venv/bin/activate
       echo "Saving environment variables that control test execution"
       ./save_test_related_env_vars.py
 
