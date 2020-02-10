@@ -844,6 +844,9 @@ workflows:
       - smoke_tests_dev:
           requires:
             - setup_env_for_smoke_tests
+      - generate_allure_report_from_smoke_tests_and_send_link_to_slack:
+          requires:
+            - smoke_tests_dev
       - func_fas_test_dev:
           requires:
             - delete_test_data_dev
@@ -867,6 +870,9 @@ workflows:
       - smoke_tests_stage:
           requires:
             - setup_env_for_smoke_tests
+      - generate_allure_report_from_smoke_tests_and_send_link_to_slack:
+          requires:
+            - smoke_tests_stage
       - func_fas_test_stage:
           requires:
             - delete_test_data_stage
@@ -890,6 +896,9 @@ workflows:
       - smoke_tests_uat:
           requires:
             - setup_env_for_smoke_tests
+      - generate_allure_report_from_smoke_tests_and_send_link_to_slack:
+          requires:
+            - smoke_tests_uat
       - func_fas_test_uat:
           requires:
             - delete_test_data_uat
@@ -1036,6 +1045,9 @@ workflows:
       - smoke_tests_dev:
           requires:
             - setup_env_for_smoke_tests
+      - generate_allure_report_from_smoke_tests_and_send_link_to_slack:
+          requires:
+            - smoke_tests_dev
       - func_fas_test_dev:
           requires:
             - delete_test_data_dev
@@ -1065,6 +1077,9 @@ workflows:
       - smoke_tests_stage:
           requires:
             - setup_env_for_smoke_tests
+      - generate_allure_report_from_smoke_tests_and_send_link_to_slack:
+          requires:
+            - smoke_tests_stage
       - func_fas_test_stage:
           requires:
             - delete_test_data_stage
@@ -1094,6 +1109,9 @@ workflows:
       - smoke_tests_uat:
           requires:
             - setup_env_for_smoke_tests
+      - generate_allure_report_from_smoke_tests_and_send_link_to_slack:
+          requires:
+            - smoke_tests_uat
       - func_fas_test_uat:
           requires:
             - delete_test_data_uat
