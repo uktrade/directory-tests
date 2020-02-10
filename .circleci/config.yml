@@ -726,9 +726,9 @@ jobs:
     *steps_run_parallel_browser_tests,
     ]
 
-  merge_allure_results_and_generate_report:
     docker:
       - image: circleci/python:3.8.0-node-browsers
+  merge_browser_allure_results_and_generate_report:
     working_directory: ~/directory-tests
     steps:
       - run:
@@ -1092,7 +1092,7 @@ workflows:
       - dev_parallel_browser_tests_using_circleci:
           requires:
             - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_allure_results_and_generate_report:
+      - merge_browser_allure_results_and_generate_report:
           requires:
             - dev_parallel_browser_tests_using_circleci
       - merge_junit_results_from_parallel_browser_tests:
@@ -1112,7 +1112,7 @@ workflows:
       - stage_parallel_browser_tests_using_circleci:
           requires:
             - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_allure_results_and_generate_report:
+      - merge_browser_allure_results_and_generate_report:
           requires:
             - stage_parallel_browser_tests_using_circleci
       - merge_junit_results_from_parallel_browser_tests:
@@ -1132,7 +1132,7 @@ workflows:
       - uat_parallel_browser_tests_using_circleci:
           requires:
             - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_allure_results_and_generate_report:
+      - merge_browser_allure_results_and_generate_report:
           requires:
             - uat_parallel_browser_tests_using_circleci
       - merge_junit_results_from_parallel_browser_tests:
@@ -1146,7 +1146,7 @@ workflows:
       - dev_parallel_browser_tests_using_circleci:
           requires:
             - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_allure_results_and_generate_report:
+      - merge_browser_allure_results_and_generate_report:
           requires:
             - dev_parallel_browser_tests_using_circleci
       - merge_junit_results_from_parallel_browser_tests:
@@ -1160,7 +1160,7 @@ workflows:
       - stage_parallel_browser_tests_using_circleci:
           requires:
             - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_allure_results_and_generate_report:
+      - merge_browser_allure_results_and_generate_report:
           requires:
             - stage_parallel_browser_tests_using_circleci
       - merge_junit_results_from_parallel_browser_tests:
@@ -1174,7 +1174,7 @@ workflows:
       - uat_parallel_browser_tests_using_circleci:
           requires:
             - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_allure_results_and_generate_report:
+      - merge_browser_allure_results_and_generate_report:
           requires:
             - uat_parallel_browser_tests_using_circleci
       - merge_junit_results_from_parallel_browser_tests:
