@@ -181,7 +181,7 @@ step_run_browser_tests_in_parallel: &step_run_browser_tests_in_parallel
       fi
 
       echo "Saving environment variables that control test execution"
-      ./save_browser_env_vars.py
+      ./save_test_related_env_vars.py
 
       cd tests/browser
       echo "Found `wc -l < scenario_titles.txt` scenarios to run"
