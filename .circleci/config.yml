@@ -82,7 +82,8 @@ step_make_allure_report: &step_make_allure_report
     name: Generate Allure report
     when: always
     command: |
-      export PATH=$PATH:./allure/bin
+      export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))
+      export PATH=$PATH:$HOME/bin:$PATH:$JAVA_HOME/bin:./allure/bin
       make report
 
 step_store_report_artificats: &step_store_report_artificats
