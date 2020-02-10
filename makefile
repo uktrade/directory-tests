@@ -238,6 +238,6 @@ serve:
 report:
 	@echo Allure
 	@allure --version
-	@allure generate --clean --output ./report results/
+	@allure generate --output ./report results/
 
 .PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests results report
