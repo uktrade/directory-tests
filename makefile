@@ -241,11 +241,11 @@ serve:
 report:
 	@mkdir -p reports
 	@mkdir -p tmp_reports
-	@mv reports/{.[!.],}* tmp_reports/
+	@mv reports/{.[!.],}* tmp_reports/ 2> /dev/null
 	@echo Allure
 	@allure --version
 	@allure generate --output ./reports results/
-	@mv tmp_reports/{.[!.],}* reports/
+	@mv tmp_reports/{.[!.],}* reports/ 2> /dev/null
 	@rm -fr tmp_reports/
 
 .PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests results_browser results_functional report
