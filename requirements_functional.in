@@ -1,5 +1,6 @@
 -e ./directory_tests_shared/
 Scrapy
+allure-behave
 beautifulsoup4
 behave
 directory-api-client
