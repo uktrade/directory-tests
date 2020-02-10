@@ -1,8 +1,8 @@
 {
   "devDependencies": {
-    "klank": "^0.0.5"
+    "moxci": "0.1.1"
   },
   "scripts": {
-    "klank": "klank index.html"
+    "moxci": "moxci index.html"
   }
 }

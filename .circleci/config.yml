@@ -751,10 +751,8 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install --quiet --upgrade pip
-            pip install --quiet docopt nodeenv
-            nodeenv --python-virtualenv
-            npm install -g yarn@1.21.1
-            yarn add -D klank@0.0.5
+            pip install --quiet docopt
+            npm install -g moxci@0.1.1
       - run:
           name: Update Allure result files and generate an Allure report
           when: always
@@ -773,9 +771,8 @@ jobs:
           command: |
             set -e
             . venv/bin/activate
-            nodeenv --python-virtualenv
             export CIRCLE_PULL_REQUEST=none
-            yarn klank
+            moxci -m "Latest report from Browser tests ran against `awk '/Environment/{print $3}' ./results/environment.properties`"
 
   merge_junit_results_from_parallel_browser_tests:
     docker:
@@ -791,8 +788,6 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install --quiet --upgrade pip
-            pip install --quiet nodeenv
-            nodeenv --python-virtualenv
             npm install -g junit-merge@2.0.0
       - *step_merge_junit_xml_reports_from_parallel_browser_tests
       - store_test_results:
