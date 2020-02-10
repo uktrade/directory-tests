@@ -92,7 +92,7 @@ step_update_allure_result_files_generated_by_browser_tests: &step_update_allure_
       set -e
       mv tests/browser/results* .
       ls -lad results*
-      make results
+      make results_browser
 
 step_install_junit_merge: &step_install_junit_merge
   run:
