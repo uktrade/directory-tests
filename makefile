@@ -224,11 +224,8 @@ find_duplicated_scenario_names:
 		<(behave $(ARGUMENTS) --dry --no-source --no-summary --no-snippets | grep 'Scenario' | sort -u)
 
 results:
-	@rm -fr results/
-	@mkdir results
 	@for directory in $(shell find ./ -maxdepth 1 -iname "results_chrome_*" -type d -printf '%P\n') ; do echo "Processing results from $${directory}"; ./update_results.py "$${directory}" Chrome; mv ./$${directory}/* results/ | true; done
 	@for directory in $(shell find ./ -maxdepth 1 -iname "results_firefox_*" -type d -printf '%P\n') ; do echo "Processing results from $${directory}"; ./update_results.py "$${directory}" Firefox; mv ./$${directory}/* results/ | true; done
-	@mv ./environment.properties results/
 
 serve:
 	@echo Allure
