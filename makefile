@@ -239,6 +239,7 @@ serve:
 	@allure serve results/
 
 report:
+	@mkdir -p reports
 	@mkdir -p tmp_reports
 	@mv reports/{.[!.],}* tmp_reports/
 	@echo Allure
