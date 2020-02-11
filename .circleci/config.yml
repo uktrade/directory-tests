@@ -73,7 +73,9 @@ step_save_test_related_env_vars: &step_save_test_related_env_vars
     name: Saving environment variables that control test execution
     when: always
     command: |
+      python3 -m venv venv
       . venv/bin/activate
+      pip install --quiet envparse
       echo "Saving environment variables that control test execution"
       ./save_test_related_env_vars.py
 
