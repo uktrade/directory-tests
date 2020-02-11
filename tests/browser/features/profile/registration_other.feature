@@ -1,5 +1,5 @@
-@TT-1033
-@TT-1094
+@allure.link:TT-1033
+@allure.link:TT-1094
 @enrol
 @new-registration
 @allure.suite:
@@ -9,7 +9,7 @@ Feature: Profile - Non-CH enrolment flows
     Given basic authentication is done for "Domestic - Home" page
 
 
-  @TT-1118
+  @allure.link:TT-1118
   @sole-trader-other-business
   Scenario: "Sole trader" representative should be asked to specify the type of their business before being asked to enter their email and set a password
     Given "Natalia" visits the "Profile - Select your business type" page
@@ -23,7 +23,7 @@ Feature: Profile - Non-CH enrolment flows
       | Enrolment progress bar |
 
 
-  @TT-1119
+  @allure.link:TT-1119
   @uk-taxpayer
   Scenario: UK taxpayers can create an SSO account
     Given "Mirko" visits the "Profile - Select your business type" page
@@ -37,7 +37,7 @@ Feature: Profile - Non-CH enrolment flows
       | Enrolment progress bar |
 
 
-  @TT-1119
+  @allure.link:TT-1119
   @foreign-business
   Scenario: Only UK business can create a great.gov.uk account
     Given "Mirko" visits the "Profile - Select your business type" page
@@ -60,7 +60,7 @@ Feature: Profile - Non-CH enrolment flows
 
 
   @dev-only
-  @TT-1120
+  @allure.link:TT-1120
   @sole-trader-other-business
   @tax-payer
   Scenario Outline: "<selected business type>" representative should receive an email with confirmation code
@@ -84,8 +84,8 @@ Feature: Profile - Non-CH enrolment flows
 
 
   @dev-only
-  @TT-2176
-  @TT-2193
+  @allure.link:TT-2176
+  @allure.link:TT-2193
   @password
   @sole-trader-other-business
   @tax-payer
@@ -125,7 +125,7 @@ Feature: Profile - Non-CH enrolment flows
 
 
   @bug
-  @TT-2192
+  @allure.issue:TT-2192
   @fixed
   @dev-only
   @sole-trader-other-business
@@ -147,7 +147,7 @@ Feature: Profile - Non-CH enrolment flows
 
 
   @dev-only
-  @TT-1121
+  @allure.link:TT-1121
   @sole-trader-other-business
   Scenario Outline: A representative of a "<selected business type>" company should be asked to enter their business details after providing email confirmation code
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
@@ -168,7 +168,7 @@ Feature: Profile - Non-CH enrolment flows
 
 
   @dev-only
-  @TT-1122
+  @allure.link:TT-1122
   @uk-taxpayer
   Scenario: A UK taxpayers wanting to register should be asked to enter their details after providing email confirmation code
     Given "Natalia" has received the email confirmation code by opting to register as "UK taxpayer"
@@ -185,7 +185,7 @@ Feature: Profile - Non-CH enrolment flows
 
 
   @dev-only
-  @TT-1123
+  @allure.link:TT-1123
   @sole-trader-other-business
   Scenario Outline: A representative of a "<selected business type>" company should be asked to enter their details after providing business details
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
@@ -207,8 +207,8 @@ Feature: Profile - Non-CH enrolment flows
 
   @captcha
   @dev-only
-  @TT-1128
-  @TT-1036
+  @allure.link:TT-1128
+  @allure.link:TT-1036
   @sole-trader-other-business
   Scenario: A logged-in user representing "Sole trader or other type of business" should not be able to access SSO Sign in or Create an account pages
     Given "Natalia" has created a great.gov.uk account for a "Sole trader or other type of business"
@@ -222,8 +222,8 @@ Feature: Profile - Non-CH enrolment flows
 
   @captcha
   @dev-only
-  @TT-1128
-  @TT-1036
+  @allure.link:TT-1128
+  @allure.link:TT-1036
   @uk-taxpayer
   Scenario: A logged-in user representing "UK taxpayer" should not be able to access SSO Sign in or Create an account pages
     Given "Natalia" has created a great.gov.uk account for a "UK taxpayer"
@@ -235,7 +235,7 @@ Feature: Profile - Non-CH enrolment flows
     Then "Natalia" should be on the "Profile - Create an account" page
 
 
-  @TT-1560
+  @allure.link:TT-1560
   @uk-taxpayer
   Scenario: New registration for an individual who starts journey in Business profiles
     Given "Mirko" visited the "Find a Buyer - Home" page

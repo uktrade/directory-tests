@@ -5,7 +5,7 @@ Feature: Domestic - Advice articles
   Background:
     Given basic authentication is done for "Domestic - Home" page
 
-  @CMS-686
+  @allure.link:CMS-686
   @home-page
   @articles
   Scenario: Any Exporter should see all expected sections on "Domestic - Advice landing" page
@@ -21,7 +21,7 @@ Feature: Domestic - Advice articles
       | Footer                   |
 
 
-  @CMS-686
+  @allure.link:CMS-686
   @home-page
   @articles
   Scenario: Any Exporter should be able to get to a list of Advice articles from the home page using link in "<specific>" section
@@ -40,7 +40,7 @@ Feature: Domestic - Advice articles
       | Footer                   |
 
 
-  @CMS-686
+  @allure.link:CMS-686
   @home-page
   @articles
   Scenario Outline: Any Exporter should be able to get to "<advice>" Advice article
@@ -74,7 +74,7 @@ Feature: Domestic - Advice articles
       | Prepare for export procedures and logistics |
 
 
-  @CMS-686
+  @allure.link:CMS-686
   @report
   Scenario: Any Exporter should be able to report a problem with Advice Article page
     Given "Robert" is on randomly selected Advice article page
@@ -85,9 +85,9 @@ Feature: Domestic - Advice articles
 
 
   @bug
-  @CMS-1698
+  @allure.issue:CMS-1698
   @fixed
-  @CMS-686
+  @allure.link:CMS-686
   @breadcrumbs
   Scenario Outline: Any Exporter should see be to use "<breadcrumb>" breadcrumb on "Advice article" page to get to "<target>" page
     Given "Robert" is on randomly selected Advice article page

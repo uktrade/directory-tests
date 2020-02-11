@@ -1,5 +1,5 @@
-@ED-3183
-@ED-4259
+@allure.link:ED-3183
+@allure.link:ED-4259
 @no-sso-email-verification-required
 @allure.suite:International
 Feature: FAS - Search
@@ -8,7 +8,7 @@ Feature: FAS - Search
     Given basic authentication is done for "International - Landing" page
 
 
-  @ED-4263
+  @allure.link:ED-4263
   @search
   Scenario Outline: Buyers should be able to find UK suppliers from "<specific> Industry"
     Given "Robert" visits the "Find a Supplier - Landing" page
@@ -41,7 +41,7 @@ Feature: FAS - Search
       | salon      | Clothing Footwear And Fashion          |
 
 
-  @ED-4263
+  @allure.link:ED-4263
   @search
   Scenario Outline: Buyers should be able to change their initial search criteria to find UK suppliers in "<other industry> Industry"
     Given "Robert" searched for companies using "<following>" keyword in "<specific>" sector

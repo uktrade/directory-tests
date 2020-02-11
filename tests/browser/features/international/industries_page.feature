@@ -1,4 +1,4 @@
-@ED-3190
+@allure.link:ED-3190
 @industries-page
 @no-sso-email-verification-required
 @allure.suite:International
@@ -7,7 +7,7 @@ Feature: INTL - Industries page
   Background:
     Given basic authentication is done for "International - Landing" page
 
-  @ED-4253
+  @allure.link:ED-4253
   Scenario: Buyers should be able to view "International - Industries" page
     Given "Annette Geissinger" visits the "International - Industries" page
 
@@ -21,7 +21,7 @@ Feature: INTL - Industries page
       | Footer           |
 
 
-  @ED-4255
+  @allure.link:ED-4255
   @breadcrumbs
   Scenario: Buyers should be able to go back to the "International - Landing" page via breadcrumbs on the "International - Industries" page
     Given "Robert" visits the "International - Industries" page
@@ -31,7 +31,7 @@ Feature: INTL - Industries page
     Then "Robert" should be on the "International - Landing" page
 
 
-  @ED-4258
+  @allure.link:ED-4258
   @report-this-page
   Scenario: Buyers should be able to report a problem with the "International - Industries" page
     Given "Robert" visits the "International - Industries" page

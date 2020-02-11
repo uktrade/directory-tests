@@ -6,7 +6,7 @@ Feature: SOO - Apply via DIT
     And basic authentication is done for "Domestic - Home" page
 
 
-  @XOT-689
+  @allure.link:XOT-689
   @exopps
   @captcha
   @dev-only
@@ -25,7 +25,7 @@ Feature: SOO - Apply via DIT
       | Australia | Clothing and accessories |
 
 
-  @XOT-740
+  @allure.link:XOT-740
   @exopps
   @captcha
   @dev-only
@@ -48,8 +48,8 @@ Feature: SOO - Apply via DIT
       | Australia | Clothing and accessories |
 
 
-  @XOT-689
-  @XOT-741
+  @allure.link:XOT-689
+  @allure.link:XOT-741
   @exopps
   @captcha
   @dev-only

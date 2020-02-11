@@ -9,7 +9,7 @@ Feature: ERP - UK business
     Given basic authentication is done for "ERP - Landing" page
 
 
-  @TT-2074
+  @allure.link:TT-2074
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should see a list of product codes which might be affected by Brexit
     Given "Robert" got to "ERP - Import from overseas (UK business)" from "ERP - User type" via "UK business"
@@ -31,7 +31,7 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2075
+  @allure.link:TT-2075
   @drill
   @full
   @<business_type>
@@ -55,7 +55,7 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2076
+  @allure.link:TT-2076
   @<business_type>
   @drill
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to change the goods previously selected
@@ -75,7 +75,7 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2077
+  @allure.link:TT-2077
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell where do they import goods from
@@ -100,7 +100,7 @@ Feature: ERP - UK business
       | imported        | UK importer   | Where do you import from (UK importer) |
 
 
-  @TT-2101
+  @allure.link:TT-2101
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell whether imported goods are used to make something else or not
@@ -132,7 +132,7 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2102
+  @allure.link:TT-2102
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell what were company's UK sales volumes for these goods before Brexit
@@ -170,7 +170,7 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2103
+  @allure.link:TT-2103
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell what were company's UK export volumes before Brexit
@@ -204,7 +204,7 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2104
+  @allure.link:TT-2104
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell whether they're aware of changes to UK imports for selected goods since Brexit
@@ -241,7 +241,7 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2105
+  @allure.link:TT-2105
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell whether they're aware of changes to their sales for selected goods since Brexit
@@ -281,7 +281,7 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2106
+  @allure.link:TT-2106
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell whether they're aware of other changes for selected goods since Brexit
@@ -324,7 +324,7 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2107
+  @allure.link:TT-2107
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us what percentage of their production do these goods make up
     Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
@@ -369,7 +369,7 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2108
+  @allure.link:TT-2108
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us if there are equivalent goods made in the UK
     Given "Robert" got to "ERP - Product search (<business_type>)" from "ERP - User type" via "UK business -> <imported or not>"
@@ -417,7 +417,7 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2109
+  @allure.link:TT-2109
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us what's the total UK market value of these goods
@@ -469,7 +469,7 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2110
+  @allure.link:TT-2110
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us what outcome they're seeking for
@@ -524,7 +524,7 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2111
+  @allure.link:TT-2111
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to provide us with their business details
@@ -582,7 +582,7 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2112
+  @allure.link:TT-2112
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to provide us with their personal details
@@ -643,7 +643,7 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2113
+  @allure.link:TT-2113
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to see form summary before submitting it
@@ -707,7 +707,7 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2114
+  @allure.link:TT-2114
   @dev-only
   @captcha
   @<business_type>
@@ -773,11 +773,11 @@ Feature: ERP - UK business
       | imported        | UK importer   |
 
 
-  @TT-2115
+  @allure.link:TT-2115
   @save-for-later
   @restore-session
   @bug
-  @TT-2098
+  @allure.issue:TT-2098
   @fixed
   Scenario Outline: A UK importer should be able to resume progress giving feedback from "<expected>" page
     Given "Robert" got to "<expected>" ERP page as "UK importer"

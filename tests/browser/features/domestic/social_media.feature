@@ -7,9 +7,9 @@ Feature: Domestic - Sharing on Social Media and via emails
     Given basic authentication is done for "Domestic - Home" page
 
 
-  @CMS-686
+  @allure.link:CMS-686
   @bug
-  @CMS-733
+  @allure.issue:CMS-733
   @fixed
   @advice
   @article
@@ -28,9 +28,9 @@ Feature: Domestic - Sharing on Social Media and via emails
       | Twitter      |
 
 
-  @CMS-686
+  @allure.link:CMS-686
   @bug
-  @CMS-733
+  @allure.issue:CMS-733
   @fixed
   @advice
   @article
@@ -43,9 +43,9 @@ Feature: Domestic - Sharing on Social Media and via emails
     Then "Robert" should see that "LinkedIn" share link contains link to the article
 
 
-  @CMS-686
+  @allure.link:CMS-686
   @bug
-  @CMS-733
+  @allure.issue:CMS-733
   @fixed
   @advice
   @article

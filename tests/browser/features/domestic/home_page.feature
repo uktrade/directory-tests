@@ -5,7 +5,7 @@ Feature: Domestic - Home Page
   Background:
     Given basic authentication is done for "Domestic - Home" page
 
-  @ED-2366
+  @allure.link:ED-2366
   @sections
   Scenario: Any Exporter should see the "Beta bar, Hero, EU Exit enquiries banner, Advice, Services, Case Studies, Business is Great, Error Reporting" sections on the home page
       Given "Robert" visits the "Domestic - Home" page
@@ -22,7 +22,7 @@ Feature: Domestic - Home Page
         | Footer                           |
 
 
-  @ED-3014
+  @allure.link:ED-3014
   @video
   Scenario: Any Exporter should be able to play promotional video on the Home page
     Given "Robert" visits the "Domestic - Home" page
@@ -32,7 +32,7 @@ Feature: Domestic - Home Page
     Then "Robert" should be able to watch at least first "3" seconds of the promotional video
 
 
-  @ED-3014
+  @allure.link:ED-3014
   @video
   Scenario: Any Exporter should be able to close the window with promotional video on the Home page
     Given "Robert" visits the "Domestic - Home" page
@@ -43,7 +43,7 @@ Feature: Domestic - Home Page
     Then "Robert" should not see the window with promotional video
 
 
-  @XOT-1215
+  @allure.link:XOT-1215
   @maddb
   @sections
   Scenario: Any Exporter should be able to get to the "Market Access Database" using link on the home page
@@ -54,7 +54,7 @@ Feature: Domestic - Home Page
     Then "Robert" should be on the "Market Access Database - Landing" page
 
 
-  @XOT-1216
+  @allure.link:XOT-1216
   @govuk
   @sections
   Scenario: Any Exporter should be able to find out more how to "prepare business for Brexit" by going to one of the "brexit related" pages on GOV.UK
@@ -65,7 +65,7 @@ Feature: Domestic - Home Page
     Then "Robert" should be on the "GOV.UK - Brexit related article" page
 
 
-  @XOT-1217
+  @allure.link:XOT-1217
   @markets
   @sections
   Scenario Outline: Any Exporter should be able to get to the export markets listing using "<export market guides>" link on Home page
@@ -81,7 +81,7 @@ Feature: Domestic - Home Page
       | view all market guides    |
 
 
-  @XOT-1217
+  @allure.link:XOT-1217
   @markets
   @sections
   Scenario: Exporters should be able to quickly filter export markets by one of the preselected sectors
@@ -92,7 +92,7 @@ Feature: Domestic - Home Page
     Then "Robert" should be on the "Domestic - filtered markets listing" page
 
 
-  @XOT-1217
+  @allure.link:XOT-1217
   @markets
   @sections
   Scenario: Exporters should be able to filter export markets by the sector their business is in
@@ -103,7 +103,7 @@ Feature: Domestic - Home Page
     Then "Robert" should be on the "Domestic - filtered markets listing" page
 
 
-  @XOT-1218
+  @allure.link:XOT-1218
   @markets
   @sections
   Scenario: Any Exporter should be able to learn what's new on our site

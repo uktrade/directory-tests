@@ -5,7 +5,7 @@ Feature: INTL - Header-Footer
   Background:
     Given basic authentication is done for "International - Landing" page
 
-  @CMS-158
+  @allure.link:CMS-158
   @logo
   @header
   @footer

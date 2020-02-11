@@ -7,9 +7,9 @@ Feature: FAS - Google Tag Manager
     Given basic authentication is done for "International - Landing" page
 
   @bug
-  @CMS-1634
+  @allure.issue:CMS-1634
   @fixed
-  @TT-1500
+  @allure.link:TT-1500
   Scenario Outline: GTM properties should be properly set on "Find a Supplier - <selected>" page
     When "Robert" goes to the "Find a Supplier - <selected>" page
 
@@ -22,9 +22,9 @@ Feature: FAS - Google Tag Manager
       | Empty search results | FindASupplier | False       | en-gb        | Companies   | Search         | None   |
 
   @bug
-  @CMS-1634
+  @allure.issue:CMS-1634
   @fixed
-  @TT-1500
+  @allure.link:TT-1500
   Scenario Outline: GTM properties should be properly set on "Find a Supplier - Company profile" page
     Given "Robert" searched for companies using "food" keyword in "any" sector
 
@@ -42,9 +42,9 @@ Feature: FAS - Google Tag Manager
 
   @stage-only
   @bug
-  @CMS-1634
+  @allure.issue:CMS-1634
   @fixed
-  @TT-1500
+  @allure.link:TT-1500
   @internationalisation
   Scenario Outline: GTM properties should be properly set on "Find a Supplier - <selected>" page viewed in "<preferred_language>"
     Given "Robert" visits the "Find a Supplier - <selected>" page

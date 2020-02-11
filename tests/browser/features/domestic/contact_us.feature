@@ -5,7 +5,7 @@ Feature: Domestic - Contact us
   Background:
     Given basic authentication is done for "Domestic - Home" page
 
-  @TT-758
+  @allure.link:TT-758
   @enquirer-location
   Scenario: Enquirers should see all expected contact location options on the "Domestic - Contact us"
     Given "Robert" visits the "Domestic - Contact us" page
@@ -17,7 +17,7 @@ Feature: Domestic - Contact us
       | Outside the UK |
 
 
-  @TT-758
+  @allure.link:TT-758
   @enquirer-location
   @domestic-enquiry-page
   Scenario: Domestic Enquirers should see all expected contact options on the "Domestic - What can we help you with?" page
@@ -38,7 +38,7 @@ Feature: Domestic - Contact us
       | Other                                     |
 
 
-  @TT-363
+  @allure.link:TT-363
   @office-finder
   Scenario: Domestic Enquirers should be able to get to the "New Office finder - Home" page
     Given "Robert" visits the "Domestic - Contact us" page
@@ -49,7 +49,7 @@ Feature: Domestic - Contact us
     Then "Robert" should be on the "Domestic - New Office Finder" page
 
 
-  @TT-363
+  @allure.link:TT-363
   @office-finder
   Scenario Outline: Domestic Enquirers should be able to get to find contact details for "<appropriate>" office in "<city>"
     Given "Robert" visits the "Domestic - New Office Finder" page
@@ -80,7 +80,7 @@ Feature: Domestic - Contact us
 
 
   @wip
-  @TT-363
+  @allure.link:TT-363
   @office-finder
   Scenario: Domestic Enquirers should be able to get to the NEW Office finder page
     Given "Robert" visits the "Domestic - New Office Finder" page
@@ -92,7 +92,7 @@ Feature: Domestic - Contact us
 
 
   @wip
-  @TT-363
+  @allure.link:TT-363
   @captcha
   @dev-only
   @office-finder
@@ -105,7 +105,7 @@ Feature: Domestic - Contact us
     And an email is submitted to "appropriate local office based on the postcode provided"
 
 
-  @TT-758
+  @allure.link:TT-758
   @exporting-from-the-UK
   Scenario: Domestic Enquirers should be able to get to the "Long (Export Advice Comment) - Contact us" form
     Given "Robert" visits the "Domestic - Contact us" page
@@ -116,7 +116,7 @@ Feature: Domestic - Contact us
     Then "Robert" should be on the "Domestic - Long (Export Advice Comment) - Contact us" page
 
 
-  @TT-758
+  @allure.link:TT-758
   @ita
   @captcha
   @dev-only
@@ -136,7 +136,7 @@ Feature: Domestic - Contact us
 #    And an email is submitted to relevant "ITA" (based on the postcode provided)
 
 
-  @TT-758
+  @allure.link:TT-758
   @account-support
   Scenario: Domestic enquirers should see all expected help options on the "Great.gov.uk account and services support" page
     Given "Robert" got to the "Domestic - Great.gov.uk account and services support" page via "The UK -> Great.gov.uk account and services support"
@@ -148,7 +148,7 @@ Feature: Domestic - Contact us
       | Other                        |
 
 
-  @TT-758
+  @allure.link:TT-758
   @exopps
   @account-support
   Scenario: Domestic enquirers should see all expected help options for "Export opportunities service"
@@ -161,7 +161,7 @@ Feature: Domestic - Contact us
       | Other                                                       |
 
 
-  @TT-758
+  @allure.link:TT-758
   @greatgovuk-account
   @account-support
   Scenario: Domestic enquirers should see all expected help options for "Great.gov.uk account"
@@ -178,7 +178,7 @@ Feature: Domestic - Contact us
       | Other                                                          |
 
 
-  @TT-758
+  @allure.link:TT-758
   @short-domestic
   @account-support
   Scenario: Domestic enquirers should be able to get to the "Short Contact Us" form via "The UK -> Great.gov.uk account and services support -> Other"
@@ -189,7 +189,7 @@ Feature: Domestic - Contact us
     Then "Robert" should be on the "Domestic - Short contact form (Tell us how we can help)" page
 
 
-  @TT-758
+  @allure.link:TT-758
   @short-domestic
   @greatgovuk-account
   @support
@@ -201,7 +201,7 @@ Feature: Domestic - Contact us
     Then "Robert" should be on the "Domestic - Short contact form (Tell us how we can help)" page
 
 
-  @TT-758
+  @allure.link:TT-758
   @greatgovuk-account
   @support
   Scenario: Domestic enquirers should be able to find answers to sought topic about "Your account on Great.gov.uk"
@@ -212,7 +212,7 @@ Feature: Domestic - Contact us
     Then "Robert" should be on the "Domestic - Great.gov.uk account - Dedicated Support Content" page
 
 
-  @TT-758
+  @allure.link:TT-758
   @exopps
   @support
   Scenario Outline: Exporters should be able to find answers to Export Opportunities related topic "<selected>"
@@ -228,7 +228,7 @@ Feature: Domestic - Contact us
       | My daily alerts are not relevant to me                      |
 
 
-  @TT-758
+  @allure.link:TT-758
   @zendesk
   @dev-only
   @captcha
@@ -258,7 +258,7 @@ Feature: Domestic - Contact us
       | I have not received a verification code                        |
 
 
-  @TT-758
+  @allure.link:TT-758
   @zendesk
   @dev-only
   @captcha
@@ -281,7 +281,7 @@ Feature: Domestic - Contact us
 
   # Choosing "Other" on the "Your account on Great.gov.uk" page takes us
   # directly to the short contact us form
-  @TT-758
+  @allure.link:TT-758
   @zendesk
   @dev-only
   @captcha
@@ -299,7 +299,7 @@ Feature: Domestic - Contact us
       | Other          |
 
 
-  @TT-758
+  @allure.link:TT-758
   @ukef
   Scenario: Exporters should be able to get to the UKEF Check your eligibility contact-us form
     Given "Robert" got to the "Domestic - What can we help you with? - Domestic Contact us" page via "The UK"
@@ -325,7 +325,7 @@ Feature: Domestic - Contact us
     And an email is submitted to "UKEF mailbox"
 
 
-  @TT-758
+  @allure.link:TT-758
   @investing-overseas
   @events
   @dso
@@ -344,8 +344,8 @@ Feature: Domestic - Contact us
       | Other                                   |
 
 
-  @TT-758
-  @CMS-506
+  @allure.link:TT-758
+  @allure.link:CMS-506
   @eu-exit
   @feature-flagged
   Scenario: Exporters should be able to get to the "Domestic Brexit help short contact-us form"
@@ -356,9 +356,9 @@ Feature: Domestic - Contact us
     Then "Robert" should be on the "Domestic - Brexit help" page
 
 
-  @TT-758
+  @allure.link:TT-758
   @zendesk
-  @CMS-506
+  @allure.link:CMS-506
   @dev-only
   @captcha
   @eu-exit
@@ -372,7 +372,7 @@ Feature: Domestic - Contact us
     And a "zendesk" notification entitled "Brexit contact form" should be sent to "Robert"
 
 
-  @TT-758
+  @allure.link:TT-758
   @dev-only
   @captcha
   @short-form
@@ -393,7 +393,7 @@ Feature: Domestic - Contact us
 
 
   @dev-only
-  @TT-758
+  @allure.link:TT-758
   @international
   Scenario: International Enquirers should be able to see all expected contact options on the "International - What would you like to know more about?" page (Dev)
     Given "Robert" visits the "Domestic - Contact us" page
@@ -412,7 +412,7 @@ Feature: Domestic - Contact us
 
   @stage-only
   @prod-only
-  @TT-758
+  @allure.link:TT-758
   @international
   Scenario: International Enquirers should be able to see all expected contact options on the "International - What would you like to know more about?" page (Staging)
     Given "Robert" visits the "Domestic - Contact us" page
@@ -428,7 +428,7 @@ Feature: Domestic - Contact us
       | Other                        |
 
 
-  @TT-758
+  @allure.link:TT-758
   @international
   Scenario Outline: International Enquirers should be able to get to the "<expected>" form for "<selected>"
     Given "Robert" got to the "Domestic - What would you like to know more about? - International Contact us" page via "Outside the UK"
@@ -447,7 +447,7 @@ Feature: Domestic - Contact us
       | Other                        | International - Contact us                              |
 
 
-  @TT-758
+  @allure.link:TT-758
   @stage-only
   @prod-only
   @international
@@ -466,7 +466,7 @@ Feature: Domestic - Contact us
       | Other                      | International - Contact us                              |
 
 
-  @TT-758
+  @allure.link:TT-758
   @going-back
   Scenario Outline: Enquirers should be able to navigate back to previous pages from "<path>" back to "<expected>" page
     Given "Robert" navigates via "<path>"
@@ -484,7 +484,7 @@ Feature: Domestic - Contact us
       | The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk | Domestic - Great.gov.uk account and services support        |
 
 
-  @TT-758
+  @allure.link:TT-758
   @dev-only
   @captcha
   @capital-investment
@@ -506,7 +506,7 @@ Feature: Domestic - Contact us
       | Footer            |
 
 
-  @TT-758
+  @allure.link:TT-758
   @dev-only
   @captcha
   @international

@@ -1,4 +1,4 @@
-@ED-3580
+@allure.link:ED-3580
 @fas-home-page
 @no-sso-email-verification-required
 @allure.suite:International
@@ -7,7 +7,7 @@ Feature: FAS - Landing page
   Background:
     Given basic authentication is done for "International - Landing" page
 
-  @ED-4242
+  @allure.link:ED-4242
   Scenario: Buyers should be able to view "Find a Supplier home" page
     Given "Robert" visits the "Find a Supplier - Landing" page
 
@@ -22,7 +22,7 @@ Feature: FAS - Landing page
       | Footer            |
 
 
-  @ED-4245
+  @allure.link:ED-4245
   @search
   Scenario Outline: Buyers should be able to "Find UK suppliers" in "<specific>" industry from the "Find a Supplier home" page using "<following>" keyword
     Given "Robert" visits the "Find a Supplier - Landing" page
@@ -38,7 +38,7 @@ Feature: FAS - Landing page
       | no        | Mining         | Find a Supplier - Search results       |
 
 
-  @ED-4248
+  @allure.link:ED-4248
   @industry-page
   Scenario: Buyers should be able to find out more about featured industries from the "Find a Supplier - Landing" page
     Given "Robert" visits the "Find a Supplier - Landing" page
@@ -48,7 +48,7 @@ Feature: FAS - Landing page
     Then "Robert" should be on the "International - Industry" page
 
 
-  @ED-4249
+  @allure.link:ED-4249
   @industries-page
   Scenario: Buyers should be able to see more UK industries from the "Find a Supplier - Landing" page
     Given "Robert" visits the "Find a Supplier - Landing" page
@@ -59,7 +59,7 @@ Feature: FAS - Landing page
 
 
   @bug
-  @TT-1512
+  @allure.issue:TT-1512
   @fixed
   @search
   Scenario: Buyers should be able to find UK suppliers using arbitrary search term

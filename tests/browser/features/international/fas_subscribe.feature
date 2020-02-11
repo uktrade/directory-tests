@@ -6,7 +6,7 @@ Feature: FAS - Search
     Given basic authentication is done for "International - Landing" page
 
 
-  @TT-2194
+  @allure.link:TT-2194
   @subscribe
   @dev-only
   @captcha
@@ -19,9 +19,9 @@ Feature: FAS - Search
     And "Robert" should be signed up for email updates of the latest UK companies in selected industry
 
 
-  @TT-2194
+  @allure.link:TT-2194
   @bug
-  @TT-2186
+  @allure.issue:TT-2186
   @fixed
   @search
   @subscribe

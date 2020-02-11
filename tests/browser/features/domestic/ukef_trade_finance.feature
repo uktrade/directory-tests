@@ -5,7 +5,7 @@ Feature: Domestic - UK Export Finance page & contact-us form
   Background:
     Given basic authentication is done for "Domestic - Home" page
 
-  @TT-585
+  @allure.link:TT-585
   Scenario: Any Exporter should see the all expected sections on the "UKEF Trade Finance" page
     Given "Robert" visits the "Domestic - Trade Finance" page
 
@@ -20,7 +20,7 @@ Feature: Domestic - UK Export Finance page & contact-us form
       | Error Reporting             |
 
 
-  @TT-585
+  @allure.link:TT-585
   @video
   Scenario: Any Exporter should be able to watch promotional video on the "UKEF Trade Finance" page
     Given "Robert" visits the "Domestic - Trade Finance" page
@@ -30,7 +30,7 @@ Feature: Domestic - UK Export Finance page & contact-us form
     Then "Robert" should be able to watch at least first "5" seconds of the promotional video
 
 
-  @TT-585
+  @allure.link:TT-585
   Scenario: Any Exporter should be able to get to "Finance Advice" page from the "UKEF Trade Finance" page
     Given "Robert" visits the "Domestic - Trade Finance" page
 
@@ -39,7 +39,7 @@ Feature: Domestic - UK Export Finance page & contact-us form
     Then "Robert" should be on the "Domestic - Advice article list" page
 
 
-  @TT-585
+  @allure.link:TT-585
   Scenario Outline: Any Exporter should be able to navigate to "Domestic - <expected>" page using "<breadcrumb>" on the "UKEF Trade Finance" page
     Given "Robert" visits the "Domestic - Trade Finance" page
 
@@ -53,7 +53,7 @@ Feature: Domestic - UK Export Finance page & contact-us form
       | UKEF         | Get Finance |
 
 
-  @TT-585
+  @allure.link:TT-585
   Scenario: Any Exporter should be able to get to the "Contact UKEF" form from "Domestic - Trade Finance"
     Given "Robert" visits the "Domestic - Trade Finance" page
 
@@ -67,7 +67,7 @@ Feature: Domestic - UK Export Finance page & contact-us form
       | Error Reporting |
 
 
-  @TT-585
+  @allure.link:TT-585
   @captcha
   @dev-only
   Scenario: Any Exporter should be able to contact UKEF team by submitting the "Check your eligibility" form
@@ -83,7 +83,7 @@ Feature: Domestic - UK Export Finance page & contact-us form
     Then "Robert" should be on the "Domestic - Thank you - UKEF Contact us" page
 
 
-  @TT-585
+  @allure.link:TT-585
   @captcha
   @dev-only
   Scenario: Any Exporter should not be able to submit "Check you eligibility" form without filling out all required fields

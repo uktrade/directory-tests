@@ -5,7 +5,7 @@ Feature: Invest - Contact us and Leave feedback
   Background:
     Given basic authentication is done for "International - Landing" page
 
-  @CMS-237
+  @allure.link:CMS-237
   @contact-us
   @dev-only
   @captcha

@@ -5,8 +5,8 @@ Feature: SOO - Search for marketplace
     Given basic authentication is done for "Selling Online Overseas - Home" page
 
 
-  @XOT-631
-  @XOT-689
+  @allure.link:XOT-631
+  @allure.link:XOT-689
   @exopps
   @soo-long-domestic
   @account-support
@@ -25,7 +25,7 @@ Feature: SOO - Search for marketplace
       | Search results | Poland    | Home and lifestyle       |
 
 
-  @XOT-689
+  @allure.link:XOT-689
   @exopps
   @soo-long-domestic
   @account-support

@@ -8,7 +8,7 @@ Feature: Domestic - Google Analytics 360 Events
 
 
   @skip
-  @CMS-1672
+  @allure.link:CMS-1672
   @header-events
   Scenario Outline: All GA360 events should registered for event handlers attached to "Domestic Header" elements on "Domestic - <specific>" page
     Given "Robert" visits the "Domestic - <specific>" page
@@ -37,7 +37,7 @@ Feature: Domestic - Google Analytics 360 Events
       | Join our Export Community - form     |
 
     @bug
-    @CMS-1683
+    @allure.issue:CMS-1683
     @fixme
     Examples: Pages without Domestic Header tagging
       | specific                             |
@@ -46,7 +46,7 @@ Feature: Domestic - Google Analytics 360 Events
       | Trade finance                        |
 
     @bug
-    @CMS-1683
+    @allure.issue:CMS-1683
     @fixme
     @dev-only
     Examples: Pages without Domestic Header tagging
@@ -55,9 +55,9 @@ Feature: Domestic - Google Analytics 360 Events
 
 
   @bug
-  @CMS-1684
+  @allure.issue:CMS-1684
   @fixme
-  @CMS-1672
+  @allure.link:CMS-1672
   @page-events
   Scenario Outline: All GA360 "LandingPage" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page
     Given "Robert" visits the "Domestic - <specific>" page
@@ -84,7 +84,7 @@ Feature: Domestic - Google Analytics 360 Events
       | Get export finance - article list    |
 
 
-  @CMS-1672
+  @allure.link:CMS-1672
   @dev-only
   @page-events
   Scenario Outline: All GA360 "ArticleList" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page (Dev)
@@ -101,7 +101,7 @@ Feature: Domestic - Google Analytics 360 Events
       | Create an export plan - article list |
 
 
-  @CMS-1672
+  @allure.link:CMS-1672
   @stage-only
   @page-events
   Scenario Outline: All GA360 "ArticleList" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page (Staging)
@@ -121,7 +121,7 @@ Feature: Domestic - Google Analytics 360 Events
       | Create an export plan - article list |
 
 
-  @CMS-1672
+  @allure.link:CMS-1672
   @dev-only
   @page-events
   Scenario Outline: All GA360 "CountryGuidePage" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page (Dev)
@@ -149,7 +149,7 @@ Feature: Domestic - Google Analytics 360 Events
       | Brazil - guide |
 
 
-  @CMS-1672
+  @allure.link:CMS-1672
   @stage-only
   @page-events
   Scenario Outline: All GA360 "CountryGuidePage" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page (Staging)
@@ -176,7 +176,7 @@ Feature: Domestic - Google Analytics 360 Events
       | Brazil - guide |
 
 
-  @CMS-1672
+  @allure.link:CMS-1672
   @stage-only
   @page-events
   Scenario Outline: All GA360 "CountryGuidePage" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page
@@ -199,7 +199,7 @@ Feature: Domestic - Google Analytics 360 Events
       | Germany - guide |
 
 
-  @CMS-1672
+  @allure.link:CMS-1672
   @stage-only
   @page-events
   Scenario Outline: All GA360 "CountryGuidePage" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page
@@ -221,7 +221,7 @@ Feature: Domestic - Google Analytics 360 Events
       | Italy - guide |
 
 
-  @CMS-1672
+  @allure.link:CMS-1672
   @stage-only
   @page-events
   Scenario Outline: All GA360 "CountryGuidePage" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page
@@ -245,7 +245,7 @@ Feature: Domestic - Google Analytics 360 Events
       | South Korea - guide |
 
 
-  @CMS-1672
+  @allure.link:CMS-1672
   @stage-only
   @page-events
   Scenario Outline: All GA360 "CountryGuidePage" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page
@@ -269,7 +269,7 @@ Feature: Domestic - Google Analytics 360 Events
       | The Netherlands - guide |
 
 
-  @CMS-1672
+  @allure.link:CMS-1672
   @stage-only
   @page-events
   Scenario Outline: All GA360 "CountryGuidePage" events should registered for event handlers attached to "Domestic Pages" elements on "Domestic - <specific>" page

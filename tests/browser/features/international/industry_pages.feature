@@ -1,5 +1,5 @@
-@ED-3183
-@ED-4259
+@allure.link:ED-3183
+@allure.link:ED-4259
 @industry-pages
 @no-sso-email-verification-required
 @allure.suite:International
@@ -8,7 +8,7 @@ Feature: INTL - Industry pages
   Background:
     Given basic authentication is done for "International - Landing" page
 
-  @ED-4260
+  @allure.link:ED-4260
   Scenario Outline: Buyers should be able to see all expected page elements on "<specific>" page
     Given "Robert" visits the "International - <specific> - industry" page
 
@@ -55,9 +55,9 @@ Feature: INTL - Industry pages
 
 
   @bug
-  @TT-433
+  @allure.issue:TT-433
   @fixed
-  @ED-4261
+  @allure.link:ED-4261
   @breadcrumbs
   Scenario Outline: Buyers should be able to go back to the "<specific>" page via "<selected>" breadcrumb on the "<specific> Industry" page
     Given "Robert" visits the "International - <specific> - industry" page

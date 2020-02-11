@@ -6,7 +6,7 @@ Feature: Invest - High Potential Opportunities
   Background:
     Given basic authentication is done for "International - Landing" page
 
-  @TT-442
+  @allure.link:TT-442
   Scenario Outline: Investors should be able to view "HPO - <selected>" page
     Given "Annette Geissinger" visits the "Invest - <selected> - HPO" page
 
@@ -34,7 +34,7 @@ Feature: Invest - High Potential Opportunities
       | Lightweight structures            |
 
 
-  @TT-442
+  @allure.link:TT-442
   Scenario Outline: Investors should be able to view "HPO - <selected>" page
     Given "Annette Geissinger" visits the "Invest - <selected> - HPO" page
 
@@ -61,7 +61,7 @@ Feature: Invest - High Potential Opportunities
       | Rail infrastructure    |
 
 
-  @TT-442
+  @allure.link:TT-442
   @contact-us
   Scenario Outline: Investors should be able to reach "Contact us" page from "HPO - <selected>" page
     Given "Annette Geissinger" visits the "Invest - <selected> - HPO" page
@@ -86,7 +86,7 @@ Feature: Invest - High Potential Opportunities
       | Rail infrastructure      |
 
 
-  @TT-442
+  @allure.link:TT-442
   @related-opportunities
   Scenario Outline: Investors should be able to view "Other investment opportunities" from "HPO - <selected>" page
     Given "Annette Geissinger" visits the "Invest - <selected> - HPO" page
@@ -110,11 +110,11 @@ Feature: Invest - High Potential Opportunities
 
 
   @bug
-  @TT-879
+  @allure.issue:TT-879
   @fixed
-  @TT-443
+  @allure.link:TT-443
   @bug
-  @TT-1509
+  @allure.issue:TT-1509
   @fixed
   @dev-only
   @captcha

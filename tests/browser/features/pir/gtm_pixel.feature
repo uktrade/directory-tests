@@ -6,7 +6,7 @@ Feature: PIR - Google Tag Manager
   Background:
     Given basic authentication is done for "Domestic - Home" page
 
-  @TT-1500
+  @allure.link:TT-1500
   Scenario Outline: GTM properties should be properly set on "PIR - <selected>" page
     When "Robert" goes to the "PIR - <selected>" page
 

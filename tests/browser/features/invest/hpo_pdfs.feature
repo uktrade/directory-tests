@@ -8,7 +8,7 @@ Feature: Invest - HPO PDFs sent after
   Background:
     Given basic authentication is done for "International - Landing" page
 
-  @TT-444
+  @allure.link:TT-444
   @dev-only
   @captcha
   Scenario Outline: Check PDFs listed on "Thank you for your enquiry" page for "<selected>" HPO
@@ -31,7 +31,7 @@ Feature: Invest - HPO PDFs sent after
       | High productivity food production |
 
 
-  @TT-444
+  @allure.link:TT-444
   @dev-only
   @captcha
   Scenario Outline: Check PDFs listed on "Thank you for your enquiry" page for "<selected>" HPO
@@ -54,7 +54,7 @@ Feature: Invest - HPO PDFs sent after
       | Lightweight structures |
 
 
-  @TT-444
+  @allure.link:TT-444
   @dev-only
   @captcha
   Scenario Outline: Check PDFs listed on "Thank you for your enquiry" page for "<selected>" HPO

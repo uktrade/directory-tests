@@ -7,7 +7,7 @@ Feature: INTL - Updates for non-UK companies on EU Exit
 
   @news
   @eu-exit
-  @CMS-579
+  @allure.link:CMS-579
   Scenario: International Visitors should be able to view news article
     Given at least "1" published "international" news article on "Domestic"
 
@@ -19,7 +19,7 @@ Feature: INTL - Updates for non-UK companies on EU Exit
 
   @news
   @eu-exit
-  @CMS-579
+  @allure.link:CMS-579
   Scenario: International Visitors should be able to ge to the "Updates for non-UK companies on EU Exit" from "International - Landing" page
     Given at least "1" published "international" news article on "Domestic"
     And "Henry" went to the "International - Landing" page
@@ -38,7 +38,7 @@ Feature: INTL - Updates for non-UK companies on EU Exit
       | Footer          |
 
 
-  @CMS-579
+  @allure.link:CMS-579
   @eu-exit
   @contact-form
   Scenario: International Visitors should see be able to navigate to the "EU Exit contact form"
@@ -49,7 +49,7 @@ Feature: INTL - Updates for non-UK companies on EU Exit
     Then "Henry" should be on the "International - EU Exit - Contact us" page
 
 
-  @CMS-579
+  @allure.link:CMS-579
   @eu-exit
   @breadcrumbs
   Scenario: International Visitors should see be able to get to "International" page by using "Great.gov.uk" breadcrumb on "Updates for non-UK companies on EU Exit" page
@@ -62,7 +62,7 @@ Feature: INTL - Updates for non-UK companies on EU Exit
 
   @news
   @eu-exit
-  @CMS-579
+  @allure.link:CMS-579
   @breadcrumbs
   Scenario: International Visitors should see be able to get to "International" page by using "Great.gov.uk" breadcrumb on international news article page
     Given "Henry" opened random "international" news article
@@ -74,7 +74,7 @@ Feature: INTL - Updates for non-UK companies on EU Exit
 
   @news
   @eu-exit
-  @CMS-579
+  @allure.link:CMS-579
   @breadcrumbs
   Scenario Outline: International Visitors should see be able to get to "<expected page>" by using "<breadcrumb>" breadcrumb on "International EU Exit news" page
     Given "Henry" opened random "international" news article
@@ -105,7 +105,7 @@ Feature: INTL - Updates for non-UK companies on EU Exit
 
 
   @bug
-  @CMS-553
+  @allure.issue:CMS-553
   @fixme
   @news
   @eu-exit
@@ -121,7 +121,7 @@ Feature: INTL - Updates for non-UK companies on EU Exit
 
   @wip
   @bug
-  @CMS-556
+  @allure.issue:CMS-556
   @fixme
   @news
   @eu-exit

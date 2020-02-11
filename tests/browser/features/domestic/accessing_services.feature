@@ -5,7 +5,7 @@ Feature: Domestic - Accessing Services
   Background:
     Given basic authentication is done for "Domestic - Home" page
 
-  @ED-2659
+  @allure.link:ED-2659
   @home-page
   @accessing-services
   Scenario: Any Exporter visiting the Services page should be able to see links to all relevant Services
@@ -22,9 +22,9 @@ Feature: Domestic - Accessing Services
 
 
   @bug
-  @ED-2702
+  @allure.issue:ED-2702
   @fixed
-  @ED-2661
+  @allure.link:ED-2661
   @home-page
   @accessing-services
   @<service>

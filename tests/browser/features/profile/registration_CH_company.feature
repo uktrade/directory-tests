@@ -1,5 +1,5 @@
-@TT-1033
-@TT-1094
+@allure.link:TT-1033
+@allure.link:TT-1094
 @enrol
 @new-registration
 @allure.suite:
@@ -8,7 +8,7 @@ Feature: Profile - CH enrolment flows
   Background:
     Given basic authentication is done for "Domestic - Home" page
 
-  @TT-1115
+  @allure.link:TT-1115
   Scenario: Users should be presented with the Enrolment Steps prior to starting the registration process
     Given "Natalia" visits the "Profile - Create an account" page
 
@@ -28,7 +28,7 @@ Feature: Profile - CH enrolment flows
       | Overseas Company                      |
 
 
-  @TT-1117
+  @allure.link:TT-1117
   @ltd-plc-royal
   Scenario Outline: "<business type>" representative should be asked to enter their email and set a password after selecting their business type
     Given "Natalia" visits the "Profile - Enter your email address and set a password (<business type>)" page
@@ -45,7 +45,7 @@ Feature: Profile - CH enrolment flows
 
 
   @dev-only
-  @TT-1120
+  @allure.link:TT-1120
   @ltd-plc-royal
   Scenario Outline: "<business type>" representative should receive an email with confirmation code
     Given "Natalia" visits the "Profile - Enter your email address and set a password (<business type>)" page
@@ -67,8 +67,8 @@ Feature: Profile - CH enrolment flows
 
 
   @dev-only
-  @TT-2176
-  @TT-2193
+  @allure.link:TT-2176
+  @allure.link:TT-2193
   @password
   @ltd-plc-royal
   Scenario Outline: "<business type>" representative shouldn't be able to use a password that doesn't meet requirements otherwise their going to see "<an error message>"
@@ -97,7 +97,7 @@ Feature: Profile - CH enrolment flows
 
 
   @bug
-  @TT-2192
+  @allure.issue:TT-2192
   @fixed
   @dev-only
   @ltd-plc-royal
@@ -118,7 +118,7 @@ Feature: Profile - CH enrolment flows
 
 
   @dev-only
-  @TT-1121
+  @allure.link:TT-1121
   @ltd-plc-royal
   Scenario Outline: A representative of a "<selected business type>" company should be asked to enter their business details after providing email confirmation code
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
@@ -138,7 +138,7 @@ Feature: Profile - CH enrolment flows
 
 
   @dev-only
-  @TT-1123
+  @allure.link:TT-1123
   @ltd-plc-royal
   Scenario Outline: A representative of a "<selected business type>" company should be asked to enter their details after providing business details
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
@@ -163,7 +163,7 @@ Feature: Profile - CH enrolment flows
 
 
   @dev-only
-  @TT-1124
+  @allure.link:TT-1124
   @ltd-plc-royal
   Scenario Outline: A representative of a "<selected business type>" company should be told when account is created and the are the next possible steps
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
@@ -192,8 +192,8 @@ Feature: Profile - CH enrolment flows
 
 
   @dev-only
-  @TT-1126
-  @TT-1031
+  @allure.link:TT-1126
+  @allure.link:TT-1031
   @ltd-plc-royal
   Scenario: Companies House company enrolment creates a business profile
     Given "Natalia" has created a great.gov.uk account for a "LTD, PLC or Royal Charter"
@@ -225,8 +225,8 @@ Feature: Profile - CH enrolment flows
 
 
   @dev-only
-  @TT-1125
-  @TT-1017
+  @allure.link:TT-1125
+  @allure.link:TT-1017
   @ltd-plc-royal
   Scenario Outline: When CH record doesn't include business' address the business representative should be referred to a contact page
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
@@ -246,8 +246,8 @@ Feature: Profile - CH enrolment flows
   # this scenario uses deprecated form of registration via SSO signup page
   @dev-only
   @legacy-sso-registration
-  @TT-1127
-  @TT-1035
+  @allure.link:TT-1127
+  @allure.link:TT-1035
   @ltd-plc-royal
   @sole-trader-other-business
   @uk-taxpayer
@@ -268,8 +268,8 @@ Feature: Profile - CH enrolment flows
 
 
   @dev-only
-  @TT-1127
-  @TT-1035
+  @allure.link:TT-1127
+  @allure.link:TT-1035
   @ltd-plc-royal
   @sole-trader-other-business
   @uk-taxpayer
@@ -292,8 +292,8 @@ Feature: Profile - CH enrolment flows
 
   @captcha
   @dev-only
-  @TT-1128
-  @TT-1036
+  @allure.link:TT-1128
+  @allure.link:TT-1036
   @ltd-plc-royal
   Scenario: A logged-in user representing "LTD, PLC or Royal Charter" company should not be able to access SSO Sign in or Create an account pages
     Given "Natalia" has created a great.gov.uk account for a "LTD, PLC or Royal Charter"
@@ -306,8 +306,8 @@ Feature: Profile - CH enrolment flows
 
 
   @dev-only
-  @TT-1129
-  @TT-1036
+  @allure.link:TT-1129
+  @allure.link:TT-1036
   @ltd-plc-royal
   @sole-trader-other-business
   Scenario Outline: Handle invalid user state - already logged in - skip ahead to page where they enter business details for "<selected business type>"
@@ -328,8 +328,8 @@ Feature: Profile - CH enrolment flows
 
 
   @dev-only
-  @TT-1130
-  @TT-1037
+  @allure.link:TT-1130
+  @allure.link:TT-1037
   @ltd-plc-royal
   @sole-trader-other-business
   Scenario Outline: Log user in on verification submit, not on account creation for "<selected business type>"
@@ -348,7 +348,7 @@ Feature: Profile - CH enrolment flows
 
 
   @bug
-  @TT-1281
+  @allure.issue:TT-1281
   @fixed
   @captcha
   @dev-only

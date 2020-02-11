@@ -5,7 +5,7 @@ Feature: Invest - Header-Footer
   Background:
     Given basic authentication is done for "International - Landing" page
 
-  @CMS-158
+  @allure.link:CMS-158
   @logo
   @header
   @footer
@@ -39,7 +39,7 @@ Feature: Invest - Header-Footer
 
 
   @stage-only
-  @CMS-158
+  @allure.link:CMS-158
   @logo
   @header
   @footer
@@ -58,7 +58,7 @@ Feature: Invest - Header-Footer
       | Rail infrastructure               |
 
 
-  @CMS-158
+  @allure.link:CMS-158
   @header
   @footer
   @landing-page
@@ -79,7 +79,7 @@ Feature: Invest - Header-Footer
       | Contact us              | Invest - Contact us              |
 
 
-  @CMS-158
+  @allure.link:CMS-158
   @logo
   @header
   @footer

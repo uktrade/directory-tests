@@ -7,7 +7,7 @@ Feature: INTL - Google Tag Manager
   Background:
     Given basic authentication is done for "International - Landing" page
 
-  @TT-1500
+  @allure.link:TT-1500
   Scenario Outline: GTM properties should be properly set on "International - <selected>" page
     When "Robert" goes to the "International - <selected>" page
 
@@ -16,7 +16,7 @@ Feature: INTL - Google Tag Manager
       | <businessUnit> | <loginStatus> | <siteLanguage> | <siteSection> | <siteSubsection> | <userId> |
 
     @bug
-    @CMS-1634
+    @allure.issue:CMS-1634
     @fixed
     Examples: Landing page
       | selected | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
@@ -92,9 +92,9 @@ Feature: INTL - Google Tag Manager
 
 
   @bug
-  @CMS-1634
+  @allure.issue:CMS-1634
   @fixed
-  @TT-1500
+  @allure.link:TT-1500
   @internationalisation
   Scenario Outline: GTM properties should be properly set on "International - <selected>" page viewed in "<preferred_language>"
     Given "Robert" visits the "International - <selected>" page

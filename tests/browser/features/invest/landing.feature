@@ -6,7 +6,7 @@ Feature: Invest - landing page
   Background:
     Given basic authentication is done for "International - Landing" page
 
-  @CMS-157
+  @allure.link:CMS-157
   Scenario: Visitors should be able to view "Invest - Landing" page
     Given "Robert" visits the "Invest - landing" page
 
@@ -24,7 +24,7 @@ Feature: Invest - landing page
       | Footer                       |
 
 
-  @CMS-157
+  @allure.link:CMS-157
   Scenario Outline: Overseas businesses should be able to learn more about "<selected>" UK Industry
     Given "Robert" visits the "Invest - landing" page
 
@@ -47,7 +47,7 @@ Feature: Invest - landing page
       | Technology                          |
 
 
-  @CMS-157
+  @allure.link:CMS-157
   Scenario: Overseas businesses should be able to also learn more about UK Industries other than the promoted ones
     Given "Robert" visits the "Invest - landing" page
 
@@ -56,7 +56,7 @@ Feature: Invest - landing page
     Then "Robert" should be on the "International - Industries" page
 
 
-  @CMS-157
+  @allure.link:CMS-157
   Scenario: Overseas businesses should be able to learn how to set up in the UK
     Given "Robert" visits the "Invest - landing" page
 

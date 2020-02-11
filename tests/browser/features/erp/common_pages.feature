@@ -56,7 +56,7 @@ Feature: ERP - common pages
 
 
   @wip
-  @TT-2183
+  @allure.link:TT-2183
   @dev-only
   @summary
   Scenario Outline: Should see correct data on summary page

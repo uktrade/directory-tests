@@ -5,7 +5,7 @@ Feature: Domestic - Great site search
   Background:
     Given basic authentication is done for "Domestic - Home" page
 
-  @XOT-760
+  @allure.link:XOT-760
   Scenario: Visitor should see empty search results if they don't specify search phrase
     Given "Robert" visits the "Domestic - Home" page
 
@@ -14,7 +14,7 @@ Feature: Domestic - Great site search
     Then "Robert" should be on the "Domestic - Empty Search results" page
 
 
-  @XOT-760
+  @allure.link:XOT-760
   Scenario Outline: Visitor should see search results for "<phrase>"
     Given "Robert" visits the "Domestic - <specific>" page
 
@@ -31,9 +31,9 @@ Feature: Domestic - Great site search
 
 
   @bug
-  @XOT-840
+  @allure.issue:XOT-840
   @fixed
-  @XOT-760
+  @allure.link:XOT-760
   Scenario Outline: Visitors should be able to find out more about the "<type of>" search results
     Given "Robert" searched using "<phrase>" on the "Domestic - <specific>" page
 
@@ -47,7 +47,7 @@ Feature: Domestic - Great site search
       | Markets listing | Food   | Online marketplace | Selling Online Overseas - Marketplace, Domestic - Markets - guide, Events - event |
 
     @bug
-    @XOT-1208
+    @allure.issue:XOT-1208
     @fixme
     Examples: event, market, service and opportunity
       | specific       | phrase         | type of            | expected                                                                                            |
@@ -56,7 +56,7 @@ Feature: Domestic - Great site search
       | Services       | Manufacture    | Export opportunity | Export Opportunities - Opportunity                                                                  |
 
 
-  @XOT-760
+  @allure.link:XOT-760
   Scenario Outline: Visitors should be able to navigate through search results pages for "<phrase>"
     Given "Robert" searched using "<phrase>" on the "Domestic - <specific>" page
     And "Robert" sees more than "1" search result page
@@ -74,7 +74,7 @@ Feature: Domestic - Great site search
       | Markets listing | Water       |
 
 
-  @XOT-760
+  @allure.link:XOT-760
   Scenario Outline: Visitor should be able to clear the last search for "<first phrase>" and start new search for "<second phrase>"
     Given "Robert" searched using "<first phrase>" on the "Domestic - <specific>" page
     And "Robert" sees search results page number "1" for "<first phrase>"

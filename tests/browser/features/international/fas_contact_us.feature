@@ -26,7 +26,7 @@ Feature: FAS - Contact us
       | Footer   |
 
 
-  @ED-4246
+  @allure.link:ED-4246
   Scenario Outline: Buyers should be able to get to the "<expected>" page from the "Find a Supplier - Landing" page
     Given "Robert" visits the "Find a Supplier - Landing" page
 
@@ -40,7 +40,7 @@ Feature: FAS - Contact us
       | Contact us footer | Domestic - Contact us                                   |
 
 
-  @ED-4247
+  @allure.link:ED-4247
   @captcha
   @dev-only
   Scenario: Buyers should be able to contact DIT from the "Find a Supplier - Landing" page
@@ -144,7 +144,7 @@ Feature: FAS - Contact us
       | Creative industries                 |
 
 
-  @TT-942
+  @allure.link:TT-942
   @captcha
   @dev-only
   @contact-us
@@ -157,13 +157,13 @@ Feature: FAS - Contact us
     Then "Robert" should be on the "International - Find a UK business partner - Thank you" page
     And "Robert" should not receive a confirmation email
 #    @bug
-#    @TT-1777
+#    @allure.issue:TT-1777
 #    @fixme
 #    And an email notification about "Robert"'s enquiry should NOT be send to "Trade mailbox"
 
 
   @bug
-  @TT-277
+  @allure.issue:TT-277
   @fixed
   @full
   @contact-us

@@ -7,7 +7,7 @@ Feature: International - Regional pages
     Given basic authentication is done for "International - Landing" page
 
 
-  @CMS-215
+  @allure.link:CMS-215
   Scenario: Visitors should be able to see all expected sections on "International - Regions" page
     Given "Robert" visits the "International - Regions" page
 
@@ -23,7 +23,7 @@ Feature: International - Regional pages
       | Footer           |
 
 
-  @CMS-215
+  @allure.link:CMS-215
   @link
   @anchor
   Scenario Outline: Visitors should be able to find out more about "<region>" using regular page links
@@ -50,7 +50,7 @@ Feature: International - Regional pages
       | South England    |
 
 
-  @CMS-215
+  @allure.link:CMS-215
   @link
   @map
   @skip-in-firefox
@@ -78,7 +78,7 @@ Feature: International - Regional pages
       | South England    |
 
 
-  @CMS-215
+  @allure.link:CMS-215
   @breadcrumbs
   Scenario Outline: Visitors should be able to go back to the "Regions" page via breadcrumb on "<region>" page
     Given "Robert" visits the "International - <region> - region" page

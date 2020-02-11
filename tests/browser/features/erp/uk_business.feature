@@ -9,7 +9,7 @@ Feature: ERP - UK business
     Given basic authentication is done for "ERP - Landing" page
 
 
-  @TT-2073
+  @allure.link:TT-2073
   @UK_business
   Scenario: A UK business should be able to tell whether they're importing from overseas or not
     Given "Robert" visits the "ERP - User type" page
@@ -30,7 +30,7 @@ Feature: ERP - UK business
       | Footer   |
 
 
-  @TT-2074
+  @allure.link:TT-2074
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should see a list of product codes which might be affected by Brexit
@@ -53,7 +53,7 @@ Feature: ERP - UK business
       | not imported    | UK business   |
 
 
-  @TT-2075
+  @allure.link:TT-2075
   @drill
   @full
   @<business_type>
@@ -77,7 +77,7 @@ Feature: ERP - UK business
       | not imported    | UK business   |
 
 
-  @TT-2076
+  @allure.link:TT-2076
   @<business_type>
   @drill
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to change the goods previously selected
@@ -97,7 +97,7 @@ Feature: ERP - UK business
       | not imported    | UK business   |
 
 
-  @TT-2078
+  @allure.link:TT-2078
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to specify what were UK sales volumes for these goods before Brexit
@@ -129,7 +129,7 @@ Feature: ERP - UK business
       | not imported    | UK business   | Sales volumes (UK business) |
 
 
-  @TT-2079
+  @allure.link:TT-2079
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to specify what were UK export volumes before Brexit
@@ -157,7 +157,7 @@ Feature: ERP - UK business
       | not imported    | UK business   | Sales volumes (UK business) |
 
 
-  @TT-2080
+  @allure.link:TT-2080
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us if they're aware of sales changes
@@ -194,7 +194,7 @@ Feature: ERP - UK business
       | not imported    | UK business   |
 
 
-  @TT-2081
+  @allure.link:TT-2081
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us if they're aware of market size changes
@@ -234,7 +234,7 @@ Feature: ERP - UK business
       | not imported    | UK business   |
 
 
-  @TT-2082
+  @allure.link:TT-2082
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us if they're aware of other changes
@@ -275,7 +275,7 @@ Feature: ERP - UK business
       | not imported    | UK business   |
 
 
-  @TT-2083
+  @allure.link:TT-2083
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us about total UK market value of affected goods
@@ -319,7 +319,7 @@ Feature: ERP - UK business
       | not imported    | UK business   |
 
 
-  @TT-2084
+  @allure.link:TT-2084
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to tell us what outcome (in terms of tariffs and quotas) they are seeking for affected goods
@@ -370,7 +370,7 @@ Feature: ERP - UK business
       | not imported    | UK business   |
 
 
-  @TT-2085
+  @allure.link:TT-2085
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to provide us with business details
@@ -420,7 +420,7 @@ Feature: ERP - UK business
       | not imported    | UK business   |
 
 
-  @TT-2086
+  @allure.link:TT-2086
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to provide us with personal details
@@ -469,7 +469,7 @@ Feature: ERP - UK business
       | not imported    | UK business   |
 
 
-  @TT-2087
+  @allure.link:TT-2087
   @full
   @<business_type>
   Scenario Outline: A UK business which goods are "<imported or not>" from overseas should be able to see the form summary before submitting it
@@ -522,7 +522,7 @@ Feature: ERP - UK business
       | not imported    | UK business   |
 
 
-  @TT-2088
+  @allure.link:TT-2088
   @dev-only
   @captcha
   @<business_type>
@@ -576,11 +576,11 @@ Feature: ERP - UK business
       | not imported    | UK business   |
 
 
-  @TT-2116
+  @allure.link:TT-2116
   @save-for-later
   @restore-session
   @bug
-  @TT-2098
+  @allure.issue:TT-2098
   @fixed
   Scenario Outline: A UK business should be able to resume progress giving feedback from "<expected>" page
     Given "Robert" got to "<expected>" ERP page as "UK business"

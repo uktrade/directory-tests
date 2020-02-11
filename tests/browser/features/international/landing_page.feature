@@ -5,7 +5,7 @@ Feature: INTL - Landing page
   Background:
     Given basic authentication is done for "International - Landing" page
 
-  @ED-3114
+  @allure.link:ED-3114
   @dev-only
   Scenario: Visitors should see "Buy from the UK, Invest in the UK, Study in the UK, Visit the UK" sections on the International page
     Given "Robert" visits the "International - Landing" page
@@ -23,7 +23,7 @@ Feature: INTL - Landing page
       | Footer                |
 
 
-  @ED-3136
+  @allure.link:ED-3136
   @dev-only
   @external-service
   @<expected_service>
@@ -46,7 +46,7 @@ Feature: INTL - Landing page
       | Visit the UK     | Visit Britain - Home   |
 
 
-  @ED-3149
+  @allure.link:ED-3149
   @dev-only
   @language-selector
   Scenario Outline: Visitors should be able to view International page in "<preferred_language>"
@@ -72,14 +72,14 @@ Feature: INTL - Landing page
       | 日本語              |
 
   @bug
-  @CMS-1263
+  @allure.issue:CMS-1263
   @fixme
     Examples: 500 ISE
       | preferred_language |
       | العربيّة            |
 
 
-  @ED-3083
+  @allure.link:ED-3083
   @dev-only
   @language-selector
   Scenario: Visitor should be able to open and close the language selector on "International - Landing" page
@@ -91,7 +91,7 @@ Feature: INTL - Landing page
     When "Robert" closes the language selector
 
 
-  @ED-3083
+  @allure.link:ED-3083
   @dev-only
   @language-selector
   @accessibility
@@ -104,7 +104,7 @@ Feature: INTL - Landing page
     When "Robert" closes the language selector using his keyboard
 
 
-  @ED-3149
+  @allure.link:ED-3149
   @dev-only
   Scenario: Visitors should be able to "get advice and services to help them export" from International page
     Given "Robert" visits the "International - Landing" page

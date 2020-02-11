@@ -6,7 +6,7 @@ Feature: INTL - Brexit help - Contact us
   Background:
     Given basic authentication is done for "International - Landing" page
 
-  @TT-617
+  @allure.link:TT-617
   @brexit
   @dev-only
   Scenario: International Visitors should see all expected page sections on "International Brexit help - Contact Us form" page
@@ -26,7 +26,7 @@ Feature: INTL - Brexit help - Contact us
 
   # Missing translations
   @wip
-  @TT-617
+  @allure.link:TT-617
   @brexit
   @dev-only
   Scenario Outline: International Visitors should not be able view "International Brexit help - Contact Us form" in "<preferred_language>"
@@ -48,7 +48,7 @@ Feature: INTL - Brexit help - Contact us
       | ar                 |
 
 
-  @TT-617
+  @allure.link:TT-617
   @dev-only
   @captcha
   @brexit

@@ -6,9 +6,9 @@ Feature: Domestic - Header-Footer
 
 
   @bug
-  @ED-3116
+  @allure.issue:ED-3116
   @fixed
-  @ED-3118
+  @allure.link:ED-3118
   @logo
   @header
   @footer
@@ -31,7 +31,7 @@ Feature: Domestic - Header-Footer
 
 
   @stage-only
-  @ED-3118
+  @allure.link:ED-3118
   @logo
   @header
   @footer
@@ -44,9 +44,9 @@ Feature: Domestic - Header-Footer
 
 
   @bug
-  @ED-3116
+  @allure.issue:ED-3116
   @fixed
-  @ED-3118
+  @allure.link:ED-3118
   @events
   @logo
   @header
@@ -58,7 +58,7 @@ Feature: Domestic - Header-Footer
     And "Robert" should see correct "EVENTS Business Is Great - footer" logo
 
 
-  @ED-3118
+  @allure.link:ED-3118
   @logo
   @header
   @footer
@@ -70,11 +70,11 @@ Feature: Domestic - Header-Footer
     And "Robert" should see correct "Great - footer" logo
 
 
-  @ED-3587
+  @allure.link:ED-3587
   @logo
   @header
   @footer
-  @ED-3118
+  @allure.link:ED-3118
   Scenario Outline: Any Exporter should be able to get to the Domestic Home page from "<selected>" page by using DIT logo in the page header and footer
     Given "Robert" visits the "<selected>" page
 
@@ -99,7 +99,7 @@ Feature: Domestic - Header-Footer
       | Export Opportunities - Home |
 
 
-  @ED-3091
+  @allure.link:ED-3091
   @favicon
   Scenario Outline: Any user should see the correct favicon on "<specific>" page
     Given basic authentication is done for "<specific>" page

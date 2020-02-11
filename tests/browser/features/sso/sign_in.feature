@@ -6,7 +6,7 @@ Feature: SSO - Sign in
     Given basic authentication is done for "SSO - Sign in" page
 
   @bug
-  @TT-1778
+  @allure.issue:TT-1778
   @fixed
   Scenario: Visitors should see all expected page elements on "SSO - Sign in"
     When "Robert" goes to the "SSO - Sign in" page
@@ -22,7 +22,7 @@ Feature: SSO - Sign in
 
 
   @bug
-  @TT-1778
+  @allure.issue:TT-1778
   @fixed
   Scenario: Visitors should see all expected page elements on "SSO - Registration" page
     When "Robert" goes to the "SSO - Registration" page
@@ -37,7 +37,7 @@ Feature: SSO - Sign in
 
 
   @bug
-  @TT-1778
+  @allure.issue:TT-1778
   @fixed
   Scenario: Visitors should see all expected page elements on "Profile - Sign in"
     Given "Robert" visits the "SSO - Sign in" page

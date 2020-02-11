@@ -9,7 +9,7 @@ Feature: ERP - An exporter from developing country
     Given basic authentication is done for "ERP - Landing" page
 
 
-  @TT-2121
+  @allure.link:TT-2121
   Scenario: An enquirer representing an "exporter from developing country" should be able to tell which country they are from
     Given "Robert" visits the "ERP - User type" page
 
@@ -25,7 +25,7 @@ Feature: ERP - An exporter from developing country
       | Footer   |
 
 
-  @TT-2122
+  @allure.link:TT-2122
   @full
   @<business_type>
   Scenario Outline: An exporter from developing country should see a list of product codes which might be affected by Brexit
@@ -42,7 +42,7 @@ Feature: ERP - An exporter from developing country
       | Developing country |
 
 
-  @TT-2123
+  @allure.link:TT-2123
   @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to select goods affected by Brexit
@@ -59,7 +59,7 @@ Feature: ERP - An exporter from developing country
       | Developing country |
 
 
-  @TT-2124
+  @allure.link:TT-2124
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to change the goods previously selected
     Given "Robert" got to "ERP - Select country (<business_type>)" from "ERP - User type" via "exporter from developing country"
@@ -81,7 +81,7 @@ Feature: ERP - An exporter from developing country
       | Developing country |
 
 
-  @TT-2125
+  @allure.link:TT-2125
   @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to specify what were UK sales volumes for these goods before Brexit
@@ -101,7 +101,7 @@ Feature: ERP - An exporter from developing country
       | Developing country |
 
 
-  @TT-2126
+  @allure.link:TT-2126
   @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to specify what were UK export volumes before Brexit
@@ -124,7 +124,7 @@ Feature: ERP - An exporter from developing country
       | Developing country |
 
 
-  @TT-2127
+  @allure.link:TT-2127
   @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to to tell us if they're aware of sales changes
@@ -150,7 +150,7 @@ Feature: ERP - An exporter from developing country
       | Developing country |
 
 
-  @TT-2128
+  @allure.link:TT-2128
   @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to tell us if they're aware of market size changes
@@ -179,7 +179,7 @@ Feature: ERP - An exporter from developing country
       | Developing country |
 
 
-  @TT-2129
+  @allure.link:TT-2129
   @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to tell us if they're aware of other changes
@@ -211,7 +211,7 @@ Feature: ERP - An exporter from developing country
       | Developing country |
 
 
-  @TT-2130
+  @allure.link:TT-2130
   @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to tell us what outcome (in terms of tariffs and quotas) they are seeking for affected goods
@@ -246,7 +246,7 @@ Feature: ERP - An exporter from developing country
       | Developing country |
 
 
-  @TT-2131
+  @allure.link:TT-2131
   @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to provide us with business details
@@ -284,7 +284,7 @@ Feature: ERP - An exporter from developing country
       | Developing country |
 
 
-  @TT-2132
+  @allure.link:TT-2132
   @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to provide us with personal details
@@ -325,7 +325,7 @@ Feature: ERP - An exporter from developing country
       | Developing country |
 
 
-  @TT-2133
+  @allure.link:TT-2133
   @full
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to see the form summary before submitting it
@@ -369,7 +369,7 @@ Feature: ERP - An exporter from developing country
       | Developing country |
 
 
-  @TT-2134
+  @allure.link:TT-2134
   @<business_type>
   Scenario Outline: An exporter from developing country should should be able to submit the complete form
     Given "Robert" got to "ERP - Select country (<business_type>)" from "ERP - User type" via "exporter from developing country"
@@ -415,11 +415,11 @@ Feature: ERP - An exporter from developing country
       | Developing country |
 
 
-  @TT-2136
+  @allure.link:TT-2136
   @save-for-later
   @restore-session
   @bug
-  @TT-2098
+  @allure.issue:TT-2098
   @fixed
   Scenario Outline: An exporter from developing country should be able to resume progress giving feedback from "<expected>" page
     Given "Robert" got to "<expected>" ERP page as "exporter from developing country"

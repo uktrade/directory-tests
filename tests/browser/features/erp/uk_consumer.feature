@@ -1,7 +1,7 @@
 @dev-only
 @erp
 @uk_consumer
-@TT-2047
+@allure.link:TT-2047
 @allure.suite:ERP
 Feature: ERP - UK consumer
 
@@ -145,7 +145,7 @@ Feature: ERP - UK consumer
       | individual consumer         | Personal details (UK consumer)       |
 
 
-  @TT-2060
+  @allure.link:TT-2060
   @search
   Scenario Outline: A UK consumer should be able to search for affected goods by commodity code or part of their name "<phrase>"
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
@@ -171,7 +171,7 @@ Feature: ERP - UK consumer
       | 05100000 | no                    | at least 1  |
 
 
-  @TT-2060
+  @allure.link:TT-2060
   @search
   Scenario Outline: A UK consumer should be able to search for affected goods by commodity code or part of their name
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
@@ -193,7 +193,7 @@ Feature: ERP - UK consumer
       | 9305200010 |
 
 
-  @TT-2060
+  @allure.link:TT-2060
   @search
   Scenario Outline: A UK consumer should be able to search for affected goods by commodity code or part of their name
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
@@ -216,7 +216,7 @@ Feature: ERP - UK consumer
       | 6700000000 |
 
 
-  @TT-2054
+  @allure.link:TT-2054
   @print
   Scenario Outline: A "<uk consumer>" should be able to print a copy of their submitted form
     Given "Robert" submitted his ERP form as "<uk consumer>"
@@ -230,11 +230,11 @@ Feature: ERP - UK consumer
       | consumer group      |
 
 
-  @TT-2056
+  @allure.link:TT-2056
   @save-for-later
   @restore-session
   @bug
-  @TT-2098
+  @allure.issue:TT-2098
   @fixed
   Scenario Outline: A "<uk consumer>" should be able to resume progress giving feedback from "<expected>" page
     Given "Robert" got to "<expected>" ERP page as "<uk consumer>"

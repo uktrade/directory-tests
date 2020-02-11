@@ -6,7 +6,7 @@ Feature: Invest - Google Tag Manager
   Background:
     Given basic authentication is done for "International - Landing" page
 
-  @TT-1500
+  @allure.link:TT-1500
   Scenario Outline: GTM properties should be properly set on "Invest - <selected>" page
     When "Robert" goes to the "Invest - <selected>" page
 
@@ -15,7 +15,7 @@ Feature: Invest - Google Tag Manager
       | <businessUnit> | <loginStatus> | <siteLanguage> | <siteSection> | <siteSubsection> | <userId> |
 
     @bug
-    @CMS-1634
+    @allure.issue:CMS-1634
     @fixed
     Examples: Listing pages
       | selected                | businessUnit | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
@@ -41,9 +41,9 @@ Feature: Invest - Google Tag Manager
 
 
   @bug
-  @CMS-1634
+  @allure.issue:CMS-1634
   @fixed
-  @TT-1500
+  @allure.link:TT-1500
   @internationalisation
   Scenario Outline: GTM properties should be properly set on "Invest - <selected>" page viewed in "<preferred_language>"
     Given "Robert" visits the "Invest - <selected>" page
