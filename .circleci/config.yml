@@ -980,6 +980,12 @@ workflows:
       - func_profile_test_stage:
           requires:
             - delete_test_data_stage
+      - generate_allure_report_from_functional_tests_and_send_link_to_slack:
+          requires:
+            - func_fas_test_stage
+            - func_sso_test_stage
+            - func_profile_test_stage
+            - func_international_test_stage
 
   run_smoke_and_functional_on_uat_ad_hoc:
     jobs:
@@ -1003,6 +1009,12 @@ workflows:
       - func_profile_test_uat:
           requires:
             - delete_test_data_uat
+      - generate_allure_report_from_functional_tests_and_send_link_to_slack:
+          requires:
+            - func_fas_test_uat
+            - func_sso_test_uat
+            - func_profile_test_uat
+            - func_international_test_uat
 
   run_cms_load_tests_on_stage:
     triggers:
@@ -1121,6 +1133,7 @@ workflows:
           requires:
             - setup_env_for_load_tests
 
+
   run_smoke_and_functional_tests_on_dev:
     triggers:
     - schedule:
@@ -1149,6 +1162,12 @@ workflows:
       - func_profile_test_dev:
           requires:
             - delete_test_data_dev
+      - generate_allure_report_from_functional_tests_and_send_link_to_slack:
+          requires:
+            - func_fas_test_dev
+            - func_sso_test_dev
+            - func_profile_test_dev
+            - func_international_test_dev
 
   run_smoke_and_functional_tests_on_stage:
     triggers:
@@ -1178,6 +1197,12 @@ workflows:
       - func_profile_test_stage:
           requires:
             - delete_test_data_stage
+      - generate_allure_report_from_functional_tests_and_send_link_to_slack:
+          requires:
+            - func_fas_test_stage
+            - func_sso_test_stage
+            - func_profile_test_stage
+            - func_international_test_stage
 
   run_smoke_and_functional_tests_on_uat:
     triggers:
@@ -1207,6 +1232,12 @@ workflows:
       - func_profile_test_uat:
           requires:
             - delete_test_data_uat
+      - generate_allure_report_from_functional_tests_and_send_link_to_slack:
+          requires:
+            - func_fas_test_uat
+            - func_sso_test_uat
+            - func_profile_test_uat
+            - func_international_test_uat
 
 
   run_browser_tests_in_parallel_in_dev:
