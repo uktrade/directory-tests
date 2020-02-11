@@ -323,6 +323,29 @@ step_merge_junit_xml_reports_from_parallel_browser_tests: &step_merge_junit_xml_
       cd ../../
       ./print_error_summary.py --report ./tests/browser/junit_report/merged.xml
 
+step_persist_fas_results: &step_persist_fas_results
+  persist_to_workspace:
+    root: .
+    paths:
+      - results_fas
+
+step_persist_sso_results: &step_persist_sso_results
+  persist_to_workspace:
+    root: .
+    paths:
+      - results_sso
+
+step_persist_profile_results: &step_persist_profile_results
+  persist_to_workspace:
+    root: .
+    paths:
+      - results_profile
+
+step_persist_international_results: &step_persist_international_results
+  persist_to_workspace:
+    root: .
+    paths:
+      - results_international
 
 # Lists of steps
 steps_setup_env_for_smoke_tests: &steps_setup_env_for_smoke_tests
@@ -373,7 +396,6 @@ steps_smoke_tests: &steps_smoke_tests
           moxci -m "Latest report from Smoke tests ran against `awk '/Environment/{print $3}' ./results/environment.properties`"
 
 steps_functional_tests: &steps_functional_tests
-  steps:
     - *step_restore_cached_functional_tests_requirements
     - *step_run_functional_tests
     - *step_install_junit_merge
@@ -382,15 +404,31 @@ steps_functional_tests: &steps_functional_tests
         path: ./tests/functional/reports
     - store_artifacts:
         path: ./tests/functional/reports
-    - persist_to_workspace:
-        root: .
-        paths:
-          - .
 
 steps_delete_test_data: &steps_delete_test_data
   steps:
     - *step_restore_cached_functional_tests_requirements
     - *step_delete_test_data
+
+steps_functional_tests_and_persist_fas_results: &steps_functional_tests_and_persist_fas_results
+  steps:
+    - *steps_functional_tests
+    - *step_persist_fas_results
+
+steps_functional_tests_and_persist_sso_results: &steps_functional_tests_and_persist_sso_results
+  steps:
+    - *steps_functional_tests
+    - *step_persist_sso_results
+
+steps_functional_tests_and_persist_profile_results: &steps_functional_tests_and_persist_profile_results
+  steps:
+    - *steps_functional_tests
+    - *step_persist_profile_results
+
+steps_functional_tests_and_persist_international_results: &steps_functional_tests_and_persist_international_results
+  steps:
+    - *steps_functional_tests
+    - *step_persist_international_results
 
 steps_run_parallel_browser_tests: &steps_run_parallel_browser_tests
   steps:
@@ -476,7 +514,7 @@ jobs:
       TAGS: "--tags=~@stage-only --tags=~@uat-only"
     <<: [
     *machine_python3_node_browsers,
-    *steps_functional_tests,
+    *steps_functional_tests_and_persist_fas_results,
     ]
 
   func_sso_test_dev:
@@ -487,7 +525,7 @@ jobs:
       TAGS: "--tags=~@stage-only --tags=~@uat-only"
     <<: [
     *machine_python3_node_browsers,
-    *steps_functional_tests,
+    *steps_functional_tests_and_persist_fas_results,
     ]
 
   func_profile_test_dev:
@@ -498,7 +536,7 @@ jobs:
       TAGS: "--tags=~@stage-only --tags=~@uat-only"
     <<: [
     *machine_python3_node_browsers,
-    *steps_functional_tests,
+    *steps_functional_tests_and_persist_profile_results,
     ]
 
   func_international_test_dev:
@@ -509,7 +547,7 @@ jobs:
       TAGS: "--tags=~@stage-only --tags=~@uat-only"
     <<: [
     *machine_python3_node_browsers,
-    *steps_functional_tests,
+    *steps_functional_tests_and_persist_international_results,
     ]
 
   func_fas_test_stage:
@@ -520,7 +558,7 @@ jobs:
       TAGS: "--tags=~@dev-only --tags=~@uat-only"
     <<: [
     *machine_python3_node_browsers,
-    *steps_functional_tests,
+    *steps_functional_tests_and_persist_fas_results,
     ]
 
   func_sso_test_stage:
@@ -531,7 +569,7 @@ jobs:
       TAGS: "--tags=~@dev-only --tags=~@uat-only"
     <<: [
     *machine_python3_node_browsers,
-    *steps_functional_tests,
+    *steps_functional_tests_and_persist_sso_results,
     ]
 
   func_profile_test_stage:
@@ -542,7 +580,7 @@ jobs:
       TAGS: "--tags=~@dev-only --tags=~@uat-only"
     <<: [
     *machine_python3_node_browsers,
-    *steps_functional_tests,
+    *steps_functional_tests_and_persist_profile_results,
     ]
 
   func_international_test_stage:
@@ -553,7 +591,7 @@ jobs:
       TAGS: "--tags=~@dev-only --tags=~@uat-only"
     <<: [
     *machine_python3_node_browsers,
-    *steps_functional_tests,
+    *steps_functional_tests_and_persist_international_results,
     ]
 
   func_fas_test_uat:
@@ -564,7 +602,7 @@ jobs:
       TAGS: "--tags=~@stage-only"
     <<: [
     *machine_python3_node_browsers,
-    *steps_functional_tests,
+    *steps_functional_tests_and_persist_fas_results,
     ]
 
   func_sso_test_uat:
@@ -575,7 +613,7 @@ jobs:
       TAGS: "--tags=~@stage-only"
     <<: [
     *machine_python3_node_browsers,
-    *steps_functional_tests,
+    *steps_functional_tests_and_persist_sso_results,
     ]
 
   func_profile_test_uat:
@@ -586,7 +624,7 @@ jobs:
       TAGS: "--tags=~@stage-only"
     <<: [
     *machine_python3_node_browsers,
-    *steps_functional_tests,
+    *steps_functional_tests_and_persist_profile_results,
     ]
 
   func_international_test_uat:
@@ -597,7 +635,7 @@ jobs:
       TAGS: "--tags=~@stage-only"
     <<: [
     *machine_python3_node_browsers,
-    *steps_functional_tests,
+    *steps_functional_tests_and_persist_international_results,
     ]
 
   delete_test_data_dev:
