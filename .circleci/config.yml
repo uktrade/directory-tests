@@ -493,7 +493,7 @@ jobs:
     *steps_functional_tests,
     ]
 
-  func_sud_test_dev:
+  func_profile_test_dev:
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
@@ -537,7 +537,7 @@ jobs:
     *steps_functional_tests,
     ]
 
-  func_sud_test_stage:
+  func_profile_test_stage:
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
@@ -581,7 +581,7 @@ jobs:
     *steps_functional_tests,
     ]
 
-  func_sud_test_uat:
+  func_profile_test_uat:
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "uat"
@@ -895,14 +895,14 @@ workflows:
       - func_sso_test_dev:
           requires:
             - delete_test_data_dev
-      - func_sud_test_dev:
+      - func_profile_test_dev:
           requires:
             - delete_test_data_dev
       - generate_allure_report_from_functional_tests_and_send_link_to_slack:
           requires:
             - func_fas_test_dev
             - func_sso_test_dev
-            - func_sud_test_dev
+            - func_profile_test_dev
             - func_international_test_dev
 
   run_smoke_and_functional_on_stage_ad_hoc:
@@ -924,7 +924,7 @@ workflows:
       - func_sso_test_stage:
           requires:
             - delete_test_data_stage
-      - func_sud_test_stage:
+      - func_profile_test_stage:
           requires:
             - delete_test_data_stage
 
@@ -947,7 +947,7 @@ workflows:
       - func_sso_test_uat:
           requires:
             - delete_test_data_uat
-      - func_sud_test_uat:
+      - func_profile_test_uat:
           requires:
             - delete_test_data_uat
 
@@ -1093,7 +1093,7 @@ workflows:
       - func_sso_test_dev:
           requires:
             - delete_test_data_dev
-      - func_sud_test_dev:
+      - func_profile_test_dev:
           requires:
             - delete_test_data_dev
 
@@ -1122,7 +1122,7 @@ workflows:
       - func_sso_test_stage:
           requires:
             - delete_test_data_stage
-      - func_sud_test_stage:
+      - func_profile_test_stage:
           requires:
             - delete_test_data_stage
 
@@ -1151,7 +1151,7 @@ workflows:
       - func_sso_test_uat:
           requires:
             - delete_test_data_uat
-      - func_sud_test_uat:
+      - func_profile_test_uat:
           requires:
             - delete_test_data_uat
 
