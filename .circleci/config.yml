@@ -261,6 +261,8 @@ step_run_browser_tests_in_parallel: &step_run_browser_tests_in_parallel
         echo "${BROWSER} run: '${title}'"
         PYTHONPATH=. behave features/ \
         --format=allure_behave.formatter:AllureFormatter \
+        --define AllureFormatter.issue_pattern=${BUG_TRACKER_URL_PATTERN} \
+        --define AllureFormatter.link_pattern=${BUG_TRACKER_URL_PATTERN} \
         --outfile=results_${BROWSER}_${CIRCLE_NODE_INDEX}/ \
         --no-skipped \
         --no-source \
