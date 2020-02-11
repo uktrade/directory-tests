@@ -7,12 +7,12 @@
 attrs==19.3.0
 automat==0.8.0
 certifi==2019.11.28
-cffi==1.13.2
+cffi==1.14.0
 chardet==3.0.4
 constantly==15.1.0
 cryptography==2.8
 cssselect==1.1.0
-directory-api-client==21.0.1
+directory-api-client==21.1.0
 directory-client-core==6.1.0
 directory-cms-client==11.1.0
 directory-sso-api-client==6.2.0
@@ -55,4 +55,4 @@ w3lib==1.21.0
 zope.interface==4.7.1
 
 # The following packages are considered to be unsafe in a requirements file:
-# setuptools==45.1.0
+# setuptools
