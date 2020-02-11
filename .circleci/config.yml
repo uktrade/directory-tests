@@ -395,7 +395,13 @@ steps_smoke_tests: &steps_smoke_tests
           export CIRCLE_PULL_REQUEST=none
           moxci allure_report/index.html --message "Latest report from Smoke tests ran against `awk '/Environment/{print $3}' ./results/environment.properties`"
 
-steps_functional_tests: &steps_functional_tests
+steps_delete_test_data: &steps_delete_test_data
+  steps:
+    - *step_restore_cached_functional_tests_requirements
+    - *step_delete_test_data
+
+steps_functional_tests_and_persist_fas_results: &steps_functional_tests_and_persist_fas_results
+  steps:
     - *step_restore_cached_functional_tests_requirements
     - *step_run_functional_tests
     - *step_install_junit_merge
@@ -404,30 +410,42 @@ steps_functional_tests: &steps_functional_tests
         path: ./tests/functional/reports
     - store_artifacts:
         path: ./tests/functional/reports
-
-steps_delete_test_data: &steps_delete_test_data
-  steps:
-    - *step_restore_cached_functional_tests_requirements
-    - *step_delete_test_data
-
-steps_functional_tests_and_persist_fas_results: &steps_functional_tests_and_persist_fas_results
-  steps:
-    - *steps_functional_tests
     - *step_persist_fas_results
 
 steps_functional_tests_and_persist_sso_results: &steps_functional_tests_and_persist_sso_results
   steps:
-    - *steps_functional_tests
+    - *step_restore_cached_functional_tests_requirements
+    - *step_run_functional_tests
+    - *step_install_junit_merge
+    - *step_merge_junit_xml_reports_from_functional_tests
+    - store_test_results:
+        path: ./tests/functional/reports
+    - store_artifacts:
+        path: ./tests/functional/reports
     - *step_persist_sso_results
 
 steps_functional_tests_and_persist_profile_results: &steps_functional_tests_and_persist_profile_results
   steps:
-    - *steps_functional_tests
+    - *step_restore_cached_functional_tests_requirements
+    - *step_run_functional_tests
+    - *step_install_junit_merge
+    - *step_merge_junit_xml_reports_from_functional_tests
+    - store_test_results:
+        path: ./tests/functional/reports
+    - store_artifacts:
+        path: ./tests/functional/reports
     - *step_persist_profile_results
 
 steps_functional_tests_and_persist_international_results: &steps_functional_tests_and_persist_international_results
   steps:
-    - *steps_functional_tests
+    - *step_restore_cached_functional_tests_requirements
+    - *step_run_functional_tests
+    - *step_install_junit_merge
+    - *step_merge_junit_xml_reports_from_functional_tests
+    - store_test_results:
+        path: ./tests/functional/reports
+    - store_artifacts:
+        path: ./tests/functional/reports
     - *step_persist_international_results
 
 steps_run_parallel_browser_tests: &steps_run_parallel_browser_tests
@@ -525,7 +543,7 @@ jobs:
       TAGS: "--tags=~@stage-only --tags=~@uat-only"
     <<: [
     *machine_python3_node_browsers,
-    *steps_functional_tests_and_persist_fas_results,
+    *steps_functional_tests_and_persist_sso_results,
     ]
 
   func_profile_test_dev:
