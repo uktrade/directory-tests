@@ -3,7 +3,7 @@
 Feature: View FAS in various languages
 
 
-  @ED-2004
+  @allure.link:ED-2004
   @internationalization
   @i18n
   @<selected>

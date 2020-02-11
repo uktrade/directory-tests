@@ -4,19 +4,19 @@ Feature: Find a Supplier
 
 
   @bug
-  @TT-1438
+  @allure.issue:TT-1438
   @fixed
-  @ED-1746
+  @allure.link:ED-1746
   @case-study
   @profile
   @verified
   @published
   @two-actors
   @bug
-  @ED-1968
+  @allure.issue:ED-1968
   @fixed
   @bug
-  @ED-3031
+  @allure.issue:ED-3031
   @fixed
   @captcha
   @dev-only
@@ -46,13 +46,13 @@ Feature: Find a Supplier
 #      | keywords                  |
 
 
-  @ED-1746
+  @allure.link:ED-1746
   @case-study
   @profile
   @verified
   @published
   @bug
-  @ED-3031
+  @allure.issue:ED-3031
   @fixed
   @captcha
   @dev-only
@@ -75,16 +75,16 @@ Feature: Find a Supplier
     And "Annette Geissinger" should be able to find company "Y" on FAS using any part of case study "no 3"
 
 
-  @ED-1746
+  @allure.link:ED-1746
   @case-study
   @profile
   @unverified
   @unpublished
   @bug
-  @ED-3031
+  @allure.issue:ED-3031
   @fixed
   @bug
-  @TT-727
+  @allure.issue:TT-727
   @fixed
   @captcha
   @dev-only
@@ -100,9 +100,9 @@ Feature: Find a Supplier
     Then "Annette Geissinger" should NOT be able to find company "Y" on FAS by using any part of case study "no 1"
 
 
-  @ED-1967
+  @allure.link:ED-1967
   @bug
-  @TT-1256
+  @allure.issue:TT-1256
   @fixed
   @search
   @profile
@@ -143,7 +143,7 @@ Feature: Find a Supplier
 #      | website        |
 
 
-  @ED-2000
+  @allure.link:ED-2000
   @search
   @no-sso-email-verification-required
   Scenario: Empty search query should return no results
@@ -155,7 +155,7 @@ Feature: Find a Supplier
 
 
   @dev-only
-  @ED-2020
+  @allure.link:ED-2020
   @search
   @no-sso-email-verification-required
   Scenario: Buyers should be able to find Suppliers by product, service or keyword (Dev)
@@ -170,7 +170,7 @@ Feature: Find a Supplier
 
 
   @staging-only
-  @ED-2020
+  @allure.link:ED-2020
   @search
   @no-sso-email-verification-required
   Scenario: Buyers should be able to find Suppliers by product, service or keyword (Staging)
@@ -185,7 +185,7 @@ Feature: Find a Supplier
 
 
   @uat-only
-  @ED-2020
+  @allure.link:ED-2020
   @search
   @no-sso-email-verification-required
   Scenario: Buyers should be able to find Suppliers by product, service or keyword (UAT)
@@ -199,7 +199,7 @@ Feature: Find a Supplier
     Then "Annette Geissinger" should be able to find all sought companies
 
 
-  @ED-2017
+  @allure.link:ED-2017
   @filter
   @sector
   @search
@@ -212,7 +212,7 @@ Feature: Find a Supplier
     Then "Annette Geissinger" should see search results filtered by appropriate sector
 
 
-  @ED-2018
+  @allure.link:ED-2018
   @filter
   @sector
   @search
@@ -225,7 +225,7 @@ Feature: Find a Supplier
     Then "Annette Geissinger" should see search results filtered by appropriate sectors
 
 
-  @ED-2018
+  @allure.link:ED-2018
   @filter
   @sector
   @search
@@ -239,7 +239,7 @@ Feature: Find a Supplier
     Then "Annette Geissinger" should be told that the search did not match any UK trade profiles
 
 
-  @ED-2019
+  @allure.link:ED-2019
   @filter
   @sector
   @search
@@ -254,7 +254,7 @@ Feature: Find a Supplier
     And "Annette Geissinger" should see that FAS search results are not filtered by any sector
 
 
-  @ED-1824
+  @allure.link:ED-1824
   @filter
   @sector
   @search
@@ -268,7 +268,7 @@ Feature: Find a Supplier
     Then "Annette Geissinger" should see company "Y" only once on browsed search result pages
 
 
-  @ED-1983
+  @allure.link:ED-1983
   @search
   @contextual
   @no-sso-email-verification-required
@@ -285,7 +285,7 @@ Feature: Find a Supplier
       | metal    |
 
 
-  @TT-1258
+  @allure.link:TT-1258
   @profile
   @verified
   @unpublished

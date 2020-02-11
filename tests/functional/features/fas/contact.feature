@@ -3,7 +3,7 @@
 Feature: Contact a Supplier
 
 
-  @ED-2011
+  @allure.link:ED-2011
   @contact
   @captcha
   @dev-only

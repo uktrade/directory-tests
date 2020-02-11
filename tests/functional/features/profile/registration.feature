@@ -3,7 +3,7 @@
 Feature: Trade Profile
 
 
-  @ED-2094
+  @allure.link:ED-2094
   @verification
   @letter
   @captcha
@@ -24,7 +24,7 @@ Feature: Trade Profile
     Then "Annette Geissinger" should be told that business profile is ready to be published
 
 
-  @ED-2094
+  @allure.link:ED-2094
   @verification
   @letter
   @captcha
@@ -169,7 +169,7 @@ Feature: Trade Profile
       | unpublished ISD & published Trade                                        | ISD Company                                   | Publish your business profile |
 
 
-  @TT-2027
+  @allure.link:TT-2027
   @published
   @verified
   @captcha
@@ -199,7 +199,7 @@ Feature: Trade Profile
       | published ISD & Trade                                         |
 
 
-  @TT-2033
+  @allure.link:TT-2033
   @unpublish
   @published
   @verified
@@ -229,7 +229,7 @@ Feature: Trade Profile
       | published ISD & Trade                                         |
 
 
-  @TT-2034
+  @allure.link:TT-2034
   @unpublished
   @unverified
   @captcha

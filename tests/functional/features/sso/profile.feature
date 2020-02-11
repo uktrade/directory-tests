@@ -6,9 +6,9 @@ Feature: SSO profile
 
 
   @bug
-  @TT-1823
+  @allure.issue:TT-1823
   @fixed
-  @ED-1757
+  @allure.link:ED-1757
   @login
   @verification
   @no-sso-email-verification-required
@@ -21,7 +21,7 @@ Feature: SSO profile
     Then "Annette Geissinger" should be told that she needs to verify her email address first
 
 
-  @ED-2145
+  @allure.link:ED-2145
   @account
   @no-sso-email-verification-required
   Scenario: Suppliers should not be able to register with the same email again
@@ -39,7 +39,7 @@ Feature: SSO profile
     Then "Peter Alder" should be on "Profile - Enter email verification code (UK taxpayer)" page
 
 
-  @ED-2147
+  @allure.link:ED-2147
   @account
   @fake-sso-email-verification
   Scenario: Suppliers should be able to sign out and sign back in

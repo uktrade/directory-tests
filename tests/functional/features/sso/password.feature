@@ -5,7 +5,7 @@
 Feature: SSO password management
 
 
-  @ED-2146
+  @allure.link:ED-2146
   @account
   @manage
   @password
@@ -21,9 +21,9 @@ Feature: SSO password management
 
 
   @bug
-  @TT-876
+  @allure.issue:TT-876
   @fixed
-  @ED-2251
+  @allure.link:ED-2251
   @account
   @manage
   @password
@@ -40,7 +40,7 @@ Feature: SSO password management
     Then "Peter Alder" should be on Welcome to your great.gov.uk profile page
 
 
-  @ED-2251
+  @allure.link:ED-2251
   @account
   @manage
   @password
@@ -58,9 +58,9 @@ Feature: SSO password management
 
 
   @bug
-  @TT-1297
+  @allure.issue:TT-1297
   @fixme
-  @ED-2251
+  @allure.link:ED-2251
   @account
   @manage
   @password
@@ -75,7 +75,7 @@ Feature: SSO password management
     Then "Peter Alder" should see "This password contains letters only." message
 
 
-  @ED-2146
+  @allure.link:ED-2146
   @account
   @manage
   @password
@@ -89,7 +89,7 @@ Feature: SSO password management
     Then "Peter Alder" should be on Welcome to your great.gov.uk profile page
 
 
-  @ED-2146
+  @allure.link:ED-2146
   @account
   @manage
   @password

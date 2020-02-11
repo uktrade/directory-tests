@@ -4,7 +4,7 @@
 Feature: Investment Support Directory - Profiles
 
 
-  @TT-1459
+  @allure.link:TT-1459
   @captcha
   @dev-only
   @fake-sso-email-verification

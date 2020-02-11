@@ -1,13 +1,13 @@
 @fixme
 @bug
-@TT-1057
+@allure.issue:TT-1057
 @fixed
 @multi-user
 @allure.suite:Profile
 Feature: Multi-user accounts
 
 
-  @ED-3554
+  @allure.link:ED-3554
   @captcha
   @dev-only
   @multi-user
@@ -28,7 +28,7 @@ Feature: Multi-user accounts
       | unpublished unverified | does not have        |
 
 
-  @ED-3555
+  @allure.link:ED-3555
   @captcha
   @dev-only
   @multi-user
@@ -44,7 +44,7 @@ Feature: Multi-user accounts
     Then "Annette Geissinger" should see "Profile - edit company profile" page
 
 
-  @ED-3556
+  @allure.link:ED-3556
   @captcha
   @dev-only
   @multi-user
@@ -60,7 +60,7 @@ Feature: Multi-user accounts
     Then "Annette Geissinger" should see "Profile - edit company profile" page
 
 
-  @ED-3558
+  @allure.link:ED-3558
   @captcha
   @dev-only
   @multi-user
@@ -74,7 +74,7 @@ Feature: Multi-user accounts
     Then "Annette Geissinger, Betty Jones, James Weir" should receive an email with a request to confirm that they've been added to company "Y" Find a Buyer profile
 
 
-  @ED-3559
+  @allure.link:ED-3559
   @captcha
   @dev-only
   @multi-user
@@ -95,13 +95,14 @@ Feature: Multi-user accounts
     Then "James Weir" should see "Profile - edit company profile" page
 
 
-  @ED-3560
+  @allure.link:ED-3560
   @captcha
   @dev-only
   @multi-user
   @add-collaborator
   @bug
-  @ED-2268
+  @allure.issue:ED-2268
+  @fixed
   Scenario: Find a Buyer profile owners should see options to manage account users on SSO - Profile
     Given "Peter Alder" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "Y"
 
@@ -109,15 +110,16 @@ Feature: Multi-user accounts
 
 
   @bug
-  @TT-217
+  @allure.issue:TT-217
   @fixed
-  @ED-3560
+  @allure.link:ED-3560
   @captcha
   @dev-only
   @multi-user
   @add-collaborator
   @bug
-  @ED-2268
+  @allure.issue:ED-2268
+  @fixed
   Scenario: Collaborators should not be able to add/remove other collaborators or transfer account ownership
     Given "Peter Alder" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "Y"
     And "Annette Geissinger" created a "verified Individual" profile
@@ -128,7 +130,7 @@ Feature: Multi-user accounts
     Then "Annette Geissinger" should not see options to manage Find a Buyer profile users on SSO Profile
 
 
-  @ED-3561
+  @allure.link:ED-3561
   @captcha
   @dev-only
   @multi-user
@@ -149,17 +151,18 @@ Feature: Multi-user accounts
       | does not have        | unpublished unverified |
 
 
-  @ED-3562
+  @allure.link:ED-3562
   @multi-user
   @transfer-ownership
   @bug
-  @TT-1764
+  @allure.issue:TT-1764
   @fixme
   @bug
-  @TT-217
+  @allure.issue:TT-217
   @fixed
   @bug
-  @ED-2268
+  @allure.issue:ED-2268
+  @fixed
   @captcha
   @dev-only
   Scenario Outline: Company account owner should be able to transfer the ownership of "<a>" profile to a user who "<has or does not have>" an SSO/great.gov.uk account
@@ -179,7 +182,7 @@ Feature: Multi-user accounts
       | unpublished unverified | does not have        |
 
 
-  @ED-3564
+  @allure.link:ED-3564
   @captcha
   @dev-only
   @multi-user
@@ -198,7 +201,7 @@ Feature: Multi-user accounts
     And "Annette Geissinger" should not be able to access "Profile - edit company profile" page
 
 
-  @ED-3565
+  @allure.link:ED-3565
   @captcha
   @dev-only
   @multi-user
@@ -223,7 +226,7 @@ Feature: Multi-user accounts
     And "James Weir" should not be able to access "Profile - edit company profile" page
 
 
-  @ED-3566
+  @allure.link:ED-3566
   @captcha
   @dev-only
   @multi-user
@@ -245,7 +248,7 @@ Feature: Multi-user accounts
     And "Annette Geissinger" should be told that business profile is ready to be published
 
 
-  @ED-3567
+  @allure.link:ED-3567
   @captcha
   @dev-only
   @multi-user
@@ -284,9 +287,9 @@ Feature: Multi-user accounts
 
 
   @bug
-  @TT-1537
+  @allure.issue:TT-1537
   @fixed
-  @ED-3568
+  @allure.link:ED-3568
   @captcha
   @dev-only
   @multi-user
@@ -309,7 +312,7 @@ Feature: Multi-user accounts
       | Anfiteatro_El_Jem.jpeg |
 
 
-  @ED-3569
+  @allure.link:ED-3569
   @captcha
   @dev-only
   @multi-user
@@ -329,15 +332,15 @@ Feature: Multi-user accounts
 
 
   @bug
-  @TT-1764
+  @allure.issue:TT-1764
   @fixme
   @bug
-  @TT-217
+  @allure.issue:TT-217
   @fixed
   @bug
-  @ED-3882
+  @allure.issue:ED-3882
   @fixed
-  @ED-3570
+  @allure.link:ED-3570
   @captcha
   @dev-only
   @multi-user
@@ -357,9 +360,9 @@ Feature: Multi-user accounts
 
 
   @bug
-  @ED-3882
+  @allure.issue:ED-3882
   @fixme
-  @ED-3571
+  @allure.link:ED-3571
   @captcha
   @dev-only
   @multi-user
@@ -377,9 +380,9 @@ Feature: Multi-user accounts
 
 
   @bug
-  @ED-3852
+  @allure.issue:ED-3852
   @fixme
-  @ED-3572
+  @allure.link:ED-3572
   @captcha
   @dev-only
   @multi-user

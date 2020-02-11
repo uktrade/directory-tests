@@ -2,7 +2,7 @@
 Feature: Case Studies
 
 
-  @ED-2142
+  @allure.link:ED-2142
   @case-study
   @profile
   @captcha

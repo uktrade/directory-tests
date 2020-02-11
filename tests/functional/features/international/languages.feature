@@ -3,7 +3,7 @@
 Feature: International - View pages in various languages
 
 
-  @ED-2013
+  @allure.link:ED-2013
   @internationalization
   @i18n
   @<selected>
@@ -34,7 +34,7 @@ Feature: International - View pages in various languages
       | Arabic     | 0.85        |
 
 
-  @ED-2013
+  @allure.link:ED-2013
   @internationalization
   @i18n
   @<selected>
@@ -67,7 +67,7 @@ Feature: International - View pages in various languages
 
 
   # langdetect library can't detect Chinese on Industries pages, thus that assertion is omitted from this scenario
-  @ED-2013
+  @allure.link:ED-2013
   @internationalization
   @i18n
   @<selected>

@@ -2,7 +2,7 @@
 Feature: Profile pages
 
 
-  @ED-2265
+  @allure.link:ED-2265
   @sso
   @account
   @no-sso-email-verification-required
@@ -14,7 +14,7 @@ Feature: Profile pages
     Then "Peter Alder" should see "Profile - About" page
 
 
-  @ED-2266
+  @allure.link:ED-2266
   @sso
   @account
   @no-sso-email-verification-required
@@ -33,11 +33,11 @@ Feature: Profile pages
       | Profile - Selling Online Overseas | SSO - Login     |
 
 
-  @ED-2266
+  @allure.link:ED-2266
   @sso
   @account
   @bug
-  @ED-2268
+  @allure.issue:ED-2268
   @fixed
   @no-sso-email-verification-required
   Scenario Outline: Users who visit "<Profile>" page for the first time should be redirected to SSO Login page
@@ -57,7 +57,7 @@ Feature: Profile pages
   # I've been told that on non-prod envs ExOpps doesn't keep synced state
   # between different services and thus ExOpps page on Profile displays
   # different content based on user ID
-  @ED-2267
+  @allure.link:ED-2267
   @sso
   @account
   @captcha
@@ -75,7 +75,7 @@ Feature: Profile pages
     Then "Peter Alder" should be able to see all selected pages
 
 
-  @ED-2141
+  @allure.link:ED-2141
   @profile
   @captcha
   @dev-only
@@ -97,9 +97,9 @@ Feature: Profile pages
 
 
   @bug
-  @TT-1289
+  @allure.issue:TT-1289
   @fixed
-  @ED-2141
+  @allure.link:ED-2141
   @profile
   @captcha
   @dev-only
@@ -119,7 +119,7 @@ Feature: Profile pages
       | trading name |
 
 
-  @ED-2141
+  @allure.link:ED-2141
   @profile
   @captcha
   @dev-only
@@ -134,7 +134,7 @@ Feature: Profile pages
     Then "Annette Geissinger" should see expected error messages
 
 
-  @ED-2141
+  @allure.link:ED-2141
   @profile
   @captcha
   @dev-only
@@ -153,7 +153,7 @@ Feature: Profile pages
     Then "Annette Geissinger" should be taken to "Profile - Edit company's products and services (keywords)" for all requests
 
 
-  @ED-1769
+  @allure.link:ED-1769
   @login
   @fab
   @captcha
@@ -168,7 +168,7 @@ Feature: Profile pages
     Then "Annette Geissinger" should be on "Profile - About" page
 
 
-  @ED-1758
+  @allure.link:ED-1758
   @fab
   @login
   @captcha
@@ -184,11 +184,11 @@ Feature: Profile pages
     And "Peter Alder" should see "Sign out" on the page
 
 
-  @ED-1760
-  @ED-1766
+  @allure.link:ED-1760
+  @allure.link:ED-1766
   @fab
   @bug
-  @ED-3151
+  @allure.issue:ED-3151
   @fixed
   @profile
   @captcha
@@ -222,14 +222,14 @@ Feature: Profile pages
 
 
   @bug
-  @TT-1537
+  @allure.issue:TT-1537
   @fixed
-  @ED-2093
-  @ED-1759
+  @allure.link:ED-2093
+  @allure.link:ED-1759
   @profile
   @logo
   @bug
-  @ED-2160
+  @allure.issue:ED-2160
   @fixed
   @captcha
   @dev-only
@@ -252,10 +252,10 @@ Feature: Profile pages
 
 
   @bug
-  @TT-1537
+  @allure.issue:TT-1537
   @fixed
-  @ED-2093
-  @ED-1759
+  @allure.link:ED-2093
+  @allure.link:ED-1759
   @profile
   @logo
   @captcha
@@ -277,7 +277,7 @@ Feature: Profile pages
       | Anfiteatro_El_Jem.jpeg | Kobe_Port_Tower.jpg |
 
 
-  @ED-1759
+  @allure.link:ED-1759
   @profile
   @logo
   @captcha
@@ -300,7 +300,7 @@ Feature: Profile pages
     Then for every uploaded unsupported file "Peter Alder" should be told that only certain image types can be used as company's logo
 
 
-  @ED-1761
+  @allure.link:ED-1761
   @fab
   @profile
   @captcha
@@ -319,7 +319,7 @@ Feature: Profile pages
     And "Peter Alder" should see links to all online profiles on FAS Business Profile page
 
 
-  @ED-1762
+  @allure.link:ED-1762
   @fab
   @profile
   @captcha
@@ -337,11 +337,11 @@ Feature: Profile pages
     Then "Peter Alder" should be told to provide valid links to all online profiles
 
 
-  @ED-1762
+  @allure.link:ED-1762
   @fab
   @profile
   @bug
-  @ED-1833
+  @allure.issue:ED-1833
   @fixed
   @captcha
   @dev-only
@@ -358,7 +358,7 @@ Feature: Profile pages
     Then "Peter Alder" should be told to provide valid links to all online profiles
 
 
-  @ED-1763
+  @allure.link:ED-1763
   @fab
   @profile
   @captcha
@@ -378,7 +378,7 @@ Feature: Profile pages
     And "Peter Alder" should not see any links to online profiles on FAS Business Profile page
 
 
-  @ED-1764
+  @allure.link:ED-1764
   @fab
   @case-study
   @profile
@@ -393,7 +393,7 @@ Feature: Profile pages
     Then "Peter Alder" should see all case studies on the edit Business Profile page
 
 
-  @ED-1764
+  @allure.link:ED-1764
   @fab
   @case-study
   @profile
@@ -409,7 +409,7 @@ Feature: Profile pages
     And "Peter Alder" should see all case studies on the FAS Business Profile page
 
 
-  @ED-1765
+  @allure.link:ED-1765
   @fab
   @case-study
   @profile
@@ -427,7 +427,7 @@ Feature: Profile pages
     Then "Peter Alder" should see all case studies on the edit Business Profile page
 
 
-  @ED-1765
+  @allure.link:ED-1765
   @fab
   @case-study
   @profile
@@ -446,13 +446,13 @@ Feature: Profile pages
     And "Peter Alder" should see all case studies on the FAS Business Profile page
 
 
-  @ED-1803
+  @allure.link:ED-1803
   @fab
   @case-study
   @profile
   @fake-sso-email-verification
   @bug
-  @ED-3040
+  @allure.issue:ED-3040
   @fixed
   @captcha
   @dev-only
@@ -466,13 +466,13 @@ Feature: Profile pages
     Then "Peter Alder" should see all case studies on the edit Business Profile page
 
 
-  @ED-1803
+  @allure.link:ED-1803
   @fab
   @case-study
   @profile
   @fake-sso-email-verification
   @bug
-  @ED-3040
+  @allure.issue:ED-3040
   @fixed
   @captcha
   @dev-only
@@ -487,13 +487,13 @@ Feature: Profile pages
     And "Peter Alder" should see all case studies on the FAS Business Profile page
 
 
-  @ED-1804
+  @allure.link:ED-1804
   @fab
   @case-study
   @profile
   @fake-sso-email-verification
   @bug
-  @ED-3040
+  @allure.issue:ED-3040
   @fixed
   @captcha
   @dev-only
@@ -511,13 +511,13 @@ Feature: Profile pages
     Then "Peter Alder" should see all case studies on the edit Business Profile page
 
 
-  @ED-1804
+  @allure.link:ED-1804
   @fab
   @case-study
   @profile
   @fake-sso-email-verification
   @bug
-  @ED-3040
+  @allure.issue:ED-3040
   @fixed
   @captcha
   @dev-only

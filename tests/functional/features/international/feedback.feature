@@ -4,9 +4,9 @@ Feature: Send feedback
 
 
   @bug
-  @CMS-1850
+  @allure.issue:CMS-1850
   @fixme
-  @ED-2012
+  @allure.link:ED-2012
   @captcha
   @dev-only
   @feedback

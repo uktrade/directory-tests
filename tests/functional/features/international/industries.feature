@@ -3,7 +3,7 @@
 Feature: International - Industry pages
 
 
-  @ED-2015
+  @allure.link:ED-2015
   @industries
   @no-sso-email-verification-required
   Scenario Outline: Buyers should be able to find out more about every promoted industry - visit "<selected>" page
