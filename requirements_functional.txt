@@ -5,19 +5,19 @@
 #    pip-compile requirements_functional.in
 #
 -e ./directory_tests_shared/
-allure-behave==2.8.9
-allure-python-commons==2.8.9  # via allure-behave
+allure-behave==2.8.10
+allure-python-commons==2.8.10  # via allure-behave
 attrs==19.3.0             # via allure-python-commons, automat, jsonschema, pytest, service-identity, twisted
 automat==0.8.0            # via twisted
 beautifulsoup4==4.8.2
 behave==1.2.6
 certifi==2019.11.28       # via requests
-cffi==1.13.2              # via cryptography
+cffi==1.14.0              # via cryptography
 chardet==3.0.4            # via requests
 constantly==15.1.0        # via twisted
 cryptography==2.8         # via pyopenssl, scrapy, service-identity
 cssselect==1.1.0          # via parsel, scrapy
-directory-api-client==21.0.1
+directory-api-client==21.1.0
 directory-client-core==6.1.0  # via directory-api-client, directory-cms-client, directory-sso-api-client
 directory-cms-client==11.1.0
 directory-constants==20.11.0
