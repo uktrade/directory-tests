@@ -382,9 +382,6 @@ steps_functional_tests: &steps_functional_tests
         path: ./tests/functional/reports
     - store_artifacts:
         path: ./tests/functional/reports
-    - store_artifacts:
-        path: ./allure_report
-        destination: allure_report
     - persist_to_workspace:
         root: .
         paths:
