@@ -393,7 +393,7 @@ steps_smoke_tests: &steps_smoke_tests
         command: |
           set -e
           export CIRCLE_PULL_REQUEST=none
-          moxci -m "Latest report from Smoke tests ran against `awk '/Environment/{print $3}' ./results/environment.properties`"
+          moxci allure_report/index.html --message "Latest report from Smoke tests ran against `awk '/Environment/{print $3}' ./results/environment.properties`"
 
 steps_functional_tests: &steps_functional_tests
     - *step_restore_cached_functional_tests_requirements
@@ -866,7 +866,7 @@ jobs:
           command: |
             set -e
             export CIRCLE_PULL_REQUEST=none
-            moxci -m "Latest report from Browser tests ran against `awk '/Environment/{print $3}' ./results/environment.properties`"
+            moxci allure_report/index.html --message "Latest report from Browser tests ran against `awk '/Environment/{print $3}' ./results/environment.properties`"
 
   generate_allure_report_from_functional_tests_and_send_link_to_slack:
     <<: *machine_python3_node_browsers
@@ -889,7 +889,7 @@ jobs:
           command: |
             set -e
             export CIRCLE_PULL_REQUEST=none
-            moxci -m "Latest report from Functional tests ran against `awk '/Environment/{print $3}' ./results/environment.properties`"
+            moxci allure_report/index.html --message "Latest report from Functional tests ran against `awk '/Environment/{print $3}' ./results/environment.properties`"
 
   merge_junit_results_from_parallel_browser_tests:
     docker:

@@ -1,8 +1,5 @@
 {
   "devDependencies": {
     "moxci": "0.1.1"
-  },
-  "scripts": {
-    "moxci": "moxci allure_report/index.html"
   }
 }
