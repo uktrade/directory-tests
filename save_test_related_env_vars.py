@@ -24,9 +24,11 @@ ENV_VARS = {
     "PyTest_args": env.str("PYTEST_ARGS", default=None),
 }
 
-with open(f"./{RESULTS_DIR}/environment.properties", "w") as properties:
+properties_filepath = f"./{RESULTS_DIR}/environment.properties"
+with open(properties_filepath, "w") as properties:
     for key, value in ENV_VARS.items():
         if value:
             line = f"{key} = {value}\n"
             properties.write(line)
             print(f"{key} = {value}")
+    print(f"All found env vars were saved in {properties_filepath}")
