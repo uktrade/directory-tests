@@ -25,7 +25,8 @@ ENV_VARS = {
 }
 
 with open(f"./{RESULTS_DIR}/environment.properties", "w") as properties:
-    for key, var in ENV_VARS.items():
-        if var:
-            line = f"{key} = {var}\n"
+    for key, value in ENV_VARS.items():
+        if value:
+            line = f"{key} = {value}\n"
             properties.write(line)
+            print(f"{key} = {value}")
