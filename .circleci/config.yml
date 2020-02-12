@@ -398,6 +398,48 @@ steps_smoke_tests: &steps_smoke_tests
           export summary="$(./parse_test_summary_json.py allure_report/widgets/summary.json)"
           moxci allure_report/index.html --slack_message "The latest report from SMOKE tests ran against `awk '/Environment/{print toupper($3)}' ./results/environment.properties`. ${summary}"
 
+steps_merge_browser_allure_results_and_generate_report_and_send_link_to_slack: &steps_merge_browser_allure_results_and_generate_report_and_send_link_to_slack
+  steps:
+    - checkout
+    - attach_workspace:
+        at: ./
+    - *step_install_moxci
+    - *step_install_allure_cli
+    - *step_update_allure_result_files_generated_by_browser_tests
+    - *step_make_allure_report
+    - store_artifacts:
+        path: ./allure_report/
+        destination: allure_report
+    - run:
+        name: Push Allure report link to Slack with moxci
+        when: always
+        command: |
+          set -e
+          export CIRCLE_PULL_REQUEST=none
+          export summary="$(./parse_test_summary_json.py allure_report/widgets/summary.json)"
+          moxci allure_report/index.html --slack_message "The latest report from BROWSER tests ran against `awk '/Environment/{print toupper($3)}' ./results/environment.properties`. ${summary}"
+
+steps_generate_allure_report_from_functional_tests_and_send_link_to_slack: &steps_generate_allure_report_from_functional_tests_and_send_link_to_slack
+  steps:
+    - checkout
+    - attach_workspace:
+        at: ./
+    - *step_install_moxci
+    - *step_install_allure_cli
+    - *step_update_allure_result_files_generated_by_functional_tests
+    - *step_make_allure_report
+    - store_artifacts:
+        path: ./allure_report/
+        destination: allure_report
+    - run:
+        name: Push Allure report link to Slack with moxci
+        when: always
+        command: |
+          set -e
+          export CIRCLE_PULL_REQUEST=none
+          export summary="$(./parse_test_summary_json.py allure_report/widgets/summary.json)"
+          moxci allure_report/index.html --slack_message "The latest report from FUNCTIONAL tests ran against `awk '/Environment/{print toupper($3)}' ./results/environment.properties`. ${summary}"
+
 steps_delete_test_data: &steps_delete_test_data
   steps:
     - *step_restore_cached_functional_tests_requirements
@@ -871,50 +913,18 @@ jobs:
     ]
 
   merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
-    <<: *machine_python3_node_browsers
     working_directory: ~/directory-tests
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ./
-      - *step_install_moxci
-      - *step_install_allure_cli
-      - *step_update_allure_result_files_generated_by_browser_tests
-      - *step_make_allure_report
-      - store_artifacts:
-          path: ./allure_report/
-          destination: allure_report
-      - run:
-          name: Push Allure report link to Slack with moxci
-          when: always
-          command: |
-            set -e
-            export CIRCLE_PULL_REQUEST=none
-            export summary="$(./parse_test_summary_json.py allure_report/widgets/summary.json)"
-            moxci allure_report/index.html --slack_message "The latest report from BROWSER tests ran against `awk '/Environment/{print toupper($3)}' ./results/environment.properties`. ${summary}"
+    <<: [
+    *machine_python3_node_browsers,
+    *steps_merge_browser_allure_results_and_generate_report_and_send_link_to_slack,
+    ]
 
   generate_allure_report_from_functional_tests_and_send_link_to_slack:
-    <<: *machine_python3_node_browsers
     working_directory: ~/directory-tests
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ./
-      - *step_install_moxci
-      - *step_install_allure_cli
-      - *step_update_allure_result_files_generated_by_functional_tests
-      - *step_make_allure_report
-      - store_artifacts:
-          path: ./allure_report/
-          destination: allure_report
-      - run:
-          name: Push Allure report link to Slack with moxci
-          when: always
-          command: |
-            set -e
-            export CIRCLE_PULL_REQUEST=none
-            export summary="$(./parse_test_summary_json.py allure_report/widgets/summary.json)"
-            moxci allure_report/index.html --slack_message "The latest report from FUNCTIONAL tests ran against `awk '/Environment/{print toupper($3)}' ./results/environment.properties`. ${summary}"
+    <<: [
+    *machine_python3_node_browsers,
+    *steps_generate_allure_report_from_functional_tests_and_send_link_to_slack,
+    ]
 
   merge_junit_results_from_parallel_browser_tests:
     docker:
