@@ -229,10 +229,21 @@ results_browser:
 	@for directory in $(shell find ./ -maxdepth 1 -iname "results_firefox_*" -type d -printf '%P\n') ; do echo "Processing results from $${directory}"; ./update_results.py "$${directory}" Firefox; mv ./$${directory}/* results/ | true; done
 
 results_functional:
-	@echo "Processing Allure results from functional FAS tests"; ./update_results.py "results_fas" FAS; mv ./results_fas/* results/ | true;
-	@echo "Processing Allure results from functional SSO tests"; ./update_results.py "results_sso" SSO; mv ./results_sso/* results/ | true;
-	@echo "Processing Allure results from functional Profile tests"; ./update_results.py "results_profile" Profile; mv ./results_profile/* results/ | true;
-	@echo "Processing Allure results from functional International tests"; ./update_results.py "results_international" International; mv ./results_international/* results/ | true;
+	@for suite in fas sso profile international ; \
+	do \
+		if test -d "./results_$$suite"; \
+		then \
+			if [ -n "$$(ls -A results_$$suite 2>/dev/null)" ]; \
+				then \
+					./update_results.py results_$$suite $$suite; \
+					mv ./results_$$suite/* results/; \
+				else \
+					echo "./results_$$suite is empty"; \
+				fi \
+		else \
+			echo ./results_$$suite does not exist; \
+		fi \
+	done
 
 serve:
 	@echo Allure
