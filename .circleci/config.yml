@@ -240,9 +240,6 @@ step_run_browser_tests_in_parallel: &step_run_browser_tests_in_parallel
           export BROWSER="firefox";
       fi
 
-      echo "Saving environment variables that control test execution"
-      ./save_test_related_env_vars.py
-
       cd tests/browser
       echo "Found `wc -l < scenario_titles.txt` scenarios to run"
       # cat scenario_titles.txt | circleci tests split > /tmp/tests-to-run
@@ -282,6 +279,9 @@ step_run_browser_tests_in_parallel: &step_run_browser_tests_in_parallel
       done
       echo "Found `ls -la results_${BROWSER}_${CIRCLE_NODE_INDEX}/*.json | wc -l` JSON Allure result files in results_${BROWSER}_${CIRCLE_NODE_INDEX}/"
       echo "Found `ls -la junit_reports_${BROWSER}_${CIRCLE_NODE_INDEX}/*.xml | wc -l` JUnit XML result files in junit_reports_${BROWSER}_${CIRCLE_NODE_INDEX}/"
+
+      echo "Saving environment variables that control test execution"
+      ../../save_test_related_env_vars.py
 
 
 step_run_load_tests: &step_run_load_tests
