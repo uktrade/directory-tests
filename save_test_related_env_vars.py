@@ -2,7 +2,20 @@
 # -*- coding: utf-8 -*-
 from envparse import env
 
-variables = {
+# Allure results from Smoke tests are kept in results/
+RESULTS_DIR = "results"
+# Allure results from Functional tests are kept in results_${FEATURE_DIR}/
+FEATURE_DIR = env.str("FEATURE_DIR", default=None)
+# Allure results from Browser tests are kept in results_${BROWSER}_${CIRCLE_NODE_INDEX}/
+BROWSER = env.str("BROWSER", default=None)
+CIRCLE_NODE_INDEX = env.str("CIRCLE_NODE_INDEX", default=None)
+
+if FEATURE_DIR:
+    RESULTS_DIR = f"results_{FEATURE_DIR}"
+if BROWSER and CIRCLE_NODE_INDEX:
+    RESULTS_DIR = f"results_{BROWSER}_{CIRCLE_NODE_INDEX}"
+
+ENV_VARS = {
     "Environment": env.str("TEST_ENV", default=None),
     "Automatically_retry_on_failures": env.str("AUTO_RETRY", default=None),
     "Take_screenshots": env.str("TAKE_SCREENSHOTS", default=None),
@@ -11,8 +24,8 @@ variables = {
     "PyTest_args": env.str("PYTEST_ARGS", default=None),
 }
 
-with open("./results/environment.properties", "w") as properties:
-    for key, var in variables.items():
+with open(f"./{RESULTS_DIR}/environment.properties", "w") as properties:
+    for key, var in ENV_VARS.items():
         if var:
             line = f"{key} = {var}\n"
             properties.write(line)
