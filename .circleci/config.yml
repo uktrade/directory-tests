@@ -73,9 +73,7 @@ step_save_test_related_env_vars: &step_save_test_related_env_vars
     name: Saving environment variables that control test execution
     when: always
     command: |
-      python3 -m venv venv
       . venv/bin/activate
-      pip install --quiet envparse
       echo "Saving environment variables that control test execution"
       ./save_test_related_env_vars.py
 
@@ -408,6 +406,7 @@ steps_functional_tests_and_persist_fas_results: &steps_functional_tests_and_pers
   steps:
     - *step_restore_cached_functional_tests_requirements
     - *step_run_functional_tests
+    - *step_save_test_related_env_vars
     - *step_install_junit_merge
     - *step_merge_junit_xml_reports_from_functional_tests
     - store_test_results:
@@ -420,6 +419,7 @@ steps_functional_tests_and_persist_sso_results: &steps_functional_tests_and_pers
   steps:
     - *step_restore_cached_functional_tests_requirements
     - *step_run_functional_tests
+    - *step_save_test_related_env_vars
     - *step_install_junit_merge
     - *step_merge_junit_xml_reports_from_functional_tests
     - store_test_results:
@@ -432,6 +432,7 @@ steps_functional_tests_and_persist_profile_results: &steps_functional_tests_and_
   steps:
     - *step_restore_cached_functional_tests_requirements
     - *step_run_functional_tests
+    - *step_save_test_related_env_vars
     - *step_install_junit_merge
     - *step_merge_junit_xml_reports_from_functional_tests
     - store_test_results:
@@ -444,6 +445,7 @@ steps_functional_tests_and_persist_international_results: &steps_functional_test
   steps:
     - *step_restore_cached_functional_tests_requirements
     - *step_run_functional_tests
+    - *step_save_test_related_env_vars
     - *step_install_junit_merge
     - *step_merge_junit_xml_reports_from_functional_tests
     - store_test_results:
@@ -877,7 +879,6 @@ jobs:
       - *step_install_moxci
       - *step_install_allure_cli
       - *step_update_allure_result_files_generated_by_browser_tests
-      - *step_save_test_related_env_vars
       - *step_make_allure_report
       - store_artifacts:
           path: ./allure_report/
@@ -900,7 +901,6 @@ jobs:
       - *step_install_moxci
       - *step_install_allure_cli
       - *step_update_allure_result_files_generated_by_functional_tests
-      - *step_save_test_related_env_vars
       - *step_make_allure_report
       - store_artifacts:
           path: ./allure_report/
