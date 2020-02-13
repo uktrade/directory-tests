@@ -6,11 +6,12 @@ clean:
 	-find . -type f -name "*.pyc" -delete
 	-find . -type d -name "__pycache__" -delete
 	-find . -type f -name "behave.log" -delete
+	-find ./results/ -type f -not -name '.gitignore' -delete
+	-find ./reports/ -type f -not -name '.gitignore' -delete
+	-rm -fr ./allure_report/
 	-rm -fr ./tests/browser/reports/*.xml
 	-rm -fr ./tests/functional/reports/*.xml
 	-rm -fr ./tests/smoke/reports/*.xml
-	-rm -fr ./reports/*.csv
-	-rm -fr ./allure_report/
 
 pep8:
 	flake8 .
