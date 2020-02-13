@@ -1,14 +1,27 @@
 # -*- coding: utf-8 -*-
 import pytest
+from bs4 import BeautifulSoup
 from rest_framework.status import HTTP_200_OK
 
-from bs4 import BeautifulSoup
-
+import allure
 from directory_tests_shared import URLs
-from directory_tests_shared.settings import BASICAUTH_USER, BASICAUTH_PASS
+from directory_tests_shared.settings import BASICAUTH_PASS, BASICAUTH_USER
 from tests.smoke.cms_api_helpers import get_and_assert
 
+pytestmark = [
+    allure.suite("sitemap.xml"),
+    allure.feature("sitemap.xml"),
+    allure.story("Top Level domain should expose a valid sitemap.xml"),
+    allure.description(
+        "A service which handles our Top Level Domain should expose a valid sitemap.xml"
+        " which enables various Search Engines/Web Crawlers (like Google) to discover "
+        "what pages are present and which change frequently. This allows them to crawl "
+        "our site accordingly"
+    ),
+]
 
+
+@allure.step("Check if sitemap.xml is present")
 def get_urls_from_sitemap(sitemap_url: str, *, ignore_404: bool = False) -> list:
     result = []
     try:
@@ -49,6 +62,7 @@ def test_check_sitemap_schema_and_if_it_contains_urls(url, basic_auth):
     assert sitemap_urls, error
 
 
+@allure.issue("CMS-1699", "Domestic - sitemap.xml contains links it shouldn't")
 @pytest.mark.skip(reason="see CMS-1699")
 @pytest.mark.parametrize(
     "url",
@@ -60,6 +74,7 @@ def test_sitemap_should_not_contain_reference_to_itself(url):
     assert url not in sitemap_urls, error
 
 
+@allure.issue("CMS-1699", "Domestic - sitemap.xml contains links it shouldn't")
 @pytest.mark.skip(reason="see CMS-1699")
 @pytest.mark.parametrize(
     "url", [URLs.DOMESTIC_SITEMAP.absolute]  # contains a dupe. See bug CMS-1699
@@ -71,6 +86,10 @@ def test_sitemap_should_not_contain_duplicated_links(url):
     assert not dupes, error
 
 
+@allure.issue("CMS-1699", "sitemap.xml contains links it shouldn't")
+@allure.issue(
+    "CMS-1811", "500 ISE when visiting report a trade barrier success page directly"
+)
 @pytest.mark.skip(reason="see CMS-1699 & CMS-1811")
 @pytest.mark.parametrize(
     "url",

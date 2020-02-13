@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 from random import choice
+
 from rest_framework.status import HTTP_200_OK
 
+import allure
 from directory_tests_shared import URLs
 from directory_tests_shared.constants import SECTORS
 from directory_tests_shared.utils import rare_word
 from tests.smoke.cms_api_helpers import get_and_assert
+
+pytestmark = [allure.suite("FAS"), allure.feature("FAS")]
 
 
 def test_landing_page_200(basic_auth):

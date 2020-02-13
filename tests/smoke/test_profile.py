@@ -12,6 +12,8 @@ from directory_tests_shared import URLs
 from directory_tests_shared.utils import is_500
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
 
+pytestmark = [allure.suite("Profile"), allure.feature("Profile")]
+
 
 def test_about_200(basic_auth):
     url = URLs.PROFILE_ABOUT.absolute

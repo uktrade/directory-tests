@@ -2,6 +2,7 @@
 import pytest
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 
+import allure
 from directory_tests_shared import URLs
 from directory_tests_shared.clients import CMS_API_CLIENT
 from directory_tests_shared.settings import CMS_API_URL
@@ -14,6 +15,8 @@ from tests.smoke.cms_api_helpers import (
     get_pages_types,
     status_error,
 )
+
+pytestmark = [allure.suite("CMS"), allure.feature("CMS")]
 
 SKIPPED_PAGE_TYPES = [
     "wagtailcore.page"  # remove generic (parent) page type common to all pages

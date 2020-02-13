@@ -2,8 +2,11 @@
 import pytest
 from rest_framework.status import HTTP_200_OK, HTTP_302_FOUND, HTTP_404_NOT_FOUND
 
+import allure
 from directory_tests_shared import URLs
 from tests.smoke.cms_api_helpers import get_and_assert
+
+pytestmark = [allure.suite("Invest"), allure.feature("Invest")]
 
 
 @pytest.mark.dev

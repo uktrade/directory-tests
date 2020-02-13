@@ -3,10 +3,23 @@ import pytest
 from requests import Response
 from rest_framework.status import HTTP_200_OK
 
+import allure
 from directory_tests_shared import URLs
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
 
+pytestmark = [
+    allure.suite("HttpOnly Cookie flag"),
+    allure.feature("HttpOnly Cookie flag"),
+    allure.story("The HttpOnly flag should be set on all sensitive cookies"),
+    allure.description(
+        "The HttpOnly flag should be set by including this attribute within "
+        "the relevant Set-cookie directive. Alternatively, URL rewriting could be used,"
+        " as is detailed in the following example"
+    ),
+]
 
+
+@allure.step("Assert that HttpOnly Cookie flag is set")
 def assert_httponly_cookie_flag_is_set(response: Response):
     without_httponly = {
         c.name: c.__dict__
@@ -20,7 +33,7 @@ def assert_httponly_cookie_flag_is_set(response: Response):
     assert not list(without_httponly.keys()), error
 
 
-@pytest.mark.skip(reason="See TT-1615")
+@allure.issue("TT-1615", "Cookies Not Set With HttpOnly")
 @pytest.mark.parametrize(
     "url",
     [
@@ -54,7 +67,7 @@ def test_secure_cookie_flag_is_set_for_pages_behind_auth(
     assert_httponly_cookie_flag_is_set(response)
 
 
-@pytest.mark.skip(reason="See TT-1615")
+@allure.issue("TT-1615", "Cookies Not Set With HttpOnly")
 @pytest.mark.parametrize(
     "url",
     [
@@ -107,7 +120,7 @@ def test_secure_cookie_flag_is_set_for_public_pages(url, basic_auth):
     assert_httponly_cookie_flag_is_set(response)
 
 
-@pytest.mark.skip(reason="See TT-1615")
+@allure.issue("TT-1615", "Cookies Not Set With HttpOnly")
 @pytest.mark.dev
 @pytest.mark.parametrize(
     "url",
@@ -122,13 +135,13 @@ def test_secure_cookie_flag_is_present_export_opportunities_dev(url, basic_auth)
     assert_httponly_cookie_flag_is_set(response)
 
 
-@pytest.mark.skip(reason="See TT-1615")
+@allure.issue("TT-1615", "Cookies Not Set With HttpOnly")
 @pytest.mark.stage
 @pytest.mark.parametrize(
     "url",
     [
         URLs.EXOPPS_SEARCH.absolute_template.format(term="food"),
-        URLs.EXOPPS_OPPORTUNITY.absolute_template.format(slug="furniture-917"),
+        URLs.EXOPPS_OPPORTUNITY.absolute_template.format(slug="furniture-498"),
     ],
 )
 def test_secure_cookie_flag_is_present_export_opportunities_stage(url, basic_auth):
@@ -136,7 +149,7 @@ def test_secure_cookie_flag_is_present_export_opportunities_stage(url, basic_aut
     assert_httponly_cookie_flag_is_set(response)
 
 
-@pytest.mark.skip(reason="See TT-1615")
+@allure.issue("TT-1615", "Cookies Not Set With HttpOnly")
 @pytest.mark.dev
 @pytest.mark.parametrize(
     "url",

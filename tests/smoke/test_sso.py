@@ -2,8 +2,11 @@
 import pytest
 from rest_framework.status import HTTP_200_OK, HTTP_301_MOVED_PERMANENTLY
 
+import allure
 from directory_tests_shared import URLs
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
+
+pytestmark = [allure.suite("SSO"), allure.feature("SSO")]
 
 
 @pytest.mark.session_auth
@@ -36,13 +39,14 @@ def test_access_sso_endpoints_as_anonymous_user_yields_200(url, basic_auth):
     )
 
 
+@allure.issue("TT-1758", "500 ISE on sso/accounts/password/change/")
 @pytest.mark.session_auth
 @pytest.mark.parametrize(
     "url",
     [
         URLs.SSO_LOGOUT.absolute,
-        # URLs.SSO_PASSWORD_CHANGE.absolute,  # see TT-1758
-        # URLs.SSO_PASSWORD_SET.absolute,  # see TT-1758
+        URLs.SSO_PASSWORD_CHANGE.absolute,
+        URLs.SSO_PASSWORD_SET.absolute,
         URLs.SSO_PASSWORD_RESET.absolute,
         URLs.SSO_EMAIL_CONFIRM.absolute,
         URLs.SSO_INACTIVE.absolute,

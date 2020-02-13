@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import pytest
-from directory_tests_shared.clients import CMS_API_CLIENT, SSO_API_CLIENT
 from rest_framework.status import (
     HTTP_200_OK,
     HTTP_301_MOVED_PERMANENTLY,
@@ -8,10 +7,14 @@ from rest_framework.status import (
 )
 from retrying import retry
 
+import allure
 from directory_tests_shared import URLs
-from directory_tests_shared.utils import retriable_error
+from directory_tests_shared.clients import CMS_API_CLIENT, SSO_API_CLIENT
 from directory_tests_shared.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
+from directory_tests_shared.utils import retriable_error
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
+
+pytestmark = [allure.suite("Health checks"), allure.feature("Health checks")]
 
 
 @pytest.mark.sso_api

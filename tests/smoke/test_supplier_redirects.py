@@ -2,11 +2,15 @@
 import pytest
 from rest_framework.status import HTTP_302_FOUND
 
+import allure
 from directory_tests_shared import URLs
 from tests.smoke.cms_api_helpers import get_and_assert
 
+pytestmark = [allure.suite("FAS redirects"), allure.feature("FAS redirects")]
 
-@pytest.mark.skip(reason="See CMS-1834")
+
+@allure.issue("CMS-1834", "Links to legacy industry pages redirect to wrong place")
+@allure.issue("ED-4152", "404s on old industry pages & contact-us page")
 @pytest.mark.parametrize(
     "old_url,to_new_endpoint",
     [

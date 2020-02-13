@@ -2,12 +2,19 @@
 import pytest
 from rest_framework.status import HTTP_200_OK, HTTP_301_MOVED_PERMANENTLY
 
+import allure
 from directory_tests_shared import URLs
 from directory_tests_shared.settings import BASICAUTH_PASS, BASICAUTH_USER
 from directory_tests_shared.utils import extract_attributes_by_css, extract_by_css
 from tests.smoke.cms_api_helpers import get_and_assert
 
+pytestmark = [
+    allure.suite("Selling Online Overseas"),
+    allure.feature("Selling Online Overseas"),
+]
 
+
+@allure.step("Get slugs for all marketplaces")
 def get_all_market_slugs(*, auth: tuple = (BASICAUTH_USER, BASICAUTH_PASS)) -> list:
     start_page = f"{URLs.SOO_SEARCH_RESULTS.absolute}?category_id=&country_id=&commit="
     response = get_and_assert(url=start_page, status_code=HTTP_200_OK, auth=auth)

@@ -2,8 +2,11 @@
 import pytest
 from rest_framework.status import HTTP_200_OK, HTTP_302_FOUND
 
+import allure
 from directory_tests_shared import URLs
 from tests.smoke.cms_api_helpers import get_and_assert
+
+pytestmark = [allure.suite("Domestic site"), allure.feature("Domestic site")]
 
 
 @pytest.mark.parametrize(

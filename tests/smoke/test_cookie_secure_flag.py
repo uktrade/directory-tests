@@ -3,10 +3,23 @@ import pytest
 from requests import Response
 from rest_framework.status import HTTP_200_OK
 
+import allure
 from directory_tests_shared import URLs
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
 
+pytestmark = [
+    allure.suite("Secure Cookie flag"),
+    allure.feature("Secure Cookie flag"),
+    allure.story("The Secure Cookie flag should be set on all sensitive cookies"),
+    allure.description(
+        "The Secure flag should be set on all cookies that are used for transmitting "
+        "sensitive data when accessing content over HTTPS. If cookies are used to "
+        "transmit session"
+    ),
+]
 
+
+@allure.step("Assert that Secure Cookie flag is set")
 def assert_secure_cookie_flag_is_set(response: Response):
     cookie_dict = {c.name: c.__dict__ for c in response.cookies}
     insecure_cookies = [c.name for c in response.cookies if not c.secure]
@@ -17,7 +30,7 @@ def assert_secure_cookie_flag_is_set(response: Response):
     assert all(c.secure for c in response.cookies), error
 
 
-@pytest.mark.skip(reason="See TT-1614")
+@allure.issue("TT-1614", "Cookies Not Set With Secure Flag")
 @pytest.mark.parametrize(
     "url",
     [
@@ -51,7 +64,7 @@ def test_secure_cookie_flag_is_set_for_pages_behind_auth(
     assert_secure_cookie_flag_is_set(response)
 
 
-@pytest.mark.skip(reason="See TT-1614")
+@allure.issue("TT-1614", "Cookies Not Set With Secure Flag")
 @pytest.mark.parametrize(
     "url",
     [
@@ -104,7 +117,7 @@ def test_secure_cookie_flag_is_set_for_public_pages(url, basic_auth):
     assert_secure_cookie_flag_is_set(response)
 
 
-@pytest.mark.skip(reason="See TT-1614")
+@allure.issue("TT-1614", "Cookies Not Set With Secure Flag")
 @pytest.mark.dev
 @pytest.mark.parametrize(
     "url",
@@ -119,7 +132,7 @@ def test_secure_cookie_flag_is_present_export_opportunities_dev(url, basic_auth)
     assert_secure_cookie_flag_is_set(response)
 
 
-@pytest.mark.skip(reason="See TT-1614")
+@allure.issue("TT-1614", "Cookies Not Set With Secure Flag")
 @pytest.mark.stage
 @pytest.mark.parametrize(
     "url",
@@ -133,7 +146,7 @@ def test_secure_cookie_flag_is_present_export_opportunities_stage(url, basic_aut
     assert_secure_cookie_flag_is_set(response)
 
 
-@pytest.mark.skip(reason="See TT-1614")
+@allure.issue("TT-1614", "Cookies Not Set With Secure Flag")
 @pytest.mark.dev
 @pytest.mark.parametrize(
     "url",

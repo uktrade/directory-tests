@@ -7,8 +7,18 @@ from rest_framework.status import (
     HTTP_302_FOUND,
 )
 
+import allure
 from directory_tests_shared import URLs
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
+
+pytestmark = [
+    allure.suite("Letter links"),
+    allure.feature("Letter links"),
+    allure.description(
+        "Links to legacy pages which were used in physical letters sent to our users "
+        "should redirect to appropriate new pages"
+    ),
+]
 
 
 @pytest.mark.stage

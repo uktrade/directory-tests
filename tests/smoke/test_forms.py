@@ -6,10 +6,12 @@ from rest_framework.status import (
     HTTP_405_METHOD_NOT_ALLOWED,
 )
 
-
+import allure
 from directory_tests_shared import URLs
 from directory_tests_shared.clients import FORMS_API_CLIENT
 from tests.smoke.cms_api_helpers import status_error
+
+pytestmark = [allure.suite("Forms-API"), allure.feature("Forms-API")]
 
 
 @pytest.mark.forms
