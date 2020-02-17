@@ -88,6 +88,8 @@ def check_for_special_urls_cases(url: str) -> str:
         and "/international-eu-exit-news/" not in url
     ):
         url = url.replace("/international/", "/international/content/")
+    if "/international/content/success/" in url:
+        url = url.replace("/international/content/success/", "/international/success/")
     if url.startswith("http://"):
         url = url.replace("http://", "https://")
     return url
