@@ -6,4 +6,5 @@ __all__ = [
     "registration_confirmation",
     "sign_in",
     "sign_out",
+    "static_content",
 ]

@@ -4,6 +4,7 @@ Feature: SSO - Sign in
 
   Background:
     Given basic authentication is done for "SSO - Sign in" page
+    And basic authentication is done for "SSO - Static assets" page
 
   @bug
   @allure.issue:TT-1778
