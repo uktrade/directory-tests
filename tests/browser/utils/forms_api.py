@@ -3,7 +3,8 @@ from typing import List
 
 from retrying import retry
 
-from directory_tests_shared.clients import FORMS_API_CLIENT
+from directory_tests_shared.clients import FORMS_API_CLIENT, BasicAuthenticator
+from directory_tests_shared.settings import BASICAUTH_PASS, BASICAUTH_USER
 
 
 def filter_by_action(submissions: List[dict], action: str) -> list:
@@ -54,7 +55,10 @@ def filter_by_uuid_last_name(submissions: List[dict], uuid: str) -> list:
 
 def find_form_submissions(email: str) -> List[dict]:
     assert email, "Please provide email address!"
-    response = FORMS_API_CLIENT.get(f"testapi/submissions-by-email/{email}/")
+    response = FORMS_API_CLIENT.get(
+        f"testapi/submissions-by-email/{email}/",
+        authenticator=BasicAuthenticator(BASICAUTH_USER, BASICAUTH_PASS),
+    )
     if response.status_code == 200:
         result = response.json()
     elif response.status_code == 404:
