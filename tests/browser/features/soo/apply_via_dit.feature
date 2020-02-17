@@ -32,16 +32,15 @@ Feature: SOO - Apply via DIT
   @soo-long-domestic
   @account-support
   Scenario Outline: Logged in Domestic "Selling Online Overseas" Enquirers should be able to get the Enquiry page
-    Given "Robert" has a verified standalone SSO/great.gov.uk account
-    And "Robert" is signed in
+    Given "Robert" has created a great.gov.uk account for a "UK taxpayer"
     And "Robert" found a marketplace in "<country>" to sell "<products>"
 
     When "Robert" decides to "Apply now"
 
     Then "Robert" should be on the "Domestic - Contact details (SOO)" page
     And "Robert" should see following fields populated with values provided on other forms
-      | form               | fields |
-      | SSO - Registration | email  |
+      | form                                                                       | fields |
+      | Profile - Enter your email address and set a password (UK taxpayer) - form | email  |
 
     Examples: products and countries
       | country   | products                 |
