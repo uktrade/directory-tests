@@ -60,6 +60,9 @@ DOMESTIC_HEADER = {
 }
 DOMESTIC_COOKIE_BANNER = {
     "cookie banner": {
+        "banner": Selector(
+            By.CSS_SELECTOR, "div[aria-label='Cookies consent manager']"
+        ),
         "accept all cookies": Selector(
             By.CSS_SELECTOR,
             "body > div.ReactModalPortal a[href='#']",

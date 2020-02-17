@@ -40,6 +40,7 @@ from pages import (
     profile,
 )
 from pages.common_actions import (
+    accept_all_cookies,
     assertion_msg,
     avoid_browser_stack_idle_timeout_exception,
     get_actor,
@@ -73,6 +74,7 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
         error = f"Got blocked again on {context.driver.current_url}"
         assert "access denied" not in context.driver.page_source.lower(), error
     check_for_errors(context.driver.page_source, context.driver.current_url)
+    accept_all_cookies(context.driver)
     has_action(page, "should_be_here")
     take_screenshot(context.driver, page_name)
     if hasattr(page, "SubURLs"):

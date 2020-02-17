@@ -35,6 +35,7 @@ from pages import (
     sso,
 )
 from pages.common_actions import (
+    accept_all_cookies,
     add_actor,
     avoid_browser_stack_idle_timeout_exception,
     barred_actor,
@@ -147,6 +148,7 @@ def visit_page(context: Context, actor_alias: str, page_name: str):
         page.visit(context.driver)
 
     revisit_page_on_access_denied(context, page, page_name)
+    accept_all_cookies(context.driver)
     check_for_errors(context.driver.page_source, context.driver.current_url)
     update_actor(context, actor_alias, visited_page=page)
     take_screenshot(context.driver, page_name)
