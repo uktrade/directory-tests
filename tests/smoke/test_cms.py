@@ -29,7 +29,7 @@ if "dev" in CMS_API_URL:
         # # and are used to categorise capital invest opportunities
         # # so come up as a filter on the opportunity listing page
         # "great_international.internationalsectorpage",
-        # "great_international.internationalsubsectorpage",
+        "great_international.internationalsubsectorpage",
         # "great_international.internationaltopiclandingpage",
         # "great_international.aboutuklandingpage",
         # "great_international.capitalinvestopportunitylistingpage",
