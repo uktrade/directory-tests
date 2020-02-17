@@ -88,11 +88,6 @@ def check_for_special_urls_cases(url: str) -> str:
         and "/international-eu-exit-news/" not in url
     ):
         url = url.replace("/international/", "/international/content/")
-    # ATM International pages with "Tree Based Routing" enabled are served
-    # via "/content/" infix, which is not handled by UI properly. Instead UI
-    # temporarily allows to view those pages via "/content/" infix
-    if "/international/content/" in url:
-        url = url.replace("/international/content/", "/international/content/")
     if url.startswith("http://"):
         url = url.replace("http://", "https://")
     return url
