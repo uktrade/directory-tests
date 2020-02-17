@@ -63,7 +63,6 @@ def test_access_sso_endpoints_as_logged_in_user_without_redirect_to_sud(
 @pytest.mark.parametrize(
     "url, expected_status_code",
     [
-        (URLs.SSO_LANDING.absolute, HTTP_301_MOVED_PERMANENTLY),
         (URLs.SSO_LOGIN.absolute, HTTP_301_MOVED_PERMANENTLY),
         (URLs.SSO_SIGNUP.absolute, HTTP_301_MOVED_PERMANENTLY),
         (URLs.SSO_LOGOUT.absolute, HTTP_301_MOVED_PERMANENTLY),
@@ -75,6 +74,29 @@ def test_access_sso_endpoints_as_logged_in_user_without_redirect_to_sud(
     ],
 )
 def test_redirects_after_removing_trailing_slash_as_logged_in_user(
+    logged_in_session, url, expected_status_code, basic_auth
+):
+    # get rid of trailing slash
+    if url[-1] == "/":
+        url = url[:-1]
+    response = logged_in_session.get(url, allow_redirects=False, auth=basic_auth)
+    assert response.status_code == expected_status_code, status_error(
+        expected_status_code, response
+    )
+
+
+@allure.issue(
+    "TT-2287",
+    "TT-2287 going to /sso without trailing slash redirects to not existent /sso/sso/ page",
+)
+@pytest.mark.dev
+@pytest.mark.prod
+@pytest.mark.session_auth
+@pytest.mark.parametrize(
+    "url, expected_status_code",
+    [(URLs.SSO_LANDING.absolute, HTTP_301_MOVED_PERMANENTLY)],
+)
+def test_redirects_after_removing_trailing_slash_as_logged_in_user_tt_2287(
     logged_in_session, url, expected_status_code, basic_auth
 ):
     # get rid of trailing slash
