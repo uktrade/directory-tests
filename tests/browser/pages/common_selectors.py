@@ -35,9 +35,6 @@ DOMESTIC_HEADER = {
         "find out more about cookies": Selector(
             By.CSS_SELECTOR, "#header-cookie-notice a", is_visible=False
         ),
-        "dismiss cookie notice": Selector(
-            By.ID, "dismiss-cookie-notice", is_visible=False
-        ),
         # global header
         "global header": Selector(By.ID, "great-global-header"),
         "great global logo": Selector(By.ID, "great-global-header-logo"),
@@ -58,6 +55,20 @@ DOMESTIC_HEADER = {
             By.CSS_SELECTOR,
             "#great-header-search-box ~ button",
             type=ElementType.BUTTON,
+        ),
+    }
+}
+DOMESTIC_COOKIE_BANNER = {
+    "cookie banner": {
+        "accept all cookies": Selector(
+            By.CSS_SELECTOR,
+            "body > div.ReactModalPortal a[href='#']",
+            type=ElementType.LINK,
+        ),
+        "reject all cookies": Selector(
+            By.CSS_SELECTOR,
+            "body > div.ReactModalPortal a.button[href$='cookies/']",
+            type=ElementType.LINK,
         ),
     }
 }

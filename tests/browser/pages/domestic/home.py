@@ -113,6 +113,7 @@ SELECTORS = {
 }
 SELECTORS.update(common_selectors.DOMESTIC_HEADER)
 SELECTORS.update(common_selectors.DOMESTIC_HERO_WITH_LINK)
+SELECTORS.update(common_selectors.DOMESTIC_COOKIE_BANNER)
 SELECTORS.update(common_selectors.SSO_LOGGED_OUT)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
 SELECTORS.update(common_selectors.DOMESTIC_FOOTER)

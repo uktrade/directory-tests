@@ -12,6 +12,7 @@ Feature: Domestic - Home Page
       Then "Robert" should see following sections
         | Sections                         |
         | Header                           |
+        | Cookie banner                    |
         | SSO links - logged out           |
         | Hero                             |
         | Prepare your business for Brexit |
