@@ -547,7 +547,7 @@ jobs:
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
-      PYTEST_ARGS: '-m "not stage and not prod"'
+      PYTEST_ARGS: '-m "not stage and not uat and not prod"'
     <<: [
     *machine_python3_node_browsers,
     *steps_smoke_tests,
@@ -557,7 +557,7 @@ jobs:
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
-      PYTEST_ARGS: "-m 'not dev and not prod'"
+      PYTEST_ARGS: "-m 'not dev and not uat and not prod'"
     <<: [
     *machine_python3_node_browsers,
     *steps_smoke_tests,
@@ -567,7 +567,7 @@ jobs:
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "uat"
-      PYTEST_ARGS: "-m 'not dev and not prod'"
+      PYTEST_ARGS: "-m 'not dev and not stage and not prod'"
     <<: [
     *machine_python3_node_browsers,
     *steps_smoke_tests,
