@@ -15,7 +15,7 @@ from directory_tests_shared import URLs
 from directory_tests_shared.constants import COMPANIES
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
 
-pytestmark = [allure.suite("FAB suite"), allure.feature("FAB feature")]
+pytestmark = [allure.suite("FAB"), allure.feature("FAB")]
 
 
 @allure.issue("ED-3188", "ATM we're not caching inactive companies: see ED-3188")
@@ -61,15 +61,6 @@ def test_redirects_to_profile_pages(url, destination, basic_auth):
         f"'{destination}' but got redirect to '{location}'"
     )
     assert destination.endswith(location), error
-
-
-@allure.issue("TT-1543", "Missing redirect for requests with trailing /")
-@pytest.mark.skip(reason="see TT-1543 missing redirect with trailing /")
-@pytest.mark.parametrize("url", [URLs.FAB_REGISTER.absolute])
-def test_tt_1543_302_redirects_for_anon_user(url, basic_auth):
-    get_and_assert(
-        url=url, allow_redirects=False, status_code=HTTP_302_FOUND, auth=basic_auth
-    )
 
 
 @allure.story(
