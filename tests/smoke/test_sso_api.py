@@ -58,7 +58,7 @@ def test_get_oauth2_user_profile():
 def test_get_oauth2_user_profile_w_invalid_token(token):
     response = SSO_API_CLIENT.user.get_oauth2_user_profile(bearer_token=token)
     assert response.status_code == HTTP_401_UNAUTHORIZED, status_error(
-        HTTP_200_OK, response
+        HTTP_401_UNAUTHORIZED, response
     )
 
 
@@ -88,7 +88,7 @@ def test_check_invalid_password(logged_in_session, password):
     user_session_id = logged_in_session.cookies.get("directory_sso_dev_session")
     response = SSO_API_CLIENT.user.check_password(user_session_id, password)
     assert response.status_code == HTTP_400_BAD_REQUEST, status_error(
-        HTTP_200_OK, response
+        HTTP_400_BAD_REQUEST, response
     )
 
 
