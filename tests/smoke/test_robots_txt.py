@@ -11,7 +11,6 @@ from tests.smoke.cms_api_helpers import get_and_assert
 pytestmark = [
     allure.suite("robots.txt"),
     allure.feature("robots.txt"),
-    allure.story("All services should have robots.txt"),
     allure.description(
         "The HttpOnly flag should be set by including this attribute within "
         "the relevant Set-cookie directive. Alternatively, URL rewriting could be used,"

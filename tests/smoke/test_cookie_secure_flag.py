@@ -10,7 +10,6 @@ from tests.smoke.cms_api_helpers import get_and_assert, status_error
 pytestmark = [
     allure.suite("Secure Cookie flag"),
     allure.feature("Secure Cookie flag"),
-    allure.story("The Secure Cookie flag should be set on all sensitive cookies"),
     allure.description(
         "The Secure flag should be set on all cookies that are used for transmitting "
         "sensitive data when accessing content over HTTPS. If cookies are used to "

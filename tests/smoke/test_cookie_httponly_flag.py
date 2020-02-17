@@ -10,7 +10,6 @@ from tests.smoke.cms_api_helpers import get_and_assert, status_error
 pytestmark = [
     allure.suite("HttpOnly Cookie flag"),
     allure.feature("HttpOnly Cookie flag"),
-    allure.story("The HttpOnly flag should be set on all sensitive cookies"),
     allure.description(
         "The HttpOnly flag should be set by including this attribute within "
         "the relevant Set-cookie directive. Alternatively, URL rewriting could be used,"

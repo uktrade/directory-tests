@@ -11,7 +11,6 @@ from tests.smoke.cms_api_helpers import get_and_assert
 pytestmark = [
     allure.suite("sitemap.xml"),
     allure.feature("sitemap.xml"),
-    allure.story("Top Level domain should expose a valid sitemap.xml"),
     allure.description(
         "A service which handles our Top Level Domain should expose a valid sitemap.xml"
         " which enables various Search Engines/Web Crawlers (like Google) to discover "
