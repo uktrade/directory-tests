@@ -148,6 +148,9 @@ def should_skip_url(url: str) -> bool:
         "contact/find-uk-companies/success/",  # this page is not in use anymore
         "skip.this.url",  # skip URL which was deemed to skip the page checker
         "/success-stories/",  # Success Stories are behind a feature flag
+        # these 2 contact forms were never released
+        "/department-for-environment-food-and-rural-affairs/",
+        "/department-for-business-energy-and-industrial-strategy/",
     ]
     if any(True for bit in skip if bit in url):
         return True
