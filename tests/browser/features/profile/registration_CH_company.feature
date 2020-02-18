@@ -2,7 +2,7 @@
 @allure.link:TT-1094
 @enrol
 @new-registration
-@allure.suite:
+@allure.suite:Profile
 Feature: Profile - CH enrolment flows
 
   Background:
