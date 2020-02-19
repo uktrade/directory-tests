@@ -4,6 +4,7 @@ Feature: Domestic - Contact us
 
   Background:
     Given basic authentication is done for "Domestic - Home" page
+    And basic authentication is done for "SSO - Static assets" page
 
   @allure.link:TT-758
   @enquirer-location
