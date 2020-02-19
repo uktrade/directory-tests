@@ -31,6 +31,7 @@ Feature: ERP - common pages
       | Exporter from developing country |
 
 
+  @wip
   @stage-only
   @holding
   Scenario: Enquirers should be greeted with a holding page when such feature is enabled
@@ -45,6 +46,7 @@ Feature: ERP - common pages
       | Footer          |
 
 
+  @wip
   @stage-only
   @holding
   Scenario: Enquirers should be able to learn more about the service from external Gov.UK pages
