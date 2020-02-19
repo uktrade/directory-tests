@@ -4,6 +4,7 @@ Feature: Domestic - Accessing Services
 
   Background:
     Given basic authentication is done for "Domestic - Home" page
+    And basic authentication is done for "Export Opportunities - Home" page
 
   @allure.link:ED-2659
   @home-page
