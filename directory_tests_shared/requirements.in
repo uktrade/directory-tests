@@ -1,5 +1,6 @@
 directory-api-client
 directory-cms-client
+directory-forms-api-client
 directory-sso-api-client
 envparse
 notifications-python-client

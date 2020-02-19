@@ -5,16 +5,17 @@
 #    pip-compile --no-annotate --output-file=./directory_tests_shared/requirements.txt ./directory_tests_shared/requirements.in
 #
 attrs==19.3.0
-automat==0.8.0
+automat==20.2.0
 certifi==2019.11.28
 cffi==1.14.0
 chardet==3.0.4
 constantly==15.1.0
 cryptography==2.8
 cssselect==1.1.0
-directory-api-client==21.1.0
+directory-api-client==21.3.0
 directory-client-core==6.1.0
-directory-cms-client==11.1.0
+directory-cms-client==11.1.1
+directory-forms-api-client==5.2.0
 directory-sso-api-client==6.2.0
 django==2.2.10
 djangorestframework==3.11.0
