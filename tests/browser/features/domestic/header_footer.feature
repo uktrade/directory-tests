@@ -124,11 +124,13 @@ Feature: Domestic - Header-Footer
 
   @header
   @footer
-  Scenario Outline: Any mobile user should see mobile-friendly header
-    Given "Robert" has a small screen
-    And basic authentication is done for "<selected>" page
+  Scenario Outline: Any mobile user should see mobile-friendly header on "<selected>" page
+    Given basic authentication is done for "<selected>" page
+    And "Robert" has a small screen
     And "Robert" visits the "<selected>" page
+
     When "Robert" clicks the Menu button
+
     Then "Robert" should see the menu items
 
     Examples: Domestic pages
