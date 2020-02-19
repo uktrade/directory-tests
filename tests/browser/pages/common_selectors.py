@@ -218,30 +218,18 @@ INVEST_HEADER = {
     "header": {
         # sub menu
         "header sub menu": Selector(By.CSS_SELECTOR, "nav.sub-nav"),
-        "overview": Selector(
-            By.CSS_SELECTOR,
-            "nav.sub-nav > ul > li.menu-item:nth-child(1) > a",
-            type=ElementType.LINK,
+        "overview": Selector(By.PARTIAL_LINK_TEXT, "Overview", type=ElementType.LINK),
+        "how we help": Selector(
+            By.PARTIAL_LINK_TEXT, "How we help", type=ElementType.LINK
         ),
         "how to expand to the uk": Selector(
-            By.CSS_SELECTOR,
-            "nav.sub-nav > ul > li.menu-item:nth-child(2) > a",
-            type=ElementType.LINK,
+            By.PARTIAL_LINK_TEXT, "How to expand to the UK", type=ElementType.LINK
         ),
         "find a uk specialist": Selector(
-            By.CSS_SELECTOR,
-            "nav.sub-nav > ul > li.menu-item:nth-child(3) > a",
-            type=ElementType.LINK,
-        ),
-        "how we help": Selector(
-            By.CSS_SELECTOR,
-            "nav.sub-nav > ul > li.menu-item:nth-child(4) > a",
-            type=ElementType.LINK,
+            By.PARTIAL_LINK_TEXT, "Find a UK specialist", type=ElementType.LINK
         ),
         "contact us": Selector(
-            By.CSS_SELECTOR,
-            "nav.sub-nav > ul > li.menu-item:nth-child(5) > a",
-            type=ElementType.LINK,
+            By.PARTIAL_LINK_TEXT, "Contact us", type=ElementType.LINK
         ),
     }
 }
