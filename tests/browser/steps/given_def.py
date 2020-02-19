@@ -5,6 +5,7 @@
 from behave import given
 from behave.runner import Context
 
+from pages.common_actions import generic_set_basic_auth_creds
 from steps.then_impl import (
     domestic_search_finder_should_see_page_number,
     should_be_on_page,
@@ -26,7 +27,6 @@ from steps.when_impl import (
     generic_fill_out_and_submit_form,
     generic_get_in_touch,
     generic_open_industry_page,
-    generic_set_basic_auth_creds,
     get_barred_actor,
     profile_start_registration_as,
     registration_create_and_verify_account,
@@ -107,7 +107,7 @@ def given_actor_navigates_via_contact_us_options(
 
 @given('basic authentication is done for "{page_name}" page')
 def given_user_did_basic_auth(context: Context, page_name: str):
-    generic_set_basic_auth_creds(context, page_name)
+    generic_set_basic_auth_creds(context.driver, page_name)
 
 
 @given('"{actor_alias}" is on randomly selected Advice article page')

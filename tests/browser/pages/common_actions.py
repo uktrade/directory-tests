@@ -34,8 +34,14 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 import allure
-from directory_tests_shared.settings import BARRED_USERS, BROWSER, TAKE_SCREENSHOTS
-from directory_tests_shared.utils import extract_attributes_by_css
+from directory_tests_shared.settings import (
+    BARRED_USERS,
+    BASICAUTH_PASS,
+    BASICAUTH_USER,
+    BROWSER,
+    TAKE_SCREENSHOTS,
+)
+from directory_tests_shared.utils import access_was_denied, extract_attributes_by_css
 from pages import ElementType
 from PIL import Image
 
@@ -1181,3 +1187,30 @@ def accept_all_cookies(driver: WebDriver):
             logging.debug("Cookie banner is not visible")
     else:
         logging.debug("Cookie banner is not present")
+
+
+def generic_set_basic_auth_creds(driver: WebDriver, page_name: str):
+    from pages import get_page_object
+
+    page = get_page_object(page_name)
+    parsed = urlparse(page.URL)
+    with_creds = f"{parsed.scheme}://{BASICAUTH_USER}:{BASICAUTH_PASS}@{parsed.netloc}{parsed.path}"
+    if with_creds.endswith("/"):
+        with_creds += "automated-test-auth"
+    else:
+        with_creds += "/automated-test-auth"
+    logging.debug(f"Visiting {page.URL} in order to pass basic auth")
+    with wait_for_page_load_after_action(driver):
+        driver.get(with_creds)
+    assertion_msg = f"Access is still denied after authentication attempt → {page.URL}"
+    with selenium_action(driver, assertion_msg):
+        assert "ok" in driver.page_source
+
+
+def revisit_page_on_access_denied(driver: WebDriver, page: ModuleType, page_name: str):
+    if access_was_denied(driver.page_source):
+        logging.debug(
+            f"Access Denied. Trying to re-authenticate on '{page_name}' {page.URL}"
+        )
+        generic_set_basic_auth_creds(driver, page_name)
+        driver.get(page.URL)

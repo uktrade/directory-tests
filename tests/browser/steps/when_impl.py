@@ -3,9 +3,9 @@
 import logging
 import random
 from inspect import signature
-from types import MethodType, ModuleType
+from types import MethodType
 from typing import Dict
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urljoin
 
 from behave.model import Table
 from behave.runner import Context
@@ -22,7 +22,6 @@ from directory_tests_shared.gov_notify import (
     get_email_verification_code,
     get_verification_link,
 )
-from directory_tests_shared.settings import BASICAUTH_PASS, BASICAUTH_USER
 from directory_tests_shared.utils import check_for_errors
 from pages import (
     common_language_selector,
@@ -46,8 +45,8 @@ from pages.common_actions import (
     get_full_page_name,
     get_last_visited_page,
     go_to_url,
+    revisit_page_on_access_denied,
     scroll_to,
-    selenium_action,
     take_screenshot,
     try_alternative_click_on_exception,
     unauthenticated_actor,
@@ -79,31 +78,6 @@ def retry_if_webdriver_error(exception):
 def retry_if_assertion_error(exception):
     """Return True if we should retry on AssertionError, False otherwise"""
     return isinstance(exception, AssertionError)
-
-
-def generic_set_basic_auth_creds(context: Context, page_name: str):
-    driver = context.driver
-    page = get_page_object(page_name)
-    parsed = urlparse(page.URL)
-    with_creds = f"{parsed.scheme}://{BASICAUTH_USER}:{BASICAUTH_PASS}@{parsed.netloc}{parsed.path}"
-    if with_creds.endswith("/"):
-        with_creds += "automated-test-auth"
-    else:
-        with_creds += "/automated-test-auth"
-    logging.debug(f"Visiting {page.URL} in order to pass basic auth")
-    with wait_for_page_load_after_action(driver):
-        driver.get(with_creds)
-    with selenium_action(driver, f"Request to {driver.current_url} was blocked"):
-        assert "Access Denied" not in driver.page_source
-
-
-def revisit_page_on_access_denied(context: Context, page: ModuleType, page_name: str):
-    if "access denied" in context.driver.page_source.lower():
-        logging.debug(f"Trying to re-authenticate on '{page_name}' {page.URL}")
-        generic_set_basic_auth_creds(context, page_name)
-        context.driver.get(page.URL)
-        error = f"Got blocked again on {context.driver.current_url}"
-        assert "access denied" not in context.driver.page_source.lower(), error
 
 
 # BrowserStack times out after 60 seconds of inactivity
@@ -147,9 +121,9 @@ def visit_page(context: Context, actor_alias: str, page_name: str):
         )
         page.visit(context.driver)
 
-    revisit_page_on_access_denied(context, page, page_name)
-    accept_all_cookies(context.driver)
+    revisit_page_on_access_denied(context.driver, page, page_name)
     check_for_errors(context.driver.page_source, context.driver.current_url)
+    accept_all_cookies(context.driver)
     update_actor(context, actor_alias, visited_page=page)
     take_screenshot(context.driver, page_name)
 
@@ -161,15 +135,10 @@ def set_small_screen(context: Context):
 
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
-    if "access denied" in context.driver.page_source.lower():
-        logging.debug(f"Trying to re-authenticate on '{page_name}' {page.URL}")
-        generic_set_basic_auth_creds(context, page_name)
-        context.driver.get(page.URL)
-        error = f"Got blocked again on {context.driver.current_url}"
-        assert "access denied" not in context.driver.page_source.lower(), error
+    revisit_page_on_access_denied(context.driver, page, page_name)
     check_for_errors(context.driver.page_source, context.driver.current_url)
-    has_action(page, "should_be_here")
     take_screenshot(context.driver, page_name)
+    has_action(page, "should_be_here")
     if hasattr(page, "SubURLs"):
         special_page_name = page_name.split(" - ")[1].lower()
         if signature(page.should_be_here).parameters.get("page_name"):

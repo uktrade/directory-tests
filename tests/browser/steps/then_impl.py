@@ -46,12 +46,12 @@ from pages.common_actions import (
     get_actor,
     get_full_page_name,
     get_last_visited_page,
+    revisit_page_on_access_denied,
     take_screenshot,
     update_actor,
 )
 from pages.domestic import contact_us_office_finder_search_results
 from steps import has_action
-from steps.when_impl import generic_set_basic_auth_creds
 from utils.browser import clear_driver_cookies
 from utils.forms_api import (
     find_form_submissions,
@@ -67,16 +67,12 @@ from utils.gtm import (
 
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
-    if "access denied" in context.driver.page_source.lower():
-        logging.debug(f"Trying to re-authenticate on '{page_name}' {page.URL}")
-        generic_set_basic_auth_creds(context, page_name)
-        context.driver.get(page.URL)
-        error = f"Got blocked again on {context.driver.current_url}"
-        assert "access denied" not in context.driver.page_source.lower(), error
-    check_for_errors(context.driver.page_source, context.driver.current_url)
+    page_source = context.driver.page_source
+    revisit_page_on_access_denied(context.driver, page, page_name)
+    check_for_errors(page_source, context.driver.current_url)
     accept_all_cookies(context.driver)
-    has_action(page, "should_be_here")
     take_screenshot(context.driver, page_name)
+    has_action(page, "should_be_here")
     if hasattr(page, "SubURLs"):
         special_page_name = page_name.split(" - ")[1].lower()
         if signature(page.should_be_here).parameters.get("page_name"):

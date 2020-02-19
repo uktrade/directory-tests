@@ -104,8 +104,20 @@ def random_operating_countries() -> str:
     return choice(OPERATING_COUNTRIES)
 
 
+def access_was_denied(source: str) -> bool:
+    network_errors = ["Unfortunately your IP address", "If you require access"]
+    return all(msg in source for msg in network_errors)
+
+
+def check_if_access_denied(
+    source: str, url: str, *, error_msg: str = "Access denied (on error check) → {url}"
+):
+    network_errors = ["Unfortunately your IP address", "If you require access"]
+    assert all(msg not in source for msg in network_errors), error_msg.format(url=url)
+
+
 def check_for_errors(source: str, url: str):
-    assert "Access Denied" not in source, f"Access denied → {url}"
+    check_if_access_denied(source, url)
     assert "404 Not Found" not in source, f"404 Not Found → {url}"
     assert "This page cannot be found" not in source, f"404 Not Found → {url}"
     assert "Internal Server Error" not in source, f"500 ISE → {url}"
