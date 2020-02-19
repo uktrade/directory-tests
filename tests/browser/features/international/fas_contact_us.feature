@@ -66,30 +66,30 @@ Feature: FAS - Contact us
     Then "Robert" should be on the "<expected>" page
 
     Examples: common industries
-      | specific                      | buy or invest    | expected                                                |
-      | Creative industries           | invest in the UK | Invest - Contact us                                     |
-      | Engineering and manufacturing | buy from the UK  | International - Find a UK business partner - Contact us |
+      | specific                      | buy or invest              | expected                                                |
+      | Creative industries           | I want to invest in the UK | Invest - Contact us                                     |
+      | Engineering and manufacturing | I want to buy from the UK  | International - Find a UK business partner - Contact us |
 
     @full
     @dev-only
     Examples: promoted industries
-      | specific                     | buy or invest    | expected                                                |
-      | Automotive                   | invest in the UK | Invest - Contact us                                     |
-      | Aerospace                    | invest in the UK | Invest - Contact us                                     |
-      | Education                    | invest in the UK | Invest - Contact us                                     |
-      | Healthcare and Life Sciences | invest in the UK | Invest - Contact us                                     |
-      | Legal services               | buy from the UK  | International - Find a UK business partner - Contact us |
-      | Real Estate                  | buy from the UK  | International - Find a UK business partner - Contact us |
-      | Space                        | buy from the UK  | International - Find a UK business partner - Contact us |
-      | Technology                   | buy from the UK  | International - Find a UK business partner - Contact us |
+      | specific                     | buy or invest              | expected                                                |
+      | Automotive                   | I want to invest in the UK | Invest - Contact us                                     |
+      | Aerospace                    | I want to invest in the UK | Invest - Contact us                                     |
+      | Education                    | I want to invest in the UK | Invest - Contact us                                     |
+      | Healthcare and Life Sciences | I want to invest in the UK | Invest - Contact us                                     |
+      | Legal services               | I want to buy from the UK  | International - Find a UK business partner - Contact us |
+      | Real Estate                  | I want to buy from the UK  | International - Find a UK business partner - Contact us |
+      | Space                        | I want to buy from the UK  | International - Find a UK business partner - Contact us |
+      | Technology                   | I want to buy from the UK  | International - Find a UK business partner - Contact us |
 
     @full
     @stage-only
     Examples: promoted industries
-      | specific                            | buy or invest    | expected                                                |
-      | Financial and professional services | invest in the UK | Invest - Contact us                                     |
-      | Legal services                      | buy from the UK  | International - Find a UK business partner - Contact us |
-      | Technology                          | buy from the UK  | International - Find a UK business partner - Contact us |
+      | specific                            | buy or invest              | expected                                                |
+      | Financial and professional services | I want to invest in the UK | Invest - Contact us                                     |
+      | Legal services                      | I want to buy from the UK  | International - Find a UK business partner - Contact us |
+      | Technology                          | I want to buy from the UK  | International - Find a UK business partner - Contact us |
 
 
   @report-this-page

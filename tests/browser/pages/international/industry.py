@@ -89,10 +89,10 @@ SELECTORS = {
     },
     "next steps": {
         "next steps": Selector(By.ID, "sector-next-steps-section"),
-        "invest in the uk": Selector(
+        "i want to invest in the uk": Selector(
             By.CSS_SELECTOR, "#sector-next-steps-section div:nth-child(1) > a"
         ),
-        "buy from the uk": Selector(
+        "i want to buy from the uk": Selector(
             By.CSS_SELECTOR, "#sector-next-steps-section div:nth-child(2) > a"
         ),
     },
