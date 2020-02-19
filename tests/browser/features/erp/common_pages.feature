@@ -61,7 +61,7 @@ Feature: ERP - common pages
   @allure.link:TT-2183
   @dev-only
   @summary
-  Scenario Outline: Should see correct data on summary page
+  Scenario Outline: "<specific_user_type>" should see correct data on "<summary>" page
     Given "Robert" got to "<summary>" ERP page as "<specific_user_type>"
 
     Then "Robert" should see correct data shown on the summary page
