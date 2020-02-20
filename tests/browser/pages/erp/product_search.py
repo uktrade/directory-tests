@@ -157,7 +157,9 @@ def should_see_number_of_product_codes_to_select(
 ):
     found_elements = find_elements(driver, PRODUCT_CODES_SELECTOR)
     evaluate_comparison(
-        "number of product codes to be", len(found_elements), comparison_details
+        f"number of product codes (on {driver.current_url}) to be",
+        len(found_elements),
+        comparison_details,
     )
 
 
@@ -166,7 +168,9 @@ def should_see_number_of_product_categories_to_expand(
 ):
     found_elements = find_elements(driver, PRODUCT_CATEGORIES_SELECTOR)
     evaluate_comparison(
-        "number of product categories to be", len(found_elements), comparison_details
+        "number of product categories (on {driver.current_url}) to be",
+        len(found_elements),
+        comparison_details,
     )
 
 
