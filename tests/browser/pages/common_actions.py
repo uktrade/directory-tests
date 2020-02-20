@@ -107,7 +107,6 @@ def go_to_url(driver: WebDriver, url: str, page_name: str):
     """Go to the specified URL and take a screenshot afterwards."""
     driver.get(url)
     accept_all_cookies(driver)
-    take_screenshot(driver, page_name)
 
 
 def check_url(driver: WebDriver, expected_url: str, *, exact_match: bool = True):

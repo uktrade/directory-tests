@@ -122,10 +122,10 @@ def visit_page(context: Context, actor_alias: str, page_name: str):
         page.visit(context.driver)
 
     revisit_page_on_access_denied(context.driver, page, page_name)
-    check_for_errors(context.driver.page_source, context.driver.current_url)
-    accept_all_cookies(context.driver)
-    update_actor(context, actor_alias, visited_page=page)
     take_screenshot(context.driver, page_name)
+    accept_all_cookies(context.driver)
+    check_for_errors(context.driver.page_source, context.driver.current_url)
+    update_actor(context, actor_alias, visited_page=page)
 
 
 def set_small_screen(context: Context):
@@ -241,9 +241,11 @@ def sign_in(context: Context, actor_alias: str):
     email = actor.email
     password = actor.password
     sso.sign_in.visit(context.driver)
+    take_screenshot(context.driver, sso.sign_in.NAME)
     sso.sign_in.should_be_here(context.driver)
     sso.sign_in.fill_out(context.driver, email, password)
     sso.sign_in.submit(context.driver)
+    take_screenshot(context.driver, "after sign in")
     check_for_errors(context.driver.page_source, context.driver.current_url)
 
 
@@ -684,6 +686,7 @@ def domestic_open_random_market(context: Context, actor_alias: str):
         add_actor(context, unauthenticated_actor(actor_alias))
     driver = context.driver
     domestic.markets_listing.visit(driver)
+    take_screenshot(driver, domestic.markets_listing.NAME)
     check_for_errors(driver.page_source, driver.current_url)
     market_name = domestic.markets_listing.open_random_marketplace(driver)
     domestic.market_country_guide.should_be_here(driver)
@@ -701,6 +704,7 @@ def domestic_open_random_advice_article(context: Context, actor_alias: str):
         add_actor(context, unauthenticated_actor(actor_alias))
     driver = context.driver
     domestic.advice_landing.visit(driver)
+    take_screenshot(driver, domestic.advice_landing.NAME)
     check_for_errors(driver.page_source, driver.current_url)
     advice_name = domestic.advice_landing.open_any_article(driver)
     article_name = domestic.advice_article_list.open_any_article(driver)
