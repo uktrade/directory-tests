@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 __all__ = [
+    "buy_from_the_uk",
     "industries",
     "industry",
     "landing",

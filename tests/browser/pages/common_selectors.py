@@ -378,3 +378,13 @@ ERP_FOOTER = {
         ),
     }
 }
+
+
+FAS_HEADER = {
+    "fas header": {
+        "fas header itself": Selector(By.CSS_SELECTOR, "nav.sub-nav"),
+        "how we help": Selector(By.CSS_SELECTOR, "nav.sub-nav li:nth-child(1) a"),
+        "find a supplier": Selector(By.CSS_SELECTOR, "nav.sub-nav li:nth-child(2) a"),
+        "contact us": Selector(By.CSS_SELECTOR, "nav.sub-nav li:nth-child(3) a"),
+    }
+}

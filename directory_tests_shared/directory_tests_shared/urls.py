@@ -684,6 +684,9 @@ class URLs(Enum):
     INTERNATIONAL_LANDING = InternationalUrl("")
     INTERNATIONAL_CONTACT_US = InternationalUrl("contact/")
     INTERNATIONAL_SITEMAP = InternationalUrl("sitemap.xml")
+    INTERNATIONAL_BUY_FROM_THE_UK = InternationalUrl(
+        "content/trade/how-we-help-you-buy/"
+    )
     INTERNATIONAL_INDUSTRIES = InternationalUrl(
         "content/about-uk/industries/",
         template="content/about-uk/industries/{industry}/",
