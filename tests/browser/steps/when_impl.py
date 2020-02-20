@@ -679,6 +679,23 @@ def contact_us_navigate_through_options(context: Context, actor_alias: str, via:
         generic_pick_radio_option_and_submit(context, actor_alias, option)
 
 
+def domestic_open_random_market(context: Context, actor_alias: str):
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
+    driver = context.driver
+    domestic.markets_listing.visit(driver)
+    check_for_errors(driver.page_source, driver.current_url)
+    market_name = domestic.markets_listing.open_random_marketplace(driver)
+    domestic.market_country_guide.should_be_here(driver)
+    update_actor(
+        context,
+        actor_alias,
+        visited_page=domestic.market_country_guide,
+        article_url=driver.current_url,
+        visited_articles=market_name,
+    )
+
+
 def domestic_open_random_advice_article(context: Context, actor_alias: str):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))

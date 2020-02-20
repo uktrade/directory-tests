@@ -18,6 +18,7 @@ from steps.when_impl import (
     contact_us_get_to_page_via,
     contact_us_navigate_through_options,
     domestic_open_random_advice_article,
+    domestic_open_random_market,
     domestic_search_for_phrase_on_page,
     domestic_search_result_has_more_than_one_page,
     erp_follow_user_flow,
@@ -108,6 +109,11 @@ def given_actor_navigates_via_contact_us_options(
 @given('basic authentication is done for "{page_name}" page')
 def given_user_did_basic_auth(context: Context, page_name: str):
     generic_set_basic_auth_creds(context.driver, page_name)
+
+
+@given('"{actor_alias}" is on randomly selected Market page')
+def given_actor_in_on_random_market(context: Context, actor_alias: str):
+    domestic_open_random_market(context, actor_alias)
 
 
 @given('"{actor_alias}" is on randomly selected Advice article page')
