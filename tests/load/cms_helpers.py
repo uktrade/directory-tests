@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
 
-from directory_cms_client.client import DirectoryCMSClient  # noqa
-from directory_constants.cms import INVEST  # noqa
 from locust import HttpLocust, events
 from requests.exceptions import (
     InvalidSchema,
@@ -11,6 +9,8 @@ from requests.exceptions import (
     RequestException,
 )
 
+from directory_cms_client.client import DirectoryCMSClient  # noqa
+from directory_constants.cms import INVEST  # noqa
 from directory_tests_shared.settings import (
     CMS_API_DEFAULT_TIMEOUT,
     CMS_API_KEY,
@@ -32,9 +32,7 @@ class LocustCMSAPIAuthenticatedClient(DirectoryCMSClient):
 
     def get(self, *args, **kwargs):
         self.name = kwargs.pop("name", None) or self.name
-        self.expected_codes = (
-            kwargs.pop("expected_codes", None) or self.expected_codes
-        )
+        self.expected_codes = kwargs.pop("expected_codes", None) or self.expected_codes
         start_time = time.time()
         status_code = None
         try:
@@ -60,6 +58,7 @@ class LocustCMSAPIAuthenticatedClient(DirectoryCMSClient):
                 request_type="GET",
                 name=self.name,
                 response_time=total_time,
+                response_length=0,
                 exception=status_code or RequestException.errno,
             )
 
