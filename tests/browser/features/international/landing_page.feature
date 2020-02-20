@@ -35,15 +35,11 @@ Feature: INTL - Landing page
     Then "Robert" should be on the "<expected_service>" page
 
     Examples:
-      | service          | expected_service          |
-      | Expand to the UK | Invest - landing          |
-      | Buy from the UK  | Find a Supplier - Landing |
-
-    @wip
-    Examples: ATM there are no links to these services
-      | service          | expected_service       |
-      | Study in the UK  | British Council - Home |
-      | Visit the UK     | Visit Britain - Home   |
+      | service          | expected_service                                |
+      | Expand to the UK | Invest - landing                                |
+      | Buy from the UK  | International - How we help you buy from the UK |
+      | Study in the UK  | British Council - Home                          |
+      | Visit the UK     | Visit Britain - Home                            |
 
 
   @allure.link:ED-3149

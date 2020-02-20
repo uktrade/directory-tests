@@ -7,6 +7,40 @@ Feature: FAS - Landing page
   Background:
     Given basic authentication is done for "International - Landing" page
 
+  Scenario: Visitors should be able to go to "<expected_service>" page from the International page
+    Given "Robert" visits the "International - Landing" page
+
+    When "Robert" decides to find out more about "Buy from the UK"
+
+    Then "Robert" should be on the "International - How we help you buy from the UK" page
+    And "Robert" should see following sections
+      | Sections        |
+      | Header          |
+      | FAS Header      |
+      | Hero            |
+      | Breadcrumbs     |
+      | Teaser          |
+      | eBook           |
+      | Services        |
+      | Contact us      |
+      | Error reporting |
+      | Footer          |
+
+
+  Scenario Outline: Visitors looking for UK Suppliers should be able to "<subsection>" from the International page
+    Given "Robert" visits the "International - How we help you buy from the UK" page
+
+    When "Robert" decides to find out more about "<subsection>"
+
+    Then "Robert" should be on the "<expected>" page
+
+    Examples: FAS pages
+      | subsection      | expected                                        |
+      | How we help     | International - How we help you buy from the UK |
+      | Find a supplier | Find a Supplier - landing                       |
+      | Contact us      | International - Find a UK business partner      |
+
+
   @allure.link:ED-4242
   Scenario: Buyers should be able to view "Find a Supplier home" page
     Given "Robert" visits the "Find a Supplier - Landing" page
