@@ -2,8 +2,9 @@
 """Domestic Markets Page object"""
 
 import logging
+import random
 from types import ModuleType
-from typing import Union
+from typing import List, Union
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -15,12 +16,14 @@ from pages import ElementType, common_selectors
 from pages.common_actions import (
     Actor,
     Selector,
+    check_for_sections,
     check_url,
     go_to_url,
     pick_option,
     submit_form,
+    wait_for_page_load_after_action,
 )
-from pages.domestic import actions as domestic_actions, markets_listing
+from pages.domestic import actions, markets_listing as SELF
 
 NAME = "Markets listing"
 SERVICE = Service.DOMESTIC
@@ -41,7 +44,7 @@ SELECTORS = {
             By.CSS_SELECTOR,
             "#id_sector-container ~ button",
             type=ElementType.SUBMIT,
-            next_page=markets_listing,
+            next_page=SELF,
         ),
         "view all market guides": Selector(
             By.CSS_SELECTOR, "#id_sector-container ~ a", type=ElementType.LINK
@@ -64,8 +67,12 @@ def should_be_here(driver: WebDriver, *, page_name: str = None):
         check_url(driver, URL, exact_match=False)
 
 
+def should_see_sections(driver: WebDriver, names: List[str]):
+    check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
+
+
 def search(driver: WebDriver, phrase: str):
-    domestic_actions.search(driver, phrase)
+    actions.search(driver, phrase)
 
 
 def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
@@ -85,3 +92,13 @@ def fill_out(driver: WebDriver, details: dict):
 
 def submit(driver: WebDriver) -> Union[ModuleType, None]:
     return submit_form(driver, SELECTORS["form"])
+
+
+def open_random_marketplace(driver: WebDriver) -> str:
+    card_links = driver.find_elements_by_css_selector("a.card-link")
+    link = random.choice(card_links)
+    link_text = link.text
+    logging.debug(f"Randomly selected market is: {link_text}")
+    with wait_for_page_load_after_action(driver):
+        link.click()
+    return link_text
