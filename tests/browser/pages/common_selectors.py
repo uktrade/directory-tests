@@ -58,7 +58,7 @@ DOMESTIC_HEADER = {
         ),
     }
 }
-DOMESTIC_COOKIE_BANNER = {
+COOKIE_BANNER = {
     "cookie banner": {
         "banner": Selector(
             By.CSS_SELECTOR, "div[aria-label='Cookies consent manager']"
@@ -160,9 +160,6 @@ INTERNATIONAL_HEADER = {
         "itself": Selector(By.ID, "header-cookie-notice", is_visible=False),
         "find out more about cookies": Selector(
             By.CSS_SELECTOR, "#header-cookie-notice a", is_visible=False
-        ),
-        "dismiss cookie notice": Selector(
-            By.ID, "dismiss-cookie-notice", is_visible=False
         ),
         # global header
         "global header": Selector(By.ID, "great-global-header"),

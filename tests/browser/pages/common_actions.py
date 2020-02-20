@@ -1174,10 +1174,8 @@ def untick_selected_checkboxes(driver: WebDriver, selector: Selector):
 def accept_all_cookies(driver: WebDriver):
     from pages import common_selectors
 
-    accept = common_selectors.DOMESTIC_COOKIE_BANNER["cookie banner"][
-        "accept all cookies"
-    ]
-    banner_selector = common_selectors.DOMESTIC_COOKIE_BANNER["cookie banner"]["banner"]
+    accept = common_selectors.COOKIE_BANNER["cookie banner"]["accept all cookies"]
+    banner_selector = common_selectors.COOKIE_BANNER["cookie banner"]["banner"]
     if is_element_present(driver, banner_selector):
         banner = driver.find_element_by_css_selector(banner_selector.value)
         if banner.is_displayed():

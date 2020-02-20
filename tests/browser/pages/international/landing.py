@@ -84,6 +84,7 @@ SELECTORS = {
     },
 }
 SELECTORS.update(common_selectors.INTERNATIONAL_HEADER)
+SELECTORS.update(common_selectors.COOKIE_BANNER)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
 SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
