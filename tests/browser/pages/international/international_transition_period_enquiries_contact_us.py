@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""International - EU Exit Contact us page"""
+"""International - Transition period enquiries Contact us page"""
 import random
 from types import ModuleType
 from typing import List, Union
@@ -26,10 +26,10 @@ from pages.common_actions import (
     tick_checkboxes,
 )
 
-NAME = "Brexit help"
+NAME = "Transition period enquiries"
 SERVICE = Service.INTERNATIONAL
 TYPE = PageType.CONTACT_US
-URL = URLs.CONTACT_US_INTERNATIONAL_BREXIT_CONTACT.absolute
+URL = URLs.CONTACT_US_INTERNATIONAL_TRANSITION_PERIOD_CONTACT.absolute
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
 SELECTORS = {

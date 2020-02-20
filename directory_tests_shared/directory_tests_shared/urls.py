@@ -242,6 +242,12 @@ class URLs(Enum):
     CONTACT_US_INTERNATIONAL_BREXIT_CONTACT_SUCCESS = InternationalUrl(
         "brexit/contact/success/"
     )
+    CONTACT_US_INTERNATIONAL_TRANSITION_PERIOD_CONTACT = InternationalUrl(
+        "transition-period/contact/"
+    )
+    CONTACT_US_INTERNATIONAL_TRANSITION_PERIOD_CONTACT_SUCCESS = InternationalUrl(
+        "transition-period/contact/success/"
+    )
     CONTACT_US_LANDING = ContactUrl("triage/location/")
     CONTACT_US_OTHER_DOMESTIC_EU_EXIT = ContactUrl("eu-exit-news/contact/")
     CONTACT_US_OTHER_GET_FINANCE = ContactUrl("get-finance/contact/")

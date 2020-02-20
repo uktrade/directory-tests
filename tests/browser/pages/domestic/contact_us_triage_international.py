@@ -23,7 +23,7 @@ from pages.common_actions import (
 from pages.international import (
     international_contact_us,
     international_contact_us_capital_invest,
-    international_eu_exit_contact_us,
+    international_transition_period_enquiries_contact_us,
     trade_contact_us,
 )
 from pages.invest import contact_us as invest_contact_us
@@ -49,7 +49,7 @@ SELECTORS = {
         "find a uk business partner": Selector(
             By.ID, "id_choice_2", type=ElementType.RADIO, is_visible=False
         ),
-        "brexit enquiries": Selector(
+        "the transition period": Selector(
             By.ID, "id_choice_3", type=ElementType.RADIO, is_visible=False
         ),
         "other": Selector(
@@ -63,7 +63,7 @@ POs = {
     "expanding to the uk": invest_contact_us,
     "investing capital in the uk": international_contact_us_capital_invest,
     "find a uk business partner": trade_contact_us,
-    "brexit enquiries": international_eu_exit_contact_us,
+    "the transition period": international_transition_period_enquiries_contact_us,
     "other": international_contact_us,
 }
 

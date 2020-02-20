@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""International - EU Exit Contact us - Thank you page"""
+"""International - Transition period enquiries - Thank you page"""
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -7,10 +7,10 @@ from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
 from pages.common_actions import Selector, check_url, go_to_url
 
-NAME = "Brexit help"
+NAME = "Transition period enquiries"
 SERVICE = Service.INTERNATIONAL
 TYPE = PageType.THANK_YOU
-URL = URLs.CONTACT_US_INTERNATIONAL_BREXIT_CONTACT_SUCCESS.absolute
+URL = URLs.CONTACT_US_INTERNATIONAL_TRANSITION_PERIOD_CONTACT_SUCCESS.absolute
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
 

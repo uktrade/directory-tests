@@ -393,10 +393,9 @@ Feature: Domestic - Contact us
       | Other                                   | Thank you for your enquiry                                   | DIT Enquiry unit   |
 
 
-  @dev-only
   @allure.link:TT-758
   @international
-  Scenario: International Enquirers should be able to see all expected contact options on the "International - What would you like to know more about?" page (Dev)
+  Scenario: International Enquirers should be able to see all expected contact options on the "International - What would you like to know more about?" page
     Given "Robert" visits the "Domestic - Contact us" page
 
     When "Robert" says that his business is "Outside the UK"
@@ -405,27 +404,9 @@ Feature: Domestic - Contact us
     And "Robert" should see following form choices
       | radio elements               |
       | Expanding to the UK          |
-      | Investing capital in the UK |
+      | Investing capital in the UK  |
       | Find a UK business partner   |
-      | Brexit enquiries             |
-      | Other                        |
-
-
-  @stage-only
-  @prod-only
-  @allure.link:TT-758
-  @international
-  Scenario: International Enquirers should be able to see all expected contact options on the "International - What would you like to know more about?" page (Staging)
-    Given "Robert" visits the "Domestic - Contact us" page
-
-    When "Robert" says that his business is "Outside the UK"
-
-    Then "Robert" should be on the "Domestic - What would you like to know more about? (staging) - International Contact us" page
-    And "Robert" should see following form choices
-      | radio elements               |
-      | Investing in the UK          |
-      | Find a UK business partner   |
-      | Brexit enquiries             |
+      | The transition period        |
       | Other                        |
 
 
@@ -438,33 +419,13 @@ Feature: Domestic - Contact us
 
     Then "Robert" should be on the "<expected>" page
 
-    @dev-only
     Examples:
       | selected                     | expected                                                |
       | Expanding to the UK          | Invest - Contact us                                     |
       | Investing capital in the UK  | International - Contact the Capital Investment team     |
       | Find a UK business partner   | International - Find a UK business partner - Contact us |
-      | Brexit enquiries             | International - Brexit help                             |
+      | The transition period        | International - Transition period enquiries             |
       | Other                        | International - Contact us                              |
-
-
-  @allure.link:TT-758
-  @stage-only
-  @prod-only
-  @international
-  Scenario Outline: International Enquirers should be able to get to the "<expected>" form for "<selected>"
-    Given "Robert" got to the "Domestic - What would you like to know more about? (staging) - International Contact us" page via "Outside the UK"
-
-    When "Robert" chooses "<selected>" option
-
-    Then "Robert" should be on the "<expected>" page
-
-    Examples:
-      | selected                   | expected                                                |
-      | Investing in the UK        | Invest - Contact us                                     |
-      | Find a UK business partner | International - Find a UK business partner - Contact us |
-      | Brexit enquiries           | International - Brexit help                             |
-      | Other                      | International - Contact us                              |
 
 
   @allure.link:TT-758
