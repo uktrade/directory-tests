@@ -266,6 +266,7 @@ def when_actor_looks_for_marketplace_using_countries_and_products(
 
 
 @when('"{actor_alias}" randomly selects a marketplace')
+@when('"{actor_alias}" selects a random market')
 def when_actor_selects_marketplace(context: Context, actor_alias: str):
     generic_click_on_random_marketplace(context, actor_alias)
 
