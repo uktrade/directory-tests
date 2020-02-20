@@ -118,6 +118,7 @@ class Account:
 
 class Service(Enum):
     BRITISH_COUNCIL = "British Council"
+    CHECK_DUTIES_CUSTOMS = "Check duties and customs"
     DOMESTIC = "Domestic"
     EORI = "EORI"
     EVENTS = "Events"
