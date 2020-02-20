@@ -34,6 +34,7 @@ Feature: INTL - Industries page
   @allure.link:ED-4258
   @report-this-page
   Scenario: Buyers should be able to report a problem with the "International - Industries" page
+    Given basic authentication is done for "Domestic - Home" page
     Given "Robert" visits the "International - Industries" page
 
     When "Robert" decides to "report a problem with the page"
