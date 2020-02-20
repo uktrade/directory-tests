@@ -244,6 +244,7 @@ def get_actor(context: Context, alias: str) -> Actor:
 def get_last_visited_page(context: Context, actor_alias: str) -> ModuleType:
     """Get last visited Page Object context Scenario Data."""
     actor = context.scenario_data.actors.get(actor_alias)
+    assert actor, f"Check your scenario. There's no such actor as: {actor_alias}"
     return actor.visited_page
 
 
