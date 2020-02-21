@@ -9,7 +9,11 @@ from retrying import retry
 
 import allure
 from directory_tests_shared import URLs
-from directory_tests_shared.clients import CMS_API_CLIENT, SSO_API_CLIENT
+from directory_tests_shared.clients import (
+    BASIC_AUTHENTICATOR,
+    CMS_API_CLIENT,
+    SSO_API_CLIENT,
+)
 from directory_tests_shared.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
 from directory_tests_shared.utils import retriable_error
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
@@ -30,8 +34,9 @@ def test_sso_api_health_check(url, basic_auth):
 @pytest.mark.sso_api
 def test_sso_api_health_check_ping_with_sso_api_client():
     """Use SSO-API client"""
-    response = SSO_API_CLIENT.ping()
+    response = SSO_API_CLIENT.ping(authenticator=BASIC_AUTHENTICATOR)
     assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
+    assert "Access Denied" not in response.content.decode("UTF-8")
 
 
 @pytest.mark.fab
