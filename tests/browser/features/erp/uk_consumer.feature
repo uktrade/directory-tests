@@ -173,7 +173,7 @@ Feature: ERP - UK consumer
 
   @allure.link:TT-2060
   @search
-  Scenario Outline: A UK consumer should be able to search for affected goods by commodity code or part of their name
+  Scenario Outline: A UK consumer should be able to search for affected goods by "<phrase>" which can be a commodity code or part of their name
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" searches using "<phrase>"
@@ -195,7 +195,7 @@ Feature: ERP - UK consumer
 
   @allure.link:TT-2060
   @search
-  Scenario Outline: A UK consumer should be able to search for affected goods by commodity code or part of their name
+  Scenario Outline: A UK consumer should be able to see product code details after looking for it using a "<phrase>" which is their commodity code
     Given "Robert" got to "ERP - Product search (UK consumer)" from "ERP - User type" via "UK consumer"
 
     When "Robert" searches using "<phrase>"
