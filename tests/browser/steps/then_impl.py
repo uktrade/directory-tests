@@ -47,6 +47,7 @@ from pages.common_actions import (
     get_full_page_name,
     get_last_visited_page,
     revisit_page_on_access_denied,
+    selenium_action,
     take_screenshot,
     update_actor,
 )
@@ -720,8 +721,8 @@ def menu_items_should_be_visible(context: Context):
             continue
     else:
         raise
-
-    assert element.is_displayed()
+    with selenium_action(context.driver, f"Menu items should be visible"):
+        assert element.is_displayed()
 
 
 def generic_should_be_able_to_print(context: Context, actor_alias: str):

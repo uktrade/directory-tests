@@ -47,6 +47,7 @@ from pages.common_actions import (
     go_to_url,
     revisit_page_on_access_denied,
     scroll_to,
+    selenium_action,
     take_screenshot,
     try_alternative_click_on_exception,
     unauthenticated_actor,
@@ -925,7 +926,8 @@ def click_on_header_menu_button(context: Context):
         button = context.driver.find_element(by=By.ID, value="js-mobile-button")
     except NoSuchElementException:
         button = context.driver.find_element(by=By.ID, value="mobile-menu-button")
-    button.click()
+    with selenium_action(context.driver, "click on header menu button"):
+        button.click()
 
 
 def erp_drill_down_hierarchy_tree(

@@ -588,6 +588,8 @@ def run_alternative_visibility_check(
     element = element or find_element(driver, selector)
     location = element.location
     size = element.size
+    if not all(location.values()) or not all(size.values()):
+        take_screenshot(driver, f"{element_name}_is_not_visible")
     with assertion_msg(
         f"It looks like '{element_name}' element identified by '{selector.by} →"
         f" {selector.value}' selector is not visible on "
@@ -1100,13 +1102,13 @@ def pick_one_option_and_submit(
     radio_selectors = get_selectors(form_selectors, ElementType.RADIO)
     selector = radio_selectors[name.lower()]
     choose_one_form_option(driver, radio_selectors, name)
-    take_screenshot(driver, "Before submitting the form")
+    take_screenshot(driver, f"Before submitting the form - {name}")
     submit_button_selector = form_selectors[submit_button_name]
     button = find_element(
         driver, submit_button_selector, element_name="Submit button", wait_for_it=False
     )
     button.click()
-    take_screenshot(driver, "After submitting the form")
+    take_screenshot(driver, f"After submitting the form - {name}")
     return selector.next_page
 
 
