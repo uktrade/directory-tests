@@ -727,6 +727,7 @@ def menu_items_should_be_visible(context: Context):
 def generic_should_be_able_to_print(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "should_be_able_to_print")
+    take_screenshot(context.driver, "should_be_able_to_print")
     page.should_be_able_to_print(context.driver)
     logging.debug(
         f"{actor_alias} is able to print out contents of: {context.driver.current_url}"
@@ -740,6 +741,7 @@ def erp_should_see_number_of_product_codes_to_select(
 
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "should_see_number_of_product_codes_to_select")
+    take_screenshot(context.driver, "should_see_number_of_product_codes_to_select")
     page.should_see_number_of_product_codes_to_select(
         context.driver, comparison_details
     )
@@ -755,6 +757,7 @@ def erp_should_see_number_of_product_categories_to_expand(
 
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "should_see_number_of_product_categories_to_expand")
+    take_screenshot(context.driver, "should_see_number_of_product_categories_to_expand")
     page.should_see_number_of_product_categories_to_expand(
         context.driver, comparison_details
     )
@@ -765,6 +768,7 @@ def erp_should_see_number_of_product_categories_to_expand(
 
 def erp_should_see_correct_data_on_summary_page(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
+    take_screenshot(context.driver, "should_see_correct_data_on_summary_page")
     erp.summary.should_see_correct_data_on_summary_page(
         context.driver, actor.forms_data
     )
