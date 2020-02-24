@@ -20,10 +20,10 @@ from pages.common_actions import (
 NAME = "Region"
 NAMES = [
     "London",
-    "North England",
+    "North of England",
     "Northern Ireland",
     "Scotland",
-    "South England",
+    "South of England",
     "Midlands",
     "Wales",
 ]
@@ -35,10 +35,10 @@ PAGE_TITLE = "Invest in Great Britain - "
 
 SubURLs = {
     "london": URLs.INTERNATIONAL_REGIONS_LONDON.absolute,
-    "north england": URLs.INTERNATIONAL_REGIONS_NORTH_ENGLAND.absolute,
+    "north of england": URLs.INTERNATIONAL_REGIONS_NORTH_ENGLAND.absolute,
     "northern ireland": URLs.INTERNATIONAL_REGIONS_NORTHERN_IRELAND.absolute,
     "scotland": URLs.INVEST_REGIONS_SCOTLAND.absolute,
-    "south england": URLs.INTERNATIONAL_REGIONS_SOUTH_ENGLAND.absolute,
+    "south of england": URLs.INTERNATIONAL_REGIONS_SOUTH_ENGLAND.absolute,
     "midlands": URLs.INTERNATIONAL_REGIONS_MIDLANDS.absolute,
     "wales": URLs.INTERNATIONAL_REGIONS_WALES.absolute,
 }

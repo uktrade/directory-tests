@@ -44,10 +44,10 @@ Feature: International - Regional pages
       | region           |
       | Scotland         |
       | Northern Ireland |
-      | North England    |
+      | North of England |
       | Wales            |
       | Midlands         |
-      | South England    |
+      | South of England |
 
 
   @allure.link:CMS-215
@@ -72,10 +72,10 @@ Feature: International - Regional pages
       | region           |
       | Scotland         |
       | Northern Ireland |
-      | North England    |
+      | North of England |
       | Wales            |
       | Midlands         |
-      | South England    |
+      | South of England |
 
 
   @allure.link:CMS-215
@@ -89,9 +89,9 @@ Feature: International - Regional pages
 
     Examples: UK Regions
       | region           |
-      | North England    |
       | Northern Ireland |
-      | South England    |
+      | North of England |
+      | South of England |
       | Midlands         |
       | Wales            |
 

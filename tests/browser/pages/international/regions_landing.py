@@ -21,19 +21,19 @@ SELECTORS = {
     "regions list": {
         "scotland": Selector(By.PARTIAL_LINK_TEXT, "Scotland"),
         "northern ireland": Selector(By.PARTIAL_LINK_TEXT, "Northern Ireland"),
-        "north england": Selector(By.PARTIAL_LINK_TEXT, "North England"),
+        "north of england": Selector(By.PARTIAL_LINK_TEXT, "North of England"),
         "wales": Selector(By.PARTIAL_LINK_TEXT, "Wales"),
         "midlands": Selector(By.PARTIAL_LINK_TEXT, "Midlands"),
-        "south england": Selector(By.PARTIAL_LINK_TEXT, "South England"),
+        "south of england": Selector(By.PARTIAL_LINK_TEXT, "South of England"),
     },
     "the uk map": {
         "the uk map - svg": Selector(By.CSS_SELECTOR, "svg.uk-map"),
         "scotland - svg": Selector(By.ID, "scotland"),
         "northern ireland - svg": Selector(By.ID, "northern-ireland"),
-        "north england - svg": Selector(By.ID, "north-england"),
+        "north of england - svg": Selector(By.ID, "north-england"),
         "wales - svg": Selector(By.ID, "wales"),
         "midlands - svg": Selector(By.ID, "midlands"),
-        "south england - svg": Selector(By.ID, "south-england"),
+        "south of england - svg": Selector(By.ID, "south-england"),
     },
     "contact us": {"get in touch": Selector(By.PARTIAL_LINK_TEXT, "Get in touch")},
 }
