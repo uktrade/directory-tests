@@ -946,6 +946,10 @@ jobs:
 workflows:
   version: 2
 
+  ####################################################################
+  ## Ad hoc workflows - these are run every time you push a change
+  ####################################################################
+
   run_smoke_and_functional_tests_on_dev_ad_hoc:
     jobs:
       - setup_env_for_smoke_tests
@@ -974,6 +978,19 @@ workflows:
             - func_sso_test_dev
             - func_profile_test_dev
             - func_international_test_dev
+
+  run_browser_tests_in_parallel_in_dev_ad_hoc:
+    jobs:
+      - setup_env_for_parallel_browser_tests_using_circleci
+      - dev_parallel_browser_tests_using_circleci:
+          requires:
+            - setup_env_for_parallel_browser_tests_using_circleci
+      - merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
+          requires:
+            - dev_parallel_browser_tests_using_circleci
+      - merge_junit_results_from_parallel_browser_tests:
+          requires:
+            - dev_parallel_browser_tests_using_circleci
 
   run_smoke_and_functional_on_stage_ad_hoc:
     jobs:
@@ -1004,6 +1021,19 @@ workflows:
             - func_profile_test_stage
             - func_international_test_stage
 
+  run_browser_tests_in_parallel_in_stage_ad_hoc:
+    jobs:
+      - setup_env_for_parallel_browser_tests_using_circleci
+      - stage_parallel_browser_tests_using_circleci:
+          requires:
+            - setup_env_for_parallel_browser_tests_using_circleci
+      - merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
+          requires:
+            - stage_parallel_browser_tests_using_circleci
+      - merge_junit_results_from_parallel_browser_tests:
+          requires:
+            - stage_parallel_browser_tests_using_circleci
+
   run_smoke_and_functional_on_uat_ad_hoc:
     jobs:
       - setup_env_for_smoke_tests
@@ -1032,6 +1062,132 @@ workflows:
             - func_sso_test_uat
             - func_profile_test_uat
             - func_international_test_uat
+
+  run_browser_tests_in_parallel_in_uat_ad_hoc:
+    jobs:
+      - setup_env_for_parallel_browser_tests_using_circleci
+      - uat_parallel_browser_tests_using_circleci:
+          requires:
+            - setup_env_for_parallel_browser_tests_using_circleci
+      - merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
+          requires:
+            - uat_parallel_browser_tests_using_circleci
+      - merge_junit_results_from_parallel_browser_tests:
+          requires:
+            - uat_parallel_browser_tests_using_circleci
+
+
+  ####################################################################
+  ## Scheduled workflows
+  ####################################################################
+
+  run_smoke_and_functional_tests_on_dev:
+    triggers:
+      - schedule:
+          cron: "7 1 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_smoke_tests
+      - setup_env_for_functional_tests
+      - delete_test_data_dev:
+          requires:
+            - setup_env_for_functional_tests
+      - smoke_tests_dev:
+          requires:
+            - setup_env_for_smoke_tests
+      - func_fas_test_dev:
+          requires:
+            - delete_test_data_dev
+      - func_international_test_dev:
+          requires:
+            - delete_test_data_dev
+      - func_sso_test_dev:
+          requires:
+            - delete_test_data_dev
+      - func_profile_test_dev:
+          requires:
+            - delete_test_data_dev
+      - generate_allure_report_from_functional_tests_and_send_link_to_slack:
+          requires:
+            - func_fas_test_dev
+            - func_sso_test_dev
+            - func_profile_test_dev
+            - func_international_test_dev
+
+  run_browser_tests_in_parallel_in_dev:
+    triggers:
+      - schedule:
+          cron: "39 1 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_parallel_browser_tests_using_circleci
+      - dev_parallel_browser_tests_using_circleci:
+          requires:
+            - setup_env_for_parallel_browser_tests_using_circleci
+      - merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
+          requires:
+            - dev_parallel_browser_tests_using_circleci
+      - merge_junit_results_from_parallel_browser_tests:
+          requires:
+            - dev_parallel_browser_tests_using_circleci
+
+  run_smoke_and_functional_tests_on_stage:
+    triggers:
+      - schedule:
+          cron: "52 2 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_smoke_tests
+      - setup_env_for_functional_tests
+      - delete_test_data_stage:
+          requires:
+            - setup_env_for_functional_tests
+      - smoke_tests_stage:
+          requires:
+            - setup_env_for_smoke_tests
+      - func_fas_test_stage:
+          requires:
+            - delete_test_data_stage
+      - func_international_test_stage:
+          requires:
+            - delete_test_data_stage
+      - func_sso_test_stage:
+          requires:
+            - delete_test_data_stage
+      - func_profile_test_stage:
+          requires:
+            - delete_test_data_stage
+      - generate_allure_report_from_functional_tests_and_send_link_to_slack:
+          requires:
+            - func_fas_test_stage
+            - func_sso_test_stage
+            - func_profile_test_stage
+            - func_international_test_stage
+
+  run_browser_tests_in_parallel_in_stage:
+    triggers:
+      - schedule:
+          cron: "23 3 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_parallel_browser_tests_using_circleci
+      - stage_parallel_browser_tests_using_circleci:
+          requires:
+            - setup_env_for_parallel_browser_tests_using_circleci
+      - merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
+          requires:
+            - stage_parallel_browser_tests_using_circleci
+      - merge_junit_results_from_parallel_browser_tests:
+          requires:
+            - stage_parallel_browser_tests_using_circleci
 
   run_cms_load_tests_on_stage:
     triggers:
@@ -1150,77 +1306,6 @@ workflows:
           requires:
             - setup_env_for_load_tests
 
-
-  run_smoke_and_functional_tests_on_dev:
-    triggers:
-    - schedule:
-        cron: "7 1 * * 1-5"
-        filters:
-          branches:
-            only: master
-    jobs:
-      - setup_env_for_smoke_tests
-      - setup_env_for_functional_tests
-      - delete_test_data_dev:
-          requires:
-            - setup_env_for_functional_tests
-      - smoke_tests_dev:
-          requires:
-            - setup_env_for_smoke_tests
-      - func_fas_test_dev:
-          requires:
-            - delete_test_data_dev
-      - func_international_test_dev:
-          requires:
-            - delete_test_data_dev
-      - func_sso_test_dev:
-          requires:
-            - delete_test_data_dev
-      - func_profile_test_dev:
-          requires:
-            - delete_test_data_dev
-      - generate_allure_report_from_functional_tests_and_send_link_to_slack:
-          requires:
-            - func_fas_test_dev
-            - func_sso_test_dev
-            - func_profile_test_dev
-            - func_international_test_dev
-
-  run_smoke_and_functional_tests_on_stage:
-    triggers:
-    - schedule:
-        cron: "52 1 * * 1-5"
-        filters:
-          branches:
-            only: master
-    jobs:
-      - setup_env_for_smoke_tests
-      - setup_env_for_functional_tests
-      - delete_test_data_stage:
-          requires:
-            - setup_env_for_functional_tests
-      - smoke_tests_stage:
-          requires:
-            - setup_env_for_smoke_tests
-      - func_fas_test_stage:
-          requires:
-            - delete_test_data_stage
-      - func_international_test_stage:
-          requires:
-            - delete_test_data_stage
-      - func_sso_test_stage:
-          requires:
-            - delete_test_data_stage
-      - func_profile_test_stage:
-          requires:
-            - delete_test_data_stage
-      - generate_allure_report_from_functional_tests_and_send_link_to_slack:
-          requires:
-            - func_fas_test_stage
-            - func_sso_test_stage
-            - func_profile_test_stage
-            - func_international_test_stage
-
   run_smoke_and_functional_tests_on_uat:
     triggers:
       - schedule:
@@ -1256,47 +1341,6 @@ workflows:
             - func_profile_test_uat
             - func_international_test_uat
 
-
-  run_browser_tests_in_parallel_in_dev:
-    triggers:
-      - schedule:
-          cron: "39 1 * * 1-5"
-          filters:
-            branches:
-              only: master
-    jobs:
-      - setup_env_for_parallel_browser_tests_using_circleci
-      - dev_parallel_browser_tests_using_circleci:
-          requires:
-            - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
-          requires:
-            - dev_parallel_browser_tests_using_circleci
-      - merge_junit_results_from_parallel_browser_tests:
-          requires:
-            - dev_parallel_browser_tests_using_circleci
-
-
-  run_browser_tests_in_parallel_in_stage:
-    triggers:
-      - schedule:
-          cron: "23 3 * * 1-5"
-          filters:
-            branches:
-              only: master
-    jobs:
-      - setup_env_for_parallel_browser_tests_using_circleci
-      - stage_parallel_browser_tests_using_circleci:
-          requires:
-            - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
-          requires:
-            - stage_parallel_browser_tests_using_circleci
-      - merge_junit_results_from_parallel_browser_tests:
-          requires:
-            - stage_parallel_browser_tests_using_circleci
-
-
   run_browser_tests_in_parallel_in_uat:
     triggers:
       - schedule:
@@ -1304,48 +1348,6 @@ workflows:
           filters:
             branches:
               only: master
-    jobs:
-      - setup_env_for_parallel_browser_tests_using_circleci
-      - uat_parallel_browser_tests_using_circleci:
-          requires:
-            - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
-          requires:
-            - uat_parallel_browser_tests_using_circleci
-      - merge_junit_results_from_parallel_browser_tests:
-          requires:
-            - uat_parallel_browser_tests_using_circleci
-
-
-  run_browser_tests_in_parallel_in_dev_ad_hoc:
-    jobs:
-      - setup_env_for_parallel_browser_tests_using_circleci
-      - dev_parallel_browser_tests_using_circleci:
-          requires:
-            - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
-          requires:
-            - dev_parallel_browser_tests_using_circleci
-      - merge_junit_results_from_parallel_browser_tests:
-          requires:
-            - dev_parallel_browser_tests_using_circleci
-
-
-  run_browser_tests_in_parallel_in_stage_ad_hoc:
-    jobs:
-      - setup_env_for_parallel_browser_tests_using_circleci
-      - stage_parallel_browser_tests_using_circleci:
-          requires:
-            - setup_env_for_parallel_browser_tests_using_circleci
-      - merge_browser_allure_results_and_generate_report_and_send_link_to_slack:
-          requires:
-            - stage_parallel_browser_tests_using_circleci
-      - merge_junit_results_from_parallel_browser_tests:
-          requires:
-            - stage_parallel_browser_tests_using_circleci
-
-
-  run_browser_tests_in_parallel_in_uat_ad_hoc:
     jobs:
       - setup_env_for_parallel_browser_tests_using_circleci
       - uat_parallel_browser_tests_using_circleci:
