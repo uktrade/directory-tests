@@ -341,7 +341,7 @@ def test_invest_pages_redirect_to_international_prod(url, redirected, basic_auth
         URLs.INVEST_LANDING.absolute,
         URLs.INVEST_CONTACT.absolute,
         URLs.INVEST_HPO_CONTACT.absolute,
-        URLs.INVEST_HPO_FOOD.absolute,
+        URLs.INVEST_HPO_HIGH_PRODUCTIVITY_FOOD.absolute,
         URLs.INVEST_HPO_LIGHTWEIGHT.absolute,
         URLs.INVEST_HPO_RAIL.absolute,
     ],
@@ -363,6 +363,22 @@ def test_invest_pages_dev(url, basic_auth):
     ],
 )
 def test_invest_pages_stage(url, basic_auth):
+    get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
+
+
+@pytest.mark.uat
+@pytest.mark.parametrize(
+    "url",
+    [
+        URLs.INVEST_LANDING.absolute,
+        URLs.INVEST_CONTACT.absolute,
+        URLs.INVEST_HPO_CONTACT.absolute,
+        URLs.INVEST_HPO_FOOD.absolute,
+        URLs.INVEST_HPO_LIGHTWEIGHT.absolute,
+        URLs.INVEST_HPO_RAIL.absolute,
+    ],
+)
+def test_invest_pages_uat(url, basic_auth):
     get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
 
 

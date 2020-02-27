@@ -864,6 +864,9 @@ class URLs(Enum):
     INVEST_HPO_FOOD = InternationalUrl(
         "content/invest/high-potential-opportunities/food-production/"
     )
+    INVEST_HPO_HIGH_PRODUCTIVITY_FOOD = InternationalUrl(
+        "content/invest/high-potential-opportunities/high-productivity-food-production/"
+    )
     INVEST_HPO_LIGHTWEIGHT = InternationalUrl(
         "content/invest/high-potential-opportunities/lightweight-structures/"
     )
