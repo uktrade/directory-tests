@@ -255,8 +255,8 @@ step_run_browser_tests_in_parallel: &step_run_browser_tests_in_parallel
       cat tests-to-run${SPLIT_FILE_SUFFIX}
 
       cat tests-to-run${SPLIT_FILE_SUFFIX} | while IFS=$'\r' read -r title ; do
-        echo "${BROWSER} run: '${title}'"
-        PYTHONPATH=. behave features/ \
+        echo -e "\n\n${BROWSER} run:    ${title}"
+        PYTHONPATH=. timeout --verbose --preserve-status --kill-after=5s 5m behave features/ \
         --format=allure_behave.formatter:AllureFormatter \
         --define AllureFormatter.issue_pattern=${BUG_TRACKER_URL_PATTERN} \
         --define AllureFormatter.link_pattern=${BUG_TRACKER_URL_PATTERN} \
