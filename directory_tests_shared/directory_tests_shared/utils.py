@@ -121,9 +121,7 @@ def check_for_errors(source: str, url: str):
     assert "404 Not Found" not in source, f"404 Not Found → {url}"
     assert "This page cannot be found" not in source, f"404 Not Found → {url}"
     assert "Internal Server Error" not in source, f"500 ISE → {url}"
-    assert (
-        "Sorry, there is a problem with the service" not in source
-    ), f"500 ISE → {url}"
+    assert "there is a problem with the service" not in source, f"500 ISE → {url}"
     assert "trollface.dk" not in url, f"Faced the troll face!"
 
 

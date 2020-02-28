@@ -123,7 +123,7 @@ def visit_page(context: Context, actor_alias: str, page_name: str):
         page.visit(context.driver)
 
     revisit_page_on_access_denied(context.driver, page, page_name)
-    take_screenshot(context.driver, page_name)
+    take_screenshot(context.driver, f"visit page {page_name}")
     accept_all_cookies(context.driver)
     check_for_errors(context.driver.page_source, context.driver.current_url)
     update_actor(context, actor_alias, visited_page=page)
@@ -137,8 +137,8 @@ def set_small_screen(context: Context):
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
     revisit_page_on_access_denied(context.driver, page, page_name)
+    take_screenshot(context.driver, f"should be on {page_name}")
     check_for_errors(context.driver.page_source, context.driver.current_url)
-    take_screenshot(context.driver, page_name)
     has_action(page, "should_be_here")
     if hasattr(page, "SubURLs"):
         special_page_name = page_name.split(" - ")[1].lower()
@@ -246,7 +246,7 @@ def sign_in(context: Context, actor_alias: str):
     sso.sign_in.should_be_here(context.driver)
     sso.sign_in.fill_out(context.driver, email, password)
     sso.sign_in.submit(context.driver)
-    take_screenshot(context.driver, "after sign in")
+    take_screenshot(context.driver, "after signing in")
     check_for_errors(context.driver.page_source, context.driver.current_url)
 
 

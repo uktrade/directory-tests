@@ -70,9 +70,9 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
     page_source = context.driver.page_source
     revisit_page_on_access_denied(context.driver, page, page_name)
+    take_screenshot(context.driver, f"should be on {page_name}")
     check_for_errors(page_source, context.driver.current_url)
     accept_all_cookies(context.driver)
-    take_screenshot(context.driver, page_name)
     has_action(page, "should_be_here")
     if hasattr(page, "SubURLs"):
         special_page_name = page_name.split(" - ")[1].lower()
