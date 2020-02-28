@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Invest in Great - Contact us Page Object."""
 import logging
+from random import choice
 from types import ModuleType
 from typing import List, Union
 
@@ -14,6 +15,7 @@ from pages.common_actions import (
     Actor,
     Selector,
     check_for_sections,
+    check_radio,
     check_url,
     fill_out_input_fields,
     fill_out_textarea_fields,
@@ -31,7 +33,6 @@ TYPE = PageType.CONTACT_US
 URL = URLs.INVEST_CONTACT.absolute
 PAGE_TITLE = ""
 
-IM_NOT_A_ROBOT = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")
 SELECTORS = {
     "hero": {
         "itself": Selector(By.CSS_SELECTOR, "section.hero"),
@@ -39,12 +40,16 @@ SELECTORS = {
     },
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
-        "full name": Selector(By.ID, "id_name", type=ElementType.INPUT),
+        "given name": Selector(By.ID, "id_given_name", type=ElementType.INPUT),
+        "family name": Selector(By.ID, "id_family_name", type=ElementType.INPUT),
         "job title": Selector(By.ID, "id_job_title", type=ElementType.INPUT),
         "email": Selector(By.ID, "id_email", type=ElementType.INPUT),
         "phone": Selector(By.ID, "id_phone_number", type=ElementType.INPUT),
         "company name": Selector(By.ID, "id_company_name", type=ElementType.INPUT),
         "website url": Selector(By.ID, "id_company_website", type=ElementType.INPUT),
+        "company hq address": Selector(
+            By.ID, "id_company_hq_address", type=ElementType.INPUT
+        ),
         "country": Selector(
             By.CSS_SELECTOR,
             "form[method=post] #js-country-select-select",
@@ -52,15 +57,28 @@ SELECTORS = {
             is_visible=False,
             autocomplete_callback=js_country_select,
         ),
-        "organisation size": Selector(
-            By.ID, "id_staff_number", type=ElementType.SELECT, is_visible=False
+        "industry": Selector(
+            By.ID, "id_industry", type=ElementType.SELECT, is_visible=False
+        ),
+        "feeling": Selector(
+            By.ID, "id_expanding_to_uk", type=ElementType.SELECT, is_visible=False
         ),
         "your plans": Selector(By.ID, "id_description", type=ElementType.TEXTAREA),
-        "captcha": Selector(
-            By.CSS_SELECTOR, "#form-container iframe", type=ElementType.IFRAME
+        "arrange call yes": Selector(
+            By.ID, "id_arrange_callback_0", type=ElementType.RADIO
         ),
-        "i'm not a robot": IM_NOT_A_ROBOT,
-        "hint": Selector(By.CSS_SELECTOR, "#content form div.form-hint"),
+        "arrange call no": Selector(
+            By.ID, "id_arrange_callback_1", type=ElementType.RADIO
+        ),
+        "how did you hear": Selector(
+            By.ID, "id_how_did_you_hear", type=ElementType.SELECT, is_visible=False
+        ),
+        "updates by email": Selector(
+            By.ID, "id_email_contact_consent", type=ElementType.CHECKBOX
+        ),
+        "updates by tel": Selector(
+            By.ID, "id_telephone_contact_consent", type=ElementType.CHECKBOX
+        ),
         "submit": Selector(
             By.CSS_SELECTOR,
             "#content form button.button",
@@ -87,26 +105,40 @@ def should_see_sections(driver: WebDriver, names: List[str]):
     check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
-def generate_form_details(actor: Actor) -> dict:
+def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
+    arrange_call = choice([True, False])
     details = {
-        "full name": actor.company_name or "Automated test",
+        "given name": actor.company_name or "Automated test",
+        "family name": actor.company_name or "Automated test",
         "job title": "QA @ DIT",
         "email": actor.email,
         "phone": "0123456789",
         "company name": actor.company_name or "Automated test - company name",
         "website url": "https://example.com",
+        "company hq address": "Far, far away",
         "country": True,
-        "organisation size": None,
+        "industry": None,
+        "feeling": None,
         "your plans": "This is a test message sent via automated tests",
+        "arrange call yes": arrange_call,
+        "arrange call no": not arrange_call,
+        "how did you hear": None,
+        "updates by email": choice([True, False]),
+        "updates by tel": choice([True, False]),
     }
+
+    if custom_details:
+        details.update(custom_details)
+    logging.debug(f"Generated form details: {details}")
     return details
 
 
 def fill_out(driver: WebDriver, details: dict):
     form_selectors = SELECTORS["form"]
     fill_out_input_fields(driver, form_selectors, details)
-    fill_out_textarea_fields(driver, form_selectors, details)
     pick_option(driver, form_selectors, details)
+    check_radio(driver, form_selectors, details)
+    fill_out_textarea_fields(driver, form_selectors, details)
     tick_captcha_checkbox(driver)
 
 
