@@ -17,6 +17,8 @@ pytestmark = [
     ),
 ]
 
+USER_AGENT = {"user-agent": "automated smoke tests"}
+
 
 @allure.step("Assert that HttpOnly Cookie flag is set")
 def assert_httponly_cookie_flag_is_set(response: Response):
@@ -49,16 +51,34 @@ def assert_httponly_cookie_flag_is_set(response: Response):
         URLs.PROFILE_BUSINESS_PROFILE.absolute,
         URLs.PROFILE_EXOPS_ALERTS.absolute,
         URLs.PROFILE_EXOPS_APPLICATIONS.absolute,
+        URLs.CONTACT_US_SOO_ORGANISATION.absolute_template.format(market="eBay"),
+    ],
+)
+def test_secure_cookie_flag_is_set_for_pages_behind_auth(
+    url, basic_auth, logged_in_session
+):
+    response = logged_in_session.get(url, allow_redirects=True, auth=basic_auth)
+    assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
+    assert_httponly_cookie_flag_is_set(response)
+
+
+@allure.issue("TT-1615", "Cookies Not Set With HttpOnly")
+@allure.issue(
+    "TT-2303", "TT-2303 - SSO - HttpOnly cookie flag is not set in Dev, Staging & UAT"
+)
+@pytest.mark.skip(reason="HttpOnly cookie flag is not set in Dev, Staging & UAT")
+@pytest.mark.parametrize(
+    "url",
+    [
         URLs.SSO_LOGOUT.absolute,
         URLs.SSO_PASSWORD_CHANGE.absolute,
         URLs.SSO_PASSWORD_SET.absolute,
         URLs.SSO_PASSWORD_RESET.absolute,
         URLs.SSO_EMAIL_CONFIRM.absolute,
         URLs.SSO_INACTIVE.absolute,
-        URLs.CONTACT_US_SOO_ORGANISATION.absolute_template.format(market="eBay"),
     ],
 )
-def test_secure_cookie_flag_is_set_for_pages_behind_auth(
+def test_secure_cookie_flag_is_set_for_sso_pages_behind_auth(
     url, basic_auth, logged_in_session
 ):
     response = logged_in_session.get(url, allow_redirects=True, auth=basic_auth)
@@ -108,7 +128,34 @@ def test_secure_cookie_flag_is_set_for_pages_behind_auth(
     ],
 )
 def test_secure_cookie_flag_is_set_for_public_pages_dev(url, basic_auth):
-    response = get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
+    response = get_and_assert(
+        url=url, status_code=HTTP_200_OK, auth=basic_auth, headers=USER_AGENT
+    )
+    assert_httponly_cookie_flag_is_set(response)
+
+
+@allure.issue("TT-1615", "Cookies Not Set With HttpOnly")
+@allure.issue(
+    "TT-2303", "TT-2303 - SSO - HttpOnly cookie flag is not set in Dev, Staging & UAT"
+)
+@pytest.mark.skip(
+    reason="TT-2303 - SSO - HttpOnly cookie flag is not set in Dev, Staging & UAT"
+)
+@pytest.mark.dev
+@pytest.mark.parametrize(
+    "url",
+    [
+        URLs.SOO_LANDING.absolute,
+        URLs.SOO_SEARCH_RESULTS.absolute,
+        URLs.SOO_MARKETS_COUNT.absolute,
+        URLs.SSO_LOGIN.absolute,
+        URLs.CONTACT_US_LANDING.absolute,
+    ],
+)
+def test_secure_cookie_flag_is_set_for_public_sso_pages_dev(url, basic_auth):
+    response = get_and_assert(
+        url=url, status_code=HTTP_200_OK, auth=basic_auth, headers=USER_AGENT
+    )
     assert_httponly_cookie_flag_is_set(response)
 
 
@@ -154,7 +201,9 @@ def test_secure_cookie_flag_is_set_for_public_pages_dev(url, basic_auth):
     ],
 )
 def test_secure_cookie_flag_is_set_for_public_pages_stage(url, basic_auth):
-    response = get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
+    response = get_and_assert(
+        url=url, status_code=HTTP_200_OK, auth=basic_auth, headers=USER_AGENT
+    )
     assert_httponly_cookie_flag_is_set(response)
 
 
@@ -169,7 +218,9 @@ def test_secure_cookie_flag_is_set_for_public_pages_stage(url, basic_auth):
     ],
 )
 def test_secure_cookie_flag_is_present_export_opportunities_dev(url, basic_auth):
-    response = get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
+    response = get_and_assert(
+        url=url, status_code=HTTP_200_OK, auth=basic_auth, headers=USER_AGENT
+    )
     assert_httponly_cookie_flag_is_set(response)
 
 
@@ -183,7 +234,9 @@ def test_secure_cookie_flag_is_present_export_opportunities_dev(url, basic_auth)
     ],
 )
 def test_secure_cookie_flag_is_present_export_opportunities_stage(url, basic_auth):
-    response = get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
+    response = get_and_assert(
+        url=url, status_code=HTTP_200_OK, auth=basic_auth, headers=USER_AGENT
+    )
     assert_httponly_cookie_flag_is_set(response)
 
 
@@ -218,6 +271,45 @@ def test_secure_cookie_flag_is_present_export_opportunities_stage(url, basic_aut
         )
     ),
 )
-def test_secure_cookie_flag_is_present_on_soo(url, basic_auth):
-    response = get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
+def test_secure_cookie_flag_is_present_on_soo_dev(url, basic_auth):
+    response = get_and_assert(
+        url=url, status_code=HTTP_200_OK, auth=basic_auth, headers=USER_AGENT
+    )
+    assert_httponly_cookie_flag_is_set(response)
+
+
+@allure.issue("TT-1615", "Cookies Not Set With HttpOnly")
+@pytest.mark.stage
+@pytest.mark.parametrize(
+    "url",
+    list(
+        map(
+            lambda name: URLs.SOO_MARKET_DETAILS.absolute_template.format(market=name),
+            [
+                "goxip",
+                "jd-worldwide",
+                "kaola",
+                "la-redoute",
+                "linio",
+                "mano-mano",
+                "newegg-business",
+                "newegg-canada",
+                "newegg-inc",
+                "onbuy",
+                "privalia",
+                "rakuten",
+                "realde",
+                "royal-mail-t-mall",
+                "spartoo",
+                "themarket",
+                "trademe",
+                "tthigo",
+            ],
+        )
+    ),
+)
+def test_secure_cookie_flag_is_present_on_soo_stage(url, basic_auth):
+    response = get_and_assert(
+        url=url, status_code=HTTP_200_OK, auth=basic_auth, headers=USER_AGENT
+    )
     assert_httponly_cookie_flag_is_set(response)

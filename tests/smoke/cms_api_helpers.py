@@ -187,9 +187,15 @@ def get_and_assert(
     params: dict = None,
     allow_redirects: bool = False,
     page_id: int = None,
+    headers: dict = None,
 ) -> Response:
     response = requests.get(
-        url, params=params, auth=auth, cookies=cookies, allow_redirects=allow_redirects
+        url,
+        params=params,
+        auth=auth,
+        cookies=cookies,
+        allow_redirects=allow_redirects,
+        headers=headers,
     )
     was_denied = "Access Denied" in response.content.decode("UTF-8")
     if response.status_code == HTTP_200_OK and was_denied:
@@ -202,7 +208,9 @@ def get_and_assert(
             f"Request to {url} was redirected to {response.url} which asked for"
             f" credentials, will try to authorize with basic auth"
         )
-        response = requests.get(response.url, auth=auth, cookies=cookies)
+        response = requests.get(
+            response.url, auth=auth, cookies=cookies, headers=headers
+        )
 
     redirect = (
         f"to {response.headers['location']} "
