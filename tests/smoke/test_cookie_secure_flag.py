@@ -104,6 +104,22 @@ def test_secure_cookie_flag_is_set_for_public_pages(url, basic_auth):
 
 
 @allure.issue("TT-1614", "Cookies Not Set With Secure Flag")
+@allure.issue("XOT-1313", "XOT-1313 - SOO - secure cookie is not set in Dev & Staging")
+@pytest.mark.skip(reason="SOO - secure cookie is not set in Dev & Staging: XOT-1313")
+@pytest.mark.parametrize(
+    "url",
+    [
+        URLs.SOO_LANDING.absolute,
+        URLs.SOO_SEARCH_RESULTS.absolute,
+        URLs.SOO_MARKETS_COUNT.absolute,
+    ],
+)
+def test_secure_cookie_flag_is_set_for_public_pages_on_soo(url, basic_auth):
+    response = get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
+    assert_secure_cookie_flag_is_set(response)
+
+
+@allure.issue("TT-1614", "Cookies Not Set With Secure Flag")
 @pytest.mark.dev
 @pytest.mark.parametrize(
     "url",
@@ -133,7 +149,9 @@ def test_secure_cookie_flag_is_present_export_opportunities_stage(url, basic_aut
 
 
 @allure.issue("TT-1614", "Cookies Not Set With Secure Flag")
+@allure.issue("XOT-1313", "XOT-1313 - SOO - secure cookie is not set in Dev & Staging")
 @pytest.mark.dev
+@pytest.mark.skip(reason="SOO - secure cookie is not set in Dev & Staging: XOT-1313")
 @pytest.mark.parametrize(
     "url",
     list(
@@ -163,6 +181,43 @@ def test_secure_cookie_flag_is_present_export_opportunities_stage(url, basic_aut
         )
     ),
 )
-def test_secure_cookie_flag_is_present_on_soo(url, basic_auth):
+def test_secure_cookie_flag_is_present_on_soo_dev(url, basic_auth):
+    response = get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
+    assert_secure_cookie_flag_is_set(response)
+
+
+@allure.issue("TT-1614", "Cookies Not Set With Secure Flag")
+@allure.issue("XOT-1313", "XOT-1313 - SOO - secure cookie is not set in Dev & Staging")
+@pytest.mark.stage
+@pytest.mark.skip(reason="SOO - secure cookie is not set in Dev & Staging: XOT-1313")
+@pytest.mark.parametrize(
+    "url",
+    list(
+        map(
+            lambda name: URLs.SOO_MARKET_DETAILS.absolute_template.format(market=name),
+            [
+                "goxip",
+                "jd-worldwide",
+                "kaola",
+                "la-redoute",
+                "linio",
+                "mano-mano",
+                "newegg-business",
+                "newegg-canada",
+                "newegg-inc",
+                "onbuy",
+                "privalia",
+                "rakuten",
+                "realde",
+                "royal-mail-t-mall",
+                "spartoo",
+                "themarket",
+                "trademe",
+                "tthigo",
+            ],
+        )
+    ),
+)
+def test_secure_cookie_flag_is_present_on_soo_stage(url, basic_auth):
     response = get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
     assert_secure_cookie_flag_is_set(response)
