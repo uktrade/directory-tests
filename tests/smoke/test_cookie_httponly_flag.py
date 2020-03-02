@@ -67,6 +67,7 @@ def test_secure_cookie_flag_is_set_for_pages_behind_auth(
 
 
 @allure.issue("TT-1615", "Cookies Not Set With HttpOnly")
+@pytest.mark.dev
 @pytest.mark.parametrize(
     "url",
     [
@@ -106,7 +107,53 @@ def test_secure_cookie_flag_is_set_for_pages_behind_auth(
         URLs.CONTACT_US_LANDING.absolute,
     ],
 )
-def test_secure_cookie_flag_is_set_for_public_pages(url, basic_auth):
+def test_secure_cookie_flag_is_set_for_public_pages_dev(url, basic_auth):
+    response = get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
+    assert_httponly_cookie_flag_is_set(response)
+
+
+@allure.issue("TT-1615", "Cookies Not Set With HttpOnly")
+@pytest.mark.stage
+@pytest.mark.parametrize(
+    "url",
+    [
+        URLs.DOMESTIC_LANDING_UK.absolute,
+        URLs.DOMESTIC_TRIAGE_SECTOR.absolute,
+        URLs.DOMESTIC_TRIAGE_EXPORTED_BEFORE.absolute,
+        URLs.DOMESTIC_TRIAGE_REGULAR_EXPORTER.absolute,
+        URLs.DOMESTIC_TRIAGE_ONLINE_MARKETPLACE.absolute,
+        URLs.DOMESTIC_TRIAGE_COMPANIES_HOUSE.absolute,
+        URLs.DOMESTIC_TRIAGE_COMPANY.absolute,
+        URLs.DOMESTIC_TRIAGE_SUMMARY.absolute,
+        URLs.DOMESTIC_CUSTOM.absolute,
+        URLs.DOMESTIC_GET_FINANCE.absolute,
+        URLs.DOMESTIC_STORY_FIRST.absolute,
+        URLs.DOMESTIC_STORY_SECOND.absolute,
+        URLs.DOMESTIC_TERMS.absolute,
+        URLs.DOMESTIC_PRIVACY.absolute,
+        URLs.FAB_LANDING.absolute,
+        URLs.FAS_LANDING.absolute,
+        URLs.FAS_SEARCH.absolute,
+        URLs.INTERNATIONAL_LANDING.absolute,
+        URLs.INTERNATIONAL_REGIONS_MIDLANDS.absolute,
+        URLs.INTERNATIONAL_REGIONS_NORTH_ENGLAND.absolute,
+        URLs.INTERNATIONAL_REGIONS_NORTHERN_IRELAND.absolute,
+        URLs.INTERNATIONAL_REGIONS_SOUTH_ENGLAND.absolute,
+        URLs.INTERNATIONAL_REGIONS_WALES.absolute,
+        URLs.INTERNATIONAL_INDUSTRY_CREATIVE_INDUSTRIES.absolute,
+        URLs.INTERNATIONAL_INDUSTRY_ENERGY.absolute,
+        URLs.INTERNATIONAL_INDUSTRY_ENGINEERING_AND_MANUFACTURING.absolute,
+        URLs.INTERNATIONAL_INDUSTRY_FINANCIAL_SERVICES.absolute,
+        URLs.INTERNATIONAL_INDUSTRY_HEALTH_AND_LIFE_SCIENCES.absolute,
+        URLs.INTERNATIONAL_INDUSTRY_TECHNOLOGY.absolute,
+        URLs.SOO_LANDING.absolute,
+        URLs.SOO_SEARCH_RESULTS.absolute,
+        URLs.SOO_MARKETS_COUNT.absolute,
+        URLs.SSO_LOGIN.absolute,
+        URLs.CONTACT_US_LANDING.absolute,
+    ],
+)
+def test_secure_cookie_flag_is_set_for_public_pages_stage(url, basic_auth):
     response = get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
     assert_httponly_cookie_flag_is_set(response)
 
