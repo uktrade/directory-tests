@@ -395,8 +395,9 @@ steps_smoke_tests: &steps_smoke_tests
         command: |
           set -e
           export CIRCLE_PULL_REQUEST="${CIRCLE_PULL_REQUEST:-none}"
+          export WORKFLOW_LINK="https://circleci.com/workflow-run/${CIRCLE_WORKFLOW_ID}"
           export summary="$(./parse_test_summary_json.py allure_report/widgets/summary.json)"
-          moxci allure_report/index.html --slack_message "The latest report from SMOKE tests ran against `awk '/Environment/{print toupper($3)}' ./results/environment.properties`. ${summary}"
+          moxci allure_report/index.html --slack_message "The latest report from SMOKE tests ran against `awk '/Environment/{print toupper($3)}' ./results/environment.properties`. ${summary}. (workflow → ${WORKFLOW_LINK})"
 
 steps_merge_browser_allure_results_and_generate_report_and_send_link_to_slack: &steps_merge_browser_allure_results_and_generate_report_and_send_link_to_slack
   steps:
@@ -416,8 +417,9 @@ steps_merge_browser_allure_results_and_generate_report_and_send_link_to_slack: &
         command: |
           set -e
           export CIRCLE_PULL_REQUEST="${CIRCLE_PULL_REQUEST:-none}"
+          export WORKFLOW_LINK="https://circleci.com/workflow-run/${CIRCLE_WORKFLOW_ID}"
           export summary="$(./parse_test_summary_json.py allure_report/widgets/summary.json)"
-          moxci allure_report/index.html --slack_message "The latest report from BROWSER tests ran against `awk '/Environment/{print toupper($3)}' ./results/environment.properties`. ${summary}"
+          moxci allure_report/index.html --slack_message "The latest report from BROWSER tests ran against `awk '/Environment/{print toupper($3)}' ./results/environment.properties`. ${summary}. (workflow → ${WORKFLOW_LINK})"
 
 steps_generate_allure_report_from_functional_tests_and_send_link_to_slack: &steps_generate_allure_report_from_functional_tests_and_send_link_to_slack
   steps:
@@ -437,8 +439,9 @@ steps_generate_allure_report_from_functional_tests_and_send_link_to_slack: &step
         command: |
           set -e
           export CIRCLE_PULL_REQUEST="${CIRCLE_PULL_REQUEST:-none}"
+          export WORKFLOW_LINK="https://circleci.com/workflow-run/${CIRCLE_WORKFLOW_ID}"
           export summary="$(./parse_test_summary_json.py allure_report/widgets/summary.json)"
-          moxci allure_report/index.html --slack_message "The latest report from FUNCTIONAL tests ran against `awk '/Environment/{print toupper($3)}' ./results/environment.properties`. ${summary}"
+          moxci allure_report/index.html --slack_message "The latest report from FUNCTIONAL tests ran against `awk '/Environment/{print toupper($3)}' ./results/environment.properties`. ${summary}. (workflow → ${WORKFLOW_LINK})"
 
 steps_delete_test_data: &steps_delete_test_data
   steps:
