@@ -394,7 +394,7 @@ steps_smoke_tests: &steps_smoke_tests
         when: always
         command: |
           set -e
-          export CIRCLE_PULL_REQUEST=none
+          export CIRCLE_PULL_REQUEST="${CIRCLE_PULL_REQUEST:-none}"
           export summary="$(./parse_test_summary_json.py allure_report/widgets/summary.json)"
           moxci allure_report/index.html --slack_message "The latest report from SMOKE tests ran against `awk '/Environment/{print toupper($3)}' ./results/environment.properties`. ${summary}"
 
@@ -415,7 +415,7 @@ steps_merge_browser_allure_results_and_generate_report_and_send_link_to_slack: &
         when: always
         command: |
           set -e
-          export CIRCLE_PULL_REQUEST=none
+          export CIRCLE_PULL_REQUEST="${CIRCLE_PULL_REQUEST:-none}"
           export summary="$(./parse_test_summary_json.py allure_report/widgets/summary.json)"
           moxci allure_report/index.html --slack_message "The latest report from BROWSER tests ran against `awk '/Environment/{print toupper($3)}' ./results/environment.properties`. ${summary}"
 
@@ -436,7 +436,7 @@ steps_generate_allure_report_from_functional_tests_and_send_link_to_slack: &step
         when: always
         command: |
           set -e
-          export CIRCLE_PULL_REQUEST=none
+          export CIRCLE_PULL_REQUEST="${CIRCLE_PULL_REQUEST:-none}"
           export summary="$(./parse_test_summary_json.py allure_report/widgets/summary.json)"
           moxci allure_report/index.html --slack_message "The latest report from FUNCTIONAL tests ran against `awk '/Environment/{print toupper($3)}' ./results/environment.properties`. ${summary}"
 
