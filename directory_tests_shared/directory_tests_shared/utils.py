@@ -113,16 +113,21 @@ def check_if_access_denied(
     source: str, url: str, *, error_msg: str = "Access denied (on error check) → {url}"
 ):
     network_errors = ["Unfortunately your IP address", "If you require access"]
-    assert all(msg not in source for msg in network_errors), error_msg.format(url=url)
+    with assertion_msg(error_msg.format(url=url)):
+        assert all(msg not in source for msg in network_errors)
 
 
 def check_for_errors(source: str, url: str):
     check_if_access_denied(source, url)
-    assert "404 Not Found" not in source, f"404 Not Found → {url}"
-    assert "This page cannot be found" not in source, f"404 Not Found → {url}"
-    assert "Internal Server Error" not in source, f"500 ISE → {url}"
-    assert "there is a problem with the service" not in source, f"500 ISE → {url}"
-    assert "trollface.dk" not in url, f"Faced the troll face!"
+    with assertion_msg(f"404 Not Found → {url}"):
+        assert "404 Not Found" not in source
+        assert "This page cannot be found" not in source
+    with assertion_msg(f"500 ISE → {url}"):
+        assert "Internal Server Error" not in source
+    with assertion_msg(f"500 ISE → {url}"):
+        assert "there is a problem with the service" not in source
+    with assertion_msg(f"Faced the troll face!"):
+        assert "trollface.dk" not in url
 
 
 @contextmanager
