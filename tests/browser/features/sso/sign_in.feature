@@ -41,7 +41,9 @@ Feature: SSO - Sign in
   @allure.issue:TT-1778
   @fixed
   Scenario: Visitors should see all expected page elements on "Profile - Sign in"
-    Given "Robert" visits the "SSO - Sign in" page
+    Given basic authentication is done for "Profile - Create an account" page
+    And basic authentication is done for "Profile - Static assets" page
+    And "Robert" visits the "SSO - Sign in" page
 
     When "Robert" decides to "Create account"
 
