@@ -28,7 +28,7 @@ from directory_tests_shared import URLs
 from directory_tests_shared.constants import SECTORS, SEPARATORS, BMPs, JP2s, WEBPs
 from directory_tests_shared.enums import Account, BusinessType, Language
 from directory_tests_shared.gov_notify import get_email_verification_code
-from directory_tests_shared.utils import rare_word, sentence
+from directory_tests_shared.utils import check_for_errors, rare_word, sentence
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
     fab,
@@ -2409,4 +2409,5 @@ def isd_search(context: Context, buyer_alias: str, term: str):
 def profile_request_to_verify(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     profile_add_business_description(context, actor.alias, ch_company=False)
-    profile.non_ch_company_request_to_verify.submit(actor)
+    response = profile.non_ch_company_request_to_verify.submit(actor)
+    check_for_errors(response.content.decode("UTF-8"), response.url)
