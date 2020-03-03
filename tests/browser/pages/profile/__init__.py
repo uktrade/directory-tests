@@ -23,4 +23,5 @@ __all__ = [
     "enrol_uk_taxpayer_enter_your_details",
     "enrol_uk_taxpayer_enter_your_confirmation_code",
     "enrol_you_cannot_create_account",
+    "static_content",
 ]
