@@ -54,7 +54,7 @@ def assert_httponly_cookie_flag_is_set(response: Response):
         URLs.CONTACT_US_SOO_ORGANISATION.absolute_template.format(market="eBay"),
     ],
 )
-def test_secure_cookie_flag_is_set_for_pages_behind_auth(
+def test_http_only_cookie_flag_is_set_for_pages_behind_auth(
     url, basic_auth, logged_in_session
 ):
     response = logged_in_session.get(url, allow_redirects=True, auth=basic_auth)
@@ -78,7 +78,7 @@ def test_secure_cookie_flag_is_set_for_pages_behind_auth(
         URLs.SSO_INACTIVE.absolute,
     ],
 )
-def test_secure_cookie_flag_is_set_for_sso_pages_behind_auth(
+def test_http_only_cookie_flag_is_set_for_sso_pages_behind_auth(
     url, basic_auth, logged_in_session
 ):
     response = logged_in_session.get(url, allow_redirects=True, auth=basic_auth)
@@ -120,14 +120,10 @@ def test_secure_cookie_flag_is_set_for_sso_pages_behind_auth(
         URLs.INTERNATIONAL_INDUSTRY_TECHNOLOGY.absolute,
         URLs.INTERNATIONAL_INDUSTRY_FINANCIAL_SERVICES.absolute,
         URLs.INTERNATIONAL_INDUSTRY_CREATIVE_INDUSTRIES.absolute,
-        URLs.SOO_LANDING.absolute,
-        URLs.SOO_SEARCH_RESULTS.absolute,
-        URLs.SOO_MARKETS_COUNT.absolute,
-        URLs.SSO_LOGIN.absolute,
         URLs.CONTACT_US_LANDING.absolute,
     ],
 )
-def test_secure_cookie_flag_is_set_for_public_pages_dev(url, basic_auth):
+def test_http_only_cookie_flag_is_set_for_public_pages_dev(url, basic_auth):
     response = get_and_assert(
         url=url, status_code=HTTP_200_OK, auth=basic_auth, headers=USER_AGENT
     )
@@ -141,7 +137,6 @@ def test_secure_cookie_flag_is_set_for_public_pages_dev(url, basic_auth):
 @pytest.mark.skip(
     reason="TT-2303 - SSO - HttpOnly cookie flag is not set in Dev, Staging & UAT"
 )
-@pytest.mark.dev
 @pytest.mark.parametrize(
     "url",
     [
@@ -149,10 +144,9 @@ def test_secure_cookie_flag_is_set_for_public_pages_dev(url, basic_auth):
         URLs.SOO_SEARCH_RESULTS.absolute,
         URLs.SOO_MARKETS_COUNT.absolute,
         URLs.SSO_LOGIN.absolute,
-        URLs.CONTACT_US_LANDING.absolute,
     ],
 )
-def test_secure_cookie_flag_is_set_for_public_sso_pages_dev(url, basic_auth):
+def test_http_only_cookie_flag_is_set_for_public_sso_pages_dev(url, basic_auth):
     response = get_and_assert(
         url=url, status_code=HTTP_200_OK, auth=basic_auth, headers=USER_AGENT
     )
@@ -193,14 +187,10 @@ def test_secure_cookie_flag_is_set_for_public_sso_pages_dev(url, basic_auth):
         URLs.INTERNATIONAL_INDUSTRY_FINANCIAL_SERVICES.absolute,
         URLs.INTERNATIONAL_INDUSTRY_HEALTH_AND_LIFE_SCIENCES.absolute,
         URLs.INTERNATIONAL_INDUSTRY_TECHNOLOGY.absolute,
-        URLs.SOO_LANDING.absolute,
-        URLs.SOO_SEARCH_RESULTS.absolute,
-        URLs.SOO_MARKETS_COUNT.absolute,
-        URLs.SSO_LOGIN.absolute,
         URLs.CONTACT_US_LANDING.absolute,
     ],
 )
-def test_secure_cookie_flag_is_set_for_public_pages_stage(url, basic_auth):
+def test_http_only_cookie_flag_is_set_for_public_pages_stage(url, basic_auth):
     response = get_and_assert(
         url=url, status_code=HTTP_200_OK, auth=basic_auth, headers=USER_AGENT
     )
@@ -217,7 +207,7 @@ def test_secure_cookie_flag_is_set_for_public_pages_stage(url, basic_auth):
         URLs.EXOPPS_OPPORTUNITY.absolute_template.format(slug="computer-equipment-783"),
     ],
 )
-def test_secure_cookie_flag_is_present_export_opportunities_dev(url, basic_auth):
+def test_http_only_cookie_flag_is_present_export_opportunities_dev(url, basic_auth):
     response = get_and_assert(
         url=url, status_code=HTTP_200_OK, auth=basic_auth, headers=USER_AGENT
     )
@@ -233,7 +223,7 @@ def test_secure_cookie_flag_is_present_export_opportunities_dev(url, basic_auth)
         URLs.EXOPPS_OPPORTUNITY.absolute_template.format(slug="furniture-498"),
     ],
 )
-def test_secure_cookie_flag_is_present_export_opportunities_stage(url, basic_auth):
+def test_http_only_cookie_flag_is_present_export_opportunities_stage(url, basic_auth):
     response = get_and_assert(
         url=url, status_code=HTTP_200_OK, auth=basic_auth, headers=USER_AGENT
     )
@@ -271,7 +261,7 @@ def test_secure_cookie_flag_is_present_export_opportunities_stage(url, basic_aut
         )
     ),
 )
-def test_secure_cookie_flag_is_present_on_soo_dev(url, basic_auth):
+def test_http_only_cookie_flag_is_present_on_soo_dev(url, basic_auth):
     response = get_and_assert(
         url=url, status_code=HTTP_200_OK, auth=basic_auth, headers=USER_AGENT
     )
@@ -308,7 +298,7 @@ def test_secure_cookie_flag_is_present_on_soo_dev(url, basic_auth):
         )
     ),
 )
-def test_secure_cookie_flag_is_present_on_soo_stage(url, basic_auth):
+def test_http_only_cookie_flag_is_present_on_soo_stage(url, basic_auth):
     response = get_and_assert(
         url=url, status_code=HTTP_200_OK, auth=basic_auth, headers=USER_AGENT
     )
