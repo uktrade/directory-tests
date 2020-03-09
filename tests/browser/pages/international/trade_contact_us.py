@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Find a Supplier - Contact us."""
 import logging
+import random
 from types import ModuleType
 from typing import List, Union
 from uuid import uuid4
@@ -34,7 +35,8 @@ PAGE_TITLE = "Contact us - trade.great.gov.uk"
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
-        "full name": Selector(By.ID, "id_full_name", type=ElementType.INPUT),
+        "given name": Selector(By.ID, "id_given_name", type=ElementType.INPUT),
+        "family name": Selector(By.ID, "id_family_name", type=ElementType.INPUT),
         "email": Selector(By.ID, "id_email_address", type=ElementType.INPUT),
         "phone number": Selector(By.ID, "id_phone_number", type=ElementType.INPUT),
         "industry": Selector(By.ID, "id_sector", type=ElementType.SELECT),
@@ -45,8 +47,14 @@ SELECTORS = {
         "country": Selector(By.ID, "js-country-select", type=ElementType.SELECT),
         "body": Selector(By.ID, "id_body", type=ElementType.INPUT),
         "source": Selector(By.ID, "id_source", type=ElementType.SELECT),
-        "accept t&c": Selector(
-            By.ID, "id_terms_agreed", type=ElementType.LABEL, is_visible=False
+        "contact by email": Selector(
+            By.ID, "id_email_contact_consent", type=ElementType.LABEL, is_visible=False
+        ),
+        "contact by phone": Selector(
+            By.ID,
+            "id_telephone_contact_consent",
+            type=ElementType.LABEL,
+            is_visible=False,
         ),
         "submit": Selector(
             By.CSS_SELECTOR, "form input[type=submit]", type=ElementType.SUBMIT
@@ -73,7 +81,8 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
     company_name = actor.company_name or "Automated test"
     result = {
-        "full name": str(uuid4()),
+        "given name": "AUTOMATED TESTS",
+        "family name": str(uuid4()),
         "email": actor.email,
         "phone number": "this is a test",
         "industry": None,
@@ -82,7 +91,8 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
         "country": None,
         "body": "This is a test message sent via automated tests",
         "source": None,
-        "accept t&c": True,
+        "contact by email": random.choice([True, False]),
+        "contact by phone": random.choice([True, False]),
         "captcha": True,
     }
     if custom_details:
