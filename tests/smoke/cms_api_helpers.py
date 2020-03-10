@@ -1,57 +1,64 @@
 # -*- coding: utf-8 -*-
-import asyncio
-import logging
-from collections import defaultdict
 from pprint import pformat
 from typing import List, Tuple
 
 import requests
 from requests import Response
+from requests.exceptions import (
+    ChunkedEncodingError,
+    ConnectionError,
+    ConnectTimeout,
+    ContentDecodingError,
+    HTTPError,
+    InvalidHeader,
+    InvalidSchema,
+    InvalidURL,
+    MissingSchema,
+    ProxyError,
+    ReadTimeout,
+    RequestException,
+    RetryError,
+    SSLError,
+    StreamConsumedError,
+    Timeout,
+    TooManyRedirects,
+    UnrewindableBodyError,
+    URLRequired,
+)
 from rest_framework.status import (
     HTTP_200_OK,
     HTTP_302_FOUND,
     HTTP_401_UNAUTHORIZED,
     HTTP_403_FORBIDDEN,
-    HTTP_404_NOT_FOUND,
 )
 from retrying import retry
+from urllib3.exceptions import HTTPError as BaseHTTPError
 
-from directory_cms_client import DirectoryCMSClient
-from directory_constants import cms as SERVICE_NAMES
 from directory_tests_shared import URLs
-from directory_tests_shared.clients import CMS_API_CLIENT
-from directory_tests_shared.settings import CMS_API_KEY, CMS_API_SENDER_ID, CMS_API_URL
-from directory_tests_shared.utils import red
+from directory_tests_shared.clients import BASIC_AUTHENTICATOR, CMS_API_CLIENT
 
-
-class AsyncDirectoryCMSClient(DirectoryCMSClient):
-    """Make CMS Client work with AsyncIO"""
-
-    async def __aenter__(self):
-        return self
-
-    async def __aexit__(self, *_):
-        pass
-
-
-def async_cms_client():
-    return AsyncDirectoryCMSClient(
-        base_url=CMS_API_URL,
-        api_key=CMS_API_KEY,
-        sender_id=CMS_API_SENDER_ID,
-        timeout=55,
-        default_service_name=SERVICE_NAMES.INVEST,
-    )
-
-
-async def fetch(endpoints: List[str]):
-    async_loop = asyncio.get_event_loop()
-    async with async_cms_client() as client:
-        futures = [
-            async_loop.run_in_executor(None, client.get, endpoint)
-            for endpoint in endpoints
-        ]
-        return await asyncio.gather(*futures)
+REQUEST_EXCEPTIONS = (
+    BaseHTTPError,
+    RequestException,
+    HTTPError,
+    ConnectionError,
+    ProxyError,
+    SSLError,
+    Timeout,
+    ConnectTimeout,
+    ReadTimeout,
+    URLRequired,
+    TooManyRedirects,
+    MissingSchema,
+    InvalidSchema,
+    InvalidURL,
+    InvalidHeader,
+    ChunkedEncodingError,
+    ContentDecodingError,
+    StreamConsumedError,
+    RetryError,
+    UnrewindableBodyError,
+)
 
 
 def check_for_special_urls_cases(url: str) -> str:
@@ -131,13 +138,6 @@ def check_for_special_page_cases(page: dict) -> str:
     return url
 
 
-def should_skip_never_published_page(response: Response) -> bool:
-    if response.status_code == HTTP_404_NOT_FOUND:
-        print(f"GET {response.request.url} → 404. Maybe this page was never published")
-        return True
-    return False
-
-
 def should_skip_url(url: str) -> bool:
     skip = [
         "/markets/",  # ATM there's no landing page for markets
@@ -165,7 +165,7 @@ def should_skip_url(url: str) -> bool:
     return False
 
 
-def status_error(expected_status_code: int, response: Response):
+def status_error(expected_status_code: int, response: Response) -> str:
     if isinstance(response, Response):
         return (
             f"{response.request.method} {response.url} "
@@ -223,156 +223,120 @@ def get_and_assert(
     return response
 
 
-def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
-    page_ids = []
+def find_draft_urls(pages: List[dict]) -> List[Tuple[str, int]]:
+    result = []
+    for page in pages:
+        page_id = page["id"]
+        draft_token = page["meta"]["draft_token"]
+        if draft_token is not None:
 
-    # get first page of results
-    relative_url = URLs.CMS_API_PAGES.relative
-    endpoint = f"{relative_url}?type={page_type}"
-    print(f"Fetching a list of pages for type: {page_type}")
-    try:
-        response = CMS_API_CLIENT.get(endpoint)
-    except requests.exceptions.ReadTimeout:
-        red(f"CMS API timed out for {page_type}")
-        return [], 0
-    total_response_time = response.elapsed.total_seconds()
-    if response.status_code != HTTP_200_OK:
-        red(f"CMS API returned {response.status_code} for {page_type}")
-        return [], 0
+            url = check_for_special_page_cases(page)
+            url = check_for_special_urls_cases(url)
+            if should_skip_url(url):
+                continue
 
-    # get all page ids from the response
-    content = response.json()
-    page_ids += [page["id"] for page in content["items"]]
+            draft_url = f"{url}?draft_token={draft_token}"
+            lang_codes = [lang[0] for lang in page["meta"]["languages"]]
+            for code in lang_codes:
+                lang_url = f"{draft_url}&lang={code}"
+                result.append((lang_url, page_id))
+    return result
 
-    total_count = content["meta"]["total_count"]
-    if total_count > len(page_ids):
-        print(
-            f"Found more than {len(content['items'])} pages of {page_type} "
-            f"type. Will fetch details of all remaining pages"
-        )
-    while len(page_ids) < total_count:
-        offset = len(page_ids) + len(content["items"])
-        endpoint = f"{relative_url}?type={page_type}&offset={offset}"
-        response = CMS_API_CLIENT.get(endpoint)
-        total_response_time += response.elapsed.total_seconds()
-        assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
-        content = response.json()
-        page_ids += [page["id"] for page in content["items"]]
 
-    result = list(sorted(page_ids))
-    error = f"Expected to get {total_count} IDs but got {len(list(sorted(page_ids)))}"
-    assert len(result) == total_count, error
-    return result, total_response_time
+def find_published_urls(pages: List[dict]) -> List[Tuple[str, int]]:
+    result = []
+    for page in pages:
+        page_id = page["id"]
+        url = check_for_special_page_cases(page)
+        url = check_for_special_urls_cases(url)
+        if should_skip_url(url):
+            continue
+        result.append((url, page_id))
+    return result
+
+
+def find_published_translated_urls(pages: List[dict]) -> List[Tuple[str, int]]:
+    result = []
+    for page in pages:
+        page_id = page["id"]
+
+        url = check_for_special_page_cases(page)
+        url = check_for_special_urls_cases(url)
+        if should_skip_url(url):
+            continue
+
+        lang_codes = [lang[0] for lang in page["meta"]["languages"]]
+        for code in lang_codes:
+            result.append(("{}?lang={}".format(url, code), page_id))
+    return result
+
+
+def all_cms_pks() -> List[int]:
+    response = CMS_API_CLIENT.get(URLs.CMS_API_PAGES.absolute)
+    assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
+    pks = response.json()
+    print(f"\nCMS returned {len(pks)} PKs of published pages")
+    return pks
 
 
 @retry(wait_fixed=3000, stop_max_attempt_number=3)
-def sync_requests(endpoints: List[str]):
-    result = []
+def sync_requests(endpoints: List[str]) -> Tuple[List[dict], List[Response]]:
+    ok_responses = []
+    bad_responses = []
     for endpoint in endpoints:
-        response = CMS_API_CLIENT.get(endpoint)
+        try:
+            response = CMS_API_CLIENT.get(endpoint, authenticator=BASIC_AUTHENTICATOR)
+        except REQUEST_EXCEPTIONS as ex:
+            print(f"Failed to GET {endpoint} because of {ex}")
+            continue
         print(
-            f"Got response from {response.url} in: "
+            f"Got {response.status_code} from {response.url} in: "
             f"{response.elapsed.total_seconds()}s"
         )
-        result.append(response)
-    return result
-
-
-def get_pages_types(*, skip: list = None) -> List[str]:
-    response = CMS_API_CLIENT.get(URLs.CMS_API_PAGE_TYPES.relative)
-    assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
-    types = response.json()["types"]
-    if skip:
-        types = sorted(list(set(types) - set(skip)))
-    return types
-
-
-@retry(wait_fixed=10000, stop_max_attempt_number=3)
-def get_pages_from_api(page_types: list, *, use_async_client: bool = True) -> dict:
-    page_endpoints_by_type = defaultdict(list)
-    responses = defaultdict(list)
-    base = URLs.CMS_API_PAGES.absolute
-
-    for page_type in page_types:
-        page_ids_of_type, responses_time = get_page_ids_by_type(page_type)
-        count = str(len(page_ids_of_type)).rjust(2, " ")
-        print(
-            f"Found {count} {page_type} pages in {responses_time}s {page_ids_of_type}"
-        )
-        page_endpoints_by_type[page_type] += [f"{base}{id}/" for id in page_ids_of_type]
-
-    for page_type in page_endpoints_by_type:
-        if use_async_client:
-            loop = asyncio.get_event_loop()
-            responses[page_type] += loop.run_until_complete(
-                fetch(page_endpoints_by_type[page_type])
-            )
+        if response.status_code == HTTP_200_OK:
+            ok_responses.append(response.json())
         else:
-            responses[page_type] = sync_requests(page_endpoints_by_type[page_type])
-
-    return dict(responses)
-
-
-def find_draft_urls(responses: dict) -> List[Tuple[str, int]]:
-    result = []
-    for page_type in responses.keys():
-        for response in responses[page_type]:
-            if response.status_code == HTTP_200_OK:
-                page = response.json()
-                page_id = page["id"]
-                draft_token = page["meta"]["draft_token"]
-                if draft_token is not None:
-
-                    url = check_for_special_page_cases(page)
-                    url = check_for_special_urls_cases(url)
-                    if should_skip_url(url):
-                        continue
-
-                    draft_url = f"{url}?draft_token={draft_token}"
-                    lang_codes = [lang[0] for lang in page["meta"]["languages"]]
-                    for code in lang_codes:
-                        lang_url = f"{draft_url}&lang={code}"
-                        result.append((lang_url, page_id))
-            else:
-                logging.error(
-                    f"Expected 200 but got {response.status_code} from "
-                    f"{response.url}"
-                )
-    return result
+            bad_responses.append(response)
+    return ok_responses, bad_responses
 
 
-def find_published_urls(responses: dict) -> List[Tuple[str, int]]:
-    result = []
-    for page_type in responses.keys():
-        for response in responses[page_type]:
-            if should_skip_never_published_page(response):
-                continue
-            page = response.json()
-            page_id = page["id"]
-            url = check_for_special_page_cases(page)
-            url = check_for_special_urls_cases(url)
-            if should_skip_url(url):
-                continue
-
-            result.append((url, page_id))
-    return result
+def fetch_url(endpoint: str) -> Response:
+    try:
+        response = CMS_API_CLIENT.get(endpoint, authenticator=BASIC_AUTHENTICATOR)
+        print(
+            f"Got {response.status_code} from {response.url} in: "
+            f"{response.elapsed.total_seconds()}s"
+        )
+        return response
+    except REQUEST_EXCEPTIONS as ex:
+        print(f"Failed to GET {endpoint} because of {ex}")
+        pass
 
 
-def find_published_translated_urls(responses: dict) -> List[Tuple[str, int]]:
-    result = []
-    for page_type in responses.keys():
-        for response in responses[page_type]:
-            if should_skip_never_published_page(response):
-                continue
-            page = response.json()
-            page_id = page["id"]
+def parallel_requests(page_endpoints: List[str]) -> Tuple[List[dict], List[Response]]:
+    from concurrent.futures import ThreadPoolExecutor
 
-            url = check_for_special_page_cases(page)
-            url = check_for_special_urls_cases(url)
-            if should_skip_url(url):
-                continue
+    pool = ThreadPoolExecutor(max_workers=2)
+    responses = [r for r in pool.map(fetch_url, page_endpoints)]
+    ok_pages = [r.json() for r in responses if r.status_code == HTTP_200_OK]
+    bad_responses = [r for r in responses if r.status_code != HTTP_200_OK]
+    return ok_pages, bad_responses
 
-            lang_codes = [lang[0] for lang in page["meta"]["languages"]]
-            for code in lang_codes:
-                result.append(("{}?lang={}".format(url, code), page_id))
-    return result
+
+def get_pages_by_pk(
+    page_pks: list, *, use_parallel_requests: bool = True
+) -> Tuple[List[dict], List[Response]]:
+    """Gets all pages by PKs.
+
+    Returns: a list of working pages and a list of bad responses (non 200 OK)
+    """
+    page_endpoints = [
+        URLs.CMS_API_PAGE_BY_ID.template.format(page_id=pk) for pk in page_pks
+    ]
+
+    if use_parallel_requests:
+        ok_pages, bad_responses = parallel_requests(page_endpoints)
+    else:
+        ok_pages, bad_responses = sync_requests(page_endpoints)
+
+    return ok_pages, bad_responses
