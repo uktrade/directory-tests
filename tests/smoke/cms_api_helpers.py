@@ -314,6 +314,9 @@ def fetch_url(endpoint: str) -> Response:
 
 
 def parallel_requests(page_endpoints: List[str]) -> Tuple[List[dict], List[Response]]:
+    """Fetch pages in parallel using multiple workers.
+    SRC: https://stackoverflow.com/a/54878794
+    """
     from concurrent.futures import ThreadPoolExecutor
 
     pool = ThreadPoolExecutor(max_workers=2)

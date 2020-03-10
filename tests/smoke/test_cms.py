@@ -18,7 +18,7 @@ from tests.smoke.cms_api_helpers import (
 pytestmark = [allure.suite("CMS"), allure.feature("CMS")]
 
 
-ALL_OK_PAGES, ALL_BAD_RESPONSES = get_pages_by_pk(all_cms_pks()[:20])
+ALL_OK_PAGES, ALL_BAD_RESPONSES = get_pages_by_pk(all_cms_pks())
 
 
 @pytest.mark.parametrize(
