@@ -7,7 +7,7 @@ from locust import TaskSet, between, task
 from directory_constants.cms import EXPORT_READINESS, FIND_A_SUPPLIER, INVEST
 from directory_tests_shared import URLs, settings
 from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
-from tests.load.cms_helpers import CMSAPIAuthClientMixin
+from tests.load.cms_helpers import CMSAPIAuthClientMixin, get_page_types
 
 UA = namedtuple("UA", "headers")
 LOAD_TESTS_USER_AGENT = UA(headers=LOAD_TESTS_USER_AGENT)
@@ -42,8 +42,36 @@ INTERNATIONAL_PAGE_PATHS = [
     "invest/how-to-setup-in-the-uk/uk-labour-costs",
 ]
 
+PAGE_TYPES = get_page_types()
+
+
+def get_random_query_filter():
+    filters = [
+        "",
+        "?type={}",
+        "?title={}".format(
+            choice(["Components", "Great Domestic pages", "great.gov.uk international"])
+        ),
+        "?child_of={}".format(randint(1, 500)),
+    ]
+    query_filter = choice(filters)
+    if query_filter == "?type={}":
+        query_filter = "?type={}".format(choice(PAGE_TYPES))
+    return query_filter
+
 
 class CMSTasks(TaskSet):
+    @task
+    def get_by_random_query_filter(self):
+        query_filter = get_random_query_filter()
+        endpoint = URLs.CMS_API_PAGES.relative + query_filter
+        self.client.get(
+            endpoint,
+            authenticator=LOAD_TESTS_USER_AGENT,
+            name="/api/pages/[filter]",
+            expected_codes=[200, 400, 404],
+        )
+
     @task
     def get_by_id(self):
         self.client.get(

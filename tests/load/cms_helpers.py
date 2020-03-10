@@ -9,13 +9,22 @@ from requests.exceptions import (
     RequestException,
 )
 
-from directory_cms_client.client import DirectoryCMSClient  # noqa
+from directory_cms_client.client import DirectoryCMSClient, cms_api_client  # noqa
 from directory_constants.cms import INVEST  # noqa
 from directory_tests_shared.settings import (
     CMS_API_DEFAULT_TIMEOUT,
     CMS_API_KEY,
     CMS_API_SENDER_ID,
 )
+
+
+def get_page_types():
+    response = cms_api_client.get("/api/pages/types/")
+    assert response.status_code == 200
+    all_page_types = response.json()["types"]
+    skipped_page_types = ["wagtailcore.page", "components.bannercomponent"]
+    page_types = sorted(list(set(all_page_types) - set(skipped_page_types)))
+    return page_types
 
 
 class LocustCMSAPIAuthenticatedClient(DirectoryCMSClient):
