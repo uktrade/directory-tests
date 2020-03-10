@@ -26,10 +26,9 @@ LOCUST := \
 		--locustfile $$LOCUST_FILE \
 		--clients=$$NUM_CLIENTS \
 		--hatch-rate=$$HATCH_RATE \
-		--only-summary \
-		--no-web \
+		--run-time=$$RUN_TIME \
 		--csv=./reports/results \
-		--run-time=$$RUN_TIME
+		--no-web
 
 rudimental_load_test_cms:
 	export LOCUST_FILE=./locustfile_rudimental_cms.py; \
