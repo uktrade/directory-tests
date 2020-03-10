@@ -5,7 +5,7 @@ load_hatch_rate: &load_hatch_rate
     HATCH_RATE: 3
 
 load_num_clients: &load_num_clients
-    NUM_CLIENTS: 40
+    NUM_CLIENTS: 1000
 
 load_run_time: &load_run_time
     RUN_TIME: 5m
