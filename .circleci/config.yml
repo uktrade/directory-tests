@@ -240,6 +240,7 @@ step_run_browser_tests_in_parallel: &step_run_browser_tests_in_parallel
       else
           export BROWSER="firefox";
           firefox --version;
+          export TAGS="${TAGS} --tags=~@skip-in-firefox"
       fi
 
       cd tests/browser
