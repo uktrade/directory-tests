@@ -161,6 +161,8 @@ def should_skip_url(url: str) -> bool:
     ]
     if any(True for bit in skip_endings if url.endswith(bit)):
         return True
+    if not url.startswith("http"):  # skip invalid URLs (e.g. for component pages)
+        return True
 
     return False
 
