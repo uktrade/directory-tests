@@ -74,6 +74,10 @@ class CMSTasks(TaskSet):
 
     @task
     def get_by_id(self):
+        pk_components_page = 237
+        pk = randint(1, 750)
+        while pk == pk_components_page:
+            pk = randint(1, 750)
         self.client.get(
             URLs.CMS_API_PAGE_BY_ID.template.format(page_id=randint(1, 500)),
             authenticator=LOAD_TESTS_USER_AGENT,
