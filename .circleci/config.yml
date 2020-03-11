@@ -236,8 +236,10 @@ step_run_browser_tests_in_parallel: &step_run_browser_tests_in_parallel
       if [ $(( ${CIRCLE_NODE_INDEX} % 2 )) = 0 ];
       then
           export BROWSER="chrome";
+          google-chrome --version;
       else
           export BROWSER="firefox";
+          firefox --version;
       fi
 
       cd tests/browser
