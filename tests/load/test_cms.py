@@ -61,7 +61,7 @@ def get_random_query_filter():
 
 
 class CMSTasks(TaskSet):
-    @task
+    @task(1)
     def get_by_random_query_filter(self):
         query_filter = get_random_query_filter()
         endpoint = URLs.CMS_API_PAGES.relative + query_filter
@@ -72,7 +72,7 @@ class CMSTasks(TaskSet):
             expected_codes=[200, 400, 404],
         )
 
-    @task
+    @task(4)
     def get_by_id(self):
         known_broken_pks = [27, 94, 235, 237, 300, 301, 359, 343, 434, 529, 575, 734]
         pk = randint(1, 800)
@@ -85,7 +85,7 @@ class CMSTasks(TaskSet):
             expected_codes=[200, 404],
         )
 
-    @task
+    @task(2)
     def get_international_page_by_path(self):
         self.client.get(
             URLs.CMS_API_PAGE_BY_PATH.template.format(
