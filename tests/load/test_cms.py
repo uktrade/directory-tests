@@ -74,12 +74,8 @@ class CMSTasks(TaskSet):
 
     @task(4)
     def get_by_id(self):
-        known_broken_pks = [27, 94, 235, 237, 300, 301, 359, 343, 434, 529, 575, 734]
-        pk = randint(1, 800)
-        while pk in known_broken_pks:
-            pk = randint(1, 800)
         self.client.get(
-            URLs.CMS_API_PAGE_BY_ID.template.format(page_id=pk),
+            URLs.CMS_API_PAGE_BY_ID.template.format(page_id=randint(1, 1000)),
             authenticator=LOAD_TESTS_USER_AGENT,
             name="/api/pages/[pk]/",
             expected_codes=[200, 404],
