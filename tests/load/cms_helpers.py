@@ -70,6 +70,8 @@ class LocustCMSAPIAuthenticatedClient(DirectoryCMSClient):
                 response_length=0,
                 exception=status_code or RequestException.errno,
             )
+            if hasattr(r, "status_code"):
+                print(f"GET {args[0]} -> {r.status_code}")
 
 
 class CMSAPIAuthClientMixin(HttpLocust):
