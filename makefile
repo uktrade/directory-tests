@@ -193,6 +193,9 @@ requirements_functional:
 requirements_load:
 	pip install -r requirements_load.txt
 
+requirements_periodic_tasks:
+	pip install -r requirements_periodic_tasks.txt
+
 requirements_smoke:
 	pip install -r requirements_smoke.txt
 
@@ -209,6 +212,11 @@ compile_requirements_functional:
 	@rm -fr requirements_functional.txt
 	python3 -m piptools compile --quiet requirements_functional.in
 	@sed -i 's/^\-e file.*/\-e .\/directory_tests_shared\//' requirements_functional.txt
+
+compile_requirements_periodic_tasks:
+	@rm -fr requirements_periodic_tasks.txt
+	python3 -m piptools compile --quiet requirements_periodic_tasks.in
+	@sed -i 's/^\-e file.*/\-e .\/directory_tests_shared\//' requirements_periodic_tasks.txt
 
 compile_requirements_smoke:
 	@rm -fr requirements_smoke.txt
@@ -228,7 +236,7 @@ compile_requirements_tests_shared:
 	@rm -fr ./directory_tests_shared/requirements.txt
 	python3 -m piptools compile --quiet --no-annotate --output-file ./directory_tests_shared/requirements.txt ./directory_tests_shared/requirements.in
 
-compile_all_requirements: compile_requirements_tests_shared compile_requirements_browser compile_requirements_functional compile_requirements_smoke compile_requirements_load compile_requirements_test_tools
+compile_all_requirements: compile_requirements_tests_shared compile_requirements_browser compile_requirements_functional compile_requirements_periodic_tasks compile_requirements_smoke compile_requirements_load compile_requirements_test_tools
 
 find_duplicated_scenario_names: SHELL:=/usr/bin/env bash  # set shell for this target to bash
 find_duplicated_scenario_names:
@@ -266,4 +274,4 @@ report:
 	@allure --version
 	@allure generate --clean --output ./allure_report results/
 
-.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests results_browser results_functional report
+.PHONY: build clean requirements test cms_page_status compare_content docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests results_browser results_functional report
