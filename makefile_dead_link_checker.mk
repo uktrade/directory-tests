@@ -448,7 +448,7 @@ dead_links_check:
 	    --header="User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36 link-checker-qa" \
 	    $(AUTH) \
 	    --ignore=`echo $${IGNORED_PREFIXES} | tr -d [:space:]` \
-	    $${TEST_URLS}
+	    $${TEST_URLS} || true
 
 dead_links_check_with_json_report:
 	$(PYLINKVALIDATE_ENV_VARS_$(TEST_ENV)) && \
@@ -476,4 +476,4 @@ dead_links_check_with_json_report:
 	    --header="User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36 link-checker-qa" \
 	    $(AUTH) \
 	    --ignore=`echo $${IGNORED_PREFIXES} | tr -d [:space:]` \
-	    $${TEST_URLS}
+	    $${TEST_URLS} || true
