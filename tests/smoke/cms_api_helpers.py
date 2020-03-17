@@ -329,7 +329,7 @@ def parallel_requests(page_endpoints: List[str]) -> Tuple[List[dict], List[Respo
     from concurrent.futures import ThreadPoolExecutor
 
     pool = ThreadPoolExecutor(max_workers=2)
-    responses = [r for r in pool.map(fetch_url, page_endpoints)]
+    responses = [r for r in pool.map(fetch_url, page_endpoints) if r]
     ok_pages = [r.json() for r in responses if r.status_code == HTTP_200_OK]
     bad_responses = [r for r in responses if r.status_code != HTTP_200_OK]
     return ok_pages, bad_responses
