@@ -35,6 +35,10 @@ cms_page_status:
 	echo "Generating CMS page status report for: $(TEST_ENV) environment" && \
 	python3 ./tests/periodic_tasks/cms_page_status/cms.py
 
+PYTHONPATH ?= .
+geckoboard_updater:
+	PYTHONPATH=$(PYTHONPATH) python3 ./tests/periodic_tasks/geckoboard_updater/geckoboard_updater.py
+
 # Locust
 LOCUST := \
 	locust \
