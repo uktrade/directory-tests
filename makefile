@@ -39,6 +39,13 @@ PYTHONPATH ?= .
 geckoboard_updater:
 	PYTHONPATH=$(PYTHONPATH) python3 ./tests/periodic_tasks/geckoboard_updater/geckoboard_updater.py
 
+# compare contents of Staging & Dev environments by default
+SERVICE ?= invest
+ENVS_TO_COMPARE ?= stage_dev
+
+compare_content:
+	behave -k -t ~wip --junit --junit-directory=./reports/ ./tests/periodic_tasks/content_diff/features/$(SERVICE)_$(ENVS_TO_COMPARE).feature
+
 # Locust
 LOCUST := \
 	locust \
