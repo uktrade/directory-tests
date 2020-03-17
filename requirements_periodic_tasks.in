@@ -1,0 +1,18 @@
+-e ./directory_tests_shared/
+-e git+https://github.com/kowalcj0/pylinkvalidator.git@json-reporter#egg=pylinkvalidator
+beautifulsoup4
+behave
+circleclient
+directory-cms-client
+directory-constants
+directory_cms_client
+directory_constants
+geckoboard.py
+jira
+junit-xml
+lxml
+mohawk
+pytest
+requests
+retrying
+termcolor
