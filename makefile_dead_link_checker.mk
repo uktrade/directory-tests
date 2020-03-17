@@ -381,25 +381,28 @@ PYLINKVALIDATE_ENV_VARS_DEV := \
 	https://great.dev.uktrade.digital/selling-online-overseas/markets/results/ \
 	"
 
-BASIC_AUTH := $(shell echo -n $(BASICAUTH_USER_$(TEST_ENV)):$(BASICAUTH_PASS_$(TEST_ENV)) | base64)
+BASIC_AUTH := $(shell echo -n $($(TEST_ENV)_BASICAUTH_USER):$($(TEST_ENV)_BASICAUTH_PASS) | base64)
 
 # Testing Production systems will check outside links
 # Testing non-Production systems will not check outside links & HAWK cookie
 # will be used.
-ifndef BASICAUTH_USER_DEV
-  $(error BASICAUTH_USER_DEV is undefined)
+ifndef DEV_BASICAUTH_USER
+  $(error DEV_BASICAUTH_USER is undefined)
 endif
-ifndef BASICAUTH_PASS_DEV
-  $(error BASICAUTH_PASS_DEV is undefined)
+ifndef DEV_BASICAUTH_PASS
+  $(error DEV_BASICAUTH_PASS is undefined)
 endif
-ifndef BASICAUTH_USER_UAT
-  $(error BASICAUTH_USER_UAT is undefined)
+ifndef STAGE_BASICAUTH_USER
+  $(error STAGE_BASICAUTH_USER is undefined)
 endif
-ifndef BASICAUTH_USER_STAGE
-  $(error BASICAUTH_USER_STAGE is undefined)
+ifndef STAGE_BASICAUTH_PASS
+  $(error STAGE_BASICAUTH_PASS is undefined)
 endif
-ifndef BASICAUTH_PASS_STAGE
-  $(error BASICAUTH_PASS_STAGE is undefined)
+ifndef UAT_BASICAUTH_USER
+  $(error UAT_BASICAUTH_USER is undefined)
+endif
+ifndef UAT_BASICAUTH_PASS
+  $(error UAT_BASICAUTH_PASS is undefined)
 endif
 
 ifeq ($(TEST_ENV),PROD)
