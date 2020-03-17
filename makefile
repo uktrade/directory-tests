@@ -1,4 +1,5 @@
 ARGUMENTS=$(filter-out $@,$(MAKECMDGOALS)) $(filter-out --,$(MAKEFLAGS))
+include *.mk
 
 build: docker_integration_tests
 
