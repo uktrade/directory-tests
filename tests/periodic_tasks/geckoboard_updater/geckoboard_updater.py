@@ -40,7 +40,7 @@ GECKOBOARD_PUSH_URL = os.getenv(
 JIRA_HOST = os.environ["JIRA_HOST"]
 JIRA_USERNAME = os.environ["JIRA_USERNAME"]
 JIRA_TOKEN = os.environ["JIRA_TOKEN"]
-CIRCLE_CI_API_TOKEN = os.environ["CIRCLE_CI_API_TOKEN"]
+CIRCLE_TOKEN = os.environ["CIRCLE_TOKEN"]
 
 # other variables
 TODAY = date.today().isoformat()
@@ -48,7 +48,7 @@ TODAY = date.today().isoformat()
 # Clients
 JIRA_CLIENT = JiraClient(JIRA_HOST, basic_auth=(JIRA_USERNAME, JIRA_TOKEN))
 GECKO_CLIENT = GeckoClient(GECKOBOARD_API_KEY)
-CIRCLE_CI_CLIENT = circleclient.CircleClient(CIRCLE_CI_API_TOKEN)
+CIRCLE_CI_CLIENT = circleclient.CircleClient(CIRCLE_TOKEN)
 
 
 if __name__ == "__main__":
