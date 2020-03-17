@@ -10,9 +10,7 @@ from tests.periodic_tasks.geckoboard_updater.circleci_helpers import (
 from tests.periodic_tasks.geckoboard_updater.geckoboard_updater import CIRCLE_CI_CLIENT
 
 circle_ci_periodic_tests_results = last_tests_results_from_junit_artifacts(
-    CIRCLE_CI_CLIENT,
-    "directory-periodic-tests",
-    DIRECTORY_PERIODIC_TESTS_JOB_NAME_MAPPINGS,
+    CIRCLE_CI_CLIENT, "directory-tests", DIRECTORY_PERIODIC_TESTS_JOB_NAME_MAPPINGS,
 )
 
 load_tests_artifacts = last_load_test_artifacts(

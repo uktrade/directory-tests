@@ -352,7 +352,7 @@ step_run_geckoboard_updater: &step_run_geckoboard_updater
     name: Run Geckoboard Updater script
     command: |
       . venv/bin/activate
-      make update_geckoboard
+      make geckoboard_updater
 
 # this step requires Java 8+ to work.
 step_merge_junit_xml_reports_from_periodic_tasks: &step_merge_junit_xml_reports_from_periodic_tasks
