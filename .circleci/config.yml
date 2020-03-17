@@ -1437,6 +1437,38 @@ workflows:
           requires:
             - uat_parallel_browser_tests_using_circleci
 
+  prod_check_for_dead_links_ad_hoc:
+    jobs:
+      - setup_env_for_periodic_tasks
+      - check_for_dead_links_on_prod:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  uat_check_for_dead_links_ad_hoc:
+    jobs:
+      - setup_env_for_periodic_tasks
+      - check_for_dead_links_on_uat:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  stage_check_for_dead_links_ad_hoc:
+    jobs:
+      - setup_env_for_periodic_tasks
+      - check_for_dead_links_on_stage:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  dev_check_for_dead_links_ad_hoc:
+    jobs:
+      - setup_env_for_periodic_tasks
+      - check_for_dead_links_on_dev:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  refresh_geckoboard_ad_hoc:
+    jobs:
+      - refresh_geckoboard
+
 
   ####################################################################
   ## Scheduled workflows
