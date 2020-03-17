@@ -20,6 +20,17 @@ format:
 	@isort --recursive .
 	@black .
 
+ifndef CMS_API_URL
+  $(error CMS_API_URL is undefined)
+endif
+ifndef CMS_API_KEY
+  $(error CMS_API_KEY is undefined)
+endif
+
+cms_pages_check:
+	echo "Running CMS pages check against: $(CMS_API_URL)" && \
+	pytest --capture=no --verbose --junit-xml=./reports/cms_pages.xml tests/periodic_tasks/cms_pages/
+
 # Locust
 LOCUST := \
 	locust \
