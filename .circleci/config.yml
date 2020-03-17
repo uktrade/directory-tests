@@ -1467,7 +1467,10 @@ workflows:
 
   refresh_geckoboard_ad_hoc:
     jobs:
-      - refresh_geckoboard
+      - setup_env_for_periodic_tasks
+      - refresh_geckoboard:
+          requires:
+            - setup_env_for_periodic_tasks
 
 
   ####################################################################
