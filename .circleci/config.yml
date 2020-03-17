@@ -1752,3 +1752,296 @@ workflows:
       - merge_junit_results_from_parallel_browser_tests:
           requires:
             - uat_parallel_browser_tests_using_circleci
+
+  refresh_geckoboard_periodically:
+    triggers:
+      - schedule:
+          cron: "0 8,13 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - refresh_geckoboard
+
+  prod_check_for_dead_links:
+    triggers:
+      - schedule:
+          cron: "43 6 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - check_for_dead_links_on_prod:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  uat_check_for_dead_links:
+    triggers:
+      - schedule:
+          cron: "53 6 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - check_for_dead_links_on_uat:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  stage_check_for_dead_links:
+    triggers:
+      - schedule:
+          cron: "0 7 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - check_for_dead_links_on_stage:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  dev_check_for_dead_links:
+    triggers:
+      - schedule:
+          cron: "10 7 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - check_for_dead_links_on_dev:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  prod_check_cms_pages:
+    triggers:
+      - schedule:
+          cron: "17 7 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - check_cms_pages_on_production:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  domestic_prod_dev_content_diff:
+    triggers:
+      - schedule:
+          cron: "28 7 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - domestic_compare_prod_and_dev_pages:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  domestic_prod_uat_content_diff:
+    triggers:
+      - schedule:
+          cron: "40 7 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - domestic_compare_prod_and_uat_pages:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  domestic_prod_stage_content_diff:
+    triggers:
+      - schedule:
+          cron: "51 7 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - domestic_compare_prod_and_stage_pages:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  domestic_stage_uat_content_diff:
+    triggers:
+      - schedule:
+          cron: "7 8 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - domestic_compare_stage_and_uat_pages:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  domestic_stage_dev_content_diff:
+    triggers:
+      - schedule:
+          cron: "21 8 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - domestic_compare_stage_and_dev_pages:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  fas_prod_dev_content_diff:
+    triggers:
+      - schedule:
+          cron: "34 8 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - fas_compare_prod_and_dev_pages:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  fas_prod_stage_content_diff:
+    triggers:
+      - schedule:
+          cron: "45 8 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - fas_compare_prod_and_stage_pages:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  fas_stage_dev_content_diff:
+    triggers:
+      - schedule:
+          cron: "57 8 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - fas_compare_stage_and_dev_pages:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  invest_prod_dev_content_diff:
+    triggers:
+      - schedule:
+          cron: "9 9 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - invest_compare_prod_and_dev_pages:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  invest_prod_stage_content_diff:
+    triggers:
+      - schedule:
+          cron: "25 9 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - invest_compare_prod_and_stage_pages:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  invest_prod_uat_content_diff:
+    triggers:
+      - schedule:
+          cron: "38 9 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - invest_compare_prod_and_uat_pages:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  invest_stage_dev_content_diff:
+    triggers:
+      - schedule:
+          cron: "52 9 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - invest_compare_stage_and_dev_pages:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  international_prod_stage_content_diff:
+    triggers:
+      - schedule:
+          cron: "7 10 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - international_compare_prod_and_stage_pages:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  international_prod_uat_content_diff:
+    triggers:
+      - schedule:
+          cron: "19 10 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - international_compare_prod_and_uat_pages:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  international_stage_uat_content_diff:
+    triggers:
+      - schedule:
+          cron: "37 10 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - international_compare_stage_and_uat_pages:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  international_stage_dev_content_diff:
+    triggers:
+      - schedule:
+          cron: "53 10 * * 1"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_periodic_tasks
+      - international_compare_stage_and_dev_pages:
+          requires:
+            - setup_env_for_periodic_tasks
+
+  prod_cms_page_status_report:
+    triggers:
+      - schedule:
+          cron: "42 14 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - generate_cms_page_status_report_for_prod
