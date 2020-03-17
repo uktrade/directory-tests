@@ -31,6 +31,10 @@ cms_pages_check:
 	echo "Running CMS pages check against: $(CMS_API_URL)" && \
 	pytest --capture=no --verbose --junit-xml=./reports/cms_pages.xml tests/periodic_tasks/cms_pages/
 
+cms_page_status:
+	echo "Generating CMS page status report for: $(TEST_ENV) environment" && \
+	python3 ./tests/periodic_tasks/cms_page_status/cms.py
+
 # Locust
 LOCUST := \
 	locust \
