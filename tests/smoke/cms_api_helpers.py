@@ -36,6 +36,7 @@ from urllib3.exceptions import HTTPError as BaseHTTPError
 
 from directory_tests_shared import URLs
 from directory_tests_shared.clients import BASIC_AUTHENTICATOR, CMS_API_CLIENT
+from directory_tests_shared.utils import red
 
 REQUEST_EXCEPTIONS = (
     BaseHTTPError,
@@ -289,30 +290,36 @@ def sync_requests(endpoints: List[str]) -> Tuple[List[dict], List[Response]]:
         try:
             response = CMS_API_CLIENT.get(endpoint, authenticator=BASIC_AUTHENTICATOR)
         except REQUEST_EXCEPTIONS as ex:
-            print(f"Failed to GET {endpoint} because of {ex}")
+            red(f"GET {endpoint} -> Failed because of: {ex}")
             continue
-        print(
-            f"Got {response.status_code} from {response.url} in: "
-            f"{response.elapsed.total_seconds()}s"
-        )
-        if response.status_code == HTTP_200_OK:
-            ok_responses.append(response.json())
         else:
-            bad_responses.append(response)
+            if response.status_code == HTTP_200_OK:
+                ok_responses.append(response.json())
+                print(
+                    f"GET {response.url} -> {response.status_code} {response.reason} "
+                    f"in: {response.elapsed.total_seconds()}s"
+                )
+            else:
+                bad_responses.append(response)
+                red(
+                    f"GET {response.url} -> {response.status_code} {response.reason} "
+                    f"in: {response.elapsed.total_seconds()}s"
+                )
     return ok_responses, bad_responses
 
 
 def fetch_url(endpoint: str) -> Response:
+    response = None
     try:
         response = CMS_API_CLIENT.get(endpoint, authenticator=BASIC_AUTHENTICATOR)
-        print(
-            f"Got {response.status_code} from {response.url} in: "
-            f"{response.elapsed.total_seconds()}s"
-        )
-        return response
     except REQUEST_EXCEPTIONS as ex:
-        print(f"Failed to GET {endpoint} because of {ex}")
-        pass
+        red(f"GET {endpoint} -> Failed because of: {ex}")
+    else:
+        if response.status_code == 200:
+            print(f"GET {response.url} -> {response.status_code} {response.reason}")
+        else:
+            red(f"GET {response.url} -> {response.status_code} {response.reason}")
+    return response
 
 
 def parallel_requests(page_endpoints: List[str]) -> Tuple[List[dict], List[Response]]:
