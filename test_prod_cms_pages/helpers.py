@@ -86,6 +86,19 @@ def red(x: str):
     cprint(x, "red", attrs=["bold"])
 
 
+def camel_case_to_separate_words(camel_case_string: str) -> str:
+    """Convert CamelCase string into a string with words separated by spaces"""
+    words = [[camel_case_string[0]]]
+
+    for character in camel_case_string[1:]:
+        if words[-1][-1].islower() and character.isupper():
+            words.append(list(character))
+        else:
+            words[-1].append(character)
+
+    return " ".join("".join(word) for word in words)
+
+
 def check_for_special_urls_cases(url: str) -> str:
     # this was added because of BUG CMS-1426
     if "setup-guides" in url:
@@ -295,6 +308,41 @@ def find_published_translated_urls(pages: List[dict]) -> List[Tuple[str, int]]:
         lang_codes = [lang[0] for lang in page["meta"]["languages"]]
         for code in lang_codes:
             result.append(("{}?lang={}".format(url, code), page_id))
+    return result
+
+
+def get_pks_by_page_type(page_type: str) -> List[int]:
+    from directory_cms_client.client import cms_api_client  # NOQA
+
+    result = []
+    try:
+        response = cms_api_client.get(f"api/pages/?type={page_type}")
+    except requests.exceptions.HTTPError as ex:
+        red(f"GET api/pages/?type={page_type} -> Failed because of: {ex}")
+    else:
+        if response.status_code != 200:
+            red(
+                f"GET api/pages/?type={page_type} -> {response.status_code} {response.reason}"
+            )
+        else:
+            result = response.json()
+    print(f"GET api/pages/?type={page_type} -> {result}")
+    return result
+
+
+def get_page_by_pk(pk: int) -> dict:
+    from directory_cms_client.client import cms_api_client  # NOQA
+
+    result = {}
+    try:
+        response = cms_api_client.get(f"api/pages/{pk}/")
+    except requests.exceptions.HTTPError as ex:
+        red(f"GET api/pages/{pk}/ -> Failed because of: {ex}")
+    else:
+        if response.status_code != 200:
+            red(f"GET api/pages/{pk}/ -> {response.status_code} {response.reason}")
+        else:
+            result = response.json()
     return result
 
 

@@ -324,14 +324,14 @@ step_run_cms_pages_checker: &step_run_cms_pages_checker
     name: Run CMS Checker
     command: |
       . venv/bin/activate
-      make cms_pages_check
+      make test_cms_pages_return_200
 
 step_run_cms_page_status: &step_run_cms_page_status
   run:
     name: Generate CMS Page Status report
     command: |
       . venv/bin/activate
-      make cms_page_status
+      make cms_page_status_report
 
 step_run_content_diff: &step_run_content_diff
   run:

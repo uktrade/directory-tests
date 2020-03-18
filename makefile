@@ -21,20 +21,13 @@ format:
 	@isort --recursive .
 	@black .
 
-ifndef CMS_API_URL
-  $(error CMS_API_URL is undefined)
-endif
-ifndef CMS_API_KEY
-  $(error CMS_API_KEY is undefined)
-endif
-
-cms_pages_check:
+test_cms_pages_return_200:
 	echo "Running CMS pages check against: $(CMS_API_URL)" && \
 	pytest --capture=no --verbose --junit-xml=./reports/cms_pages.xml test_prod_cms_pages/
 
-cms_page_status:
-	echo "Generating CMS page status report for: $(TEST_ENV) environment" && \
-	python3 ./tests/periodic_tasks/cms_page_status/cms.py
+cms_page_status_report:
+	echo "Generating CMS page status report for: $(CMS_API_URL)" && \
+	python3 ./test_prod_cms_pages/generate_page_status_report.py
 
 PYTHONPATH ?= .
 geckoboard_updater:
@@ -288,4 +281,4 @@ report:
 	@allure --version
 	@allure generate --clean --output ./allure_report results/
 
-.PHONY: build clean cms_page_status compare_content docker_remove_all docker_integration_tests smoke_tests functional_tests results_browser results_functional report
+.PHONY: build clean cms_pages_check cms_page_status_report compare_content docker_remove_all docker_integration_tests smoke_tests functional_tests results_browser results_functional report
