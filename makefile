@@ -55,7 +55,7 @@ LOCUST := \
 		--hatch-rate=$$HATCH_RATE \
 		--run-time=$$RUN_TIME \
 		--csv=./reports/results \
-		--no-web
+		--no-web || true
 
 rudimental_load_test_cms:
 	export LOCUST_FILE=./locustfile_rudimental_cms.py; \
