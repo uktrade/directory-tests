@@ -29,9 +29,8 @@ cms_page_status_report:
 	echo "Generating CMS page status report for: $(CMS_API_URL)" && \
 	python3 ./test_prod_cms_pages/generate_page_status_report.py
 
-PYTHONPATH ?= .
 geckoboard_updater:
-	PYTHONPATH=$(PYTHONPATH) python3 ./tests/periodic_tasks/geckoboard_updater/geckoboard_updater.py
+	PYTHONPATH=. python3 ./tests/periodic_tasks/geckoboard_updater/geckoboard_updater.py
 
 # compare contents of Staging & Dev environments by default
 SERVICE ?= invest
