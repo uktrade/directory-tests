@@ -319,14 +319,14 @@ step_run_load_tests: &step_run_load_tests
       source ./docker/.env_with_export;
       NUM_CLIENTS=${NUM_CLIENTS} HATCH_RATE=${HATCH_RATE} RUN_TIME=${RUN_TIME} make rudimental_load_test_${SERVICE}
 
-step_run_cms_pages_checker: &step_run_cms_pages_checker
+step_run_test_cms_pages_return_200: &step_run_test_cms_pages_return_200
   run:
     name: Run CMS Checker
     command: |
       . venv/bin/activate
       make test_cms_pages_return_200
 
-step_run_cms_page_status: &step_run_cms_page_status
+step_generate_cms_page_status_report: &step_generate_cms_page_status_report
   run:
     name: Generate CMS Page Status report
     command: |
@@ -598,19 +598,19 @@ steps_setup_env_for_periodic_tasks: &steps_setup_env_for_periodic_tasks
     - *step_install_requirements_for_periodic_tasks
     - *step_cache_periodic_tasks_requirements
 
-steps_cms_pages_checker: &steps_cms_pages_checker
+steps_run_test_cms_pages_return_200: &steps_run_test_cms_pages_return_200
   steps:
     - *step_restore_cached_periodic_tasks_requirements
-    - *step_run_cms_pages_checker
+    - *step_run_test_cms_pages_return_200
     - store_test_results:
         path: ./reports
     - store_artifacts:
         path: ./reports
 
-steps_cms_page_status: &steps_cms_page_status
+steps_generate_cms_page_status_report: &steps_generate_cms_page_status_report
   steps:
     - *step_restore_cached_periodic_tasks_requirements
-    - *step_run_cms_page_status
+    - *step_generate_cms_page_status_report
     - store_test_results:
         path: ./reports
     - store_artifacts:
@@ -1118,11 +1118,11 @@ jobs:
     *steps_dead_links_checker,
     ]
 
-  check_cms_pages_on_production:
+  check_cms_pages_on_production_return_200:
     working_directory: ~/directory-tests
     <<: [
     *machine_python3_clean,
-    *steps_cms_pages_checker,
+    *steps_run_test_cms_pages_return_200,
     ]
 
   generate_cms_page_status_report_for_prod:
@@ -1131,7 +1131,7 @@ jobs:
       TEST_ENV: "PROD"
     <<: [
     *machine_python3_clean,
-    *steps_cms_page_status,
+    *steps_generate_cms_page_status_report,
     ]
 
   invest_compare_prod_and_dev_pages:
@@ -1818,7 +1818,7 @@ workflows:
           requires:
             - setup_env_for_periodic_tasks
 
-  prod_check_cms_pages:
+  prod_check_cms_pegee_return_200:
     triggers:
       - schedule:
           cron: "17 7 * * 1-5"
@@ -1827,7 +1827,7 @@ workflows:
               only: master
     jobs:
       - setup_env_for_periodic_tasks
-      - check_cms_pages_on_production:
+      - check_cms_pages_on_production_return_200:
           requires:
             - setup_env_for_periodic_tasks
 

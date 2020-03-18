@@ -25,7 +25,7 @@ have some duplicated code so the number of required secrets to run is minimal.
 
 When in root dir of this repo use:
 ```bash
-make cms_pages_check
+make test_cms_pages_return_200
 ```
 
 or:
@@ -37,5 +37,13 @@ pytest --capture=no --verbose
 or in case you have some importing issues set `PYTHONPATH` to `.`:
 ```bash
 cd test_prod_cms_pages
-PYTHONPATH=. pytest --capture=no --verbose test_cms_pages.py
+PYTHONPATH=. pytest --capture=no --verbose test_cms_pages_return_200.py
+```
+
+
+# CMS pages status report
+
+To generate a brief HTML report with a status of all CMS page, run:
+```bash
+make cms_page_status_report
 ```
