@@ -383,28 +383,9 @@ PYLINKVALIDATE_ENV_VARS_DEV := \
 
 BASIC_AUTH := $(shell echo -n $($(TEST_ENV)_BASICAUTH_USER):$($(TEST_ENV)_BASICAUTH_PASS) | base64)
 
-# Testing Production systems will check outside links
-# Testing non-Production systems will not check outside links & HAWK cookie
-# will be used.
-ifndef DEV_BASICAUTH_USER
-  $(error DEV_BASICAUTH_USER is undefined)
-endif
-ifndef DEV_BASICAUTH_PASS
-  $(error DEV_BASICAUTH_PASS is undefined)
-endif
-ifndef STAGE_BASICAUTH_USER
-  $(error STAGE_BASICAUTH_USER is undefined)
-endif
-ifndef STAGE_BASICAUTH_PASS
-  $(error STAGE_BASICAUTH_PASS is undefined)
-endif
-ifndef UAT_BASICAUTH_USER
-  $(error UAT_BASICAUTH_USER is undefined)
-endif
-ifndef UAT_BASICAUTH_PASS
-  $(error UAT_BASICAUTH_PASS is undefined)
-endif
-
+## Testing Production systems will check outside links
+## Testing non-Production systems will not check outside links & HAWK cookie
+## will be used.
 ifeq ($(TEST_ENV),PROD)
 	AUTH=
 	TEST_OUTSIDE=--test-outside
