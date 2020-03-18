@@ -30,7 +30,7 @@ endif
 
 cms_pages_check:
 	echo "Running CMS pages check against: $(CMS_API_URL)" && \
-	pytest --capture=no --verbose --junit-xml=./reports/cms_pages.xml tests/periodic_tasks/cms_pages/
+	pytest --capture=no --verbose --junit-xml=./reports/cms_pages.xml test_prod_cms_pages/
 
 cms_page_status:
 	echo "Generating CMS page status report for: $(TEST_ENV) environment" && \

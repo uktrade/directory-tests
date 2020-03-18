@@ -2,7 +2,7 @@
 import pytest
 from rest_framework.status import HTTP_200_OK
 
-from tests.smoke.cms_api_helpers import (
+from cms_api_helpers import (
     all_cms_pks,
     find_draft_urls,
     find_published_translated_urls,

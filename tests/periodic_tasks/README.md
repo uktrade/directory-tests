@@ -9,7 +9,6 @@ Currently hosted tests & tasks:
 * Geckoboard updater
 * Measure contingency of service unavailability
 * Content diff between Dev, Staging & Production versions of services
-* Check if all CMS pages are available
 * Find accessibility issues on DEV ExRed with [pa11y](http://pa11y.org/) (currently disabled)
 * Check if Dev & Staging services return "X-Robots-Tag: noindex" header
 
@@ -110,19 +109,6 @@ This test uses:
 * [Python Behave](https://pypi.org/project/behave/) to run the tests
 * [requests](http://docs.python-requests.org/en/master/) to fetch page contents
 * Python's built-in [difflib](https://docs.python.org/3.7/library/difflib.html) to find & generate diff report
-
-
-# Check if all CMS pages are available
-
-See [./cms_pages](./cms_pages).  
-
-This test goes through all published & draft versions of pages found with the
-use of CMS API and checks whether those pages can be visited without any error.
-
-Tools
-* [pytest](https://pypi.org/project/pytest/)
-* [requests](http://docs.python-requests.org/en/master/)
-* [directory_cms_client](https://pypi.org/project/directory-cms-client/)
 
 
 # Find accessibility issues on DEV ExRed with [pa11y](http://pa11y.org/) (currently disabled)
