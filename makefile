@@ -108,8 +108,6 @@ functional_tests:
 functional_tests_feature_dir:
 	behave --format=allure_behave.formatter:AllureFormatter --define AllureFormatter.issue_pattern=$(BUG_TRACKER_URL_PATTERN) --define AllureFormatter.link_pattern=$(BUG_TRACKER_URL_PATTERN) --outfile=results_${FEATURE_DIR}/ --no-skipped --format progress3 --logging-filter=-root --tags=~@wip --tags=~@skip --tags=~@fixme tests/functional/features/${FEATURE_DIR} ${TAGS} || true
 
-test: smoke_tests functional_tests load_test_minimal
-
 DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose rm -f && docker-compose pull
 DOCKER_COMPOSE_CREATE_ENVS := \
 	python3 -m venv .venv && \
@@ -290,4 +288,4 @@ report:
 	@allure --version
 	@allure generate --clean --output ./allure_report results/
 
-.PHONY: build clean requirements test cms_page_status compare_content docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests results_browser results_functional report
+.PHONY: build clean cms_page_status compare_content docker_remove_all docker_integration_tests smoke_tests functional_tests results_browser results_functional report
