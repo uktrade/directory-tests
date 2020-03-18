@@ -326,6 +326,11 @@ def get_pks_by_page_type(page_type: str) -> List[int]:
             )
         else:
             result = response.json()
+            error = (
+                f"Expected response from 'GET api/pages/?type={page_type}' to be a "
+                f"List[int] not {type(result)}"
+            )
+            assert all(isinstance(val, int) for val in result), error
     print(f"GET api/pages/?type={page_type} -> {result}")
     return result
 
