@@ -47,24 +47,12 @@ PYLINKVALIDATE_ENV_VARS_PROD := \
 	$${DOMESTIC_URL}export-opportunities/opportunities?s=,\
 	$${DOMESTIC_URL}export-opportunities/opportunities?paged=,\
 	$${DOMESTIC_URL}export-opportunities/assets/,\
-	https://cms.trade.great.gov.uk/documents/,\
-	https://directory-cms-public.s3.amazonaws.com,\
-	https://selling-online-overseas.export.great.gov.uk/static/,\
-	https://www.contactus.trade.gov.uk/office-finder/,\
-	https://s3.eu-west-2.amazonaws.com/,\
-	https://d3zwahhsvfb28.cloudfront.net,\
-	https://seao.ca/OpportunityPublication,\
 	http://www.linkedin.com,\
-	http://ted.europa.eu,\
 	https://twitter.com,\
 	https://uk.linkedin.com/,\
 	https://www.facebook.com,\
 	https://www.facebook.com/login.php,\
-	https://www.linkedin.com,\
-	https://manaa.esma.gov.ae/,\
-	https://www.businessbankinginsight.co.uk/,\
-	https://www.pensionledfunding.com/,\
-	https://www.dubaicustoms.gov.ae/en\
+	https://www.linkedin.com\
 	" && \
 	export TEST_URLS="\
 	$${DOMESTIC_URL} \
@@ -130,27 +118,11 @@ PYLINKVALIDATE_ENV_VARS_UAT := \
 	$${EXPORT_OPPORTUNITIES_URL}opportunities/t,\
 	$${EXPORT_OPPORTUNITIES_URL}opportunities/w,\
 	$${EXPORT_OPPORTUNITIES_URL}opportunities/z,\
-	https://www.contactus.trade.gov.uk/office-finder,\
-	http://www.export.org.uk/page/Market_Selection,\
-	https://www.gov.uk/tendering-for-public-sector-contracts/overview,\
-	http://exportbritain.org.uk/international-directory/,\
-	http://mojolife.org.uk/,\
-	http://p2pfa.info/platforms/,\
-	http://www.elearningschool.co.uk,\
-	http://www.epcmortgage.org.uk/,\
-	http://www.ftsolutions.co.uk,\
-	http://www.jubaris.co.uk,\
 	http://www.linkedin.com,\
-	http://www.macduffshipdesign.com,\
-	http://www.mbe-intl.com,\
 	https://twitter.com,\
 	https://uk.linkedin.com/,\
-	https://www.airforilfe.net,\
-	https://www.callidusgroup.co.uk,\
 	https://www.facebook.com,\
-	https://www.linkedin.com,\
-	https://www.nationalarchives.gov.uk/doc/open-government-licence,\
-	https://www.pwc.co.uk/,https://www.rmlgroup.com\
+	https://www.linkedin.com\
 	" && \
 	export TEST_URLS="\
 	$${DOMESTIC_URL} \
