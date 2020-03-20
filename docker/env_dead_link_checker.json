@@ -1,0 +1,13 @@
+{
+  "file_path": "./docker/.env",
+  "env_vars": {
+    "required": [
+        "BASICAUTH_PASS",
+        "BASICAUTH_USER",
+        "DOMESTIC_URL",
+        "EXPORT_OPPORTUNITIES_URL"
+    ],
+    "optional": [
+    ]
+  }
+}
