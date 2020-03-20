@@ -1818,7 +1818,7 @@ workflows:
           requires:
             - setup_env_for_periodic_tasks
 
-  prod_check_cms_pegee_return_200:
+  prod_check_cms_peges_return_200:
     triggers:
       - schedule:
           cron: "17 7 * * 1-5"
