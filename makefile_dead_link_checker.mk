@@ -1,6 +1,33 @@
-
-# default to TRADE DEV environment if TEST_ENV is not set
+## Testing Production systems will check outside links
+## Testing non-Production systems will not check outside links & HAWK cookie
+## will be used.
 TEST_ENV ?= DEV
+BASIC_AUTH := $(shell echo -n $($(TEST_ENV)_BASICAUTH_USER):$($(TEST_ENV)_BASICAUTH_PASS) | base64)
+ifeq ($(TEST_ENV),PROD)
+	AUTH=
+	TEST_OUTSIDE=--test-outside
+else
+	ifeq ($(TEST_ENV),UAT)
+		AUTH=--header='Authorization: Basic ${BASIC_AUTH}'
+		TEST_OUTSIDE=
+	endif
+	ifeq ($(TEST_ENV),STAGE)
+		AUTH=--header='Authorization: Basic ${BASIC_AUTH}'
+		TEST_OUTSIDE=
+	endif
+	ifeq ($(TEST_ENV),DEV)
+		AUTH=--header='Authorization: Basic ${BASIC_AUTH}'
+		TEST_OUTSIDE=
+	endif
+endif
+
+## These are two required env vars with URLs to Domestic site and Export Opportunities
+ifndef DOMESTIC_URL
+  $(error DOMESTIC_URL is undefined)
+endif
+ifndef EXPORT_OPPORTUNITIES_URL
+  $(error EXPORT_OPPORTUNITIES_URL is undefined)
+endif
 
 PYLINKVALIDATE_ENV_VARS_PROD := \
 	export IGNORED_PREFIXES="\
@@ -289,29 +316,6 @@ PYLINKVALIDATE_ENV_VARS_DEV := \
 	$${DOMESTIC_URL}selling-online-overseas/ \
 	$${DOMESTIC_URL}selling-online-overseas/markets/results/ \
 	"
-
-BASIC_AUTH := $(shell echo -n $($(TEST_ENV)_BASICAUTH_USER):$($(TEST_ENV)_BASICAUTH_PASS) | base64)
-
-## Testing Production systems will check outside links
-## Testing non-Production systems will not check outside links & HAWK cookie
-## will be used.
-ifeq ($(TEST_ENV),PROD)
-	AUTH=
-	TEST_OUTSIDE=--test-outside
-else
-ifeq ($(TEST_ENV),UAT)
-	AUTH=--header='Authorization: Basic ${BASIC_AUTH}'
-	TEST_OUTSIDE=
-endif
-ifeq ($(TEST_ENV),STAGE)
-	AUTH=--header='Authorization: Basic ${BASIC_AUTH}'
-	TEST_OUTSIDE=
-endif
-ifeq ($(TEST_ENV),DEV)
-	AUTH=--header='Authorization: Basic ${BASIC_AUTH}'
-	TEST_OUTSIDE=
-endif
-endif
 
 dead_links_check:
 	$(PYLINKVALIDATE_ENV_VARS_$(TEST_ENV)) && \

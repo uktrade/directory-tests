@@ -280,4 +280,4 @@ report:
 	@allure --version
 	@allure generate --clean --output ./allure_report results/
 
-.PHONY: build clean test_cms_pages_return_200 cms_page_status_report compare_content docker_remove_all docker_integration_tests smoke_tests functional_tests results_browser results_functional report
+.PHONY: build clean test_cms_pages_return_200 cms_page_status_report compare_content dead_links_check dead_links_check_with_json_report docker_remove_all docker_integration_tests smoke_tests functional_tests results_browser results_functional report
