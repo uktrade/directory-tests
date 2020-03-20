@@ -295,7 +295,7 @@ def last_directory_tests_results(circle_ci_client: CircleClient) -> dict:
 def last_periodic_tests_results(circle_ci_client: CircleClient,) -> dict:
     return last_build_test_results(
         circle_ci_client,
-        "directory-periodic-tests",
+        "directory-tests",
         job_name_mappings=DIRECTORY_PERIODIC_TESTS_JOB_NAME_MAPPINGS,
         limit=100,
     )
@@ -304,7 +304,7 @@ def last_periodic_tests_results(circle_ci_client: CircleClient,) -> dict:
 def last_useful_content_tests_results(circle_ci_client: CircleClient) -> dict:
     return last_build_test_results(
         circle_ci_client,
-        "directory-periodic-tests",
+        "directory-tests",
         job_name_mappings=USEFUL_CONTENT_TESTS_JOB_NAME_MAPPINGS,
         limit=100,
     )
