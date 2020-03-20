@@ -345,6 +345,8 @@ step_run_dead_links_checker: &step_run_dead_links_checker
     name: Run Dead Links Checker script
     command: |
       . venv/bin/activate
+      python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
+      source ./docker/.env_with_export;
       TEST_ENV=${TEST_ENV} make dead_links_check
 
 step_run_geckoboard_updater: &step_run_geckoboard_updater
