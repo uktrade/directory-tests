@@ -29,6 +29,7 @@ from requests.exceptions import (
 )
 from rest_framework.status import (
     HTTP_200_OK,
+    HTTP_204_NO_CONTENT,
     HTTP_302_FOUND,
     HTTP_401_UNAUTHORIZED,
     HTTP_403_FORBIDDEN,
@@ -79,6 +80,11 @@ REQUEST_EXCEPTIONS = (
     RetryError,
     UnrewindableBodyError,
 )
+
+
+def blue(x: str):
+    """Print out a message in blue to console."""
+    cprint(x, "blue", attrs=["bold"])
 
 
 def red(x: str):
@@ -320,7 +326,7 @@ def get_pks_by_page_type(page_type: str) -> List[int]:
     except requests.exceptions.HTTPError as ex:
         red(f"GET api/pages/?type={page_type} -> Failed because of: {ex}")
     else:
-        if response.status_code != 200:
+        if response.status_code != HTTP_200_OK:
             red(
                 f"GET api/pages/?type={page_type} -> {response.status_code} {response.reason}"
             )
@@ -346,6 +352,11 @@ def get_page_by_pk(pk: int) -> dict:
     else:
         if response.status_code != 200:
             red(f"GET api/pages/{pk}/ -> {response.status_code} {response.reason}")
+        elif response.status_code == HTTP_204_NO_CONTENT:
+            blue(
+                f"GET {response.url} -> {response.status_code} {response.reason} "
+                f"in: {response.elapsed.total_seconds()}s EMPTY RESPONSE"
+            )
         else:
             result = response.json()
     return result

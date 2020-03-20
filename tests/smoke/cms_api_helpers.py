@@ -27,6 +27,7 @@ from requests.exceptions import (
 )
 from rest_framework.status import (
     HTTP_200_OK,
+    HTTP_204_NO_CONTENT,
     HTTP_302_FOUND,
     HTTP_401_UNAUTHORIZED,
     HTTP_403_FORBIDDEN,
@@ -36,7 +37,7 @@ from urllib3.exceptions import HTTPError as BaseHTTPError
 
 from directory_tests_shared import URLs
 from directory_tests_shared.clients import BASIC_AUTHENTICATOR, CMS_API_CLIENT
-from directory_tests_shared.utils import red
+from directory_tests_shared.utils import blue, red
 
 REQUEST_EXCEPTIONS = (
     BaseHTTPError,
@@ -298,6 +299,12 @@ def sync_requests(endpoints: List[str]) -> Tuple[List[dict], List[Response]]:
                 print(
                     f"GET {response.url} -> {response.status_code} {response.reason} "
                     f"in: {response.elapsed.total_seconds()}s"
+                )
+            elif response.status_code == HTTP_204_NO_CONTENT:
+                bad_responses.append(response.json())
+                blue(
+                    f"GET {response.url} -> {response.status_code} {response.reason} "
+                    f"in: {response.elapsed.total_seconds()}s EMPTY RESPONSE"
                 )
             else:
                 bad_responses.append(response)

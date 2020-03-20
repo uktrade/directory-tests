@@ -200,7 +200,7 @@ class CMSTasks(TaskSet):
             endpoint,
             authenticator=LOAD_TESTS_USER_AGENT,
             name="/api/pages/[filter]",
-            expected_codes=[200, 400, 404],
+            expected_codes=[200, 204, 400, 404],
         )
 
     @task(4)
@@ -209,7 +209,7 @@ class CMSTasks(TaskSet):
             URLs.CMS_API_PAGE_BY_ID.template.format(page_id=randint(1, 1000)),
             authenticator=LOAD_TESTS_USER_AGENT,
             name="/api/pages/[pk]/",
-            expected_codes=[200, 404],
+            expected_codes=[200, 204, 404],
         )
 
     @task(2)
