@@ -37,8 +37,8 @@ SITES_INTERNATIONAL = {
     "prod": "https://www.great.gov.uk/international/",
 }
 
-BASICAUTH_USER = os.environ["BASICAUTH_USER_DEV"]
-BASICAUTH_PASS = os.environ["BASICAUTH_PASS_DEV"]
+BASICAUTH_USER = os.environ["DEV_BASICAUTH_USER"]
+BASICAUTH_PASS = os.environ["DEV_BASICAUTH_PASS"]
 
 
 def get_basic_auth():
