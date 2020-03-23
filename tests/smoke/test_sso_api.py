@@ -72,10 +72,11 @@ def test_get_oauth2_user_profile_w_invalid_token(token):
 
 @pytest.mark.dev
 @pytest.mark.session_auth
-def test_check_password_using_dev_cookie(logged_in_session):
-    user_session_id = logged_in_session.cookies.get("directory_sso_dev_session")
+def test_check_password_using_dev_cookie(logged_in_session_and_user):
+    session, user = logged_in_session_and_user
+    user_session_id = session.cookies.get("directory_sso_dev_session")
     assert user_session_id
-    password = USERS["verified"]["password"]
+    password = user["password"]
     response = SSO_API_CLIENT.user.check_password(
         user_session_id, password, authenticator=BASIC_AUTHENTICATOR
     )
@@ -85,10 +86,11 @@ def test_check_password_using_dev_cookie(logged_in_session):
 
 @pytest.mark.stage
 @pytest.mark.session_auth
-def test_check_password_using_stage_cookie(logged_in_session):
-    user_session_id = logged_in_session.cookies.get("sso_stage_session")
+def test_check_password_using_stage_cookie(logged_in_session_and_user):
+    session, user = logged_in_session_and_user
+    user_session_id = session.cookies.get("sso_stage_session")
     assert user_session_id
-    password = USERS["verified"]["password"]
+    password = user["password"]
     response = SSO_API_CLIENT.user.check_password(
         user_session_id, password, authenticator=BASIC_AUTHENTICATOR
     )
