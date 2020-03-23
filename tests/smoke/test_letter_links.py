@@ -54,24 +54,12 @@ def test_access_endpoints_as_logged_in_user(logged_in_session, url, basic_auth):
 @pytest.mark.session_auth
 @pytest.mark.stage
 @pytest.mark.parametrize("url", [URLs.FAB_CONFIRM_IDENTITY.absolute])
-def test_check_if_verify_endpoint_redirects_to_correct_page(
+def test_check_if_verify_endpoint_redirects_uk_tax_payer_to_correct_page(
     logged_in_session, url, basic_auth
 ):
     response = logged_in_session.get(url, allow_redirects=True, auth=basic_auth)
     assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
-    # final redirect depends on the account's verification status
-    # for a verified profile request should be redirected to /profile/find-a-buyer/
-    # and for an unverified profile it should go to /find-a-buyer/verify/letter-confirm/
-    got_to_letter_confirmation = (
-        response.url == URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute
-    )
-    got_to_profile = response.url == URLs.PROFILE_BUSINESS_PROFILE.absolute
-    error = (
-        f"Expected request to {url} to be redirected to "
-        f"{URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute} or {URLs.PROFILE_BUSINESS_PROFILE.absolute} "
-        f"but got to {response.url}"
-    )
-    assert got_to_letter_confirmation or got_to_profile, error
+    assert response.url == URLs.FAB_LANDING.absolute
 
 
 @pytest.mark.parametrize("url", [URLs.FAB_CONFIRM_IDENTITY.absolute])
