@@ -54,17 +54,6 @@ Feature: Domestic - Home Page
     Then "Robert" should be on the "Market Access Database - Landing" page
 
 
-  @allure.link:XOT-1216
-  @govuk
-  @sections
-  Scenario: Any Exporter should be able to find out more how to "prepare business for Brexit" by going to one of the "brexit related" pages on GOV.UK
-    Given "Robert" visits the "Domestic - Home" page
-
-    When "Robert" decides to use one of the "brexit related links to GOV.UK"
-
-    Then "Robert" should be on the "GOV.UK - Brexit related article" page
-
-
   @allure.link:XOT-1217
   @markets
   @sections
