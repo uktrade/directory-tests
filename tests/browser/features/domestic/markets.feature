@@ -14,7 +14,8 @@ Feature: Domestic - Market guides
     Then "Joel" should be on the "Domestic - markets listing" page
 
 
-  Scenario: Visitors should be able to view all available markets
+  @dev-only
+  Scenario: Visitors should be able to view market guide page
     Given "Joel" visits the "Domestic - Markets listing" page
 
     When "Joel" selects a random market
@@ -29,6 +30,27 @@ Feature: Domestic - Market guides
       | Opportunities for exporters |
       | Doing business in           |
       | Next steps                  |
+      | Error Reporting             |
+      | Footer                      |
+
+
+  @stage-only
+  Scenario: Visitors should be able to view market guide page
+    Given "Joel" visits the "Domestic - Markets listing" page
+
+    When "Joel" selects a random market
+
+    Then "Joel" should be on the "Domestic - Markets - Guide" page
+    And "Joel" should see following sections
+      | Sections                    |
+      | Header                      |
+      | Hero                        |
+      | Breadcrumbs                 |
+      | Description                 |
+      | Opportunities for exporters |
+      | Doing business in           |
+      | Next steps                  |
+      | Next steps Staging          |
       | Error Reporting             |
       | Footer                      |
 

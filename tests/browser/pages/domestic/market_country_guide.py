@@ -66,6 +66,8 @@ SELECTORS = {
             "#country-guide-need-help-section a[href$='office-finder/']",
             type=ElementType.LINK,
         ),
+    },
+    "next steps staging": {
         "check duties and customs procedures for exporting goods": Selector(
             By.CSS_SELECTOR,
             "#country-guide-need-help-section a[href*=duties]",
