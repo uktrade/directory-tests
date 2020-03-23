@@ -21,14 +21,6 @@ else
 	endif
 endif
 
-## These are two required env vars with URLs to Domestic site and Export Opportunities
-ifndef DOMESTIC_URL
-  $(error DOMESTIC_URL is undefined)
-endif
-ifndef EXPORT_OPPORTUNITIES_URL
-  $(error EXPORT_OPPORTUNITIES_URL is undefined)
-endif
-
 PYLINKVALIDATE_ENV_VARS_PROD := \
 	export IGNORED_PREFIXES="\
 	$${DOMESTIC_URL}international/static/,\
