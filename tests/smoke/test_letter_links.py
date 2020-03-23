@@ -22,41 +22,6 @@ pytestmark = [
 
 
 @pytest.mark.stage
-@pytest.mark.parametrize(
-    "url",
-    [
-        URLs.LEGACY_CONTACT_US_HELP.absolute,
-        URLs.LEGACY_CONTACT_US_FEEDBACK_FORM.absolute,
-    ],
-)
-def test_access_as_anon_user(url, basic_auth):
-    response = requests.get(url, allow_redirects=False)
-    redirect = response.headers["location"]
-    get_and_assert(
-        url=redirect, allow_redirects=True, status_code=HTTP_200_OK, auth=basic_auth
-    )
-
-
-@pytest.mark.stage
-@pytest.mark.parametrize(
-    "url",
-    [
-        URLs.LEGACY_CONTACT_US_HELP.absolute,
-        URLs.LEGACY_CONTACT_US_FEEDBACK_FORM.absolute,
-    ],
-)
-def test_access_contact_us_as_anon_user_after_removing_trailing_slash(url, basic_auth):
-    # get rid of trailing slash
-    if url[-1] == "/":
-        url = url[:-1]
-    response = requests.get(url, allow_redirects=False)
-    redirect = response.headers["location"]
-    get_and_assert(
-        url=redirect, allow_redirects=True, status_code=HTTP_200_OK, auth=basic_auth
-    )
-
-
-@pytest.mark.stage
 @pytest.mark.parametrize("url", [URLs.FAB_CONFIRM_IDENTITY.absolute])
 def test_302_redirects_for_anon_user(url, basic_auth):
     get_and_assert(
