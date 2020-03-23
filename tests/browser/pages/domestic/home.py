@@ -44,43 +44,30 @@ VIDEO_MODAL_WINDOW = Selector(
 ARTICLES = Selector(By.CSS_SELECTOR, "#eu-exit-news-section .article a")
 ADVICE_ARTICLE_LINKS = Selector(By.CSS_SELECTOR, "#resource-advice a")
 SELECTORS = {
-    "prepare your business for brexit": {
-        "prepare for brexit banner": Selector(
-            By.CSS_SELECTOR, "section.prepare-for-brexit-section"
-        ),
-        "brexit related links to gov.uk": Selector(
-            By.CSS_SELECTOR,
-            "section.prepare-for-brexit-section a.card-link",
-            type=ElementType.LINK,
-        ),
-    },
-    "how dit helps": {
-        "how dit helps section": Selector(
-            By.CSS_SELECTOR, "#content section:nth-child(3)"
-        ),
-        "how dit helps links": Selector(
-            By.CSS_SELECTOR, "#content section:nth-child(3) a"
-        ),
-        "how dit helps link images": Selector(
-            By.CSS_SELECTOR, "#content section:nth-child(3) a img"
-        ),
-    },
     "find new markets": {
         "find new markets section": Selector(
-            By.CSS_SELECTOR, "section.sector-potential-section"
+            By.CSS_SELECTOR, "section.sector-potential-section div.padding-bottom-45-m"
         ),
         "select your sector": Selector(By.ID, "id_sector", type=ElementType.SELECT),
         "show markets": Selector(
-            By.CSS_SELECTOR,
-            "#id_sector-container ~ button",
-            type=ElementType.SUBMIT,
-            next_page=markets_listing,
+            By.ID, "sector-submit", type=ElementType.SUBMIT, next_page=markets_listing,
         ),
         "sector selector quick links": Selector(
             By.CSS_SELECTOR, "div.sector-selector-quick-links ul li a"
         ),
         "view all market guides": Selector(
             By.CSS_SELECTOR, "section.sector-potential-section a.view-markets"
+        ),
+    },
+    "how dit helps": {
+        "how dit helps section": Selector(
+            By.CSS_SELECTOR, "div.sector-selector-quick-links"
+        ),
+        "how dit helps links": Selector(
+            By.CSS_SELECTOR, "div.sector-selector-quick-links a"
+        ),
+        "how dit helps link images": Selector(
+            By.CSS_SELECTOR, "div.sector-selector-quick-links a img"
         ),
     },
     "export goods from the uk": {
@@ -93,20 +80,21 @@ SELECTORS = {
     },
     "what's new": {
         "what's new section": Selector(
-            By.CSS_SELECTOR, "#content section:nth-child(6)"
+            By.CSS_SELECTOR, "section.padding-bottom-45:not(.export-goods-from-uk)"
         ),
         "what's new section heading": Selector(
-            By.CSS_SELECTOR, "#content section:nth-child(6) h2"
+            By.CSS_SELECTOR, "section.padding-bottom-45:not(.export-goods-from-uk) h2"
         ),
         "what's new image heading": Selector(
-            By.CSS_SELECTOR, "#content section:nth-child(6) h3.campaign-heading"
+            By.CSS_SELECTOR,
+            "section.padding-bottom-45:not(.export-goods-from-uk) h3.campaign-heading",
         ),
         "watch video": Selector(
             By.ID, "hero-campaign-section-watch-video-button", type=ElementType.LINK
         ),
         "what's new links": Selector(
             By.CSS_SELECTOR,
-            "#content section:nth-child(6) a.card-link",
+            "section.padding-bottom-45:not(.export-goods-from-uk) a.card-link",
             type=ElementType.LINK,
         ),
     },

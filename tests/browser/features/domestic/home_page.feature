@@ -14,7 +14,7 @@ Feature: Domestic - Home Page
         | Header                           |
         | SSO links - logged out           |
         | Hero                             |
-        | Prepare your business for Brexit |
+        | How DIT helps                    |
         | Find new markets                 |
         | Export goods from the UK         |
         | What's new                       |
