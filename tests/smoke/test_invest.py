@@ -179,10 +179,6 @@ def test_invest_pages_redirect_to_international_stage(url, redirected, basic_aut
             URLs.INTERNATIONAL_INDUSTRY_AUTOMOTIVE.absolute,
         ),
         (
-            URLs.INVEST_INDUSTRIES_HEALTH_AND_LIFE_SCIENCES.absolute,
-            URLs.INTERNATIONAL_INDUSTRY_HEALTH_AND_LIFE_SCIENCES.absolute,
-        ),
-        (
             URLs.INVEST_INDUSTRIES_AUTOMOTIVE_RESEARCH_AND_DEVELOPMENT.absolute,
             URLs.INTERNATIONAL_INDUSTRY_AUTOMOTIVE.absolute,
         ),
@@ -191,16 +187,8 @@ def test_invest_pages_redirect_to_international_stage(url, redirected, basic_aut
             URLs.INTERNATIONAL_INDUSTRY_AUTOMOTIVE.absolute,
         ),
         (
-            URLs.INVEST_INDUSTRIES_MEDICAL_TECHNOLOGY.absolute,
-            URLs.INTERNATIONAL_INDUSTRY_HEALTH_AND_LIFE_SCIENCES.absolute,
-        ),
-        (
             URLs.INVEST_INDUSTRIES_MOTORSPORT.absolute,
             URLs.INTERNATIONAL_INDUSTRY_AUTOMOTIVE.absolute,
-        ),
-        (
-            URLs.INVEST_INDUSTRIES_PHARMACEUTICAL_MANUFACTURING.absolute,
-            URLs.INTERNATIONAL_INDUSTRY_HEALTH_AND_LIFE_SCIENCES.absolute,
         ),
     ],
 )
