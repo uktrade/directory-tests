@@ -1,5 +1,5 @@
 {
-  "file_path": "./docker/.env",
+  "file_path": "./env_vars/.env",
   "env_vars": {
     "required": [
         "BASICAUTH_PASS",

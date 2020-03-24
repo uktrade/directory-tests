@@ -22,7 +22,7 @@ Services covered with load tests:
 * python 3.6
 * pip
 * dependencies listed in [requirements_load.txt](../../requirements_load.txt)
-* required environment variables (see [env.json](../../docker/env.json)
+* required environment variables (see [env.json](../../env_vars/env.json)
 
 
 # Installation and execution

@@ -9,7 +9,7 @@ use of CMS API and checks whether those pages can be visited without any error.
 
 This module should be placed in `tests/periodic_tasks` so it could make use of common
 helpers. Unfortunately it would mean that we'd have to have all required env vars
-(see [docker/env.json](docker/env.json) ) for Production environment set in CircleCI.
+(see [./env_vars/env.json](./env_vars/env.json) ) for Production environment set in CircleCI.
 And this is rather far from ideal. Thus I've decided to keep this module separate and
 have some duplicated code so the number of required secrets to run is minimal.
 

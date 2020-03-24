@@ -24,7 +24,7 @@ Usage:
 
 Options:
   -h --help             Show this screen.
-  --config=ENV_FILE     Specify input config file [default: ./docker/env.json]
+  --config=ENV_FILE     Specify input config file [default: ./env_vars/env.json]
   --env=ENV             Use environment variables prefixed with "ENV_"
   --version             Show version.
 """
@@ -38,7 +38,7 @@ from docopt import docopt
 class DockerComposeEnvWriter:
     @staticmethod
     def save_env_vars(
-            configuration: dict, all_env_vars: dict, env_prefix: str, export_mode: bool
+        configuration: dict, all_env_vars: dict, env_prefix: str, export_mode: bool
     ):
         if export_mode:
             filename = "{}_with_export".format(configuration["file_path"])
@@ -47,9 +47,7 @@ class DockerComposeEnvWriter:
         with open(filename, "w") as destination:
             for var in all_env_vars:
                 # Get value of the prefixed host env var
-                value = os.getenv(
-                    f"{env_prefix}_{var}"
-                )
+                value = os.getenv(f"{env_prefix}_{var}")
                 if value:
                     special_chars = "!$"
                     if export_mode:
@@ -65,7 +63,8 @@ class DockerComposeEnvWriter:
         cls.validate(configuration, env_prefix)
 
         all_env_vars = (
-                configuration["env_vars"]["required"] + configuration["env_vars"]["optional"]
+            configuration["env_vars"]["required"]
+            + configuration["env_vars"]["optional"]
         )
         cls.save_env_vars(configuration, all_env_vars, env_prefix, export_mode=True)
         cls.save_env_vars(configuration, all_env_vars, env_prefix, export_mode=False)
@@ -75,9 +74,7 @@ class DockerComposeEnvWriter:
         unset_required_host_vars = [
             var
             for var in config["env_vars"]["required"]
-            if not os.getenv(
-                f"{env_prefix}_{var}"
-            )
+            if not os.getenv(f"{env_prefix}_{var}")
         ]
 
         if unset_required_host_vars:
@@ -92,7 +89,7 @@ if __name__ == "__main__":
     arguments = docopt(__doc__, version="env_writer 1.0")
     path_to_config = arguments["--config"]
     env_prefix = arguments["--env"].upper()
-    with open(path_to_config, 'r') as src:
+    with open(path_to_config, "r") as src:
         config = json.load(src)
 
     DockerComposeEnvWriter.create(config, env_prefix)

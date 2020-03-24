@@ -15,7 +15,7 @@ It means no browser is used to execute test scenarios defined in feature files.
 
 * python 3.6
 * pip
-* required environment variables (see [env.json](../../docker/env.json)
+* required environment variables (see [env.json](../../env_vars/env.json)
 * dependencies listed in [requirements_functional.txt](../../requirements_functional.txt)
 
 

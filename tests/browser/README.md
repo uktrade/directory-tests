@@ -12,7 +12,7 @@ This repository contains UI tests automated using:
 * python 3.6
 * pip
 * dependencies listed in [requirements_browser.txt](../../requirements_browser.txt)
-* required environment variables (see [env.json](../../docker/env.json)
+* required environment variables (see [env.json](../../env_vars/env.json)
 * [browser driver binaries](https://selenium-python.readthedocs.io/installation.html#drivers) installed in `$PATH`
 * a [BrowserStack](https://www.browserstack.com/users/sign_up) account (check Rattic)
 
