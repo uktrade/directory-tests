@@ -35,7 +35,7 @@ SERVICE ?= invest
 ENVS_TO_COMPARE ?= stage_dev
 
 compare_content:
-	behave -k -t ~wip --junit --junit-directory=./reports/ ./tests/periodic_tasks/content_diff/features/$(SERVICE)_$(ENVS_TO_COMPARE).feature
+	behave --format=allure_behave.formatter:AllureFormatter --outfile=results/ --junit --junit-directory=./reports/ --no-skipped --format pretty --logging-filter=-root --tags=~@wip ./tests/periodic_tasks/content_diff/features/$(SERVICE)_$(ENVS_TO_COMPARE).feature || true
 
 # Locust
 LOCUST := \

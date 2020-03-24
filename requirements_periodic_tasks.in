@@ -1,5 +1,6 @@
 -e ./directory_tests_shared/
 -e git+https://github.com/kowalcj0/pylinkvalidator.git@json-reporter#egg=pylinkvalidator
+allure-behave
 beautifulsoup4
 behave
 circleclient
