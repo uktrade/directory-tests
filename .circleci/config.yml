@@ -1246,16 +1246,6 @@ jobs:
     *steps_content_diff,
     ]
 
-  international_compare_preprod_and_uat_pages:
-    working_directory: ~/directory-tests
-    environment:
-      SERVICE: "international"
-      ENVS_TO_COMPARE: "preprod_uat"
-    <<: [
-    *machine_python3_clean,
-    *steps_content_diff,
-    ]
-
   international_compare_stage_and_uat_pages:
     working_directory: ~/directory-tests
     environment:
