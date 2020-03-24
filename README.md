@@ -48,10 +48,6 @@ the evening against `UAT` environment.
 Test workflows are defined in [config.yml](.circleci/config.yml#L595).
 
 
-# Host environment variables for docker-compose
-``.env`` files will be automatically created (with ``./docker/env_writer.py`` based on ``./docker/env.json`` and service env files) by ``make docker_run``, based on host environment variables for each service.
-
-
 [circle-ci-image]: https://circleci.com/gh/uktrade/directory-tests/tree/master.svg?style=svg
 [circle-ci]: https://circleci.com/gh/uktrade/directory-tests/tree/master
 

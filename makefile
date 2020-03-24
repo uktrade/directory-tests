@@ -1,8 +1,6 @@
 ARGUMENTS=$(filter-out $@,$(MAKECMDGOALS)) $(filter-out --,$(MAKEFLAGS))
 include *.mk
 
-build: docker_integration_tests
-
 clean:
 	-find . -type f -name "*.pyc" -delete
 	-find . -type d -name "__pycache__" -delete
@@ -100,74 +98,6 @@ functional_tests:
 functional_tests_feature_dir:
 	behave --format=allure_behave.formatter:AllureFormatter --define AllureFormatter.issue_pattern=$(BUG_TRACKER_URL_PATTERN) --define AllureFormatter.link_pattern=$(BUG_TRACKER_URL_PATTERN) --outfile=results_${FEATURE_DIR}/ --no-skipped --format progress3 --logging-filter=-root --tags=~@wip --tags=~@skip --tags=~@fixme tests/functional/features/${FEATURE_DIR} ${TAGS} || true
 
-DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose rm -f && docker-compose pull
-DOCKER_COMPOSE_CREATE_ENVS := \
-	python3 -m venv .venv && \
-	. .venv/bin/activate && \
-	pip install -U pip docopt docker-compose && \
-	python3 ./docker/env_writer.py --env=$(TEST_ENV) --config=./docker/env.json
-DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose rm && docker-compose pull
-
-DOCKER_SET_ENV_VARS_FOR_DEV := \
-	export DEV_DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com/; \
-	export DEV_CMS_API_URL=https://dev.cms.directory.uktrade.digital/; \
-	export DEV_CONTACT_US_URL=https://contact-us.export.great.gov.uk/; \
-	export DEV_PROFILE_URL=https://dev.profile.uktrade.digital/; \
-	export DEV_SSO_API_URL=https://directory-sso-dev.herokuapp.com/; \
-	export DEV_SSO_URL=https://www.dev.sso.uktrade.digital/; \
-	export DEV_FIND_A_BUYER_URL=https://dev.buyer.directory.uktrade.digital/; \
-	export DEV_FIND_A_SUPPLIER_URL=https://dev.supplier.directory.uktrade.digital/; \
-	export DEV_DOMESTIC_URL=https://dev.exportreadiness.directory.uktrade.digital/; \
-	export DEV_INVEST_URL=https://dev.invest.directory.uktrade.digital/; \
-	export DEV_SOO_URL=https://selling-online-overseas.export.staging.uktrade.digital/
-
-DOCKER_SET_ENV_VARS_FOR_STAGE := \
-	export STAGE_DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com/; \
-	export STAGE_CMS_API_URL=https://dev.cms.directory.uktrade.digital/; \
-	export STAGE_CONTACT_US_URL=https://contact-us.export.great.gov.uk/; \
-	export STAGE_PROFILE_URL=https://dev.profile.uktrade.digital/; \
-	export STAGE_SSO_API_URL=https://directory-sso-dev.herokuapp.com/; \
-	export STAGE_SSO_URL=https://www.dev.sso.uktrade.digital/; \
-	export STAGE_FIND_A_BUYER_URL=https://dev.buyer.directory.uktrade.digital/; \
-	export STAGE_FIND_A_SUPPLIER_URL=https://dev.supplier.directory.uktrade.digital/; \
-	export STAGE_DOMESTIC_URL=https://dev.exportreadiness.directory.uktrade.digital/; \
-	export STAGE_INVEST_URL=https://dev.invest.directory.uktrade.digital/; \
-	export STAGE_SOO_URL=https://selling-online-overseas.export.staging.uktrade.digital/
-
-DOCKER_REMOVE_ALL := \
-	docker ps -a | \
-	grep -e directorytests_ | \
-	awk '{print $$1 }' | \
-	xargs -I {} docker rm -f {}
-
-docker_remove_all:
-	$(DOCKER_REMOVE_ALL)
-
-docker_integration_tests: docker_remove_all
-	$(DOCKER_SET_ENV_VARS_FOR_$(TEST_ENV)) && \
-	$(DOCKER_COMPOSE_CREATE_ENVS) && \
-	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
-	docker-compose -f docker-compose.yml build && \
-	docker-compose -f docker-compose.yml run smoke_tests && \
-	docker-compose -f docker-compose.yml run functional_tests
-
-
-BROWSER_SET_DOCKER_ENV_VARS := \
-	export CIRCLE_SHA1=$(CIRCLE_SHA1)
-
-BROWSER_DOCKER_COMPOSE_CREATE_ENVS := \
-	python3 ./docker/env_writer.py --env=$(TEST_ENV) --config=./docker/env.json
-
-BROWSER_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := \
-	docker-compose -f docker-compose-browser.yml -p browser rm -f && \
-	docker-compose -f docker-compose-browser.yml -p browser pull
-
-BROWSER_DOCKER_REMOVE_ALL:
-	docker ps -a | \
-	grep -e browser_ | \
-	awk '{print $$1 }' | \
-	xargs -I {} docker rm -f {}
-
 BROWSER ?= chrome
 HEADLESS ?= false
 AUTO_RETRY ?= true
@@ -179,16 +109,8 @@ browser_tests_locally:
 	BROWSER_ENVIRONMENT=local BROWSER_TYPE=$(BROWSER_TYPE) BROWSER=$(BROWSER) VERSION=$(VERSION) HEADLESS=$(HEADLESS) AUTO_RETRY=$(AUTO_RETRY) behave -f pretty --no-skipped --tags=~@wip --tags=~@fixme --tags=~@skip ${TAGS}
 
 browserstack:
-	$(BROWSER_SET_DOCKER_ENV_VARS) && \
 	cd tests/browser && \
 	BROWSER_ENVIRONMENT=remote BROWSER_TYPE=$(BROWSER_TYPE) BROWSER=$(BROWSER) VERSION=$(VERSION) HEADLESS=$(HEADLESS) AUTO_RETRY=$(AUTO_RETRY) behave --format progress3 --no-skipped --tags=~@wip --tags=~@fixme --tags=~@skip ${TAGS}
-
-docker_browserstack: BROWSER_DOCKER_REMOVE_ALL
-	$(BROWSER_SET_DOCKER_ENV_VARS) && \
-	$(BROWSER_DOCKER_COMPOSE_CREATE_ENVS) && \
-	$(BROWSER_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
-	docker-compose -f docker-compose-browser.yml -p browser build && \
-	docker-compose -f docker-compose-browser.yml -p browser run browser_tests
 
 requirements_browser:
 	pip install -r requirements_browser.txt
@@ -280,4 +202,4 @@ report:
 	@allure --version
 	@allure generate --clean --output ./allure_report results/
 
-.PHONY: build clean test_cms_pages_return_200 cms_page_status_report compare_content dead_links_check dead_links_check_with_json_report docker_remove_all docker_integration_tests smoke_tests functional_tests results_browser results_functional report
+.PHONY: build clean test_cms_pages_return_200 cms_page_status_report compare_content dead_links_check dead_links_check_with_json_report smoke_tests functional_tests results_browser results_functional report
