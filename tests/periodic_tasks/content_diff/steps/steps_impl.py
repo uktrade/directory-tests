@@ -8,33 +8,33 @@ from urllib.parse import urljoin
 import requests
 from behave.runner import Context
 from bs4 import BeautifulSoup
+from envparse import env
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 from retrying import retry
 
 SITES_INVEST = {
-    "dev": "https://invest.great.dev.uktrade.digital/",
-    "stage": "https://invest.great.staging.uktrade.digital/",
-    "uat": "https://invest.great.uat.uktrade.digital/",
-    "prod": "https://invest.great.gov.uk/",
+    "dev": env.str("DEV_INVEST_URL"),
+    "stage": env.str("STAGE_INVEST_URL"),
+    "uat": env.str("UAT_INVEST_URL"),
+    "prod": env.str("PROD_INVEST_URL"),
 }
 SITES_DOMESTIC = {
-    "dev": "https://great.dev.uktrade.digital/",
-    "stage": "https://great.staging.uktrade.digital/",
-    "uat": "https://great.uat.uktrade.digital/",
-    "prod": "https://www.great.gov.uk/",
+    "dev": env.str("DEV_DOMESTIC_URL"),
+    "stage": env.str("STAGE_DOMESTIC_URL"),
+    "uat": env.str("UAT_DOMESTIC_URL"),
+    "prod": env.str("PROD_DOMESTIC_URL"),
 }
 SITES_FAS = {
-    "dev": "https://great.dev.uktrade.digital/trade/",
-    "stage": "https://great.staging.uktrade.digital/trade/",
-    "uat": "https://great.uat.uktrade.digital/trade/",
-    "prod": "https://www.great.gov.uk/trade/",
+    "dev": env.str("DEV_FIND_A_SUPPLIER_URL"),
+    "stage": env.str("STAGE_FIND_A_SUPPLIER_URL"),
+    "uat": env.str("UAT_FIND_A_SUPPLIER_URL"),
+    "prod": env.str("PROD_FIND_A_SUPPLIER_URL"),
 }
 SITES_INTERNATIONAL = {
-    "dev": "https://great.dev.uktrade.digital/international/",
-    "stage": "https://great.staging.uktrade.digital/international/",
-    "uat": "https://great.uat.uktrade.digital/international/",
-    "preprod": "https://great.preprod.uktrade.digital/international/",
-    "prod": "https://www.great.gov.uk/international/",
+    "dev": env.str("DEV_INTERNATIONAL_URL"),
+    "stage": env.str("STAGE_INTERNATIONAL_URL"),
+    "uat": env.str("UAT_INTERNATIONAL_URL"),
+    "prod": env.str("PROD_INTERNATIONAL_URL"),
 }
 
 BASICAUTH_USER = os.environ["DEV_BASICAUTH_USER"]
