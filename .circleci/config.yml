@@ -1757,7 +1757,7 @@ workflows:
   domestic_prod_dev_content_diff:
     triggers:
       - schedule:
-          cron: "28 7 * * 1"
+          cron: "28 7 * * 3"
           filters:
             branches:
               only: master
@@ -1770,7 +1770,7 @@ workflows:
   domestic_prod_uat_content_diff:
     triggers:
       - schedule:
-          cron: "40 7 * * 1"
+          cron: "40 7 * * 3"
           filters:
             branches:
               only: master
@@ -1783,7 +1783,7 @@ workflows:
   domestic_prod_stage_content_diff:
     triggers:
       - schedule:
-          cron: "51 7 * * 1"
+          cron: "51 7 * * 3"
           filters:
             branches:
               only: master
@@ -1796,7 +1796,7 @@ workflows:
   domestic_stage_uat_content_diff:
     triggers:
       - schedule:
-          cron: "7 8 * * 1"
+          cron: "7 8 * * 3"
           filters:
             branches:
               only: master
@@ -1809,7 +1809,7 @@ workflows:
   domestic_stage_dev_content_diff:
     triggers:
       - schedule:
-          cron: "21 8 * * 1"
+          cron: "21 8 * * 3"
           filters:
             branches:
               only: master
@@ -1822,7 +1822,7 @@ workflows:
   international_prod_stage_content_diff:
     triggers:
       - schedule:
-          cron: "34 8 * * 1"
+          cron: "34 8 * * 3"
           filters:
             branches:
               only: master
@@ -1835,7 +1835,7 @@ workflows:
   international_prod_uat_content_diff:
     triggers:
       - schedule:
-          cron: "52 8 * * 1"
+          cron: "52 8 * * 3"
           filters:
             branches:
               only: master
@@ -1848,7 +1848,7 @@ workflows:
   international_stage_uat_content_diff:
     triggers:
       - schedule:
-          cron: "17 9 * * 1"
+          cron: "17 9 * * 3"
           filters:
             branches:
               only: master
@@ -1861,7 +1861,7 @@ workflows:
   international_stage_dev_content_diff:
     triggers:
       - schedule:
-          cron: "33 9 * * 1"
+          cron: "33 9 * * 3"
           filters:
             branches:
               only: master
