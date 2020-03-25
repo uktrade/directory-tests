@@ -21,7 +21,7 @@ format:
 
 test_cms_pages_return_200:
 	echo "Running CMS pages check against: $(CMS_API_URL)" && \
-	pytest --capture=no --verbose --junit-xml=./reports/cms_pages.xml test_prod_cms_pages/
+	pytest --capture=no --verbose --junit-xml=./reports/cms_pages.xml test_prod_cms_pages/ $(PYTEST_ARGS) || true
 
 cms_page_status_report:
 	echo "Generating CMS page status report for: $(CMS_API_URL)" && \
