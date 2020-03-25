@@ -26,4 +26,4 @@ def test_published_translated_pages_should_return_200(url, page_id):
 
 @pytest.mark.parametrize("url, page_id", find_draft_urls(ALL_OK_PAGES))
 def test_drafts_of_translated_pages_should_return_200(url, page_id):
-    get_and_assert(url, HTTP_200_OK, page_id=page_id)
+    get_and_assert(url, HTTP_200_OK, allow_redirects=True, page_id=page_id)
