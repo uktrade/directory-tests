@@ -7,6 +7,8 @@ clean:
 	-find . -type f -name "behave.log" -delete
 	-find ./results/ -type f -not -name '.gitignore' -delete
 	-find ./reports/ -type f -not -name '.gitignore' -delete
+	-find ./tests/browser/results/ -type f -not -name '.gitignore' -delete
+	-find ./tests/browser/reports/ -type f -not -name '.gitignore' -delete
 	-rm -fr ./allure_report/
 	-rm -fr ./tests/browser/reports/*.xml
 	-rm -fr ./tests/functional/reports/*.xml
