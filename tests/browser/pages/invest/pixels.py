@@ -34,5 +34,5 @@ def should_be_present(driver: WebDriver, name: str):
 
 def should_not_be_present(driver: WebDriver, name: str):
     check_if_element_is_not_visible(
-        driver, NOT_ALLOWED[name.lower()], element_name=name
+        driver, NOT_ALLOWED[name.lower()], element_name=name, take_screenshot=False
     )

@@ -449,7 +449,8 @@ def assertion_msg(message: str, *args):
 
 
 @contextmanager
-def selenium_action(driver: WebDriver, message: str, *args):
+def selenium_action(driver: WebDriver, message: str, screenshot: bool = True, *args):
+
     """This will:
         * print the custom assertion message
         * print the traceback (stack trace)
@@ -474,7 +475,8 @@ def selenium_action(driver: WebDriver, message: str, *args):
         e.args += (message,)
         _, _, tb = sys.exc_info()
         traceback.print_tb(tb)
-        take_screenshot(driver, message)
+        if screenshot:
+            take_screenshot(driver, message)
         raise
 
 
@@ -554,11 +556,16 @@ def check_if_element_is_not_visible(
     *,
     element_name: str = "",
     wait_for_it: bool = True,
+    take_screenshot: bool = True,
 ):
     """Find element by CSS selector or it's ID."""
     try:
         element = find_element(
-            driver, selector, element_name=element_name, wait_for_it=wait_for_it
+            driver,
+            selector,
+            element_name=element_name,
+            wait_for_it=wait_for_it,
+            take_screenshot=take_screenshot,
         )
         with assertion_msg(
             f"Expected not to see '{element_name}' element identified by '{selector.value}' on {driver.current_url}"
@@ -584,6 +591,7 @@ def run_alternative_visibility_check(
     selector: Selector,
     *,
     element: WebElement = None,
+    take_screenshot: bool = True,
 ):
     element = element or find_element(driver, selector)
     location = element.location
@@ -616,12 +624,14 @@ def find_element(
     *,
     element_name: str = "",
     wait_for_it: bool = True,
+    take_screenshot: bool = True,
 ) -> WebElement:
     """Find element by CSS selector or it's ID."""
     with selenium_action(
         driver,
         f"Could not find element called '{element_name}' using selector "
         f"'{selector.value}' on {driver.current_url}",
+        screenshot=take_screenshot,
     ):
         element = driver.find_element(by=selector.by, value=selector.value)
     if wait_for_it and selector.is_visible:
@@ -630,7 +640,11 @@ def find_element(
         check_if_element_is_disabled(element, element_name)
     elif selector.alternative_visibility_check:
         run_alternative_visibility_check(
-            driver, element_name, selector, element=element
+            driver,
+            element_name,
+            selector,
+            element=element,
+            take_screenshot=take_screenshot,
         )
 
     return element
