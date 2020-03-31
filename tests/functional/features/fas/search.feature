@@ -169,7 +169,7 @@ Feature: Find a Supplier
     Then "Annette Geissinger" should be able to find all sought companies
 
 
-  @staging-only
+  @stage-only
   @allure.link:ED-2020
   @search
   @no-sso-email-verification-required
