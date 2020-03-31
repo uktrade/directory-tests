@@ -17,6 +17,7 @@ Feature: PIR - Landing page
       | Footer   |
 
 
+  @skip-in-firefox
   @contact-us
   @dev-only
   @captcha
@@ -25,7 +26,7 @@ Feature: PIR - Landing page
     Given "Robert" visits the "PIR - Landing" page
 
     When "Robert" fills out and submits the form
-      | field  | value   |
+      | field  | value    |
       | sector | <sector> |
 
     Then "Robert" should be on the "International - Thank you for requesting the Perfect Fit Prospectus" page
@@ -41,6 +42,7 @@ Feature: PIR - Landing page
       | renewable-energy   |
 
 
+  @skip-in-firefox
   @contact-us
   @dev-only
   @captcha
