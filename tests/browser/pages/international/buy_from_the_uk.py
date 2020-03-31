@@ -14,7 +14,7 @@ from pages.common_actions import Selector, check_for_sections, check_url, go_to_
 NAME = "How we help you buy from the UK"
 SERVICE = Service.INTERNATIONAL
 TYPE = PageType.ARTICLE
-URL = URLs.INTERNATIONAL_BUY_FROM_THE_UK.absolute
+URL = URLs.INTERNATIONAL_FAS_BUY_FROM_THE_UK.absolute
 PAGE_TITLE = "How we help you buy from the UK - great.gov.uk international"
 
 SELECTORS = {

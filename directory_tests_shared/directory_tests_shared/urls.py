@@ -684,8 +684,15 @@ class URLs(Enum):
     INTERNATIONAL_LANDING = InternationalUrl("")
     INTERNATIONAL_CONTACT_US = InternationalUrl("contact/")
     INTERNATIONAL_SITEMAP = InternationalUrl("sitemap.xml")
-    INTERNATIONAL_BUY_FROM_THE_UK = InternationalUrl(
+    INTERNATIONAL_ABOUT_UK = InternationalUrl("content/about-uk/")
+    INTERNATIONAL_ABOUT_US = InternationalUrl("content/about-us/")
+    INTERNATIONAL_FAS = InternationalUrl("/trade/")
+    INTERNATIONAL_FAS_CONTACT = InternationalUrl("/trade/contact/")
+    INTERNATIONAL_FAS_BUY_FROM_THE_UK = InternationalUrl(
         "content/trade/how-we-help-you-buy/"
+    )
+    INTERNATIONAL_FAS_TRADE_WHY_BUY_FROM_THE_UK = InternationalUrl(
+        "trade/how-we-help-you-buy/why-buy-from-the-uk/"
     )
     INTERNATIONAL_INDUSTRIES = InternationalUrl(
         "content/about-uk/industries/",
@@ -701,6 +708,12 @@ class URLs(Enum):
     )
     INTERNATIONAL_CAPITAL_INVEST_CONTACT_SUCCESS = InternationalUrl(
         "content/capital-invest/contact/success/"
+    )
+    INTERNATIONAL_CAPITAL_INVEST_HOW_WE_HELP = InternationalUrl(
+        "content/capital-invest/how-we-help-you-invest-capital/"
+    )
+    INTERNATIONAL_CAPITAL_INVEST_OPPORTUNITIES = InternationalUrl(
+        "content/opportunities/"
     )
     INTERNATIONAL_INDUSTRY_ADVANCED_MANUFACTURING = InternationalUrl(
         "content/about-uk/industries/advanced-manufacturing/"
