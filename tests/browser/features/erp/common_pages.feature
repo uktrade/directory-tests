@@ -73,3 +73,35 @@ Feature: ERP - common pages
       | individual consumer              | Summary (UK consumer)        |
       | UK business                      | Summary (UK business)        |
       | UK importer                      | Summary (UK importer)        |
+
+
+  @allure.link:TT-2060
+  @bug
+  @allure.issue:TT-2294
+  @fixme
+  @search
+  Scenario Outline: <user_type> should be able to search for affected goods by phrase "<phrase>" which can be a commodity code or part of its name
+    Given "Robert" got to "ERP - Product search (<user_type>)" from "ERP - User type" via "<intermediate_steps>"
+
+    When "Robert" searches using "<phrase>"
+
+    Then "Robert" should see "<an expected number of>" product code(s) to select
+    And "Robert" should see "<a number of>" product category(ies) to expand
+
+    Examples:
+      | user_type   | intermediate_steps          | phrase           | an expected number of | a number of |
+      | UK importer | UK business -> imported     | food             | at least 1            | at least 1  |
+      | UK business | UK business -> not imported | mineral products | at least 1            | at least 1  |
+      | UK consumer | UK consumer                 | food             | at least 1            | at least 1  |
+
+    Examples: specific product codes
+      | user_type   | intermediate_steps          | phrase     | an expected number of | a number of |
+      | UK importer | UK business -> imported     | 3904400091 | at least 1            | at least 1  |
+      | UK business | UK business -> not imported | 2309904151 | at least 1            | at least 1  |
+      | UK consumer | UK consumer                 | 3904400091 | at least 1            | at least 1  |
+
+    Examples: parent product code category
+      | user_type   | intermediate_steps          | phrase   | an expected number of | a number of |
+      | UK importer | UK business -> imported     | 21069055 | no                    | at least 1  |
+      | UK business | UK business -> not imported | 05100000 | no                    | at least 1  |
+      | UK consumer | UK consumer                 | 21069055 | no                    | at least 1  |
