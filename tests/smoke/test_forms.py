@@ -2,6 +2,7 @@
 import pytest
 from rest_framework.status import (
     HTTP_200_OK,
+    HTTP_403_FORBIDDEN,
     HTTP_404_NOT_FOUND,
     HTTP_405_METHOD_NOT_ALLOWED,
 )
@@ -29,8 +30,18 @@ def test_forms_submissions_endpoint_accepts_only_post():
 
 
 @pytest.mark.forms
-def test_forms_admin_is_available():
+def test_forms_admin_is_not_available_for_unauthenticated_requests():
     response = FORMS_API_CLIENT.get(URLs.FORMS_API_ADMIN.absolute)
+    assert response.status_code == HTTP_403_FORBIDDEN, status_error(
+        HTTP_403_FORBIDDEN, response
+    )
+
+
+@pytest.mark.forms
+def test_forms_admin_is_available_for_authenticated_requests():
+    response = FORMS_API_CLIENT.get(
+        URLs.FORMS_API_ADMIN.absolute, authenticator=BASIC_AUTHENTICATOR
+    )
     assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
 
 
