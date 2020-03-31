@@ -19,10 +19,12 @@ Feature: INTL - Pixels
       | Facebook tracking pixel |
 
     Examples: Various pages
-      | selected                     |
-      | Landing                      |
-      | Industries                   |
-      | Contact Us                   |
+      | selected                        |
+      | Landing                         |
+      | Industries                      |
+      | About the UK                    |
+      | About us                        |
+      | How we help you buy from the UK |
 
     @dev-only
     Examples: Industry pages
@@ -33,7 +35,18 @@ Feature: INTL - Pixels
       | Education - industry                     |
       | Engineering and manufacturing - industry |
       | Financial services - industry            |
-      | Health and life sciences - industry      |
+      | Healthcare and life sciences - industry  |
       | Legal services - industry                |
       | Space - industry                         |
+      | Technology - industry                    |
+
+    @stage-only
+    Examples: Industry pages
+      | selected                                 |
+      | Creative industries - industry           |
+      | Energy - industry                        |
+      | Engineering and manufacturing - industry |
+      | Healthcare and life sciences - industry  |
+      | Legal services - industry                |
+      | Real estate - industry                   |
       | Technology - industry                    |
