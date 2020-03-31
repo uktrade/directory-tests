@@ -71,6 +71,12 @@ Feature: Domestic - Advice articles
       | Manage payment for export orders            |
       | Prepare to do business in a foreign country |
       | Manage legal and ethical compliance         |
+
+    @bug
+    @allure.issue:TT-2311
+    @fixme
+    Examples: None of "Prepare for export procedures and logistics" pages work in Dev & Staging
+      | advice                                      |
       | Prepare for export procedures and logistics |
 
 
