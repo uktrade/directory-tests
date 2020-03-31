@@ -8,7 +8,7 @@ from pages.common_actions import Selector, check_if_element_is_not_visible, find
 
 ALLOWED = {
     "google tag manager": Selector(
-        By.CSS_SELECTOR, "script[src='https://www.googletagmanager.com/gtm.js?id=']"
+        By.CSS_SELECTOR, "script[src=^'https://www.googletagmanager.com/gtm.js?id=']"
     ),
     "google tag manager - no script": Selector(
         By.XPATH, "//noscript[contains(text(),'googletagmanager.com')]"
