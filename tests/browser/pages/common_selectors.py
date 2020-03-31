@@ -388,3 +388,40 @@ FAS_HEADER = {
         "contact us": Selector(By.CSS_SELECTOR, "nav.sub-nav li:nth-child(3) a"),
     }
 }
+
+ABOUT_UK_SUBHEADER = {
+    "about the uk subheader": {
+        "about uk subheader itself": Selector(
+            By.CSS_SELECTOR, "div.great-sub-header > nav",
+        ),
+        "overview": Selector(
+            By.CSS_SELECTOR, "div.great-sub-header > nav li:nth-child(1) a",
+        ),
+        "why choose the uk": Selector(
+            By.CSS_SELECTOR, "div.great-sub-header > nav li:nth-child(2) a",
+        ),
+        "industries": Selector(
+            By.CSS_SELECTOR, "div.great-sub-header > nav li:nth-child(3) a",
+        ),
+        "regions": Selector(
+            By.CSS_SELECTOR, "div.great-sub-header > nav li:nth-child(4) a",
+        ),
+        "contact us": Selector(
+            By.CSS_SELECTOR, "div.great-sub-header > nav li:nth-child(5) a",
+        ),
+    }
+}
+
+ABOUT_US_SUBHEADER = {
+    "about us subheader": {
+        "about us subheader itself": Selector(
+            By.CSS_SELECTOR, "div.great-sub-header > nav",
+        ),
+        "overview": Selector(
+            By.CSS_SELECTOR, "div.great-sub-header > nav li:nth-child(1) a",
+        ),
+        "contact us": Selector(
+            By.CSS_SELECTOR, "div.great-sub-header > nav li:nth-child(2) a",
+        ),
+    }
+}
