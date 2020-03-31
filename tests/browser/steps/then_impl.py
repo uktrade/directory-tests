@@ -14,7 +14,10 @@ from retrying import retry
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 
-from directory_tests_shared.clients import DIRECTORY_TEST_API_CLIENT
+from directory_tests_shared.clients import (
+    BASIC_AUTHENTICATOR,
+    DIRECTORY_TEST_API_CLIENT,
+)
 from directory_tests_shared.constants import (
     EMAIL_ERP_PROGRESS_SAVED_MSG_SUBJECT,
     FORMS_API_MAILBOXES,
@@ -779,7 +782,9 @@ def erp_should_see_correct_data_on_summary_page(context: Context, actor_alias: s
 @retry(wait_fixed=5000, stop_max_attempt_number=5)
 def fas_buyer_should_be_signed_up_for_email_updates(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
-    response = DIRECTORY_TEST_API_CLIENT.get(f"testapi/buyer/{actor.email}/")
+    response = DIRECTORY_TEST_API_CLIENT.get(
+        f"testapi/buyer/{actor.email}/", authenticator=BASIC_AUTHENTICATOR,
+    )
     with assertion_msg(
         f"Expected 200 OK but got {response.status_code} from {response.url}"
     ):
