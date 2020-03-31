@@ -746,6 +746,7 @@ def erp_should_see_number_of_product_codes_to_select(
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "should_see_number_of_product_codes_to_select")
     take_screenshot(context.driver, "should_see_number_of_product_codes_to_select")
+    check_for_errors(context.driver.page_source, context.driver.current_url)
     page.should_see_number_of_product_codes_to_select(
         context.driver, comparison_details
     )
@@ -762,6 +763,7 @@ def erp_should_see_number_of_product_categories_to_expand(
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "should_see_number_of_product_categories_to_expand")
     take_screenshot(context.driver, "should_see_number_of_product_categories_to_expand")
+    check_for_errors(context.driver.page_source, context.driver.current_url)
     page.should_see_number_of_product_categories_to_expand(
         context.driver, comparison_details
     )
