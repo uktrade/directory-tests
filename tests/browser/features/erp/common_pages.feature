@@ -78,7 +78,7 @@ Feature: ERP - common pages
   @allure.link:TT-2060
   @bug
   @allure.issue:TT-2294
-  @fixme
+  @fixed
   @search
   Scenario Outline: <user_type> should be able to search for affected goods by phrase "<phrase>" which can be a commodity code or part of its name
     Given "Robert" got to "ERP - Product search (<user_type>)" from "ERP - User type" via "<intermediate_steps>"
