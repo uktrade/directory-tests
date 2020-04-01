@@ -282,7 +282,10 @@ step_run_browser_tests_in_parallel: &step_run_browser_tests_in_parallel
 
       cat tests-to-run${SPLIT_FILE_SUFFIX} | while IFS=$'\r' read -r title ; do
         echo -e "\n\n${BROWSER} run:    ${title}"
-        PYTHONPATH=. timeout --verbose --preserve-status --kill-after=5s 5m behave features/ \
+        PYTHONPATH=. \
+        LOG_FILE="reports/behave_${BROWSER}_${CIRCLE_NODE_INDEX}.log" \
+        timeout --verbose --preserve-status --kill-after=5s 5m \
+        behave features/ \
         --format=allure_behave.formatter:AllureFormatter \
         --define AllureFormatter.issue_pattern=${BUG_TRACKER_URL_PATTERN} \
         --define AllureFormatter.link_pattern=${BUG_TRACKER_URL_PATTERN} \
@@ -1070,6 +1073,16 @@ jobs:
           path: ./tests/browser/junit_report/
           destination: junit_report
 
+  store_behave_logs_from_browser_tests_as_artifacts:
+    <<: *machine_python3_clean
+    working_directory: ~/directory-tests
+    steps:
+      - attach_workspace:
+          at: ./
+      - store_artifacts:
+          path: ./tests/browser/reports/
+          destination: behave_logs
+
   setup_env_for_periodic_tasks: &setup_env_for_periodic_tasks
     working_directory: ~/directory-tests
     <<: [
@@ -1275,6 +1288,9 @@ workflows:
       - merge_junit_results_from_parallel_browser_tests:
           requires:
             - dev_parallel_browser_tests_using_circleci
+      - store_behave_logs_from_browser_tests_as_artifacts:
+          requires:
+            - dev_parallel_browser_tests_using_circleci
 
   run_smoke_and_functional_on_stage_ad_hoc:
     jobs:
@@ -1317,6 +1333,9 @@ workflows:
       - merge_junit_results_from_parallel_browser_tests:
           requires:
             - stage_parallel_browser_tests_using_circleci
+      - store_behave_logs_from_browser_tests_as_artifacts:
+          requires:
+            - stage_parallel_browser_tests_using_circleci
 
   run_smoke_and_functional_on_uat_ad_hoc:
     jobs:
@@ -1357,6 +1376,9 @@ workflows:
           requires:
             - uat_parallel_browser_tests_using_circleci
       - merge_junit_results_from_parallel_browser_tests:
+          requires:
+            - uat_parallel_browser_tests_using_circleci
+      - store_behave_logs_from_browser_tests_as_artifacts:
           requires:
             - uat_parallel_browser_tests_using_circleci
 
@@ -1453,6 +1475,9 @@ workflows:
       - merge_junit_results_from_parallel_browser_tests:
           requires:
             - dev_parallel_browser_tests_using_circleci
+      - store_behave_logs_from_browser_tests_as_artifacts:
+          requires:
+            - dev_parallel_browser_tests_using_circleci
 
   run_smoke_and_functional_tests_on_stage:
     triggers:
@@ -1505,6 +1530,9 @@ workflows:
           requires:
             - stage_parallel_browser_tests_using_circleci
       - merge_junit_results_from_parallel_browser_tests:
+          requires:
+            - stage_parallel_browser_tests_using_circleci
+      - store_behave_logs_from_browser_tests_as_artifacts:
           requires:
             - stage_parallel_browser_tests_using_circleci
 
@@ -1676,6 +1704,9 @@ workflows:
           requires:
             - uat_parallel_browser_tests_using_circleci
       - merge_junit_results_from_parallel_browser_tests:
+          requires:
+            - uat_parallel_browser_tests_using_circleci
+      - store_behave_logs_from_browser_tests_as_artifacts:
           requires:
             - uat_parallel_browser_tests_using_circleci
 

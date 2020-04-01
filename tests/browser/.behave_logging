@@ -14,7 +14,7 @@ handlers = File
 # handlers = Console,File
 [handler_File]
 class=FileHandler
-args=("reports/behave.log", 'w')
+args=(os.getenv("LOG_FILE","reports/behave.log"), "w")
 level=NOTSET
 formatter=Brief
 
