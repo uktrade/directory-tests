@@ -34,6 +34,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 import allure
+from directory_tests_shared.exceptions import PageLoadTimeout
 from directory_tests_shared.settings import (
     BARRED_USERS,
     BASICAUTH_PASS,
@@ -783,7 +784,7 @@ class wait_for_page_load_after_action(object):
                 return True
             else:
                 time.sleep(0.5)
-        raise Exception(
+        raise PageLoadTimeout(
             f"Timed out after {self.timeout}s of waiting for the new page to load"
         )
 

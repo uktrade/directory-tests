@@ -7,11 +7,14 @@ from random import choice
 from types import BuiltinFunctionType, ModuleType
 from typing import List, Tuple
 
+from retrying import retry
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
 
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
+from directory_tests_shared.exceptions import PageLoadTimeout
 from directory_tests_shared.utils import evaluate_comparison
 from pages import common_selectors
 from pages.common_actions import (
@@ -71,6 +74,20 @@ def should_see_sections(driver: WebDriver, names: List[str]):
     check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
+def raised_page_load_timeout(exception) -> bool:
+    return isinstance(exception, PageLoadTimeout)
+
+
+@retry(
+    stop_max_attempt_number=2,
+    retry_on_exception=raised_page_load_timeout,
+    wrap_exception=False,
+)
+def click_and_wait(driver: WebDriver, element: WebElement, timeout: int = 5):
+    with wait_for_page_load_after_action(driver, timeout=timeout):
+        element.click()
+
+
 def drill_down_hierarchy_tree(
     driver: WebDriver, *, use_expanded_category: bool = False
 ) -> Tuple[ModuleType, dict]:
@@ -90,20 +107,19 @@ def drill_down_hierarchy_tree(
         first = choice(first_level)
         first_id = first.get_property("id")
 
-        with wait_for_page_load_after_action(driver):
-            logging.debug(f"First level: {first_id} -> {first.text}")
-            first.click()
+        logging.debug(f"First level: {first_id} -> {first.text}")
+        click_and_wait(driver, first)
 
     select_code_selector = Selector(
         By.CSS_SELECTOR, "button[name=product-search-commodity]"
     )
-    select_product_codes_present = is_element_present(driver, select_code_selector)
+    is_select_product_button_present = is_element_present(driver, select_code_selector)
     logging.debug(
-        f"Is Select product code button present: {select_product_codes_present}"
+        f"Is Select product code button present: {is_select_product_button_present}"
     )
 
     current_parent_id = first_id
-    while not select_product_codes_present:
+    while not is_select_product_button_present:
         child_level_selector = Selector(
             By.CSS_SELECTOR, f"#{current_parent_id} ul li.app-hierarchy-tree__chapter"
         )
@@ -115,16 +131,14 @@ def drill_down_hierarchy_tree(
         child = choice(child_level)
         current_parent_id = child.get_property("id")
 
-        with wait_for_page_load_after_action(driver, timeout=5):
-            logging.debug(f"Selected child: {current_parent_id}")
-            child.click()
+        logging.debug(f"Selected child: {current_parent_id}")
+        click_and_wait(driver, child)
 
-        logging.debug(
-            f"Is Select product code button present: {select_product_codes_present}"
-        )
-        select_product_codes_present = is_element_present(driver, select_code_selector)
+        is_button_present = is_element_present(driver, select_code_selector)
+        logging.debug(f"Is Select product code button present: {is_button_present}")
+        is_select_product_button_present = is_button_present
 
-    if select_product_codes_present:
+    if is_select_product_button_present:
         select_codes = find_elements(driver, select_code_selector)
         select = choice(select_codes)
         selected_code_value = select.get_attribute("value")
@@ -133,8 +147,7 @@ def drill_down_hierarchy_tree(
         except JSONDecodeError:
             pass
         logging.debug(f"Selected product code: {selected_code_value}")
-        with wait_for_page_load_after_action(driver, timeout=5):
-            select.click()
+        click_and_wait(driver, select)
     else:
         logging.error("Strange! Could not find 'Select' product codes button")
         selected_code_value = {}
