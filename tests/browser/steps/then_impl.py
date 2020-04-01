@@ -725,6 +725,7 @@ def menu_items_should_be_visible(context: Context):
     else:
         raise
     with selenium_action(context.driver, f"Menu items should be visible"):
+        take_screenshot(context.driver, "mobile menu")
         assert element.is_displayed()
 
 
