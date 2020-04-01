@@ -54,7 +54,7 @@ def should_be_here(driver: WebDriver):
 
 
 def open_random_marketplace(driver: WebDriver):
-    selector = Selector(By.CSS_SELECTOR, "div.market-item-inner a")
+    selector = Selector(By.CSS_SELECTOR, "div.market-item-inner a.market-header-link")
     link = random.choice(find_elements(driver, selector))
     logging.debug(f"Clicked on {link.text}")
     link.click()
