@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """International - Contact the Capital Investment team page"""
+from random import choice
 from types import ModuleType
 from typing import List, Union
 from uuid import uuid4
@@ -39,11 +40,18 @@ SELECTORS = {
         "email": Selector(By.ID, "id_email_address", type=ElementType.INPUT),
         "phone number": Selector(By.ID, "id_phone_number", type=ElementType.INPUT),
         "country": Selector(By.ID, "js-country-select", type=ElementType.SELECT),
-        "city": Selector(By.ID, "id_city", type=ElementType.INPUT),
-        "company name": Selector(By.ID, "id_company_name", type=ElementType.INPUT),
         "message": Selector(By.ID, "id_message", type=ElementType.TEXTAREA),
-        "terms and conditions": Selector(
-            By.ID, "id_terms_agreed", type=ElementType.CHECKBOX, is_visible=False
+        "receive emails": Selector(
+            By.ID,
+            "id_email_contact_consent",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+        ),
+        "receive calls": Selector(
+            By.ID,
+            "id_telephone_contact_consent",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
         ),
         "submit": Selector(
             By.CSS_SELECTOR,
@@ -51,6 +59,7 @@ SELECTORS = {
             type=ElementType.SUBMIT,
             next_page=international_contact_us_capital_invest_thank_you,
         ),
+        "privacy notice": Selector(By.CSS_SELECTOR, "form a", type=ElementType.LINK),
     }
 }
 
@@ -79,10 +88,10 @@ def generate_form_details(actor: Actor) -> dict:
         "email": actor.email,
         "phone number": "01234567890",
         "country": None,
-        "city": "automated tests",
-        "company name": "automated tests",
         "message": f"Submitted by automated tests {actor.alias}",
         "terms and conditions": True,
+        "receive emails": choice([True, False]),
+        "receive calls": choice([True, False]),
     }
     return result
 
