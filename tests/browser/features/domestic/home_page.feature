@@ -34,6 +34,7 @@ Feature: Domestic - Home Page
 
   @allure.link:ED-3014
   @video
+  @skip-in-firefox
   Scenario: Any Exporter should be able to close the window with promotional video on the Home page
     Given "Robert" visits the "Domestic - Home" page
 

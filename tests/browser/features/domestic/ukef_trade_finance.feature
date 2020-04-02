@@ -22,6 +22,7 @@ Feature: Domestic - UK Export Finance page & contact-us form
 
   @allure.link:TT-585
   @video
+  @skip-in-firefox
   Scenario: Any Exporter should be able to watch promotional video on the "UKEF Trade Finance" page
     Given "Robert" visits the "Domestic - Trade Finance" page
 
