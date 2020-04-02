@@ -82,7 +82,7 @@ def visit(driver: WebDriver):
 
 def should_be_here(driver: WebDriver):
     check_url(driver, URL, exact_match=False)
-    logging.debug("All expected elements are visible on '%s' page", NAME)
+    logging.debug(f"All expected elements are visible on '{NAME}' page")
 
 
 def should_see_sections(driver: WebDriver, names: List[str]):
@@ -94,8 +94,8 @@ def play_video(driver: WebDriver, *, play_time: int = 5):
     video = driver.find_element(by=PROMO_VIDEO.by, value=PROMO_VIDEO.value)
     scroll_to(driver, video)
     video.click()
-    play_js = 'document.querySelector("{}").play()'.format(PROMO_VIDEO.value)
-    pause = 'document.querySelector("{}").pause()'.format(PROMO_VIDEO.value)
+    play_js = f'document.querySelector("{PROMO_VIDEO.value}").play()'
+    pause = f'document.querySelector("{PROMO_VIDEO.value}").pause()'
     driver.execute_script(play_js)
     if play_time:
         time.sleep(play_time + video_load_delay)
@@ -103,14 +103,10 @@ def play_video(driver: WebDriver, *, play_time: int = 5):
 
 
 def get_video_watch_time(driver: WebDriver) -> int:
-    watch_time_js = 'return document.querySelector("{}").currentTime'.format(
-        PROMO_VIDEO.value
-    )
-    duration_js = 'return document.querySelector("{}").duration'.format(
-        PROMO_VIDEO.value
-    )
+    watch_time_js = f'return document.querySelector("{PROMO_VIDEO.value}").currentTime'
+    duration_js = f'return document.querySelector("{PROMO_VIDEO.value}").duration'
     watch_time = driver.execute_script(watch_time_js)
     duration = driver.execute_script(duration_js)
-    logging.debug("Video watch time: %d", watch_time)
-    logging.debug("Video duration : %d", duration)
+    logging.debug(f"Video watch time: {watch_time}")
+    logging.debug(f"Video duration : {duration}")
     return int(watch_time)
