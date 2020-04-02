@@ -3,7 +3,8 @@
 Feature: SSO - Sign in
 
   Background:
-    Given basic authentication is done for "SSO - Sign in" page
+    Given basic authentication is done for "Domestic - Home" page
+    And basic authentication is done for "SSO - Sign in" page
     And basic authentication is done for "SSO - Static assets" page
 
   @bug
