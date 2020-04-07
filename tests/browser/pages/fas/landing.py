@@ -50,13 +50,13 @@ SELECTORS = {
         "itself": Selector(By.ID, "industries-section"),
         "industry cards": INDUSTRY_CARDS,
         "first industry": Selector(
-            By.CSS_SELECTOR, "#industries-section div.grid-row div:nth-child(1) > a"
+            By.CSS_SELECTOR, "#industries-section ul li:nth-child(1) > a"
         ),
         "second industry": Selector(
-            By.CSS_SELECTOR, "#industries-section div.grid-row div:nth-child(2) > a"
+            By.CSS_SELECTOR, "#industries-section ul li:nth-child(2) > a"
         ),
         "third industry": Selector(
-            By.CSS_SELECTOR, "#industries-section div.grid-row div:nth-child(3) > a"
+            By.CSS_SELECTOR, "#industries-section ul li:nth-child(3) > a"
         ),
         "see more industries": Selector(
             By.CSS_SELECTOR, "#industries-section a.button"
