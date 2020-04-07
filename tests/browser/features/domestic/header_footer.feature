@@ -1,3 +1,5 @@
+@header
+@footer
 @allure.suite:Domestic
 Feature: Domestic - Header-Footer
 
@@ -10,8 +12,6 @@ Feature: Domestic - Header-Footer
   @fixed
   @allure.link:ED-3118
   @logo
-  @header
-  @footer
   Scenario Outline: Any Exporter should see correct EIG header logo & GREAT footer logo on "<selected>" page
     Given "Robert" visits the "<selected>" page
 
@@ -32,8 +32,6 @@ Feature: Domestic - Header-Footer
   @stage-only
   @allure.link:ED-3118
   @logo
-  @header
-  @footer
   Scenario: Any Exporter should see correct EIG header logo & GREAT footer logo on "Export Opportunities - Home" page
     Given "Robert" visits the "Export Opportunities - Home" page
 
@@ -47,8 +45,6 @@ Feature: Domestic - Header-Footer
   @allure.link:ED-3118
   @events
   @logo
-  @header
-  @footer
   Scenario: Any Exporter should see correct Business Is Great (BIG) header & footer logo on "Events - Home" page
     Given "Robert" visits the "Events - Home" page
 
@@ -58,8 +54,6 @@ Feature: Domestic - Header-Footer
 
   @allure.link:ED-3118
   @logo
-  @header
-  @footer
   Scenario: Any Exporter should see correct GREAT header & footer logo on "Find a Supplier - Landing" page
     Given "Robert" visits the "Find a Supplier - Landing" page
 
@@ -69,8 +63,6 @@ Feature: Domestic - Header-Footer
 
   @allure.link:ED-3587
   @logo
-  @header
-  @footer
   @allure.link:ED-3118
   Scenario Outline: Any Exporter should be able to get to the Domestic Home page from "<selected>" page by using DIT logo in the page header and footer
     Given "Robert" visits the "<selected>" page
@@ -118,8 +110,6 @@ Feature: Domestic - Header-Footer
       | specific                       |
       | Export Opportunities - Home    |
 
-  @header
-  @footer
   Scenario Outline: Any mobile user should see mobile-friendly header on "<selected>" page
     Given "Robert" visits the "<selected>" page
 
