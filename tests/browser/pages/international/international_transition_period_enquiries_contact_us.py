@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """International - Transition period enquiries Contact us page"""
-import random
+from random import choice
 from types import ModuleType
 from typing import List, Union
 from uuid import uuid4
@@ -35,7 +35,7 @@ PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 SELECTORS = {
     "heading": {
         "itself": Selector(By.CSS_SELECTOR, "#content h1"),
-        "text": Selector(By.CSS_SELECTOR, "#content p.body-text"),
+        "text": Selector(By.CSS_SELECTOR, "#content h1 ~ div > p"),
     },
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
@@ -52,8 +52,17 @@ SELECTORS = {
         "country": Selector(By.ID, "js-country-select", type=ElementType.SELECT),
         "city": Selector(By.ID, "id_city", type=ElementType.INPUT),
         "comment": Selector(By.ID, "id_comment", type=ElementType.TEXTAREA),
-        "terms and conditions": Selector(
-            By.ID, "id_terms_agreed", type=ElementType.CHECKBOX, is_visible=False
+        "by email": Selector(
+            By.ID,
+            "id_email_contact_consent",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+        ),
+        "by phone": Selector(
+            By.ID,
+            "id_telephone_contact_consent",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
         ),
         "submit": Selector(
             By.CSS_SELECTOR, "form[method=POST] button", type=ElementType.SUBMIT
@@ -105,7 +114,7 @@ def should_not_see_section(driver: WebDriver, name: str):
 
 
 def generate_form_details(actor: Actor) -> dict:
-    is_company = random.choice([True, False])
+    is_company = choice([True, False])
     result = {
         "given names": f"send by {actor.alias} - automated tests",
         "family name": str(uuid4()),
@@ -116,7 +125,8 @@ def generate_form_details(actor: Actor) -> dict:
         "country": None,
         "city": "automated tests",
         "comment": f"Submitted by automated tests {actor.alias}",
-        "terms and conditions": True,
+        "by email": choice([True, False]),
+        "by phone": choice([True, False]),
     }
     return result
 
