@@ -6,6 +6,7 @@ import socket
 from http.client import CannotSendRequest
 
 import requests
+from retrying import retry
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.remote.command import Command
@@ -127,7 +128,10 @@ def flag_browserstack_session_as_failed(session_id: str, reason: str):
         )
 
 
-def start_driver_session(session_name: str, capabilities: dict) -> WebDriver:
+@retry(stop_max_attempt_number=3)
+def start_driver_session(
+    session_name: str, capabilities: dict, *, mobile: bool = False
+) -> WebDriver:
     from directory_tests_shared.settings import BROWSER_HEADLESS, HUB_URL
 
     capabilities["name"] = session_name
@@ -155,9 +159,21 @@ def start_driver_session(session_name: str, capabilities: dict) -> WebDriver:
                 options.add_argument("--headless")
                 options.add_argument("--window-size=1920x2200")
                 options.add_argument("--disable-gpu")
-            options.add_argument("--start-maximized")
             options.add_argument("--disable-extensions")
             options.add_argument("--no-sandbox")
+            if mobile:
+                options.add_argument("--window-size=768x1024")
+                mobile_emulation = {
+                    "deviceMetrics": {"width": 768, "height": 1024, "pixelRatio": 3.0},
+                    "userAgent": (
+                        "Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40)"
+                        " AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 "
+                        "Mobile Safari/535.19"
+                    ),
+                }
+                options.add_experimental_option("mobileEmulation", mobile_emulation)
+            else:
+                options.add_argument("--start-maximized")
         elif browser_name == "firefox":
             from selenium.webdriver.firefox.options import Options
 
@@ -173,16 +189,17 @@ def start_driver_session(session_name: str, capabilities: dict) -> WebDriver:
         driver = drivers[browser_name](options=options)
 
     driver.set_page_load_timeout(time_to_wait=30)
-    try:
-        driver.maximize_window()
-        logging.debug("Maximized the window.")
-    except WebDriverException:
-        logging.debug("Failed to maximize the window.")
+    if not mobile:
         try:
-            driver.set_window_size(1600, 1200)
-            logging.warning("Set window size to 1600x1200")
+            driver.maximize_window()
+            logging.debug("Maximized the window.")
         except WebDriverException:
-            logging.warning("Failed to set window size, will continue as is")
+            logging.debug("Failed to maximize the window.")
+            try:
+                driver.set_window_size(1600, 1200)
+                logging.warning("Set window size to 1600x1200")
+            except WebDriverException:
+                logging.warning("Failed to set window size, will continue as is")
     logging.debug(f"Browser capabilities: {driver.capabilities}")
 
     return driver

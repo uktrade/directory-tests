@@ -110,6 +110,9 @@ Feature: Domestic - Header-Footer
       | specific                       |
       | Export Opportunities - Home    |
 
+
+  @mobile
+  @skip-in-firefox
   Scenario Outline: Any mobile user should see mobile-friendly header on "<selected>" page
     Given "Robert" visits the "<selected>" page
 

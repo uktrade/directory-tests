@@ -37,7 +37,10 @@ def before_scenario(context: Context, scenario: Scenario):
     logging.debug(f"Starting scenario: {scenario.name}")
     context.scenario_data = initialize_scenario_data()
     session_name = f"{scenario.feature.name} -> {scenario.name}"
-    context.driver = start_driver_session(session_name, DRIVER_CAPABILITIES)
+    mobile = True if "mobile" in scenario.tags else False
+    context.driver = start_driver_session(
+        session_name, DRIVER_CAPABILITIES, mobile=mobile
+    )
 
 
 def before_step(context: Context, step: Step):
