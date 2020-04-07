@@ -139,8 +139,8 @@ def open(driver: WebDriver, group: str, element: str):
 def play_video(driver: WebDriver, *, play_time: int = 5):
     open(driver, group="what's new", element="watch video")
     video_load_delay = 2
-    play_js = 'document.querySelector("{}").play()'.format(PROMO_VIDEO.value)
-    pause = 'document.querySelector("{}").pause()'.format(PROMO_VIDEO.value)
+    play_js = f'document.querySelector("{PROMO_VIDEO.value}").play()'
+    pause = f'document.querySelector("{PROMO_VIDEO.value}").pause()'
     driver.execute_script(play_js)
     if play_time:
         time.sleep(play_time + video_load_delay)
@@ -148,16 +148,12 @@ def play_video(driver: WebDriver, *, play_time: int = 5):
 
 
 def get_video_watch_time(driver: WebDriver) -> int:
-    watch_time_js = 'return document.querySelector("{}").currentTime'.format(
-        PROMO_VIDEO.value
-    )
-    duration_js = 'return document.querySelector("{}").duration'.format(
-        PROMO_VIDEO.value
-    )
+    watch_time_js = f'return document.querySelector("{PROMO_VIDEO.value}").currentTime'
+    duration_js = f'return document.querySelector("{PROMO_VIDEO.value}").duration'
     watch_time = driver.execute_script(watch_time_js)
     duration = driver.execute_script(duration_js)
-    logging.debug("Video watch time: %d", watch_time)
-    logging.debug("Video duration : %d", duration)
+    logging.debug(f"Video watch time: {watch_time}")
+    logging.debug(f"Video duration : {duration}")
     return int(watch_time)
 
 
