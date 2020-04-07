@@ -37,7 +37,7 @@ PAGE_TITLE = "high potential"
 
 SubURLs = {
     "aquaculture": URLs.INVEST_HPO_AQUACULTURE.absolute,
-    "high productivity food production (dev)": URLs.INVEST_HPO_FOOD.absolute,
+    "high productivity food production (dev)": URLs.INVEST_HPO_HIGH_PRODUCTIVITY_FOOD.absolute,
     "high productivity food production (staging)": URLs.INVEST_HPO_FOOD.absolute,
     "lightweight structures": URLs.INVEST_HPO_LIGHTWEIGHT.absolute,
     "photonics and microelectronics": URLs.INVEST_HPO_PHOTONICS.absolute,
