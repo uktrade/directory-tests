@@ -50,6 +50,9 @@ Feature: INTL - Transition period - Contact us
 
 
   @allure.link:TT-617
+  @bug
+  @allure.issue:CI-687
+  @fixme
   @dev-only
   @captcha
   @brexit
