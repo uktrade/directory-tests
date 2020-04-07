@@ -107,8 +107,9 @@ def given_actor_navigates_via_contact_us_options(
 
 
 @given('test authentication is done')
-def given_user_did_basic_auth(context: Context):
-    generic_set_basic_auth_creds(context.driver)
+@given('test authentication is done for "{service_name}"')
+def given_user_did_basic_auth(context: Context, *, service_name: str = None):
+    generic_set_basic_auth_creds(context.driver, service_name=service_name)
 
 
 @given('"{actor_alias}" is on randomly selected Market page')

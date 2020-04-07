@@ -4,7 +4,7 @@ Feature: ERP - common pages
 
 
   Background:
-    Given test authentication is done
+    Given test authentication is done for "ERP"
 
 
   @dev-only

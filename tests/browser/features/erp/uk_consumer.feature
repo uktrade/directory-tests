@@ -7,7 +7,7 @@ Feature: ERP - UK consumer
 
 
   Background:
-    Given test authentication is done
+    Given test authentication is done for "ERP"
 
 
   Scenario: An enquirer representing a "UK consumer" should be able to tell which goods are affected

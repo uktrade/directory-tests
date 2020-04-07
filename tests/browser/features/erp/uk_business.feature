@@ -6,7 +6,7 @@ Feature: ERP - UK business
 
 
   Background:
-    Given test authentication is done
+    Given test authentication is done for "ERP"
 
 
   @allure.link:TT-2073

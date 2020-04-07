@@ -1206,16 +1206,17 @@ def accept_all_cookies(driver: WebDriver):
         logging.debug("Cookie banner is not present")
 
 
-def generic_set_basic_auth_creds(driver: WebDriver):
-    domestic_url = URLs.DOMESTIC_LANDING.absolute
-    parsed = urlparse(domestic_url)
+def generic_set_basic_auth_creds(driver: WebDriver, *, service_name: str = None):
+    if service_name == "ERP":
+        base_url = URLs.ERP_LANDING.absolute
+    else:
+        base_url = URLs.DOMESTIC_LANDING.absolute
+    parsed = urlparse(base_url)
     with_creds = f"{parsed.scheme}://{BASICAUTH_USER}:{BASICAUTH_PASS}@{parsed.netloc}/automated-test-auth"
     logging.debug(f"Doing basic auth")
     with wait_for_page_load_after_action(driver):
         driver.get(with_creds)
-    assertion_msg = (
-        f"Access is still denied after authentication attempt → {domestic_url}"
-    )
+    assertion_msg = f"Access is still denied after authentication attempt → {base_url}"
     with selenium_action(driver, assertion_msg):
         assert "ok" in driver.page_source
 
