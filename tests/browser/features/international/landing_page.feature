@@ -17,8 +17,8 @@ Feature: INTL - Landing page
       | Informative banner    |
       | Service cards         |
       | How DIT provides help |
-      | Tariffs               |
-      | Featured links        |
+#      | Tariffs               |
+#      | Featured links        |
       | Error reporting       |
       | Study or visit the UK |
       | Footer                |
