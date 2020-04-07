@@ -26,7 +26,7 @@ Feature: Domestic - Great site search
 
     Examples: event, market, service and opportunity
       | specific        | phrase      |
-      | Home            | Food        |
+      | Home            | Work        |
       | Advice landing  | Transport   |
       | Markets listing | Export      |
 
@@ -70,7 +70,7 @@ Feature: Domestic - Great site search
 
     Examples: event, market, service and opportunity
       | specific        | phrase      |
-      | Home            | Food        |
+      | Home            | Work        |
       | Advice landing  | Transport   |
       | Markets listing | Water       |
 
@@ -86,6 +86,6 @@ Feature: Domestic - Great site search
 
     Examples: event, market, service and opportunity
       | specific        | first phrase | second phrase           |
-      | Home            | Food         | Full food service       |
+      | Home            | Work         | Full work service       |
       | Advice landing  | Transport    | way                     |
       | Markets listing | Water        | Market selection clinic |
