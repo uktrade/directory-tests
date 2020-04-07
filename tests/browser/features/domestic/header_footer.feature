@@ -13,8 +13,7 @@ Feature: Domestic - Header-Footer
   @header
   @footer
   Scenario Outline: Any Exporter should see correct EIG header logo & GREAT footer logo on "<selected>" page
-    Given basic authentication is done for "<selected>" page
-    And "Robert" visits the "<selected>" page
+    Given "Robert" visits the "<selected>" page
 
     Then "Robert" should see correct "EIG" logo
     And "Robert" should see correct "Great - footer" logo
@@ -36,8 +35,7 @@ Feature: Domestic - Header-Footer
   @header
   @footer
   Scenario: Any Exporter should see correct EIG header logo & GREAT footer logo on "Export Opportunities - Home" page
-    Given basic authentication is done for "Export Opportunities - Home" page
-    And "Robert" visits the "Export Opportunities - Home" page
+    Given "Robert" visits the "Export Opportunities - Home" page
 
     Then "Robert" should see correct "EIG" logo
     And "Robert" should see correct "Great - footer" logo
@@ -63,7 +61,6 @@ Feature: Domestic - Header-Footer
   @header
   @footer
   Scenario: Any Exporter should see correct GREAT header & footer logo on "Find a Supplier - Landing" page
-    Given basic authentication is done for "Find a Supplier - Landing" page
     Given "Robert" visits the "Find a Supplier - Landing" page
 
     Then "Robert" should see correct "Great - header" logo
@@ -102,7 +99,6 @@ Feature: Domestic - Header-Footer
   @allure.link:ED-3091
   @favicon
   Scenario Outline: Any user should see the correct favicon on "<specific>" page
-    Given basic authentication is done for "<specific>" page
     Given "Robert" visits the "<specific>" page
 
     Then "Robert" should see the correct favicon
@@ -125,9 +121,7 @@ Feature: Domestic - Header-Footer
   @header
   @footer
   Scenario Outline: Any mobile user should see mobile-friendly header on "<selected>" page
-    Given basic authentication is done for "<selected>" page
-    And "Robert" has a small screen
-    And "Robert" visits the "<selected>" page
+    Given "Robert" visits the "<selected>" page
 
     When "Robert" clicks the Menu button
 
