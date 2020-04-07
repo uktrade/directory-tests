@@ -3,8 +3,8 @@
 Feature: INTL - Header-Footer
 
   Background:
-    Given basic authentication is done for "Domestic - Home" page
-    And basic authentication is done for "International - Landing" page
+    Given test authentication is done
+
 
   @allure.link:CMS-158
   @logo

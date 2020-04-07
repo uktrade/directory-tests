@@ -3,7 +3,8 @@
 Feature: INTL - Landing page
 
   Background:
-    Given basic authentication is done for "International - Landing" page
+    Given test authentication is done
+
 
   @allure.link:ED-3114
   @dev-only
@@ -103,7 +104,7 @@ Feature: INTL - Landing page
   @allure.link:ED-3149
   @dev-only
   Scenario: Visitors should be able to "get advice and services to help them export" from International page
-    Given basic authentication is done for "Domestic - Home" page
+    Given test authentication is done
     Given "Robert" visits the "International - Landing" page
 
     When "Robert" decides to find out more about "For UK Businesses"

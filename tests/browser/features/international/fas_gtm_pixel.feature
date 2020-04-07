@@ -4,7 +4,8 @@
 Feature: FAS - Google Tag Manager
 
   Background:
-    Given basic authentication is done for "International - Landing" page
+    Given test authentication is done
+
 
   @bug
   @allure.issue:CMS-1634

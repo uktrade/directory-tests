@@ -2,7 +2,7 @@
 Feature: SOO - Search for marketplace
 
   Background:
-    Given basic authentication is done for "Selling Online Overseas - Home" page
+    Given test authentication is done
 
 
   @allure.link:XOT-631

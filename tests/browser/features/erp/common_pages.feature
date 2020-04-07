@@ -4,7 +4,7 @@ Feature: ERP - common pages
 
 
   Background:
-    Given basic authentication is done for "ERP - Landing" page
+    Given test authentication is done
 
 
   @dev-only

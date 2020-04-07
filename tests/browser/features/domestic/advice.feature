@@ -3,7 +3,8 @@
 Feature: Domestic - Advice articles
 
   Background:
-    Given basic authentication is done for "Domestic - Home" page
+    Given test authentication is done
+
 
   @allure.link:CMS-686
   @home-page

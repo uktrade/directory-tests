@@ -3,7 +3,8 @@
 Feature: INTL - Pixels
 
   Background:
-    Given basic authentication is done for "International - Landing" page
+    Given test authentication is done
+
 
   @international
   Scenario Outline: Pixels should be present on "International - <selected>" page

@@ -2,9 +2,7 @@
 Feature: SOO - Apply via DIT
 
   Background:
-    Given basic authentication is done for "Selling Online Overseas - Home" page
-    And basic authentication is done for "Domestic - Home" page
-    And basic authentication is done for "SSO - Static assets" page
+    Given test authentication is done
 
 
   @allure.link:XOT-689

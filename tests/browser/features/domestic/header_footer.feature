@@ -2,7 +2,7 @@
 Feature: Domestic - Header-Footer
 
   Background:
-    Given basic authentication is done for "Domestic - Home" page
+    Given test authentication is done
 
 
   @bug

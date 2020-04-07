@@ -2,7 +2,7 @@
 Feature: International - About the UK
 
   Background:
-    Given basic authentication is done for "International - Landing" page
+    Given test authentication is done
 
 
   Scenario: Visitors should be able to see all expected sections on "International - About the UK" page

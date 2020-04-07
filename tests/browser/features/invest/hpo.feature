@@ -4,7 +4,8 @@
 Feature: Invest - High Potential Opportunities
 
   Background:
-    Given basic authentication is done for "International - Landing" page
+    Given test authentication is done
+
 
   @allure.link:TT-442
   Scenario Outline: Investors should be able to view "HPO - <selected>" page

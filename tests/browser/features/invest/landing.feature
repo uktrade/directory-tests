@@ -4,7 +4,8 @@
 Feature: Invest - landing page
 
   Background:
-    Given basic authentication is done for "International - Landing" page
+    Given test authentication is done
+
 
   @allure.link:CMS-157
   Scenario: Visitors should be able to view "Invest - Landing" page

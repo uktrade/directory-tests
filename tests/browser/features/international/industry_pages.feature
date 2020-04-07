@@ -6,7 +6,8 @@
 Feature: INTL - Industry pages
 
   Background:
-    Given basic authentication is done for "International - Landing" page
+    Given test authentication is done
+
 
   @allure.link:ED-4260
   Scenario Outline: Buyers should be able to see all expected page elements on "<specific>" page

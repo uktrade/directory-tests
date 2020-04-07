@@ -6,7 +6,7 @@ Feature: ERP - UK business
 
 
   Background:
-    Given basic authentication is done for "ERP - Landing" page
+    Given test authentication is done
 
 
   @allure.link:TT-2073

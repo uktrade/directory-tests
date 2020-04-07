@@ -7,7 +7,7 @@ Feature: ERP - UK consumer
 
 
   Background:
-    Given basic authentication is done for "ERP - Landing" page
+    Given test authentication is done
 
 
   Scenario: An enquirer representing a "UK consumer" should be able to tell which goods are affected

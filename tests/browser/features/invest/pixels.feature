@@ -3,7 +3,8 @@
 Feature: Invest - Pixels
 
   Background:
-    Given basic authentication is done for "International - Landing" page
+    Given test authentication is done
+
 
   Scenario Outline: Pixels should be present on "Invest - <selected>" page
     Given "Robert" visits the "Invest - <selected>" page

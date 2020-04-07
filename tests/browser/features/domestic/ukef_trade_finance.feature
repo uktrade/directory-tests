@@ -3,7 +3,8 @@
 Feature: Domestic - UK Export Finance page & contact-us form
 
   Background:
-    Given basic authentication is done for "Domestic - Home" page
+    Given test authentication is done
+
 
   @allure.link:TT-585
   Scenario: Any Exporter should see the all expected sections on the "UKEF Trade Finance" page

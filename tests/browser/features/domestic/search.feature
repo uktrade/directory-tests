@@ -3,7 +3,8 @@
 Feature: Domestic - Great site search
 
   Background:
-    Given basic authentication is done for "Domestic - Home" page
+    Given test authentication is done
+
 
   @allure.link:XOT-760
   Scenario: Visitor should see empty search results if they don't specify search phrase

@@ -6,8 +6,7 @@
 Feature: Profile - Non-CH enrolment flows
 
   Background:
-    Given basic authentication is done for "Domestic - Home" page
-    And basic authentication is done for "SSO - Static assets" page
+    Given test authentication is done
 
 
   @allure.link:TT-1118

@@ -106,9 +106,9 @@ def given_actor_navigates_via_contact_us_options(
     contact_us_navigate_through_options(context, actor_alias, via)
 
 
-@given('basic authentication is done for "{page_name}" page')
-def given_user_did_basic_auth(context: Context, page_name: str):
-    generic_set_basic_auth_creds(context.driver, page_name)
+@given('test authentication is done')
+def given_user_did_basic_auth(context: Context):
+    generic_set_basic_auth_creds(context.driver)
 
 
 @given('"{actor_alias}" is on randomly selected Market page')

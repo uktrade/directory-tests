@@ -6,7 +6,8 @@
 Feature: Invest - HPO PDFs sent after
 
   Background:
-    Given basic authentication is done for "International - Landing" page
+    Given test authentication is done
+
 
   @allure.link:TT-444
   @dev-only

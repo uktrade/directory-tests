@@ -3,7 +3,8 @@
 Feature: ISD - Landing
 
   Background:
-    Given basic authentication is done for "Domestic - Home" page
+    Given test authentication is done
+
 
   Scenario: Users should see all expected elements on "Investment Support Directory - Landing" page
     When "Robert" goes to the "ISD - Landing" page

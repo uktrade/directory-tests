@@ -4,7 +4,8 @@
 Feature: INTL - Transition period - Contact us
 
   Background:
-    Given basic authentication is done for "International - Landing" page
+    Given test authentication is done
+
 
   @allure.link:TT-617
   @brexit

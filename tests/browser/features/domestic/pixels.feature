@@ -3,7 +3,8 @@
 Feature: Domestic - Pixels
 
   Background:
-    Given basic authentication is done for "Domestic - Home" page
+    Given test authentication is done
+
 
   @international
   Scenario Outline: Pixels should be present on "International - <selected>" page

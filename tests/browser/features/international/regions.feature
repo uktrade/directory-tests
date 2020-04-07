@@ -4,7 +4,7 @@
 Feature: International - Regional pages
 
   Background:
-    Given basic authentication is done for "International - Landing" page
+    Given test authentication is done
 
 
   @allure.link:CMS-215

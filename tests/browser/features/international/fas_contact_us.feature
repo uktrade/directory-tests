@@ -4,8 +4,7 @@
 Feature: FAS - Contact us
 
   Background:
-    Given basic authentication is done for "International - Landing" page
-    And basic authentication is done for "Domestic - Home" page
+    Given test authentication is done
 
 
   @captcha

@@ -4,7 +4,7 @@
 Feature: Domestic - Google Analytics 360 Events
 
   Background:
-    Given basic authentication is done for "Domestic - Home" page
+    Given test authentication is done
 
 
   @skip

@@ -3,7 +3,7 @@
 Feature: Domestic - Market guides
 
   Background:
-    Given basic authentication is done for "Domestic - Home" page
+    Given test authentication is done
 
 
   Scenario: Visitors should be able to view all available markets

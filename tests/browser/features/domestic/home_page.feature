@@ -3,7 +3,8 @@
 Feature: Domestic - Home Page
 
   Background:
-    Given basic authentication is done for "Domestic - Home" page
+    Given test authentication is done
+
 
   @allure.link:ED-2366
   @sections

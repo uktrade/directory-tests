@@ -3,7 +3,7 @@
 Feature: FAS - Search
 
   Background:
-    Given basic authentication is done for "International - Landing" page
+    Given test authentication is done
 
 
   @allure.link:TT-2194

@@ -5,7 +5,8 @@
 Feature: FAS - Landing page
 
   Background:
-    Given basic authentication is done for "International - Landing" page
+    Given test authentication is done
+
 
   Scenario: Visitors should be able to go to "<expected_service>" page from the International page
     Given "Robert" visits the "International - Landing" page

@@ -4,7 +4,8 @@
 Feature: Invest - Google Tag Manager
 
   Background:
-    Given basic authentication is done for "International - Landing" page
+    Given test authentication is done
+
 
   @allure.link:TT-1500
   Scenario Outline: GTM properties should be properly set on "Invest - <selected>" page

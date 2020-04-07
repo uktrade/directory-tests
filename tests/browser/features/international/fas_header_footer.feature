@@ -4,7 +4,8 @@
 Feature: FAS - Common header & Footer
 
   Background:
-    Given basic authentication is done for "International - Landing" page
+    Given test authentication is done
+
 
   Scenario Outline: Buyers should be able to see correct header & footer on "Find a Supplier - <specific>" page
     Given "Robert" visits the "Find a Supplier - <specific>" page
