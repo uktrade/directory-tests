@@ -36,6 +36,7 @@ from pages import (
 from pages.common_actions import (
     accept_all_cookies,
     add_actor,
+    assert_catcha_in_dev_mode,
     avoid_browser_stack_idle_timeout_exception,
     barred_actor,
     find_and_click_on_page_element,
@@ -482,6 +483,7 @@ def generic_fill_out_and_submit_form(
     go_back: bool = False,
     form_name: str = None,
 ):
+    assert_catcha_in_dev_mode(context.driver)
     actor = get_actor(context, actor_alias)
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "generate_form_details")
@@ -753,9 +755,7 @@ def sso_actor_received_email_confirmation_code(
 def generic_create_great_account(
     context: Context, actor_alias: str, business_type: str
 ):
-    page_name = (
-        f"Profile - Enter your email address and set a password ({business_type})"
-    )  # noqa
+    page_name = f"Profile - Enter your email address and set a password ({business_type})"  # noqa
 
     visit_page(context, actor_alias, page_name)
     generic_fill_out_and_submit_form(context, actor_alias)

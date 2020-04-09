@@ -35,7 +35,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 import allure
 from directory_tests_shared import URLs
-from directory_tests_shared.exceptions import PageLoadTimeout
+from directory_tests_shared.exceptions import PageLoadTimeout, UnexpectedElementPresent
 from directory_tests_shared.settings import (
     BARRED_USERS,
     BASICAUTH_PASS,
@@ -900,23 +900,30 @@ def selectors_by_group(form_selectors: Dict[str, Selector]) -> Dict[str, Selecto
     return groups
 
 
-def tick_captcha_checkbox(driver: WebDriver):
+def assert_catcha_in_dev_mode(driver: WebDriver):
     dev_site_key = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-    g_recaptcha = find_element(
-        driver,
-        Selector(By.CSS_SELECTOR, ".g-recaptcha"),
-        element_name="captcha",
-        wait_for_it=False,
-    )
-    scroll_to(driver, g_recaptcha)
-    current_site_key = g_recaptcha.get_attribute("data-sitekey")
-    logging.debug(f"Current site key: {current_site_key}")
-    logging.debug(f"Site key for captcha in dev mode: {dev_site_key}")
-    is_in_dev_mode = current_site_key == dev_site_key
-    if not is_in_dev_mode:
-        raise NoSuchElementException(
-            f"Captcha is not in Dev Mode on {driver.current_url}"
+    try:
+        g_recaptcha = find_element(
+            driver,
+            Selector(By.CSS_SELECTOR, ".g-recaptcha"),
+            element_name="captcha",
+            wait_for_it=False,
         )
+    except NoSuchElementException:
+        logging.debug(f"Captcha is not present on {driver.current_url}")
+    else:
+        scroll_to(driver, g_recaptcha)
+        current_site_key = g_recaptcha.get_attribute("data-sitekey")
+        logging.debug(f"Current site captcha key: {current_site_key}")
+        is_in_dev_mode = current_site_key == dev_site_key
+        if not is_in_dev_mode:
+            raise UnexpectedElementPresent(
+                f"Captcha is not in Dev Mode on {driver.current_url}"
+            )
+        logging.debug(f"Captcha is in Dev mode on {driver.current_url}")
+
+
+def tick_captcha_checkbox(driver: WebDriver):
     im_not_a_robot = Selector(By.CSS_SELECTOR, "#recaptcha-anchor")
     iframe = driver.find_element_by_tag_name("iframe")
     scroll_to(driver, iframe)

@@ -3,3 +3,7 @@
 
 class PageLoadTimeout(TimeoutError):
     pass
+
+
+class UnexpectedElementPresent(Exception):
+    pass
