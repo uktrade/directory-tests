@@ -128,9 +128,10 @@ Feature: FAS - Contact us
       | Technology                          |
 
 
+  @dev-only
   @captcha
   @report-this-page
-  Scenario Outline: Buyers should be able to report a problem with the "<specific> Industry" page
+  Scenario Outline: Buyers should be able to report a problem with the "<specific>" page
     Given "Robert" visits the "International - <specific> - industry" page
     And "Robert" decided to "report a problem with the page"
     And "Robert" is on the "Domestic - Feedback" page
