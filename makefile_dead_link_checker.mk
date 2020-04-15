@@ -363,3 +363,15 @@ dead_links_check_with_json_report:
 	    $(AUTH) \
 	    --ignore=`echo $${IGNORED_PREFIXES} | tr -d [:space:]` \
 	    $${TEST_URLS} || true
+
+# insipired by https://unix.stackexchange.com/a/29928
+# 1. tac - prints file contents in reverse order
+# 2. sed -e '..../I,+1 d' - deletes 1 line after the match (false positive results)
+# 3. tac - restore original order
+# 4. grep - look for failures
+# 5. awk - print the URL
+# 6. sort & remove duplicates
+.PHONY: dead_links_list
+dead_links_list:
+	@echo "Dead links (without false positive results for links with whitespaces in them which trigger \"URL can't contain control characters\" error)"
+	@tac ./reports/dead_links_report.xml | sed -e '/control character/I,+1 d' | tac | grep 'status="failed' | awk -F '"' '{print $$2}' | sort -u
