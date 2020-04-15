@@ -10,6 +10,7 @@ __pycache__/
 .Python
 allure/
 allure_report/
+tests/browser/results/
 env/
 venv/
 .env/
