@@ -44,7 +44,6 @@ SubURLs = {
 }
 PAGE_TITLE = ""
 
-IM_NOT_A_ROBOT = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
@@ -129,7 +128,6 @@ SELECTORS = {
         ),
         "submit": Selector(By.ID, "submit-button", type=ElementType.SUBMIT),
     },
-    "elements invisible to selenium": {},
 }
 SELECTORS.update(common_selectors.INVEST_HEADER)
 SELECTORS.update(common_selectors.BETA_BAR)
