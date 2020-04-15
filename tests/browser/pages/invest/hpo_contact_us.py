@@ -70,7 +70,7 @@ SELECTORS = {
             is_visible=False,
             alternative_visibility_check=True,
         ),
-        "advanced food production": Selector(
+        "high productivity food production": Selector(
             By.ID,
             "checkbox-multiple-high-productivity-food-production",
             type=ElementType.CHECKBOX,

@@ -12,7 +12,11 @@ from pages import common_selectors
 from pages.common_actions import Selector, check_for_sections, check_url
 
 NAME = "Thank you for your enquiry"
-NAMES = ["Advanced food production", "Lightweight structures", "Rail infrastructure"]
+NAMES = [
+    "High productivity food production",
+    "Lightweight structures",
+    "Rail infrastructure",
+]
 SERVICE = Service.INVEST
 TYPE = PageType.CONTACT_US
 URL = URLs.INVEST_HPO_CONTACT_THANK_YOU.absolute
