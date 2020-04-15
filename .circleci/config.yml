@@ -351,6 +351,7 @@ step_run_dead_links_checker: &step_run_dead_links_checker
       python ./env_vars/env_writer.py --env=${TEST_ENV} --config=./env_vars/env_dead_link_checker.json
       source ./env_vars/.env_with_export;
       TEST_ENV=${TEST_ENV} make dead_links_check
+      make dead_links_list > ./reports/dead_links_report.txt
 
 step_run_geckoboard_updater: &step_run_geckoboard_updater
   run:
