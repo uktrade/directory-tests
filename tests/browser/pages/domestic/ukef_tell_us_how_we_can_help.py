@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Domestic UKEF Contact Us - Page Object."""
 import logging
+import random
 from types import ModuleType
 from typing import Union
 
@@ -40,8 +41,19 @@ SELECTORS = {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
         "heading": Selector(By.CSS_SELECTOR, "#heading-container h2"),
         "comment": Selector(By.ID, "id_help-comment", type=ElementType.TEXTAREA),
-        "terms and conditions": Selector(
-            By.ID, "id_help-terms_agreed", type=ElementType.CHECKBOX, is_visible=False
+        "by email": Selector(
+            By.ID,
+            "checkbox-multiple-i-would-like-to-receive-additional-information-by-email",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+            alternative_visibility_check=True,
+        ),
+        "by phone": Selector(
+            By.ID,
+            "checkbox-multiple-i-would-like-to-receive-additional-information-by-telephone",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+            alternative_visibility_check=True,
         ),
         "continue": Selector(
             By.CSS_SELECTOR, "#content form button", type=ElementType.SUBMIT
@@ -66,7 +78,8 @@ def should_be_here(driver: WebDriver):
 def generate_form_details(actor: Actor) -> dict:
     result = {
         "comment": f"Submitted by automated tests {actor.email}",
-        "terms and conditions": True,
+        "by email": random.choice([True, False]),
+        "by phone": random.choice([True, False]),
     }
     return result
 
