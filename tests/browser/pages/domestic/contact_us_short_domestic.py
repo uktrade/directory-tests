@@ -57,8 +57,19 @@ SELECTORS = {
             By.ID, "id_organisation_name", type=ElementType.INPUT
         ),
         "postcode": Selector(By.ID, "id_postcode", type=ElementType.INPUT),
-        "terms and conditions": Selector(
-            By.ID, "id_terms_agreed", type=ElementType.CHECKBOX
+        "by email": Selector(
+            By.ID,
+            "checkbox-multiple-i-would-like-to-receive-additional-information-by-email",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+            alternative_visibility_check=True,
+        ),
+        "by phone": Selector(
+            By.ID,
+            "checkbox-multiple-i-would-like-to-receive-additional-information-by-telephone",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+            alternative_visibility_check=True,
         ),
         "submit": Selector(
             By.CSS_SELECTOR,
@@ -101,7 +112,8 @@ def generate_form_details(actor: Actor) -> dict:
         "other type of uk organisation": not is_company,
         "organisation name": "automated tests",
         "postcode": "SW1H 0TL",
-        "terms and conditions": True,
+        "by email": random.choice([True, False]),
+        "by phone": random.choice([True, False]),
     }
     if is_company:
         # In order to avoid situation when previous scenario example modified
