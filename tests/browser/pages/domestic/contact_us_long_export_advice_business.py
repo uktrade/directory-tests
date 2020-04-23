@@ -47,8 +47,19 @@ SELECTORS = {
         "industry": Selector(By.ID, "id_business-industry", type=ElementType.SELECT),
         "turnover": Selector(By.ID, "id_business-turnover", type=ElementType.SELECT),
         "size": Selector(By.ID, "id_business-employees", type=ElementType.SELECT),
-        "terms and conditions": Selector(
-            By.ID, "id_business-terms_agreed", type=ElementType.CHECKBOX
+        "by mail": Selector(
+            By.ID,
+            "checkbox-multiple-i-would-like-to-receive-additional-information-by-email",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+            alternative_visibility_check=True,
+        ),
+        "by phone": Selector(
+            By.ID,
+            "checkbox-multiple-i-would-like-to-receive-additional-information-by-telephone",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+            alternative_visibility_check=True,
         ),
         "submit": Selector(
             By.CSS_SELECTOR,
@@ -82,7 +93,8 @@ def generate_form_details(actor: Actor) -> dict:
         "industry": None,
         "turnover": None,
         "size": None,
-        "terms and conditions": True,
+        "by email": random.choice([True, False]),
+        "by phone": random.choice([True, False]),
     }
     if is_company:
         # In order to avoid situation when previous scenario example modified
