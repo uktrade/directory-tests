@@ -85,6 +85,7 @@ def should_be_here(driver: WebDriver):
 
 def generate_form_details(actor: Actor) -> dict:
     is_company = random.choice([True, False])
+    by_email = random.choice([True, False])
     result = {
         "uk private or public limited company": is_company,
         "other type of uk organisation": not is_company,
@@ -93,8 +94,8 @@ def generate_form_details(actor: Actor) -> dict:
         "industry": None,
         "turnover": None,
         "size": None,
-        "by email": random.choice([True, False]),
-        "by phone": random.choice([True, False]),
+        "by email": by_email,
+        "by phone": random.choice([True, False]) if by_email else True,
     }
     if is_company:
         # In order to avoid situation when previous scenario example modified

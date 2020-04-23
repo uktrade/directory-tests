@@ -76,10 +76,11 @@ def should_be_here(driver: WebDriver):
 
 
 def generate_form_details(actor: Actor) -> dict:
+    by_email = random.choice([True, False])
     result = {
         "comment": f"Submitted by automated tests {actor.email}",
-        "by email": random.choice([True, False]),
-        "by phone": random.choice([True, False]),
+        "by email": by_email,
+        "by phone": random.choice([True, False]) if by_email else True,
     }
     return result
 

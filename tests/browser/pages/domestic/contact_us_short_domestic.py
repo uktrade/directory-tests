@@ -103,6 +103,7 @@ def should_be_here(driver: WebDriver, *, page_name: str = None):
 
 def generate_form_details(actor: Actor) -> dict:
     is_company = random.choice([True, False])
+    by_email = random.choice([True, False])
     result = {
         "comment": f"Submitted by automated tests {actor.alias}",
         "first name": f"send by {actor.alias} - automated tests",
@@ -112,8 +113,8 @@ def generate_form_details(actor: Actor) -> dict:
         "other type of uk organisation": not is_company,
         "organisation name": "automated tests",
         "postcode": "SW1H 0TL",
-        "by email": random.choice([True, False]),
-        "by phone": random.choice([True, False]),
+        "by email": by_email,
+        "by phone": random.choice([True, False]) if by_email else True,
     }
     if is_company:
         # In order to avoid situation when previous scenario example modified
