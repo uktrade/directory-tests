@@ -171,7 +171,7 @@ Feature: FAS - Contact us
   Scenario: Buyers shouldn't be able to submit the contact us form without passing captcha
     Given "Robert" visits the "International - Find a UK business partner - Contact us" page
 
-    When "Robert" fills out and submits the form
+    When "Robert" fills out and submits the form with captcha dev check turned "off"
       | field   | value     |
       | captcha | unchecked |
 

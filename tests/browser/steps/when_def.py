@@ -2,9 +2,10 @@
 # flake8: noqa
 # fmt: off
 """When step definitions."""
-from behave import when
+from behave import register_type, when
 from behave.runner import Context
 
+import parse
 from steps.then_impl import (
     domestic_search_finder_should_see_page_number,
     should_be_on_page,
@@ -197,15 +198,28 @@ def when_actor_removes_previous_form_selections(
     )
 
 
+# -- TYPE CONVERTER: For a simple, on/off values
+@parse.with_pattern(r".*")
+def parse_on_off(text: str) -> bool:
+    result = True if text.lower() == "on" else False
+    return result
+
+
+# -- REGISTER TYPE-CONVERTER: With behave
+register_type(OnOff=parse_on_off)
+
+
 @when('"{actor_alias}" decides to find new markets for her business')
 @when('"{actor_alias}" decides to find new markets for his business')
+@when('"{actor_alias}" fills out and submits the form with captcha dev check turned "{check_captcha_dev_mode:OnOff}"')
 @when('"{actor_alias}" fills out and submits "{form_name}" form')
 @when('"{actor_alias}" fills out and submits the form')
 def when_actor_fills_out_and_submits_the_form(
-        context: Context, actor_alias: str, *, form_name: str = None
+        context: Context, actor_alias: str, *, form_name: str = None, check_captcha_dev_mode: bool = True
 ):
     generic_fill_out_and_submit_form(
-        context, actor_alias, custom_details_table=context.table, form_name=form_name
+        context, actor_alias, custom_details_table=context.table, form_name=form_name,
+        check_captcha_dev_mode=check_captcha_dev_mode,
     )
 
 

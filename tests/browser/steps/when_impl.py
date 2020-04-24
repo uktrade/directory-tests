@@ -482,8 +482,10 @@ def generic_fill_out_and_submit_form(
     retry_on_errors: bool = False,
     go_back: bool = False,
     form_name: str = None,
+    check_captcha_dev_mode: bool = True,
 ):
-    assert_catcha_in_dev_mode(context.driver)
+    if check_captcha_dev_mode:
+        assert_catcha_in_dev_mode(context.driver)
     actor = get_actor(context, actor_alias)
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "generate_form_details")
