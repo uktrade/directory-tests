@@ -21,8 +21,7 @@ from pages.common_actions import (
 NAME = "HPO"
 NAMES = [
     "Aquaculture",
-    "High productivity food production (Dev)",
-    "High productivity food production (Staging)",
+    "High productivity food production",
     "Lightweight structures",
     "Photonics and microelectronics",
     "Rail infrastructure",
@@ -37,8 +36,7 @@ PAGE_TITLE = "high potential"
 
 SubURLs = {
     "aquaculture": URLs.INVEST_HPO_AQUACULTURE.absolute,
-    "high productivity food production (dev)": URLs.INVEST_HPO_HIGH_PRODUCTIVITY_FOOD.absolute,
-    "high productivity food production (staging)": URLs.INVEST_HPO_FOOD.absolute,
+    "high productivity food production": URLs.INVEST_HPO_HIGH_PRODUCTIVITY_FOOD.absolute,
     "lightweight structures": URLs.INVEST_HPO_LIGHTWEIGHT.absolute,
     "photonics and microelectronics": URLs.INVEST_HPO_PHOTONICS.absolute,
     "rail infrastructure": URLs.INVEST_HPO_RAIL.absolute,

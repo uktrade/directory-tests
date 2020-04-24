@@ -54,7 +54,7 @@ Feature: Invest - Header-Footer
 
     Examples:
       | selected                          |
-      | High productivity food production (Staging) |
+      | High productivity food production |
       | Lightweight structures            |
       | Rail infrastructure               |
 

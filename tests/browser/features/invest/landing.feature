@@ -78,7 +78,7 @@ Feature: Invest - landing page
     Examples: HPO pages
       | selected                          |
       | Aquaculture                       |
-      | High productivity food production (Dev) |
+      | High productivity food production |
       | Lightweight structures            |
       | Photonics and microelectronics    |
       | Rail infrastructure               |
@@ -97,6 +97,6 @@ Feature: Invest - landing page
 
     Examples: HPO pages
       | selected                          |
-      | High productivity food production (Staging) |
+      | High productivity food production |
       | Lightweight structures            |
       | Rail infrastructure               |
