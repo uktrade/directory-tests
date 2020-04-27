@@ -122,6 +122,8 @@ def check_for_errors(source: str, url: str):
     with assertion_msg(f"404 Not Found → {url}"):
         assert "404 Not Found" not in source
         assert "This page cannot be found" not in source
+    with assertion_msg(f"503 Service Unavailable → {url}"):
+        assert "503 Service Unavailable" not in source
     with assertion_msg(f"500 ISE → {url}"):
         assert "Internal Server Error" not in source
     with assertion_msg(f"500 ISE → {url}"):
