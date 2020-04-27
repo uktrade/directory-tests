@@ -47,7 +47,7 @@ SELECTORS = {
         "industry": Selector(By.ID, "id_business-industry", type=ElementType.SELECT),
         "turnover": Selector(By.ID, "id_business-turnover", type=ElementType.SELECT),
         "size": Selector(By.ID, "id_business-employees", type=ElementType.SELECT),
-        "by mail": Selector(
+        "by email": Selector(
             By.ID,
             "checkbox-multiple-i-would-like-to-receive-additional-information-by-email",
             type=ElementType.CHECKBOX,
