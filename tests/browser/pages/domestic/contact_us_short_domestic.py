@@ -57,6 +57,13 @@ SELECTORS = {
             By.ID, "id_organisation_name", type=ElementType.INPUT
         ),
         "postcode": Selector(By.ID, "id_postcode", type=ElementType.INPUT),
+        "terms": Selector(
+            By.ID,
+            "id_terms_agreed",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+            alternative_visibility_check=True,
+        ),
         "by email": Selector(
             By.ID,
             "checkbox-multiple-i-would-like-to-receive-additional-information-by-email",
@@ -113,6 +120,7 @@ def generate_form_details(actor: Actor) -> dict:
         "other type of uk organisation": not is_company,
         "organisation name": "automated tests",
         "postcode": "SW1H 0TL",
+        "terms": True,
         "by email": by_email,
         "by phone": random.choice([True, False]) if by_email else True,
     }
