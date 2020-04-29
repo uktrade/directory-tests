@@ -15,7 +15,10 @@ from pages.common_actions import (
     check_for_sections,
     check_if_element_is_not_visible,
     check_url,
+    find_element,
+    get_selectors,
     go_to_url,
+    scroll_to,
 )
 
 NAME = "HPO"
@@ -204,3 +207,17 @@ def should_not_see_section(driver: WebDriver, name: str):
         check_if_element_is_not_visible(
             driver, selector, element_name=key, wait_for_it=False
         )
+
+
+def unfold_elements_in_section(driver: WebDriver, section_name: str):
+    section_selectors = SELECTORS[section_name]
+    folded_elements = get_selectors(section_selectors, ElementType.BUTTON)
+    logging.debug(f"Found {len(folded_elements)} selectors for elements to unfold")
+    for name, selector in folded_elements.items():
+        element = find_element(driver, selector, element_name=name)
+        scroll_to(driver, element)
+        if element.get_attribute("open"):
+            logging.debug(f"Element: '{name}' is already unfolded")
+        else:
+            logging.debug(f"Unfolding closed element: {name}")
+            element.click()
