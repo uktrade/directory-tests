@@ -5,12 +5,13 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
-from pages.common_actions import Selector, check_url
+from directory_tests_shared.utils import check_url_path_matches_template
+from pages.common_actions import Selector
 
 NAME = "Event"
 SERVICE = Service.EVENTS
 TYPE = PageType.EVENT
-URL = URLs.EVENTS_EVENT.absolute
+URL = URLs.EVENTS_EVENT.absolute_template
 GREAT_LOGO = Selector(By.CSS_SELECTOR, "div.event-logo")
 SELECTORS = {
     "general": {"great.gov.uk logo": GREAT_LOGO},
@@ -19,4 +20,4 @@ SELECTORS = {
 
 
 def should_be_here(driver: WebDriver):
-    check_url(driver, URL, exact_match=False)
+    check_url_path_matches_template(URL, driver.current_url)
