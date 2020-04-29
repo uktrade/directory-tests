@@ -11,6 +11,9 @@ Feature: Invest - High Potential Opportunities
   Scenario Outline: Investors should be able to view "HPO - <selected>" page
     Given "Annette Geissinger" visits the "Invest - <selected> - HPO" page
 
+    When "Annette Geissinger" unfolds all elements in "proposition one" section
+    And "Annette Geissinger" unfolds all elements in "case studies" section
+
     Then "Annette Geissinger" should see following sections
       | Sections               |
       | Header                 |
