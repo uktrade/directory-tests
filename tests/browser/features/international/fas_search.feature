@@ -50,7 +50,7 @@ Feature: FAS - Search
     And "Robert" should see search results filtered by "<specific>" industry
 
     When "Robert" removed previous "industries" selections
-    And "Robert" fills out and submits "search form" form
+    And "Robert" fills out and submits "search form" with "captcha in dev mode" check turned "off"
       | field      | value            |
       | q          | <other keyword>  |
       | industries | <other industry> |

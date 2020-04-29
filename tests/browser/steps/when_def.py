@@ -212,6 +212,7 @@ register_type(OnOff=parse_on_off)
 @when('"{actor_alias}" decides to find new markets for her business')
 @when('"{actor_alias}" decides to find new markets for his business')
 @when('"{actor_alias}" fills out and submits the form with captcha dev check turned "{check_captcha_dev_mode:OnOff}"')
+@when('"{actor_alias}" fills out and submits "{form_name}" with "captcha in dev mode" check turned "{check_captcha_dev_mode:OnOff}"')
 @when('"{actor_alias}" fills out and submits "{form_name}" form')
 @when('"{actor_alias}" fills out and submits the form')
 def when_actor_fills_out_and_submits_the_form(
