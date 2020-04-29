@@ -70,16 +70,16 @@ Feature: Domestic - Market guides
 
   @stage-only
   @check-duties-and-customs
-  Scenario Outline: Visitors which decided to "<follow up>" after they read about random market should get to "<expected>" page
+  Scenario Outline: Visitors which decided to "<follow up>" after they read about random market should get to Check Duties and Customs "<country>" page
     Given "Joel" visits the "Domestic - <country> - guide" page
 
-    When "Joel" decides to "Check duties and customs procedures for exporting goods"
+    When "Joel" decides to "<follow up>"
 
     Then "Joel" should be on the "Check duties and customs - Search product code" page
 
     Examples: next step
-      | country |
-      | Brazil  |
-      | Germany |
-      | Italy   |
-      | Japan   |
+      | follow up                                               | country |
+      | Check duties and customs procedures for exporting goods | Brazil  |
+      | Check duties and customs procedures for exporting goods | Germany |
+      | Check duties and customs procedures for exporting goods | Italy   |
+      | Check duties and customs procedures for exporting goods | Japan   |
