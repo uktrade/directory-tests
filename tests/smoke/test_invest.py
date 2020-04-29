@@ -345,7 +345,7 @@ def test_invest_pages_dev(url, basic_auth):
         URLs.INVEST_LANDING.absolute,
         URLs.INVEST_CONTACT.absolute,
         URLs.INVEST_HPO_CONTACT.absolute,
-        URLs.INVEST_HPO_FOOD.absolute,
+        URLs.INVEST_HPO_HIGH_PRODUCTIVITY_FOOD.absolute,
         URLs.INVEST_HPO_LIGHTWEIGHT.absolute,
         URLs.INVEST_HPO_RAIL.absolute,
     ],
