@@ -43,9 +43,9 @@ Feature: Domestic - Great site search
     Then "Robert" should be on one of the "<expected>" pages
 
     Examples: event, market, service and opportunity
-      | specific        | phrase | type of            | expected                                                                          |
-      | Home            | Food   | Event              | Events - Event                                                                    |
-      | Markets listing | Food   | Online marketplace | Selling Online Overseas - Marketplace, Domestic - Markets - guide, Events - event |
+      | specific        | phrase     | type of            | expected                                                                          |
+      | Home            | Exhibition | Event              | Events - Event, Events - Registration                                             |
+      | Markets listing | Food       | Online marketplace | Selling Online Overseas - Marketplace, Domestic - Markets - guide, Events - event |
 
     @bug
     @allure.issue:XOT-1208
