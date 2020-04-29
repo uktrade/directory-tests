@@ -1672,3 +1672,11 @@ def erp_select_random_search_result(
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "click_on_random_search_result")
     page.click_on_random_search_result(context.driver, result_type)
+
+
+def generic_unfold_elements_in_section(
+    context: Context, actor_alias: str, section_name: str
+):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "unfold_elements_in_section")
+    page.unfold_elements_in_section(context.driver, section_name)

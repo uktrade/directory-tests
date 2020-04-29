@@ -44,6 +44,7 @@ from steps.when_impl import (
     generic_select_dropdown_option,
     generic_submit_form,
     generic_trigger_all_gtm_events,
+    generic_unfold_elements_in_section,
     generic_visit_current_page_with_lang_parameter,
     language_selector_change_to,
     language_selector_close,
@@ -354,6 +355,12 @@ def when_actor_selects_one_of_search_results(
         context: Context, actor_alias: str, result_type: str
 ):
     erp_select_random_search_result(context, actor_alias, result_type)
+
+
+@when('"{actor_alias}" unfolds all elements in "{section_name}" section')
+def when_actor_unfolds_elements_in_section(context: Context, actor_alias: str, section_name: str):
+    generic_unfold_elements_in_section(context, actor_alias, section_name)
+
 
 ###############################################################################
 # Currently unused but useful steps
