@@ -611,6 +611,11 @@ class URLs(Enum):
         "ehome/index.php?eventid=",
         template="ehome/index.php?eventid={eventid}&",
     )
+    EVENTS_REGISTRATION = Url(
+        EVENTS_URL,
+        "ereg/newreg.php?eventid=",
+        template="ereg/newreg.php?eventid={eventid}&",
+    )
 
     # ExOpps UI - Export Opportunities
     EXOPPS_LANDING = ExOppsUrl("")
