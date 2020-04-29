@@ -88,4 +88,4 @@ Feature: Domestic - Great site search
       | specific        | first phrase | second phrase           |
       | Home            | Work         | Full work service       |
       | Advice landing  | Transport    | way                     |
-      | Markets listing | Water        | Market selection clinic |
+      | Markets listing | Water        | selection               |
