@@ -4,6 +4,7 @@ __all__ = [
     "check_duties_customs_search_product_code",
     "eori_home",
     "events_event",
+    "events_registration",
     "events_home",
     "govuk_article_page",
     "govuk_prepare_business_for_brexit",
