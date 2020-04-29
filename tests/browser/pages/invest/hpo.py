@@ -8,7 +8,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import PageType, Service
-from pages import common_selectors
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -52,19 +52,21 @@ SELECTORS = {
     },
     "contact us": {
         "self": Selector(By.ID, "contact-section"),
-        "heading": Selector(By.CSS_SELECTOR, "#contact-section h3"),
+        "heading": Selector(By.CSS_SELECTOR, "#contact-section h2"),
         "get in touch": Selector(By.CSS_SELECTOR, "#contact-section a"),
     },
     "proposition one": {
         "self": Selector(By.ID, "proposition-one"),
         "heading": Selector(By.CSS_SELECTOR, "#proposition-one h2"),
-        # "image": Selector(By.CSS_SELECTOR, "#proposition-one img"),
+        "view video transcript": Selector(
+            By.CSS_SELECTOR, "#proposition-one details summary", type=ElementType.BUTTON
+        ),
+        "video transcript": Selector(By.CSS_SELECTOR, "#proposition-one details p"),
     },
     "opportunity list": {"self": Selector(By.ID, "opportunity-list")},
     "proposition two": {
         "self": Selector(By.ID, "proposition-two"),
         "heading": Selector(By.CSS_SELECTOR, "#proposition-two div:nth-child(1) h2"),
-        # "image": Selector(By.CSS_SELECTOR, "#proposition-two div:nth-child(1) img"),
         "list of propositions": Selector(By.CSS_SELECTOR, "#proposition-two ul"),
     },
     "competitive advantages": {
@@ -110,26 +112,38 @@ SELECTORS = {
     "case studies": {
         "self": Selector(By.ID, "case-studies"),
         "heading": Selector(By.CSS_SELECTOR, "#case-studies h2"),
-        "first": Selector(By.CSS_SELECTOR, "#case-studies ul > li:nth-child(1)"),
+        "first case study": Selector(
+            By.CSS_SELECTOR,
+            "#case-studies details:nth-child(1)",
+            type=ElementType.BUTTON,
+        ),
         "first - heading": Selector(
-            By.CSS_SELECTOR, "#case-studies ul > li:nth-child(1) h3"
+            By.CSS_SELECTOR, "#case-studies details:nth-child(1) h3"
         ),
         "first - text": Selector(
-            By.CSS_SELECTOR, "#case-studies ul > li:nth-child(1) p"
+            By.CSS_SELECTOR, "#case-studies details:nth-child(1) p"
         ),
-        "second": Selector(By.CSS_SELECTOR, "#case-studies ul > li:nth-child(2)"),
+        "second case study": Selector(
+            By.CSS_SELECTOR,
+            "#case-studies details:nth-child(2)",
+            type=ElementType.BUTTON,
+        ),
         "second - heading": Selector(
-            By.CSS_SELECTOR, "#case-studies ul > li:nth-child(2) h3"
+            By.CSS_SELECTOR, "#case-studies details:nth-child(2) h3"
         ),
         "second - text": Selector(
-            By.CSS_SELECTOR, "#case-studies ul > li:nth-child(2) p"
+            By.CSS_SELECTOR, "#case-studies details:nth-child(2) p"
         ),
-        "third": Selector(By.CSS_SELECTOR, "#case-studies ul > li:nth-child(3)"),
+        "third case study": Selector(
+            By.CSS_SELECTOR,
+            "#case-studies details:nth-child(3)",
+            type=ElementType.BUTTON,
+        ),
         "third - heading": Selector(
-            By.CSS_SELECTOR, "#case-studies ul > li:nth-child(3) h3"
+            By.CSS_SELECTOR, "#case-studies details:nth-child(3) h3"
         ),
         "third - text": Selector(
-            By.CSS_SELECTOR, "#case-studies ul > li:nth-child(3) p"
+            By.CSS_SELECTOR, "#case-studies details:nth-child(3) p"
         ),
     },
     "other opportunities": {
