@@ -75,7 +75,7 @@ Feature: Domestic - Market guides
 
     When "Joel" decides to "<follow up>"
 
-    Then "Joel" should be on the "Check duties and customs - Search product code" page
+    Then "Joel" should be on one of the "Check duties and customs - Search product code, Check duties and customs - Access Geo Restricted" pages
 
     Examples: next step
       | follow up                                               | country |
