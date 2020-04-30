@@ -2,6 +2,7 @@
 __all__ = [
     "british_council_home",
     "check_duties_customs_search_product_code",
+    "check_duties_customs_geo_restricted",
     "eori_home",
     "events_event",
     "events_registration",
