@@ -1006,7 +1006,7 @@ jobs:
       TEST_ENV: "dev"
       AUTO_RETRY: "true"
       TAKE_SCREENSHOTS: "true"
-      TAGS: "--tags=~@stage-only --tags=~@uat-only"
+      TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@erp"
       BROWSER_ENVIRONMENT: "local"
       BROWSER_HEADLESS: "true"
     <<: [
@@ -1021,7 +1021,7 @@ jobs:
       TEST_ENV: "stage"
       AUTO_RETRY: "true"
       TAKE_SCREENSHOTS: "true"
-      TAGS: "--tags=~@dev-only --tags=~@uat-only"
+      TAGS: "--tags=~@dev-only --tags=~@uat-only --tags=~@erp"
       BROWSER_ENVIRONMENT: "local"
       BROWSER_HEADLESS: "true"
     <<: [
@@ -1036,7 +1036,7 @@ jobs:
       TEST_ENV: "uat"
       AUTO_RETRY: "true"
       TAKE_SCREENSHOTS: "true"
-      TAGS: "--tags=~@stage-only"
+      TAGS: "--tags=~@stage-only --tags=~@erp"
       BROWSER_ENVIRONMENT: "local"
       BROWSER_HEADLESS: "true"
     <<: [
