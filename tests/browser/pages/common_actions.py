@@ -1090,7 +1090,10 @@ def choose_one_form_option_except(
 
 
 def submit_form(
-    driver: WebDriver, form_selectors: Dict[str, Selector]
+    driver: WebDriver,
+    form_selectors: Dict[str, Selector],
+    *,
+    wait_for_new_page_to_load: bool = True,
 ) -> Union[ModuleType, None]:
     submit_selectors = get_selectors(form_selectors, ElementType.SUBMIT)
 
@@ -1107,7 +1110,11 @@ def submit_form(
         driver, submit_button_selector, element_name="submit button", wait_for_it=False
     )
     take_screenshot(driver, "Before submitting the form")
-    with wait_for_page_load_after_action(driver, timeout=25):
+    if wait_for_new_page_to_load:
+        with wait_for_page_load_after_action(driver, timeout=25):
+            with try_alternative_click_on_exception(driver, submit_button):
+                submit_button.click()
+    else:
         with try_alternative_click_on_exception(driver, submit_button):
             submit_button.click()
     take_screenshot(driver, "After submitting the form")
