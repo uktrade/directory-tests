@@ -19,6 +19,7 @@ from steps.then_impl import (
     generic_a_notification_should_be_sent,
     generic_a_notification_should_be_sent_to_specific_dit_office,
     generic_a_notification_should_not_be_sent_to_specific_dit_office,
+    generic_check_cookies,
     generic_check_gtm_datalayer_properties,
     generic_check_gtm_events,
     generic_contact_us_should_receive_confirmation_email,
@@ -284,6 +285,11 @@ def step_check_gtm_data_layer_properties(context: Context):
 @then("following GTM events should be registered")
 def then_expected_gtm_events_should_be_registered(context: Context):
     generic_check_gtm_events(context)
+
+
+@then("following cookies should be set")
+def then_expected_cookies_should_be_set(context: Context):
+    generic_check_cookies(context)
 
 
 @then('"{actor_alias}" should see the menu items')

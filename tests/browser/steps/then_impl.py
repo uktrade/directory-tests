@@ -11,7 +11,7 @@ from behave.model import Table
 from behave.runner import Context
 from datadiff import diff
 from retrying import retry
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, WebDriverException
 from selenium.webdriver.common.by import By
 
 from directory_tests_shared.clients import (
@@ -712,6 +712,31 @@ def generic_check_gtm_events(context: Context):
         f"{registered_gtm_events}"
     ):
         assert len(expected_gtm_events) == len(registered_gtm_events)
+
+
+def generic_check_cookies(context: Context):
+    required_columns = ["name", "value"]
+    context.table.require_columns(required_columns)
+    expected_cookies = table_to_list_of_dicts(context.table)
+    driver = context.driver
+    try:
+        current_cookies = driver.get_cookies()
+    except WebDriverException as ex:
+        logging.error(f"Failed to get cookies on {driver.current_url}")
+        raise ex
+    for cookie in expected_cookies:
+        name = cookie["name"]
+        value = cookie["value"]
+        error = f"Could not find '{name}' cookie on {driver.current_url}"
+        assert any(c["name"] == name for c in current_cookies), error
+        logging.debug(f"Found expected '{name}' cookie")
+        for c in current_cookies:
+            if c["name"] == name:
+                error = f"Expected {name} cookie to be '{value}' but got '{c['value']}' instaed"
+                assert c["value"] == value, error
+                logging.debug(
+                    f"As expected {name} cookie was set to expected '{value}'"
+                )
 
 
 def menu_items_should_be_visible(context: Context):
