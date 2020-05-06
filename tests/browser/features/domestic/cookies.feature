@@ -1,4 +1,5 @@
 @cookies
+@production
 @allure.suite:Domestic
 Feature: Domestic - Cookies Policy
 
