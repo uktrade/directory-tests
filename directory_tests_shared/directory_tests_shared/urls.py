@@ -213,6 +213,10 @@ class URLs(Enum):
     CONTACT_US_FORM_EXPORT_ADVICE = ContactUrl("export-advice/comment/")
     CONTACT_US_FORM_INTERNATIONAL = ContactUrl("international/")
     CONTACT_US_FORM_INTERNATIONAL_SUCCESS = ContactUrl("international/success/")
+    CONTACT_US_TRANSITION_PERIOD_CONTACT = DomesticUrl("transition-period/contact/")
+    CONTACT_US_TRANSITION_PERIOD_CONTACT_SUCCESS = DomesticUrl(
+        "transition-period/contact/success/"
+    )
     CONTACT_US_GREAT_ACCOUNT = ContactUrl("triage/great-account/")
     CONTACT_US_GREAT_ACCOUNT_CH_LOGIN = ContactUrl(
         "triage/great-account/companies-house-login/"
@@ -411,6 +415,7 @@ class URLs(Enum):
     DOMESTIC_STORY_SECOND = DomesticUrl(
         "story/york-bag-retailer-goes-global-via-e-commerce/"
     )
+    DOMESTIC_COOKIES = DomesticUrl("cookies/")
     DOMESTIC_TERMS = DomesticUrl("terms-and-conditions/")
     DOMESTIC_PRIVACY = DomesticUrl("privacy-and-cookies/")
 
