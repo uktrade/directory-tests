@@ -7,6 +7,7 @@ __all__ = [
     "autocomplete_callbacks",
     "community_form",
     "community_landing",
+    "cookies",
     "contact_us_long_export_advice_business",
     "contact_us_long_export_advice_comment",
     "contact_us_long_export_advice_personal",
