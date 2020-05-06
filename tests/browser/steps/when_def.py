@@ -26,6 +26,7 @@ from steps.when_impl import (
     fas_search_for_companies,
     fas_view_article,
     fas_view_selected_company_profile,
+    generic_accept_all_cookies,
     generic_click_on_random_element,
     generic_click_on_random_industry,
     generic_click_on_random_marketplace,
@@ -360,6 +361,11 @@ def when_actor_selects_one_of_search_results(
 @when('"{actor_alias}" unfolds all elements in "{section_name}" section')
 def when_actor_unfolds_elements_in_section(context: Context, actor_alias: str, section_name: str):
     generic_unfold_elements_in_section(context, actor_alias, section_name)
+
+
+@when('"{actor_alias}" accepts all cookies')
+def when_user_accepts_all_cookies(context: Context, actor_alias: str):
+    generic_accept_all_cookies(context, actor_alias)
 
 
 ###############################################################################

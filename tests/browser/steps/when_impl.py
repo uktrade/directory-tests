@@ -238,6 +238,12 @@ def clear_the_cookies(context: Context, actor_alias: str):
         logging.error("Failed to clear cookies for %s", actor_alias)
 
 
+def generic_accept_all_cookies(context: Context, actor_alias: str):
+    driver = context.driver
+    accept_all_cookies(driver)
+    logging.debug(f"{actor_alias} accepted all cookies on {driver.current_url}")
+
+
 def sign_in(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     email = actor.email

@@ -23,6 +23,7 @@ from steps.when_impl import (
     domestic_search_result_has_more_than_one_page,
     erp_follow_user_flow,
     fas_searched_for_companies,
+    generic_accept_all_cookies,
     generic_at_least_n_news_articles,
     generic_create_great_account,
     generic_fill_out_and_submit_form,
@@ -208,6 +209,11 @@ def given_actor_fills_out_and_submits_the_form(context: Context, actor_alias: st
 @given('"{actor_alias}" quickly signed out')
 def when_actor_clears_the_cookies(context, actor_alias):
     clear_the_cookies(context, actor_alias)
+
+
+@given('"{actor_alias}" accepted all cookies')
+def given_user_accepted_all_cookies(context: Context, actor_alias: str):
+    generic_accept_all_cookies(context, actor_alias)
 
 
 @given('"{actor_alias}" submitted her ERP form as an "{user_type}"')
