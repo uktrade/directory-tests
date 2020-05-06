@@ -41,6 +41,7 @@ __all__ = [
     "share_on_facebook",
     "share_on_linkedin",
     "share_on_twitter",
+    "transition_period_enquiries_contact_us",
     "ukef_company_details",
     "ukef_get_finance",
     "ukef_tell_us_how_we_can_help",
