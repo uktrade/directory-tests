@@ -12,8 +12,8 @@ import uuid
 from collections import defaultdict, namedtuple
 from contextlib import contextmanager
 from io import BytesIO
-from types import ModuleType
-from typing import Dict, List, Union
+from types import FunctionType, ModuleType
+from typing import Dict, List, NamedTuple, Union
 from urllib.parse import urlparse
 
 import requests
@@ -49,61 +49,50 @@ from pages import ElementType
 from PIL import Image
 
 ScenarioData = namedtuple("ScenarioData", ["actors"])
-Actor = namedtuple(
-    "Actor",
-    [
-        "alias",
-        "email",
-        "password",
-        "company_name",
-        "article_category",
-        "visited_articles",
-        "case_study_title",
-        "email_confirmation_link",
-        "email_confirmation_code",
-        "registered",
-        "visited_page",
-        "last_tag",
-        "forms_data",
-        "saved_progress_link",
-    ],
-)
-Selector = namedtuple(
-    "Selector",
-    [
-        "by",
-        "value",
-        "in_desktop",
-        "in_mobile",
-        "in_horizontal",
-        "type",
-        "is_visible",
-        "group_id",
-        "autocomplete_callback",
-        "wait_after_click",
-        "next_page",
-        "alternative_visibility_check",
-        "disabled",
-    ],
-)
 
-# define default values for various named tuples
-Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
-Selector.__new__.__defaults__ = (
-    None,
-    None,
-    True,
-    True,
-    True,
-    None,
-    True,
-    None,
-    None,
-    True,
-    None,
-    None,
-    None,
-)
+
+class Actor(NamedTuple):
+    alias: str = None
+    email: str = None
+    password: str = None
+    company_name: str = None
+    article_category: str = None
+    visited_articles: str = None
+    case_study_title: str = None
+    email_confirmation_link: str = None
+    email_confirmation_code: str = None
+    registered: str = None
+    visited_page: str = None
+    last_tag: str = None
+    forms_data: str = None
+    saved_progress_link: str = None
+
+    def __str__(self) -> str:
+        return self.alias or self.__class__.__name__
+
+    __repr__ = __str__
+
+
+class Selector(NamedTuple):
+    by: By
+    value: str
+    in_desktop: bool = True
+    in_mobile: bool = True
+    in_horizontal: bool = True
+    type: ElementType = None
+    is_visible: bool = True
+    group_id: str = None
+    autocomplete_callback: FunctionType = None
+    wait_after_click: bool = True
+    next_page: ModuleType = None
+    alternative_visibility_check: bool = False
+    disabled: bool = False
+    name: str = None
+
+    def __str__(self) -> str:
+        return self.name or self.__class__.__name__
+
+    __repr__ = __str__
 
 
 def go_to_url(driver: WebDriver, url: str, page_name: str):
