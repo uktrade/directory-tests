@@ -54,11 +54,6 @@ SSO_URL = env.str("SSO_URL")
 BASICAUTH_PASS = env.str("BASICAUTH_PASS")
 BASICAUTH_USER = env.str("BASICAUTH_USER")
 
-# MailGun
-MAILGUN_DOMAIN = env.str("MAILGUN_DOMAIN")
-MAILGUN_API_KEY = env.str("MAILGUN_API_KEY")
-MAILGUN_EVENTS_URL = "https://api.eu.mailgun.net/v3/%s/events" % MAILGUN_DOMAIN
-
 # BrowserStack
 BROWSERSTACK_USER = env.str("BROWSERSTACK_USER", default="")
 BROWSERSTACK_PASS = env.str("BROWSERSTACK_PASS", default="")
