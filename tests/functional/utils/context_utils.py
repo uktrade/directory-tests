@@ -11,6 +11,8 @@ from uuid import uuid4
 from behave.runner import Context
 from requests import Session
 
+from directory_tests_shared.settings import TEST_EMAIL_DOMAIN
+
 ScenarioData = namedtuple("ScenarioData", ["actors", "companies"])
 Actor = namedtuple(
     "Actor",
@@ -301,7 +303,7 @@ def random_password(*, length: int = 30):
 
 def random_email(alias: str) -> str:
     return (
-        f"test+{alias}{uuid4()}@directory.uktrade.digital".replace("-", "")
+        f"test+{alias}{uuid4()}@{TEST_EMAIL_DOMAIN}".replace("-", "")
         .replace(" ", "")
         .lower()
     )

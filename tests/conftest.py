@@ -42,7 +42,7 @@ def test_sso_user() -> dict:
 
     :returns a dict with basic user details
     {
-        'email': 'test+451359d7e7e644278cc66f4342c78741@directory.uktrade.digital',
+        'email': 'test+451359d7e7e644278cc66f4342c78741@ci.uktrade.io',
         'password': 'password',
         'id': 34715,
         'first_name': 'Automated',

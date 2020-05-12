@@ -32,7 +32,11 @@ from directory_tests_shared.clients import (
     url_published_companies,
 )
 from directory_tests_shared.constants import SECTORS, TEST_IMAGES_DIR, JPEGs, PNGs
-from directory_tests_shared.settings import BASICAUTH_PASS, BASICAUTH_USER
+from directory_tests_shared.settings import (
+    BASICAUTH_PASS,
+    BASICAUTH_USER,
+    TEST_EMAIL_DOMAIN,
+)
 from directory_tests_shared.utils import (
     blue,
     extract_by_css,
@@ -564,7 +568,7 @@ def random_feedback_data(
     g_recaptcha_response: str = None,
 ) -> Feedback:
     name = name or rare_word()
-    email = email or ("test+buyer_{}@directory.uktrade.digital".format(rare_word()))
+    email = email or f"test+buyer_{rare_word()}@{TEST_EMAIL_DOMAIN}"
     company_name = company_name or f"{rare_word()} AUTOTESTS"
     country = country or rare_word()
     comment = comment or sentence(max_length=1000)
@@ -609,9 +613,7 @@ def random_message_data(
     body = body or sentence(max_length=1000)
     company_name = company_name or f"{rare_word()} AUTOTESTS"
     country = country or rare_word()
-    email_address = email_address or (
-        "test+buyer_{}@directory.uktrade.digital".format(rare_word())
-    )
+    email_address = email_address or f"test+buyer_{rare_word()}@{TEST_EMAIL_DOMAIN}"
     family_name = family_name or sentence(min_words=2, max_words=2)
     given_name = given_name or sentence(min_words=2, max_words=2)
     sector = sector or random.choice(SECTORS)

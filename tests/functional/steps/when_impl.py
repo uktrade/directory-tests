@@ -28,6 +28,7 @@ from directory_tests_shared import URLs
 from directory_tests_shared.constants import SECTORS, SEPARATORS, BMPs, JP2s, WEBPs
 from directory_tests_shared.enums import Account, BusinessType, Language
 from directory_tests_shared.gov_notify import get_email_verification_code
+from directory_tests_shared.settings import TEST_EMAIL_DOMAIN
 from directory_tests_shared.utils import check_for_errors, rare_word, sentence
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
@@ -107,8 +108,7 @@ def unauthenticated_supplier(supplier_alias: str) -> Actor:
     """
     session = Session()
     email = (
-        "test+{}{}@directory.uktrade.digital".format(supplier_alias, str(uuid.uuid4()))
-        .replace("-", "")
+        f"test+{supplier_alias}{str(uuid.uuid4())}@{TEST_EMAIL_DOMAIN}".replace("-", "")
         .replace(" ", "")
         .lower()
     )
@@ -140,7 +140,7 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
     """
     session = Session()
     email = (
-        f"test+buyer_{buyer_alias}{str(uuid.uuid4())}@directory.uktrade.digital".replace(
+        f"test+buyer_{buyer_alias}{str(uuid.uuid4())}@{TEST_EMAIL_DOMAIN}".replace(
             "-", ""
         )
         .replace(" ", "")
@@ -209,7 +209,7 @@ def fab_find_published_company(
     with assertion_msg("Expected to find at least 1 published company but got none!"):
         assert len(companies) > 0
     filtered_companies = [
-        c for c in companies if "@directory.uktrade.digital" not in c["company_email"]
+        c for c in companies if f"@{TEST_EMAIL_DOMAIN}" not in c["company_email"]
     ]
     company_dict = random.choice(filtered_companies)
     sectors = filter_out_legacy_industries(company_dict)
