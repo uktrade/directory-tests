@@ -42,6 +42,7 @@ from directory_tests_shared.settings import (
     BASICAUTH_USER,
     BROWSER,
     TAKE_SCREENSHOTS,
+    TEST_EMAIL_DOMAIN,
 )
 from directory_tests_shared.utils import access_was_denied, extract_attributes_by_css
 from pages import ElementType
@@ -211,8 +212,7 @@ def unauthenticated_actor(alias: str) -> Actor:
         registration or signing-in.
     """
     email = (
-        "test+{}{}@ci.uktrade.io".format(alias, str(uuid.uuid4()))
-        .replace("-", "")
+        f"test+{alias}{str(uuid.uuid4())}@{TEST_EMAIL_DOMAIN}".replace("-", "")
         .replace(" ", "")
         .lower()
     )
