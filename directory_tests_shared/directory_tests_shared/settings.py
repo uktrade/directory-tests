@@ -68,6 +68,8 @@ BROWSERSTACK_EXECUTOR_URL = (
     f"http://{BROWSERSTACK_USER}:{BROWSERSTACK_PASS}@{BROWSERSTACK_SERVER}/wd/hub"
 )
 
+# Mailhog
+TEST_EMAIL_DOMAIN = env.str("TEST_EMAIL_DOMAIN", default="ci.uktrade.io")
 
 #####################################################################
 # Load test (locust.io) settings
