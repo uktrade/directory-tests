@@ -41,6 +41,9 @@ JIRA_HOST = os.environ["JIRA_HOST"]
 JIRA_USERNAME = os.environ["JIRA_USERNAME"]
 JIRA_TOKEN = os.environ["JIRA_TOKEN"]
 CIRCLE_TOKEN = os.environ["CIRCLE_TOKEN"]
+PA11Y_URL = os.environ["PA11Y_URL"]
+PA11Y_USERNAME = os.environ["PA11Y_USERNAME"]
+PA11Y_PASSWORD = os.environ["PA11Y_PASSWORD"]
 
 # other variables
 TODAY = date.today().isoformat()
@@ -82,6 +85,15 @@ if __name__ == "__main__":
     )
     print("Pushing load test response times metrics to Geckoboard")
     DATASETS.LOAD_TESTS_RESULT_REQUESTS.dataset.post(load_tests_response_times_metrics)
+
+    from tests.periodic_tasks.geckoboard_updater.pa11y_results import (
+        aggregated_accessibility_issues_per_service,
+    )
+
+    print("Pushing aggregated Pa11y accessibility test results to Geckoboard")
+    DATASETS.PA11Y_TESTS_RESULTS.dataset.post(
+        aggregated_accessibility_issues_per_service
+    )
 
     print(f"Pushing text widget data to GeckoBoard")
     push_directory_service_build_results(
