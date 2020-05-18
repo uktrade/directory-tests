@@ -25,6 +25,13 @@ DATE_METRIC_ENVIRONMENT_ERRORS_FAILURES_TESTS = {
     "failures": {"type": "number", "name": "Failures", "optional": False},
     "tests": {"type": "number", "name": "Tests", "optional": False},
 }
+DATE_SERVICE_ERRORS_WARNINGS_PAGES = {
+    "date": {"type": "date", "name": "Date", "optional": False},
+    "service": {"type": "string", "name": "Service", "optional": False},
+    "errors": {"type": "number", "name": "Errors", "optional": False},
+    "warnings": {"type": "number", "name": "Warnings", "optional": False},
+    "pages": {"type": "number", "name": "Pages", "optional": False},
+}
 
 # values can be optional
 # it allows for sending results for endpoints that returned failures
@@ -64,6 +71,7 @@ DATE_METRIC_ENVIRONMENT = ["date", "metric", "environment"]
 DATE_NAME_ENDPOINT = ["date", "name", "endpoint"]
 DATE_TEAM_METRIC = ["date", "team", "metric"]
 DATE_TEAM_METRIC_LABEL = ["date", "team", "metric", "label"]
+DATE_SERVICE = ["date", "service"]
 
 
 def jira_bugs_by_labels() -> Schema:
@@ -92,7 +100,7 @@ def periodic_tests_results() -> Schema:
 
 
 def load_tests_result_distribution() -> Schema:
-    """Load test (locustio) response time (percentile) distribution.
+    """Load test (locust.io) response time (percentile) distribution.
 
     One dataset for all results (endpoints).
     """
@@ -112,9 +120,19 @@ def load_tests_result_requests() -> Schema:
     )
 
 
+def pa11y_tests_results() -> Schema:
+    """Pa11y accessibility test results. One dataset for all results"""
+    return Schema(
+        dataset_id=f"pa11y.results_per_service",
+        fields=DATE_SERVICE_ERRORS_WARNINGS_PAGES,
+        unique_by=DATE_SERVICE,
+    )
+
+
 class DatasetSchemas(Enum):
     JIRA_BUGS_BY_LABELS = jira_bugs_by_labels()
     JIRA_BUG_AND_TICKET_COUNTERS = jira_bug_and_ticket_counters()
     LOAD_TESTS_RESULT_DISTRIBUTION = load_tests_result_distribution()
     LOAD_TESTS_RESULT_REQUESTS = load_tests_result_requests()
     PERIODIC_TESTS_RESULTS = periodic_tests_results()
+    PA11Y_TESTS_RESULTS = pa11y_tests_results()
