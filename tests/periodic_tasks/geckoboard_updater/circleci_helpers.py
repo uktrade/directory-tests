@@ -20,18 +20,14 @@ DIRECTORY_PERIODIC_TESTS_JOB_NAME_MAPPINGS = {
         "domestic_compare_prod_and_uat_pages": "Domestic Prod UAT",
         "domestic_compare_stage_and_uat_pages": "Domestic Stage UAT",
         "domestic_compare_stage_and_dev_pages": "Domestic Stage Dev",
-        "fas_compare_prod_and_dev_pages": "FAS Prod Dev",
-        "fas_compare_prod_and_stage_pages": "FAS Prod Stage",
-        "fas_compare_stage_and_dev_pages": "FAS Stage Dev",
         "international_compare_prod_and_uat_pages": "International Prod UAT",
+        "international_compare_prod_and_stage_pages": "International Prod Stage",
         "international_compare_stage_and_uat_pages": "International Stage UAT",
         "international_compare_stage_and_dev_pages": "International Stage Dev",
-        "invest_compare_prod_and_dev_pages": "Invest Prod Dev",
-        "invest_compare_prod_and_stage_pages": "Invest Prod Stage",
-        "invest_compare_prod_and_uat_pages": "Invest Prod UAT",
-        "invest_compare_stage_and_dev_pages": "Invest Stage Dev",
     },
-    "Availability of CMS pages": {"check_cms_pages_on_production": "CMS Prod pages"},
+    "Availability of CMS pages": {
+        "check_cms_pages_on_production_return_200": "CMS Prod pages"
+    },
     "Dead links": {
         "check_for_dead_links_on_prod": "Prod Dead links",
         "check_for_dead_links_on_uat": "UAT Dead links",
@@ -41,7 +37,7 @@ DIRECTORY_PERIODIC_TESTS_JOB_NAME_MAPPINGS = {
 }
 
 USEFUL_CONTENT_TESTS_JOB_NAME_MAPPINGS = {
-    "check_cms_pages_on_production": "CMS pages - Prod",
+    "check_cms_pages_on_production_return_200": "CMS pages - Prod",
     "check_for_dead_links_on_prod": "Dead links - Prod",
     "check_for_dead_links_on_uat": "Dead links - UAT",
     "check_for_dead_links_on_stage": "Dead links - Stage",
