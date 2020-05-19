@@ -13,6 +13,7 @@ from tests.periodic_tasks.geckoboard_updater.circleci_helpers import (
     last_directory_service_build_results,
     last_directory_tests_results,
     last_periodic_tests_results,
+    last_useful_content_diff_report_links,
     last_useful_content_tests_results,
 )
 from tests.periodic_tasks.geckoboard_updater.gecko_dataset_schemas import Schema
@@ -184,6 +185,25 @@ def push_links_to_useful_content_test_jobs(
     links = [
         f'<a href="{details["build_url"]}" target=_blank>{job}</a>'
         for job, details in sorted_results.items()
+    ]
+    text = widget_links(links)
+    push_widget_text(geckoboard_push_url, geckoboard_api_key, widget_key, text)
+
+
+def push_links_to_content_diff_reports(
+    circle_ci_client: CircleClient,
+    geckoboard_push_url: str,
+    geckoboard_api_key: str,
+    widget_key: str,
+):
+
+    last_content_diff_report_links = last_useful_content_diff_report_links(
+        circle_ci_client
+    )
+    sorted_results = OrderedDict(sorted(last_content_diff_report_links.items()))
+    links = [
+        f'<a href="{url}" target=_blank>{job}</a>'
+        for job, url in sorted_results.items()
     ]
     text = widget_links(links)
     push_widget_text(geckoboard_push_url, geckoboard_api_key, widget_key, text)

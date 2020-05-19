@@ -127,6 +127,39 @@ def last_build_per_job(builds: List[dict], job_mappings: dict) -> dict:
 
 
 @retry(wait_fixed=10000, stop_max_attempt_number=3)
+def get_build_artifact_link(
+    circle_ci_client: CircleClient,
+    builds: dict,
+    name: str,
+    *,
+    username: str = "uktrade",
+) -> dict:
+    """Fetch a link to single build artifact than matches specified name.
+
+    Example result:
+    {
+      'International Prod Stage': 'https://32078-71367747-gh.circle-artifacts.com/0/reports/index.html',
+    }
+    """
+
+    artifact_urls = {}
+    for friendly_name, build in builds.items():
+        build_num = build["build_num"]
+        project_name = build["reponame"]
+        artifacts = circle_ci_client.build.artifacts(username, project_name, build_num)
+        if artifacts:
+            for artifact in artifacts:
+                if artifact["path"].endswith(name):
+                    artifact_urls[friendly_name] = artifact["url"]
+                    print(
+                        f"Found a link to '{name}' for '{friendly_name}' build in "
+                        f"build #{build_num}"
+                    )
+
+    return artifact_urls
+
+
+@retry(wait_fixed=10000, stop_max_attempt_number=3)
 def get_build_artifacts(
     circle_ci_client: CircleClient,
     builds: dict,
@@ -304,6 +337,14 @@ def last_useful_content_tests_results(circle_ci_client: CircleClient) -> dict:
         job_name_mappings=USEFUL_CONTENT_TESTS_JOB_NAME_MAPPINGS,
         limit=100,
     )
+
+
+def last_useful_content_diff_report_links(circle_ci_client: CircleClient) -> dict:
+    recent = recent_builds(circle_ci_client, "directory-tests")
+    build_per_job = last_build_per_job(
+        recent, DIRECTORY_PERIODIC_TESTS_JOB_NAME_MAPPINGS["Content diffs"]
+    )
+    return get_build_artifact_link(circle_ci_client, build_per_job, "index.html")
 
 
 def last_directory_service_build_results(circle_ci_client: CircleClient) -> dict:
