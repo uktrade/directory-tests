@@ -29,9 +29,6 @@ GECKOBOARD_PERIODIC_TESTS_RESULTS_WIDGET_KEY = os.environ[
 GECKOBOARD_LINKS_TO_USEFUL_CONTENT_TEST_JOBS_WIDGET_KEY = os.environ[
     "GECKOBOARD_LINKS_TO_USEFUL_CONTENT_TEST_JOBS_WIDGET_KEY"
 ]
-GECKOBOARD_CONTENT_JIRA_QUERY_LINKS_WIDGET_KEY = os.environ[
-    "GECKOBOARD_CONTENT_JIRA_QUERY_LINKS_WIDGET_KEY"
-]
 GECKOBOARD_TOOLS_JIRA_QUERY_LINKS_WIDGET_KEY = os.environ[
     "GECKOBOARD_TOOLS_JIRA_QUERY_LINKS_WIDGET_KEY"
 ]
@@ -64,7 +61,6 @@ if __name__ == "__main__":
 
     print("Fetching stats from Jira")
     from tests.periodic_tasks.geckoboard_updater.jira_results import (
-        content_jira_links,
         jira_bug_and_ticket_counters,
         jira_bugs_by_labels,
         tools_jira_links,
@@ -117,12 +113,6 @@ if __name__ == "__main__":
         GECKOBOARD_PUSH_URL,
         GECKOBOARD_API_KEY,
         GECKOBOARD_LINKS_TO_USEFUL_CONTENT_TEST_JOBS_WIDGET_KEY,
-    )
-    push_jira_query_links(
-        content_jira_links,
-        GECKOBOARD_PUSH_URL,
-        GECKOBOARD_API_KEY,
-        GECKOBOARD_CONTENT_JIRA_QUERY_LINKS_WIDGET_KEY,
     )
     push_jira_query_links(
         tools_jira_links,

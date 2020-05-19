@@ -125,7 +125,6 @@ Here's a list of required environment variables:
 * `GECKOBOARD_TEST_RESULTS_WIDGET_KEY` → Custom widget key, to which a HTML test results report is sent, [QA dashboard dashboard](https://app.geckoboard.com/edit/dashboards/264228)
 * `GECKOBOARD_DIRECTORY_TESTS_RESULTS_WIDGET_KEY` → Custom widget key, [QA dashboard dashboard](https://app.geckoboard.com/edit/dashboards/264228)
 * `GECKOBOARD_PERIODIC_TESTS_RESULTS_WIDGET_KEY` → Custom widget key, [QA dashboard dashboard](https://app.geckoboard.com/edit/dashboards/264228)
-* `GECKOBOARD_CONTENT_JIRA_QUERY_LINKS_WIDGET_KEY` → Custom widget key, [CMS - Jira stats dashboard](https://app.geckoboard.com/edit/dashboards/296262)
 * `GECKOBOARD_LINKS_TO_USEFUL_CONTENT_TEST_JOBS_WIDGET_KEY` → Custom widget key, [CMS - content stats dashboard](https://app.geckoboard.com/edit/dashboards/277009)
 * `GECKOBOARD_TOOLS_JIRA_QUERY_LINKS_WIDGET_KEY` → Custom widget key, [TT - Jira stats](https://app.geckoboard.com/edit/dashboards/296257)
 * `JIRA_HOST` → URL to your Jira instance e.g.: `https://{your_orgranisation}.atlassian.net/`

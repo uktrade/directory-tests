@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Jira queries for Content & Tools teams"""
+"""Jira queries for Tools teams project"""
 from collections import namedtuple
 from enum import Enum
 from typing import List
@@ -86,55 +86,6 @@ TO ({closed_statuses})
 DURING (-0d, now())
 ORDER BY key ASC, updated DESC
 """
-
-###############################################################################
-# Content Team
-###############################################################################
-
-CONTENT_OPEN_STATUSES = [
-    "Accepted",
-    "Design Review",
-    "In progress",
-    "PM Review",
-    "Pull Request",
-    "To Do",
-]
-CONTENT_CLOSED_STATUSES = ["Closed", "Done"]
-
-
-class ContentJQLs(Enum):
-
-    BUGS_IN_BACKLOG = JQL(
-        description="Bugs in backlog",
-        query=_BACKLOG_BUGS.format(project="CMS", backlog_name="To Do"),
-    )
-    BUGS_ON_BOARD = JQL(
-        description="Bugs on sprint board",
-        query=_BOARD_BUGS.format(project="CMS", backlog_name="To Do"),
-    )
-    BUGS_CLOSED_TODAY = JQL(
-        description="Bugs closed today",
-        query=_BUGS_CLOSED_TODAY.format(
-            project="CMS",
-            open_statuses=to_jql_list_string(CONTENT_OPEN_STATUSES),
-            closed_statuses=to_jql_list_string(CONTENT_CLOSED_STATUSES),
-        ),
-    )
-    TICKETS_CLOSED_TODAY = JQL(
-        description="Tickets closed today",
-        query=_TICKETS_CLOSED_TODAY.format(
-            project="CMS",
-            open_statuses=to_jql_list_string(CONTENT_OPEN_STATUSES),
-            closed_statuses=to_jql_list_string(CONTENT_CLOSED_STATUSES),
-        ),
-    )
-    TICKETS_ON_BOARD = JQL(
-        description="Tickets (incl. bugs) on Sprint board",
-        query=_SPRINT_BOARD_TICKETS.format(
-            project="CMS", open_statuses=to_jql_list_string(CONTENT_OPEN_STATUSES),
-        ),
-    )
-
 
 ###############################################################################
 # Tools Team
