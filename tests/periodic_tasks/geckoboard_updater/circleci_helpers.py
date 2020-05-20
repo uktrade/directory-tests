@@ -152,8 +152,7 @@ def get_build_artifact_link(
                 if artifact["path"].endswith(name):
                     artifact_urls[friendly_name] = artifact["url"]
                     print(
-                        f"Found a link to '{name}' for '{friendly_name}' build in "
-                        f"build #{build_num}"
+                        f"Found a link to '{name}' among artifacts for '{friendly_name}' job #{build_num}"
                     )
 
     return artifact_urls
@@ -340,7 +339,7 @@ def last_useful_content_tests_results(circle_ci_client: CircleClient) -> dict:
 
 
 def last_useful_content_diff_report_links(circle_ci_client: CircleClient) -> dict:
-    recent = recent_builds(circle_ci_client, "directory-tests")
+    recent = recent_builds(circle_ci_client, "directory-tests", limit=100)
     build_per_job = last_build_per_job(
         recent, DIRECTORY_PERIODIC_TESTS_JOB_NAME_MAPPINGS["Content diffs"]
     )
