@@ -263,7 +263,7 @@ def xml_report_summary(xml_report: str) -> dict:
 def last_workflow_test_results(builds: dict) -> dict:
     result = {}
     github_avatar = (
-        "https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png"
+        "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
     )
     date_format = "%Y-%m-%dT%H:%M:%S.%fZ"
 
