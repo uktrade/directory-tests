@@ -64,16 +64,16 @@ def job_status_color(status: str) -> str:
 
 
 def widget_text_for_directory_tests(test_results: dict) -> str:
-    table_template = """<table style="width:100%">
+    table_template = """<table style="width:100%;font-size:14pt">
 <thead>
-<tr style="font-size:14pt">
+<tr>
 <th>Name</th><th>When</th><th>Time</th><th>Status</th>
 </tr>
 </thead>
 <tbody>
 {rows}
 </tbody></table>"""
-    row_template = """<tr style="font-size:14pt">
+    row_template = """<tr>
 <td>{name}</td>
 <td><img src="{user_avatar}" title="{user_name}" width="25" height="25"/>{start_time}</td>
 <td>{build_time}</td>
@@ -90,7 +90,7 @@ def widget_text_for_directory_tests(test_results: dict) -> str:
 
 
 def widget_text_for_service_build(build_results: dict) -> str:
-    table_template = """<table style="width:100%">
+    table_template = """<table style="width:100%;font-size:14pt">
 <thead>
 <tr style="font-size:14pt">
 <th>Name</th><th>When</th><th>Time</th><th>Unit</th><th>flake8</th>
@@ -98,7 +98,7 @@ def widget_text_for_service_build(build_results: dict) -> str:
 </thead><tbody>
 {rows}
 </tbody></table>"""
-    row_template = """<tr style="font-size:14pt">
+    row_template = """<tr>
 <td>{name}</td>
 <td><img src="{user_avatar}" title="{user_name}" width="25" height="25"/>{start_time}</td>
 <td>{build_time}</td>
@@ -126,12 +126,10 @@ def widget_text_for_service_build(build_results: dict) -> str:
 
 
 def widget_links(links: List[str]) -> str:
-    table_template = """<table style="width:100%">
-<tbody>{rows}
-</tbody></table>"""
-    row_template = """\n<tr style="font-size:14pt">
-<td>{link}</td>
-</tr>"""
+    table_template = (
+        """<table style="width:100%;font-size:14pt"><tbody>{rows}</tbody></table>"""
+    )
+    row_template = """\n<tr><td>{link}</td></tr>"""
     rows = ""
     for link in links:
         rows += row_template.format(link=link)
