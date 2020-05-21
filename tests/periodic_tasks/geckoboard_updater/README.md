@@ -43,7 +43,7 @@ Required environment variables:
     * see ["Python Jira REST API client"](https://jira.readthedocs.io/en/latest/examples.html#http-basic) manual to understand how to use that token to authenticate
 
 Optional environment variables:
-* `GECKOBOARD_PUSH_URL` → Set it if you have a private instance of Geckoboard otherwise it will default to: `https://push.geckoboard.com/v1/send/`
+* `GECKOBOARD_PUSH_URL`: Set it if you have a private instance of Geckoboard otherwise it will default to: `https://push.geckoboard.com/v1/send/`
 
 
 ## Running
