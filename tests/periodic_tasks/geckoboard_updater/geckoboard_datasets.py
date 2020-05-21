@@ -1,27 +1,33 @@
 # -*- coding: utf-8 -*-
 """Geckoboard Dataset Schemas"""
-from collections import namedtuple
-from enum import Enum, EnumMeta
+from dataclasses import dataclass
+from typing import List
 
 from geckoboard import Client as GeckoClient
 from geckoboard.dataset import Dataset
 
-Schema = namedtuple("Schema", ["dataset_id", "fields", "unique_by"])
 
-DATE_TEAM_METRIC_LABEL_QUANTITY = {
+@dataclass
+class Schema:
+    dataset_id: str
+    fields: dict
+    unique_by: List[str]
+
+
+date_team_metric_label_quantity = {
     "date": {"type": "date", "name": "Date", "optional": False},
     "team": {"type": "string", "name": "Team", "optional": False},
     "metric": {"type": "string", "name": "Metric", "optional": False},
     "label": {"type": "string", "name": "Label", "optional": False},
     "quantity": {"type": "number", "name": "Quantity", "optional": False},
 }
-DATE_TEAM_METRIC_QUANTITY = {
+date_team_metric_quantity = {
     "date": {"type": "date", "name": "Date", "optional": False},
     "team": {"type": "string", "name": "Team", "optional": False},
     "metric": {"type": "string", "name": "Metric", "optional": False},
     "quantity": {"type": "number", "name": "Quantity", "optional": False},
 }
-DATE_METRIC_ENVIRONMENT_ERRORS_FAILURES_TESTS = {
+date_metric_environment_errors_failures_tests = {
     "date": {"type": "date", "name": "Date", "optional": False},
     "metric": {"type": "string", "name": "Metric", "optional": False},
     "environment": {"type": "string", "name": "Environment", "optional": False},
@@ -29,7 +35,7 @@ DATE_METRIC_ENVIRONMENT_ERRORS_FAILURES_TESTS = {
     "failures": {"type": "number", "name": "Failures", "optional": False},
     "tests": {"type": "number", "name": "Tests", "optional": False},
 }
-DATE_SERVICE_ERRORS_WARNINGS_PAGES = {
+date_service_errors_warnings_pages = {
     "date": {"type": "date", "name": "Date", "optional": False},
     "service": {"type": "string", "name": "Service", "optional": False},
     "errors": {"type": "number", "name": "Errors", "optional": False},
@@ -39,7 +45,7 @@ DATE_SERVICE_ERRORS_WARNINGS_PAGES = {
 
 # values can be optional
 # it allows for sending results for endpoints that returned failures
-LOCUST_RESPONSE_TIME_DISTRIBUTION = {
+locust_response_time_distribution = {
     "date": {"type": "date", "name": "Date", "optional": False},
     "name": {"type": "string", "name": "Name", "optional": False},
     "endpoint": {"type": "string", "endpoint": "Name", "optional": False},
@@ -51,7 +57,7 @@ LOCUST_RESPONSE_TIME_DISTRIBUTION = {
     "99": {"type": "number", "name": "99%", "optional": True},
     "100": {"type": "number", "name": "100%", "optional": True},
 }
-LOCUST_RESPONSE_TIME_METRICS = {
+locust_response_time_metrics = {
     "date": {"type": "date", "name": "Date", "optional": False},
     "name": {"type": "string", "name": "Name", "optional": False},
     "endpoint": {"type": "string", "endpoint": "Name", "optional": False},
@@ -74,103 +80,67 @@ LOCUST_RESPONSE_TIME_METRICS = {
 
 # Define arrays of one or more field names whose values will be unique across all your records.
 # Geckoboard will ignore incoming dataset entries for which matching records already exist.
-DATE_METRIC_ENVIRONMENT = ["date", "metric", "environment"]
-DATE_NAME_ENDPOINT = ["date", "name", "endpoint"]
-DATE_TEAM_METRIC = ["date", "team", "metric"]
-DATE_TEAM_METRIC_LABEL = ["date", "team", "metric", "label"]
-DATE_SERVICE = ["date", "service"]
+date_metric_environment = ["date", "metric", "environment"]
+date_name_endpoint = ["date", "name", "endpoint"]
+date_team_metric = ["date", "team", "metric"]
+date_team_metric_label = ["date", "team", "metric", "label"]
+date_service = ["date", "service"]
 
 
-def jira_bugs_by_labels() -> Schema:
-    return Schema(
-        dataset_id=f"jira.bugs_by_labels",
-        fields=DATE_TEAM_METRIC_LABEL_QUANTITY,
-        unique_by=DATE_TEAM_METRIC_LABEL,
-    )
+# Dataset schemas
+jira_bug_and_ticket_counters = Schema(
+    dataset_id=f"jira.bug_and_ticket_counters",
+    fields=date_team_metric_quantity,
+    unique_by=date_team_metric,
+)
+jira_bugs_by_labels = Schema(
+    dataset_id=f"jira.bugs_by_labels",
+    fields=date_team_metric_label_quantity,
+    unique_by=date_team_metric_label,
+)
+load_tests_response_time_distributions = Schema(
+    dataset_id=f"load_tests.result_distribution",
+    fields=locust_response_time_distribution,
+    unique_by=date_name_endpoint,
+)
+load_tests_response_time_metrics = Schema(
+    dataset_id=f"load_tests.result_requests",
+    fields=locust_response_time_metrics,
+    unique_by=date_name_endpoint,
+)
+pa11y_results_per_service = Schema(
+    dataset_id=f"pa11y.results_per_service",
+    fields=date_service_errors_warnings_pages,
+    unique_by=date_service,
+)
+periodic_tests_results = Schema(
+    dataset_id=f"periodic_tests.results",
+    fields=date_metric_environment_errors_failures_tests,
+    unique_by=date_metric_environment,
+)
 
 
-def jira_bug_and_ticket_counters() -> Schema:
-    return Schema(
-        dataset_id=f"jira.bug_and_ticket_counters",
-        fields=DATE_TEAM_METRIC_QUANTITY,
-        unique_by=DATE_TEAM_METRIC,
-    )
-
-
-def periodic_tests_results() -> Schema:
-    return Schema(
-        dataset_id=f"periodic_tests.results",
-        fields=DATE_METRIC_ENVIRONMENT_ERRORS_FAILURES_TESTS,
-        unique_by=DATE_METRIC_ENVIRONMENT,
-    )
-
-
-def load_tests_response_time_distributions() -> Schema:
-    """Returns a schema schema for load test (locust.io) response time (percentile) distributions.
-    One dataset for all results (endpoints).
-    """
-    return Schema(
-        dataset_id=f"load_tests.result_distribution",
-        fields=LOCUST_RESPONSE_TIME_DISTRIBUTION,
-        unique_by=DATE_NAME_ENDPOINT,
-    )
-
-
-def load_tests_response_time_metrics() -> Schema:
-    """Returns a dataset schema for Load test (locust.io) response time metrics.
-    One dataset for all results.
-    """
-    return Schema(
-        dataset_id=f"load_tests.result_requests",
-        fields=LOCUST_RESPONSE_TIME_METRICS,
-        unique_by=DATE_NAME_ENDPOINT,
-    )
-
-
-def pa11y_tests_results() -> Schema:
-    """Pa11y accessibility test results.
-    One dataset for all results"""
-    return Schema(
-        dataset_id=f"pa11y.results_per_service",
-        fields=DATE_SERVICE_ERRORS_WARNINGS_PAGES,
-        unique_by=DATE_SERVICE,
-    )
-
-
-class Datasets(Enum):
-    """Simple Geckoboard Dataset enum with two extra properties."""
-
-    @property
-    def dataset(self) -> Dataset:
-        return self.value.dataset
-
-    @property
-    def schema(self) -> Schema:
-        return self.value.schema
-
-
-def find_or_create_datasets(
-    dataset_enum: EnumMeta, gecko_client: GeckoClient
-) -> Datasets:
-    """Before you can push a dataset to Geckoboard you have to ensure that it exists and create one if it doesn't.
-    More on it in the official documentation:
-    https://developer.geckoboard.com/hc/en-us/articles/360019475652
-    """
-    DatasetAndSchema = namedtuple("DatasetAndSchema", ["dataset", "schema"])
-    datasets = {
-        key: DatasetAndSchema(
-            dataset=gecko_client.datasets.find_or_create(*schema.value),
-            schema=schema.value,
+class Datasets:
+    def find_or_create(self, schema: Schema) -> Dataset:
+        """Before you can push a dataset to Geckoboard you have to ensure that it exists and create one if it doesn't.
+        More on it in the official documentation:
+        https://developer.geckoboard.com/hc/en-us/articles/360019475652
+        """
+        return self.client.datasets.find_or_create(
+            schema.dataset_id, schema.fields, unique_by=schema.unique_by
         )
-        for key, schema in dataset_enum.__members__.items()
-    }
-    return Datasets(value="Datasets", names=datasets)
 
-
-class DatasetSchemas(Enum):
-    JIRA_BUG_AND_TICKET_COUNTERS = jira_bug_and_ticket_counters()
-    JIRA_BUGS_BY_LABELS = jira_bugs_by_labels()
-    LOAD_TESTS_RESPONSE_TIME_DISTRIBUTION = load_tests_response_time_distributions()
-    LOAD_TESTS_RESPONSE_TIME_METRICS = load_tests_response_time_metrics()
-    PA11Y_TESTS_RESULTS = pa11y_tests_results()
-    PERIODIC_TESTS_RESULTS = periodic_tests_results()
+    def __init__(self, client: GeckoClient):
+        self.client = client
+        self.jira_bug_and_ticket_counters = self.find_or_create(
+            jira_bug_and_ticket_counters
+        )
+        self.jira_bugs_by_labels = self.find_or_create(jira_bugs_by_labels)
+        self.load_tests_response_time_distribution = self.find_or_create(
+            load_tests_response_time_distributions
+        )
+        self.load_tests_response_time_metrics = self.find_or_create(
+            load_tests_response_time_metrics
+        )
+        self.pa11y_tests_results = self.find_or_create(pa11y_results_per_service)
+        self.periodic_tests_results = self.find_or_create(periodic_tests_results)

@@ -8,10 +8,7 @@ from envparse import env
 from circleclient import circleclient
 from geckoboard.client import Client as GeckoClient
 from jira import JIRA as JiraClient
-from tests.periodic_tasks.geckoboard_updater.geckoboard_datasets import (
-    DatasetSchemas,
-    find_or_create_datasets,
-)
+from tests.periodic_tasks.geckoboard_updater.geckoboard_datasets import Datasets
 from tests.periodic_tasks.geckoboard_updater.geckoboard_helpers import (
     push_directory_service_build_results,
     push_directory_tests_results,
@@ -61,7 +58,7 @@ CIRCLE_CI_CLIENT = circleclient.CircleClient(CIRCLE_TOKEN)
 
 if __name__ == "__main__":
     print("Find or create Geckoboard datasets")
-    DATASETS = find_or_create_datasets(DatasetSchemas, GECKO_CLIENT)
+    DATASETS = Datasets(GECKO_CLIENT)
 
     print("Fetching stats from Jira")
     from tests.periodic_tasks.geckoboard_updater.jira_results import (
@@ -71,8 +68,8 @@ if __name__ == "__main__":
     )
 
     print("Pushing Jira stats to Geckoboard")
-    DATASETS.JIRA_BUGS_BY_LABELS.dataset.post(jira_bugs_by_labels)
-    DATASETS.JIRA_BUG_AND_TICKET_COUNTERS.dataset.post(jira_bug_and_ticket_counters)
+    DATASETS.jira_bugs_by_labels.post(jira_bugs_by_labels)
+    DATASETS.jira_bug_and_ticket_counters.post(jira_bug_and_ticket_counters)
 
     print("Fetching test results from CircleCi")
     from tests.periodic_tasks.geckoboard_updater.circleci_results import (
@@ -82,24 +79,20 @@ if __name__ == "__main__":
     )
 
     print("Pushing periodic tests results to Geckoboard")
-    DATASETS.PERIODIC_TESTS_RESULTS.dataset.post(circle_ci_periodic_tests_results)
+    DATASETS.periodic_tests_results.post(circle_ci_periodic_tests_results)
     print("Pushing load tests result distribution results to Geckoboard")
-    DATASETS.LOAD_TESTS_RESPONSE_TIME_DISTRIBUTION.dataset.post(
+    DATASETS.load_tests_response_time_distribution.post(
         load_tests_response_times_distributions
     )
     print("Pushing load test response times metrics to Geckoboard")
-    DATASETS.LOAD_TESTS_RESPONSE_TIME_METRICS.dataset.post(
-        load_tests_response_times_metrics
-    )
+    DATASETS.load_tests_response_time_metrics.post(load_tests_response_times_metrics)
 
     from tests.periodic_tasks.geckoboard_updater.pa11y_results import (
         aggregated_accessibility_issues_per_service,
     )
 
     print("Pushing aggregated Pa11y accessibility test results to Geckoboard")
-    DATASETS.PA11Y_TESTS_RESULTS.dataset.post(
-        aggregated_accessibility_issues_per_service
-    )
+    DATASETS.pa11y_tests_results.post(aggregated_accessibility_issues_per_service)
 
     print(f"Pushing text widget data to GeckoBoard")
     push_directory_service_build_results(
