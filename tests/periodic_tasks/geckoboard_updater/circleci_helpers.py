@@ -96,9 +96,10 @@ def recent_builds(
     username: str = "uktrade",
     limit: int = 10,
     branch: str = "master",
+    offset: int = 0,
 ) -> List[dict]:
     return circle_ci_client.build.recent(
-        username=username, project=project, limit=limit, branch=branch
+        username=username, project=project, limit=limit, branch=branch, offset=offset
     )
 
 
