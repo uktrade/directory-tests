@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
+"""Geckoboard Dataset Schemas"""
 from collections import namedtuple
-from enum import Enum
+from enum import Enum, EnumMeta
+
+from geckoboard import Client as GeckoClient
+from geckoboard.dataset import Dataset
 
 Schema = namedtuple("Schema", ["dataset_id", "fields", "unique_by"])
 
@@ -35,7 +39,7 @@ DATE_SERVICE_ERRORS_WARNINGS_PAGES = {
 
 # values can be optional
 # it allows for sending results for endpoints that returned failures
-LOCUST_RESULTS_DISTRIBUTION = {
+LOCUST_RESPONSE_TIME_DISTRIBUTION = {
     "date": {"type": "date", "name": "Date", "optional": False},
     "name": {"type": "string", "name": "Name", "optional": False},
     "endpoint": {"type": "string", "endpoint": "Name", "optional": False},
@@ -47,7 +51,7 @@ LOCUST_RESULTS_DISTRIBUTION = {
     "99": {"type": "number", "name": "99%", "optional": True},
     "100": {"type": "number", "name": "100%", "optional": True},
 }
-LOCUST_RESULTS_REQUESTS = {
+LOCUST_RESPONSE_TIME_METRICS = {
     "date": {"type": "date", "name": "Date", "optional": False},
     "name": {"type": "string", "name": "Name", "optional": False},
     "endpoint": {"type": "string", "endpoint": "Name", "optional": False},
@@ -67,6 +71,9 @@ LOCUST_RESULTS_REQUESTS = {
     "max_response_time": {"type": "number", "name": "Max resp time", "optional": True},
     "requests_per_s": {"type": "number", "name": "RPS", "optional": True},
 }
+
+# Define arrays of one or more field names whose values will be unique across all your records.
+# Geckoboard will ignore incoming dataset entries for which matching records already exist.
 DATE_METRIC_ENVIRONMENT = ["date", "metric", "environment"]
 DATE_NAME_ENDPOINT = ["date", "name", "endpoint"]
 DATE_TEAM_METRIC = ["date", "team", "metric"]
@@ -75,7 +82,6 @@ DATE_SERVICE = ["date", "service"]
 
 
 def jira_bugs_by_labels() -> Schema:
-    """"""
     return Schema(
         dataset_id=f"jira.bugs_by_labels",
         fields=DATE_TEAM_METRIC_LABEL_QUANTITY,
@@ -99,29 +105,31 @@ def periodic_tests_results() -> Schema:
     )
 
 
-def load_tests_result_distribution() -> Schema:
-    """Load test (locust.io) response time (percentile) distribution.
-
+def load_tests_response_time_distributions() -> Schema:
+    """Returns a schema schema for load test (locust.io) response time (percentile) distributions.
     One dataset for all results (endpoints).
     """
     return Schema(
         dataset_id=f"load_tests.result_distribution",
-        fields=LOCUST_RESULTS_DISTRIBUTION,
+        fields=LOCUST_RESPONSE_TIME_DISTRIBUTION,
         unique_by=DATE_NAME_ENDPOINT,
     )
 
 
-def load_tests_result_requests() -> Schema:
-    """Load test (locustio) requests requests. One dataset for all results"""
+def load_tests_response_time_metrics() -> Schema:
+    """Returns a dataset schema for Load test (locust.io) response time metrics.
+    One dataset for all results.
+    """
     return Schema(
         dataset_id=f"load_tests.result_requests",
-        fields=LOCUST_RESULTS_REQUESTS,
+        fields=LOCUST_RESPONSE_TIME_METRICS,
         unique_by=DATE_NAME_ENDPOINT,
     )
 
 
 def pa11y_tests_results() -> Schema:
-    """Pa11y accessibility test results. One dataset for all results"""
+    """Pa11y accessibility test results.
+    One dataset for all results"""
     return Schema(
         dataset_id=f"pa11y.results_per_service",
         fields=DATE_SERVICE_ERRORS_WARNINGS_PAGES,
@@ -129,10 +137,40 @@ def pa11y_tests_results() -> Schema:
     )
 
 
+class Datasets(Enum):
+    """Simple Geckoboard Dataset enum with two extra properties."""
+
+    @property
+    def dataset(self) -> Dataset:
+        return self.value.dataset
+
+    @property
+    def schema(self) -> Schema:
+        return self.value.schema
+
+
+def find_or_create_datasets(
+    dataset_enum: EnumMeta, gecko_client: GeckoClient
+) -> Datasets:
+    """Before you can push datasets you have to ensure that it exists and create it if it doesn't.
+    More on client.datasets.find_or_create()
+    https://developer.geckoboard.com/hc/en-us/articles/360019475652
+    """
+    DatasetAndSchema = namedtuple("DatasetAndSchema", ["dataset", "schema"])
+    datasets = {
+        key: DatasetAndSchema(
+            dataset=gecko_client.datasets.find_or_create(*schema.value),
+            schema=schema.value,
+        )
+        for key, schema in dataset_enum.__members__.items()
+    }
+    return Datasets(value="Datasets", names=datasets)
+
+
 class DatasetSchemas(Enum):
-    JIRA_BUGS_BY_LABELS = jira_bugs_by_labels()
     JIRA_BUG_AND_TICKET_COUNTERS = jira_bug_and_ticket_counters()
-    LOAD_TESTS_RESULT_DISTRIBUTION = load_tests_result_distribution()
-    LOAD_TESTS_RESULT_REQUESTS = load_tests_result_requests()
-    PERIODIC_TESTS_RESULTS = periodic_tests_results()
+    JIRA_BUGS_BY_LABELS = jira_bugs_by_labels()
+    LOAD_TESTS_RESPONSE_TIME_DISTRIBUTION = load_tests_response_time_distributions()
+    LOAD_TESTS_RESPONSE_TIME_METRICS = load_tests_response_time_metrics()
     PA11Y_TESTS_RESULTS = pa11y_tests_results()
+    PERIODIC_TESTS_RESULTS = periodic_tests_results()

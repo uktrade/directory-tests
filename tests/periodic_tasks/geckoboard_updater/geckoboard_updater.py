@@ -6,9 +6,11 @@ from datetime import date
 from circleclient import circleclient
 from geckoboard.client import Client as GeckoClient
 from jira import JIRA as JiraClient
-from tests.periodic_tasks.geckoboard_updater.dataset_schemas import DatasetSchemas
-from tests.periodic_tasks.geckoboard_updater.gecko_helpers import (
-    create_datasets,
+from tests.periodic_tasks.geckoboard_updater.geckoboard_datasets import (
+    DatasetSchemas,
+    find_or_create_datasets,
+)
+from tests.periodic_tasks.geckoboard_updater.geckoboard_helpers import (
     push_directory_service_build_results,
     push_directory_tests_results,
     push_jira_query_links,
@@ -56,8 +58,8 @@ CIRCLE_CI_CLIENT = circleclient.CircleClient(CIRCLE_TOKEN)
 
 
 if __name__ == "__main__":
-    print("Creating Geckoboard datasets")
-    DATASETS = create_datasets(DatasetSchemas, GECKO_CLIENT)
+    print("Find or create Geckoboard datasets")
+    DATASETS = find_or_create_datasets(DatasetSchemas, GECKO_CLIENT)
 
     print("Fetching stats from Jira")
     from tests.periodic_tasks.geckoboard_updater.jira_results import (
@@ -80,11 +82,13 @@ if __name__ == "__main__":
     print("Pushing periodic tests results to Geckoboard")
     DATASETS.PERIODIC_TESTS_RESULTS.dataset.post(circle_ci_periodic_tests_results)
     print("Pushing load tests result distribution results to Geckoboard")
-    DATASETS.LOAD_TESTS_RESULT_DISTRIBUTION.dataset.post(
+    DATASETS.LOAD_TESTS_RESPONSE_TIME_DISTRIBUTION.dataset.post(
         load_tests_response_times_distributions
     )
     print("Pushing load test response times metrics to Geckoboard")
-    DATASETS.LOAD_TESTS_RESULT_REQUESTS.dataset.post(load_tests_response_times_metrics)
+    DATASETS.LOAD_TESTS_RESPONSE_TIME_METRICS.dataset.post(
+        load_tests_response_times_metrics
+    )
 
     from tests.periodic_tasks.geckoboard_updater.pa11y_results import (
         aggregated_accessibility_issues_per_service,

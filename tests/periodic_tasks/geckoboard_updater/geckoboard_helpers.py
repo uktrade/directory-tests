@@ -1,14 +1,10 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from collections import OrderedDict, namedtuple
-from enum import Enum, EnumMeta
+from collections import OrderedDict
 from typing import List
 
 import requests
 
 from circleclient.circleclient import CircleClient
-from geckoboard.client import Client as GeckoClient
-from geckoboard.dataset import Dataset
 from tests.periodic_tasks.geckoboard_updater.circleci_helpers import (
     last_directory_service_build_results,
     last_directory_tests_results,
@@ -16,36 +12,6 @@ from tests.periodic_tasks.geckoboard_updater.circleci_helpers import (
     last_useful_content_diff_report_links,
     last_useful_content_tests_results,
 )
-from tests.periodic_tasks.geckoboard_updater.dataset_schemas import Schema
-
-DatasetAndSchema = namedtuple("DatasetAndSchema", ["dataset", "schema"])
-
-
-class Datasets(Enum):
-    """Geckoboard Dataset enumeration."""
-
-    @property
-    def dataset(self) -> Dataset:
-        return self.value.dataset
-
-    @property
-    def schema(self) -> Schema:
-        return self.value.schema
-
-
-def create_datasets(dataset_enum: EnumMeta, gecko_client: GeckoClient) -> Datasets:
-    """
-    More on datasets.find_or_create()
-    https://developer.geckoboard.com/api-reference/python/#findorcreate
-    """
-    dasets = {
-        key: DatasetAndSchema(
-            dataset=gecko_client.datasets.find_or_create(*schema.value),
-            schema=schema.value,
-        )
-        for key, schema in dataset_enum.__members__.items()
-    }
-    return Datasets(value="Datasets", names=dasets)
 
 
 def job_status_color(status: str) -> str:
