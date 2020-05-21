@@ -6,7 +6,7 @@ from datetime import date
 from circleclient import circleclient
 from geckoboard.client import Client as GeckoClient
 from jira import JIRA as JiraClient
-from tests.periodic_tasks.geckoboard_updater.gecko_dataset_schemas import DatasetSchemas
+from tests.periodic_tasks.geckoboard_updater.dataset_schemas import DatasetSchemas
 from tests.periodic_tasks.geckoboard_updater.gecko_helpers import (
     create_datasets,
     push_directory_service_build_results,

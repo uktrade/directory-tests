@@ -16,7 +16,7 @@ from tests.periodic_tasks.geckoboard_updater.circleci_helpers import (
     last_useful_content_diff_report_links,
     last_useful_content_tests_results,
 )
-from tests.periodic_tasks.geckoboard_updater.gecko_dataset_schemas import Schema
+from tests.periodic_tasks.geckoboard_updater.dataset_schemas import Schema
 
 DatasetAndSchema = namedtuple("DatasetAndSchema", ["dataset", "schema"])
 

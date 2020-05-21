@@ -29,7 +29,7 @@ CircleCI test workflows (for smoke, functional, load & browser tests) are define
 
 ### Geckoboard dataset schemas
 
-All dataset schemas are defined in [gecko_dataset_schemas.py](./gecko_dataset_schemas.py).  
+All dataset schemas are defined in [dataset_schemas.py](dataset_schemas.py).  
 They're were designed to accommodate various generic sets of data we'd like to visualise on a Geckoboard.  
 Schemas are share between various datasets pushed to Geckoboard.
 
