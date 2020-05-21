@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 from collections import Counter
+from datetime import date
 from enum import Enum
 from typing import List
 from urllib.parse import quote
 
-from tests.periodic_tasks.geckoboard_updater.geckoboard_updater import (
-    JIRA_CLIENT,
-    JIRA_HOST,
-    TODAY,
-)
 from tests.periodic_tasks.geckoboard_updater.jira_queries import JQL
 
 
@@ -20,6 +16,8 @@ def find_tickets(
     start_at: int = 0,
 ) -> dict:
     """Run Jira JQL and return result as JSON."""
+    from tests.periodic_tasks.geckoboard_updater.clients import JIRA_CLIENT
+
     return JIRA_CLIENT.search_issues(
         jql_str=jql.query,
         maxResults=max_results,
@@ -90,7 +88,7 @@ def tickets_by_labels(
     result = []
     for key in counters:
         item = {
-            "date": TODAY,
+            "date": date.today().isoformat(),
             "team": team,
             "metric": metric,
             "label": key,
@@ -104,7 +102,7 @@ def total_tickets(jql: Enum, team: str) -> List[dict]:
     tickets = find_tickets(jql.value)
     return [
         {
-            "date": TODAY,
+            "date": date.today().isoformat(),
             "team": team,
             "metric": jql.value.description,
             "quantity": tickets["total"],
@@ -113,6 +111,7 @@ def total_tickets(jql: Enum, team: str) -> List[dict]:
 
 
 def jira_links(jql_enum) -> List[str]:
+    from tests.periodic_tasks.geckoboard_updater.settings import JIRA_HOST
 
     url = f"{JIRA_HOST}issues/?jql={{query}}"
 

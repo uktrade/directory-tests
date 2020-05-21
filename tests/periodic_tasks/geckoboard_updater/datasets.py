@@ -3,8 +3,8 @@
 from dataclasses import dataclass
 from typing import List
 
-from geckoboard import Client as GeckoClient
 from geckoboard.dataset import Dataset
+from tests.periodic_tasks.geckoboard_updater.clients import GECKOBOARD_CLIENT
 
 
 @dataclass
@@ -86,8 +86,6 @@ date_team_metric = ["date", "team", "metric"]
 date_team_metric_label = ["date", "team", "metric", "label"]
 date_service = ["date", "service"]
 
-
-# Dataset schemas
 jira_bug_and_ticket_counters = Schema(
     dataset_id=f"jira.bug_and_ticket_counters",
     fields=date_team_metric_quantity,
@@ -120,7 +118,7 @@ periodic_tests_results = Schema(
 )
 
 
-class Datasets:
+class GeckoboardDatasets:
     def find_or_create(self, schema: Schema) -> Dataset:
         """Before you can push a dataset to Geckoboard you have to ensure that it exists and create one if it doesn't.
         More on it in the official documentation:
@@ -130,8 +128,8 @@ class Datasets:
             schema.dataset_id, schema.fields, unique_by=schema.unique_by
         )
 
-    def __init__(self, client: GeckoClient):
-        self.client = client
+    def __init__(self):
+        self.client = GECKOBOARD_CLIENT
         self.jira_bug_and_ticket_counters = self.find_or_create(
             jira_bug_and_ticket_counters
         )

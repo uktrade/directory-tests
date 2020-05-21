@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 import requests
 from retrying import retry
 
-from tests.periodic_tasks.geckoboard_updater.geckoboard_updater import (
+from tests.periodic_tasks.geckoboard_updater.settings import (
     PA11Y_PASSWORD,
     PA11Y_URL,
     PA11Y_USERNAME,
