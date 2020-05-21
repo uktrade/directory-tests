@@ -152,8 +152,8 @@ class Datasets(Enum):
 def find_or_create_datasets(
     dataset_enum: EnumMeta, gecko_client: GeckoClient
 ) -> Datasets:
-    """Before you can push datasets you have to ensure that it exists and create it if it doesn't.
-    More on client.datasets.find_or_create()
+    """Before you can push a dataset to Geckoboard you have to ensure that it exists and create one if it doesn't.
+    More on it in the official documentation:
     https://developer.geckoboard.com/hc/en-us/articles/360019475652
     """
     DatasetAndSchema = namedtuple("DatasetAndSchema", ["dataset", "schema"])
