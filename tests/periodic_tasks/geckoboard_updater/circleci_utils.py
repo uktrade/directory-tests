@@ -26,7 +26,10 @@ DIRECTORY_PERIODIC_TESTS_JOB_NAME_MAPPINGS = {
         "international_compare_stage_and_dev_pages": "International Stage Dev",
     },
     "Availability of CMS pages": {
-        "check_cms_pages_on_production_return_200": "CMS Prod pages"
+        "check_cms_pages_on_production_return_200": "Prod. CMS pages return 200 OK",
+    },
+    "Production CMS page status report": {
+        "generate_cms_page_status_report_for_prod": "Prod. CMS page status report",
     },
     "Dead links": {
         "check_for_dead_links_on_prod": "Prod Dead links",
@@ -37,7 +40,7 @@ DIRECTORY_PERIODIC_TESTS_JOB_NAME_MAPPINGS = {
 }
 
 USEFUL_CONTENT_TESTS_JOB_NAME_MAPPINGS = {
-    "check_cms_pages_on_production_return_200": "CMS pages - Prod",
+    "check_cms_pages_on_production_return_200": "Prod. CMS pages return 200 OK",
     "check_for_dead_links_on_prod": "Dead links - Prod",
     "check_for_dead_links_on_uat": "Dead links - UAT",
     "check_for_dead_links_on_stage": "Dead links - Stage",
@@ -342,6 +345,17 @@ def last_useful_content_diff_report_links(circle_ci_client: CircleClient) -> dic
     recent = recent_builds(circle_ci_client, "directory-tests", limit=100)
     build_per_job = last_build_per_job(
         recent, DIRECTORY_PERIODIC_TESTS_JOB_NAME_MAPPINGS["Content diffs"]
+    )
+    return get_build_artifact_link(circle_ci_client, build_per_job, "index.html")
+
+
+def last_useful_production_cms_page_status_report_link(
+    circle_ci_client: CircleClient,
+) -> dict:
+    recent = recent_builds(circle_ci_client, "directory-tests", limit=100)
+    build_per_job = last_build_per_job(
+        recent,
+        DIRECTORY_PERIODIC_TESTS_JOB_NAME_MAPPINGS["Production CMS page status report"],
     )
     return get_build_artifact_link(circle_ci_client, build_per_job, "index.html")
 

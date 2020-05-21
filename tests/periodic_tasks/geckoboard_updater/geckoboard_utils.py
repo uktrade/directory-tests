@@ -16,6 +16,7 @@ from tests.periodic_tasks.geckoboard_updater.circleci_utils import (
     last_tests_results_from_junit_artifacts,
     last_useful_content_diff_report_links,
     last_useful_content_tests_results,
+    last_useful_production_cms_page_status_report_link,
 )
 from tests.periodic_tasks.geckoboard_updater.clients import CIRCLE_CI_CLIENT
 from tests.periodic_tasks.geckoboard_updater.datasets import GeckoboardDatasets
@@ -177,17 +178,30 @@ def push_periodic_tests_results():
 
 
 def push_links_to_useful_content_test_jobs():
-    last_content_obs = last_useful_content_tests_results(CIRCLE_CI_CLIENT)
-    if not last_content_obs:
+    most_recent_content_job_links = last_useful_content_tests_results(CIRCLE_CI_CLIENT)
+    if not most_recent_content_job_links:
         print(
             f"Couldn't find new links to content test jobs. Will keep the old ones in place"
         )
         return
-    sorted_results = OrderedDict(sorted(last_content_obs.items()))
+    sorted_links_to_content_jobs = OrderedDict(
+        sorted(most_recent_content_job_links.items())
+    )
     links = [
         f'<a href="{details["build_url"]}" target=_blank>{job}</a>'
-        for job, details in sorted_results.items()
+        for job, details in sorted_links_to_content_jobs.items()
     ]
+
+    most_recent_cms_page_status_report_link = last_useful_production_cms_page_status_report_link(
+        CIRCLE_CI_CLIENT
+    )
+    if most_recent_cms_page_status_report_link:
+        cms_page_status_report_link = [
+            f'<a href="{report_link}" target=_blank>{report_name}</a>'
+            for report_name, report_link in most_recent_cms_page_status_report_link.items()
+        ]
+        links.extend(cms_page_status_report_link)
+
     text = widget_links(links)
     push_widget_text(
         GECKOBOARD_PUSH_URL,
