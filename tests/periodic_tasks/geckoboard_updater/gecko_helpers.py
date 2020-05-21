@@ -157,6 +157,11 @@ def push_directory_tests_results(
     widget_key: str,
 ):
     last_test_results = last_directory_tests_results(circle_ci_client)
+    if not last_test_results:
+        print(
+            f"Couldn't find new results for directory tests jobs. Will keep the old ones in place"
+        )
+        pass
     text = widget_text_for_directory_tests(last_test_results)
     push_widget_text(geckoboard_push_url, geckoboard_api_key, widget_key, text)
 
@@ -168,6 +173,11 @@ def push_periodic_tests_results(
     widget_key: str,
 ):
     last_periodic_test_results = last_periodic_tests_results(circle_ci_client)
+    if not last_periodic_test_results:
+        print(
+            f"Couldn't find new results for periodic tests jobs. Will keep the old ones in place"
+        )
+        pass
     text = widget_text_for_directory_tests(last_periodic_test_results)
     push_widget_text(geckoboard_push_url, geckoboard_api_key, widget_key, text)
 
@@ -179,6 +189,11 @@ def push_links_to_useful_content_test_jobs(
     widget_key: str,
 ):
     last_content_obs = last_useful_content_tests_results(circle_ci_client)
+    if not last_content_obs:
+        print(
+            f"Couldn't find new links to content test jobs. Will keep the old ones in place"
+        )
+        pass
     sorted_results = OrderedDict(sorted(last_content_obs.items()))
     links = [
         f'<a href="{details["build_url"]}" target=_blank>{job}</a>'
@@ -198,6 +213,11 @@ def push_links_to_content_diff_reports(
     last_content_diff_report_links = last_useful_content_diff_report_links(
         circle_ci_client
     )
+    if not last_content_diff_report_links:
+        print(
+            f"Couldn't find new links to content diff reports. Will keep the old ones in place"
+        )
+        pass
     sorted_results = OrderedDict(sorted(last_content_diff_report_links.items()))
     links = [
         f'<a href="{url}" target=_blank>{job}</a>'
@@ -214,6 +234,11 @@ def push_directory_service_build_results(
     widget_key: str,
 ):
     last_service_build_results = last_directory_service_build_results(circle_ci_client)
+    if not last_service_build_results:
+        print(
+            f"Couldn't find new service build results in CircleCI. Will keep the old ones in place"
+        )
+        pass
     text = widget_text_for_service_build(last_service_build_results)
     push_widget_text(geckoboard_push_url, geckoboard_api_key, widget_key, text)
 
