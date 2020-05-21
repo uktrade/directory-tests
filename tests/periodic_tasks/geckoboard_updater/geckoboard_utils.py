@@ -281,7 +281,7 @@ def push_jira_stats(datasets: GeckoboardDatasets):
         + tools_tickets_closed_today
         + tools_tickets_on_board
     )
-    print("Pushing Jira stats to Geckoboard")
+    print("Pushing Jira stats to Geckoboard...")
     datasets.jira_bugs_by_labels.post(jira_bugs_by_labels)
     datasets.jira_bug_and_ticket_counters.post(jira_bug_and_ticket_counters)
 
@@ -292,7 +292,7 @@ def push_pa11y_test_results(datasets: GeckoboardDatasets):
     aggregated_accessibility_issues_per_service = generate_dataset_counters(
         parsed_results
     )
-    print("Pushing aggregated Pa11y accessibility test results to Geckoboard")
+    print("Pushing aggregated Pa11y accessibility test results to Geckoboard...")
     datasets.pa11y_tests_results.post(aggregated_accessibility_issues_per_service)
 
 
@@ -312,13 +312,13 @@ def push_circleci_test_results(datasets: GeckoboardDatasets):
         load_tests_artifacts
     )
 
-    print("Pushing periodic tests results to Geckoboard")
+    print("Pushing periodic tests results to Geckoboard...")
     datasets.periodic_tests_results.post(circle_ci_periodic_tests_results)
 
-    print("Pushing load tests result distribution results to Geckoboard")
+    print("Pushing load tests result distribution results to Geckoboard...")
     datasets.load_tests_response_time_distribution.post(
         load_tests_response_times_distributions
     )
 
-    print("Pushing load test response times metrics to Geckoboard")
+    print("Pushing load test response times metrics to Geckoboard...")
     datasets.load_tests_response_time_metrics.post(load_tests_response_times_metrics)

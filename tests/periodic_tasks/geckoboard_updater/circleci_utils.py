@@ -283,7 +283,6 @@ def last_workflow_test_results(builds: dict) -> dict:
 
         if not build["start_time"]:
             last_build_date = "N/A"
-            print(f"`start_time` is not available for {job_name} #{build['build_url']}")
         else:
             datetime_object = datetime.strptime(build["start_time"], date_format)
             last_build_date = datetime_object.strftime("%d %b %H:%M")
