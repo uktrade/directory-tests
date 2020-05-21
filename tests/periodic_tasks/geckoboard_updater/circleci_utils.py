@@ -354,11 +354,6 @@ def last_directory_service_build_results(circle_ci_client: CircleClient) -> dict
             project_name="directory-api",
             job_name_mappings=DIRECTORY_SERVICE_JOB_NAME_MAPPINGS,
         ),
-        "FAS": last_build_test_results(
-            circle_ci_client=circle_ci_client,
-            project_name="directory-ui-supplier",
-            job_name_mappings=DIRECTORY_SERVICE_JOB_NAME_MAPPINGS,
-        ),
         "FAB": last_build_test_results(
             circle_ci_client=circle_ci_client,
             project_name="directory-ui-buyer",
@@ -392,11 +387,6 @@ def last_directory_service_build_results(circle_ci_client: CircleClient) -> dict
         "CMS": last_build_test_results(
             circle_ci_client=circle_ci_client,
             project_name="directory-cms",
-            job_name_mappings=DIRECTORY_SERVICE_JOB_NAME_MAPPINGS,
-        ),
-        "Invest": last_build_test_results(
-            circle_ci_client=circle_ci_client,
-            project_name="invest-ui",
             job_name_mappings=DIRECTORY_SERVICE_JOB_NAME_MAPPINGS,
         ),
         "International": last_build_test_results(
