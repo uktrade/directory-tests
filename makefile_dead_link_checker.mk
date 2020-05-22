@@ -96,15 +96,15 @@ PYLINKVALIDATE_ENV_VARS_PROD := \
 
 PYLINKVALIDATE_ENV_VARS_UAT := \
 	export IGNORED_PREFIXES="\
-	$${DOMESTIC_URL}international/static/,\
+	$${DOMESTIC_URL}selling-online-overseas/static/, \
 	$${DOMESTIC_URL}find-a-buyer/static/,\
 	$${DOMESTIC_URL}profile/static/,\
-	$${DOMESTIC_URL}profile/enrol/?next=,\
 	$${DOMESTIC_URL}sso/accounts/login/?next,\
 	$${DOMESTIC_URL}sso/accounts/password/reset/?next,\
 	$${DOMESTIC_URL}sso/accounts/signup/?next,\
 	$${DOMESTIC_URL}sso/static/,\
 	$${DOMESTIC_URL}static/,\
+	$${DOMESTIC_URL}international/static/,\
 	$${DOMESTIC_URL}international/trade/search/?term=,\
 	$${DOMESTIC_URL}international/trade/static/,\
 	$${DOMESTIC_URL}international/trade/suppliers/,\
@@ -112,104 +112,39 @@ PYLINKVALIDATE_ENV_VARS_UAT := \
 	$${DOMESTIC_URL}international/investment-support-directory/0,\
 	$${DOMESTIC_URL}international/investment-support-directory/O,\
 	$${DOMESTIC_URL}international/investment-support-directory/S,\
-	$${DOMESTIC_URL}international/investment-support-directory/search/?,\
-	$${DOMESTIC_URL}international/investment-support-directory/?q=,\
-	$${DOMESTIC_URL}selling-online-overseas/static/,\
-	$${DOMESTIC_URL}contact/selling-online-overseas/static/,\
-	$${EXPORT_OPPORTUNITIES_URL}assets/,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities?,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/a,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/b,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/c,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/d,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/m,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/f,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/g,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/h,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/j,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/k,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/m,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/n,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/m,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/p,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/r,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/s,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/t,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/w,\
-	$${EXPORT_OPPORTUNITIES_URL}opportunities/z,\
-	http://www.linkedin.com,\
-	https://twitter.com,\
-	https://uk.linkedin.com/,\
-	https://www.facebook.com,\
-	https://www.linkedin.com\
-	" && \
-	export TEST_URLS="\
-	$${DOMESTIC_URL} \
-	$${DOMESTIC_URL}advice/ \
-	$${DOMESTIC_URL}markets/ \
-	$${DOMESTIC_URL}services/ \
-	$${DOMESTIC_URL}community/ \
-	$${DOMESTIC_URL}contact/selling-online-overseas/ \
-	$${DOMESTIC_URL}contact/selling-online-overseas/markets/results/ \
-	$${DOMESTIC_URL}find-a-buyer/ \
-	$${DOMESTIC_URL}international/ \
-	$${DOMESTIC_URL}international/content/about-uk/ \
-	$${DOMESTIC_URL}international/invest/ \
-	$${DOMESTIC_URL}international/content/capital-invest/ \
-	$${DOMESTIC_URL}international/content/trade/how-we-help-you-buy/ \
-	$${DOMESTIC_URL}international/content/about-us/ \
-	$${DOMESTIC_URL}profile/about/ \
-	$${DOMESTIC_URL}sso/accounts/login/ \
-	$${EXPORT_OPPORTUNITIES_URL} \
-	$${EXPORT_OPPORTUNITIES_URL}opportunities?s=shoes&areas[]=&commit=Find+opportunities \
-	"
-
-
-PYLINKVALIDATE_ENV_VARS_STAGE := \
-	export IGNORED_PREFIXES="\
-	$${DOMESTIC_URL}international/static/,\
-	$${DOMESTIC_URL}find-a-buyer/static/,\
-	$${DOMESTIC_URL}profile/static/,\
-	$${DOMESTIC_URL}profile/enrol/?next=,\
-	$${DOMESTIC_URL}sso/accounts/login/?next,\
-	$${DOMESTIC_URL}sso/accounts/password/reset/?next,\
-	$${DOMESTIC_URL}sso/accounts/signup/?next,\
-	$${DOMESTIC_URL}sso/static/,\
-	$${DOMESTIC_URL}static/,\
-	$${DOMESTIC_URL}international/trade/search/?term=,\
-	$${DOMESTIC_URL}international/trade/static/,\
-	$${DOMESTIC_URL}international/trade/suppliers/,\
-	$${DOMESTIC_URL}international/invest/static/,\
-	$${DOMESTIC_URL}international/investment-support-directory/0,\
-	$${DOMESTIC_URL}international/investment-support-directory/O,\
-	$${DOMESTIC_URL}international/investment-support-directory/S,\
-	$${DOMESTIC_URL}international/investment-support-directory/search/?,\
-	$${DOMESTIC_URL}international/investment-support-directory/?q=,\
-	$${DOMESTIC_URL}selling-online-overseas/static/,\
-	$${DOMESTIC_URL}contact/selling-online-overseas/static/,\
-	$${DOMESTIC_URL}export-opportunities/opportunities?,\
-	$${DOMESTIC_URL}export-opportunities/opportunities/a,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/1,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/2,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/3,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/4,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/5,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/6,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/7,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/8,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/9,\
 	$${DOMESTIC_URL}export-opportunities/opportunities/b,\
 	$${DOMESTIC_URL}export-opportunities/opportunities/c,\
 	$${DOMESTIC_URL}export-opportunities/opportunities/d,\
-	$${DOMESTIC_URL}export-opportunities/opportunities/m,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/e,\
 	$${DOMESTIC_URL}export-opportunities/opportunities/f,\
 	$${DOMESTIC_URL}export-opportunities/opportunities/g,\
 	$${DOMESTIC_URL}export-opportunities/opportunities/h,\
 	$${DOMESTIC_URL}export-opportunities/opportunities/j,\
 	$${DOMESTIC_URL}export-opportunities/opportunities/k,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/l,\
 	$${DOMESTIC_URL}export-opportunities/opportunities/m,\
 	$${DOMESTIC_URL}export-opportunities/opportunities/n,\
-	$${DOMESTIC_URL}export-opportunities/opportunities/m,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/o,\
 	$${DOMESTIC_URL}export-opportunities/opportunities/p,\
 	$${DOMESTIC_URL}export-opportunities/opportunities/r,\
 	$${DOMESTIC_URL}export-opportunities/opportunities/s,\
 	$${DOMESTIC_URL}export-opportunities/opportunities/t,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/u,\
 	$${DOMESTIC_URL}export-opportunities/opportunities/w,\
 	$${DOMESTIC_URL}export-opportunities/opportunities/z,\
 	$${DOMESTIC_URL}export-opportunities/opportunities?s=,\
 	$${DOMESTIC_URL}export-opportunities/opportunities?paged=,\
 	$${DOMESTIC_URL}export-opportunities/assets/,\
+	http://exportbritain.org.uk/international-directory/,\
 	http://www.linkedin.com,\
 	https://twitter.com,\
 	https://uk.linkedin.com/,\
@@ -218,23 +153,90 @@ PYLINKVALIDATE_ENV_VARS_STAGE := \
 	" && \
 	export TEST_URLS="\
 	$${DOMESTIC_URL} \
-	$${DOMESTIC_URL}advice/ \
-	$${DOMESTIC_URL}markets/ \
-	$${DOMESTIC_URL}services/ \
 	$${DOMESTIC_URL}community/ \
-	$${DOMESTIC_URL}contact/selling-online-overseas/ \
-	$${DOMESTIC_URL}contact/selling-online-overseas/markets/results/ \
 	$${DOMESTIC_URL}export-opportunities/ \
-	$${DOMESTIC_URL}export-opportunities/opportunities?s=shoes&areas[]=&commit=Find+opportunities \
-	$${DOMESTIC_URL}find-a-buyer/ \
 	$${DOMESTIC_URL}international/ \
-	$${DOMESTIC_URL}international/content/about-uk/ \
-	$${DOMESTIC_URL}international/invest/ \
-	$${DOMESTIC_URL}international/content/capital-invest/ \
-	$${DOMESTIC_URL}international/content/trade/how-we-help-you-buy/ \
-	$${DOMESTIC_URL}international/content/about-us/ \
-	$${DOMESTIC_URL}profile/about/ \
+	$${DOMESTIC_URL}international/trade/ \
+	$${DOMESTIC_URL}international/investment-support-directory/ \
+	$${DOMESTIC_URL}find-a-buyer/ \
 	$${DOMESTIC_URL}sso/accounts/login/ \
+	$${DOMESTIC_URL}profile/about/ \
+	$${DOMESTIC_URL}international/content/invest/ \
+	$${DOMESTIC_URL}selling-online-overseas/ \
+	$${DOMESTIC_URL}selling-online-overseas/markets/results/ \
+	"
+
+
+PYLINKVALIDATE_ENV_VARS_STAGE := \
+	export IGNORED_PREFIXES="\
+	$${DOMESTIC_URL}selling-online-overseas/static/, \
+	$${DOMESTIC_URL}find-a-buyer/static/,\
+	$${DOMESTIC_URL}profile/static/,\
+	$${DOMESTIC_URL}sso/accounts/login/?next,\
+	$${DOMESTIC_URL}sso/accounts/password/reset/?next,\
+	$${DOMESTIC_URL}sso/accounts/signup/?next,\
+	$${DOMESTIC_URL}sso/static/,\
+	$${DOMESTIC_URL}static/,\
+	$${DOMESTIC_URL}international/static/,\
+	$${DOMESTIC_URL}international/trade/search/?term=,\
+	$${DOMESTIC_URL}international/trade/static/,\
+	$${DOMESTIC_URL}international/trade/suppliers/,\
+	$${DOMESTIC_URL}international/invest/static/,\
+	$${DOMESTIC_URL}international/investment-support-directory/0,\
+	$${DOMESTIC_URL}international/investment-support-directory/O,\
+	$${DOMESTIC_URL}international/investment-support-directory/S,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/1,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/2,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/3,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/4,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/5,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/6,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/7,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/8,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/9,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/b,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/c,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/d,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/e,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/f,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/g,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/h,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/j,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/k,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/l,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/m,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/n,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/o,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/p,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/r,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/s,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/t,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/u,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/w,\
+	$${DOMESTIC_URL}export-opportunities/opportunities/z,\
+	$${DOMESTIC_URL}export-opportunities/opportunities?s=,\
+	$${DOMESTIC_URL}export-opportunities/opportunities?paged=,\
+	$${DOMESTIC_URL}export-opportunities/assets/,\
+	http://exportbritain.org.uk/international-directory/,\
+	http://www.linkedin.com,\
+	https://twitter.com,\
+	https://uk.linkedin.com/,\
+	https://www.facebook.com,\
+	https://www.linkedin.com\
+	" && \
+	export TEST_URLS="\
+	$${DOMESTIC_URL} \
+	$${DOMESTIC_URL}community/ \
+	$${DOMESTIC_URL}export-opportunities/ \
+	$${DOMESTIC_URL}international/ \
+	$${DOMESTIC_URL}international/trade/ \
+	$${DOMESTIC_URL}international/investment-support-directory/ \
+	$${DOMESTIC_URL}find-a-buyer/ \
+	$${DOMESTIC_URL}sso/accounts/login/ \
+	$${DOMESTIC_URL}profile/about/ \
+	$${DOMESTIC_URL}international/content/invest/ \
+	$${DOMESTIC_URL}selling-online-overseas/ \
+	$${DOMESTIC_URL}selling-online-overseas/markets/results/ \
 	"
 
 PYLINKVALIDATE_ENV_VARS_DEV := \
