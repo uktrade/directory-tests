@@ -320,7 +320,7 @@ step_run_load_tests: &step_run_load_tests
       . venv/bin/activate
       python ./env_vars/env_writer.py --env=${TEST_ENV} --config=./env_vars/env.json
       source ./env_vars/.env_with_export;
-      NUM_USERS=${NUM_USERS} HATCH_RATE=${HATCH_RATE} RUN_TIME=${RUN_TIME} make rudimental_load_test_${SERVICE}
+      NUM_USERS=${NUM_USERS} HATCH_RATE=${HATCH_RATE} RUN_TIME=${RUN_TIME} make load_test_${SERVICE}
 
 step_run_test_cms_pages_return_200: &step_run_test_cms_pages_return_200
   run:

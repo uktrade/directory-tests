@@ -49,44 +49,44 @@ LOCUST := \
 		--csv=./reports/results \
 		--headless || true
 
-rudimental_load_test_cms:
-	export LOCUST_FILE=./locustfile_rudimental_cms.py; \
+load_test_cms:
+	export LOCUST_FILE=./locustfile_cms.py; \
 	$(LOCUST)
 
-rudimental_load_test_erp:
-	export LOCUST_FILE=./locustfile_rudimental_erp.py; \
+load_test_erp:
+	export LOCUST_FILE=./locustfile_erp.py; \
 	$(LOCUST)
 
-rudimental_load_test_profile:
-	export LOCUST_FILE=./locustfile_rudimental_profile.py; \
+load_test_profile:
+	export LOCUST_FILE=./locustfile_profile.py; \
 	$(LOCUST)
 
-rudimental_load_test_fab:
-	export LOCUST_FILE=./locustfile_rudimental_fab.py; \
+load_test_fab:
+	export LOCUST_FILE=./locustfile_fab.py; \
 	$(LOCUST)
 
-rudimental_load_test_fas:
-	export LOCUST_FILE=./locustfile_rudimental_fas.py; \
+load_test_fas:
+	export LOCUST_FILE=./locustfile_fas.py; \
 	$(LOCUST)
 
-rudimental_load_test_international:
-	export LOCUST_FILE=./locustfile_rudimental_international.py; \
+load_test_international:
+	export LOCUST_FILE=./locustfile_international.py; \
 	$(LOCUST)
 
-rudimental_load_test_invest:
-	export LOCUST_FILE=./locustfile_rudimental_invest.py; \
+load_test_invest:
+	export LOCUST_FILE=./locustfile_invest.py; \
 	$(LOCUST)
 
-rudimental_load_test_isd:
-	export LOCUST_FILE=./locustfile_rudimental_isd.py; \
+load_test_isd:
+	export LOCUST_FILE=./locustfile_isd.py; \
 	$(LOCUST)
 
-rudimental_load_test_soo:
-	export LOCUST_FILE=./locustfile_rudimental_soo.py; \
+load_test_soo:
+	export LOCUST_FILE=./locustfile_soo.py; \
 	$(LOCUST)
 
-rudimental_load_test_domestic:
-	export LOCUST_FILE=./locustfile_rudimental_domestic.py; \
+load_test_domestic:
+	export LOCUST_FILE=./locustfile_domestic.py; \
 	$(LOCUST)
 
 TEST_ENV ?= DEV
