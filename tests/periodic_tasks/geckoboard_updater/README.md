@@ -174,7 +174,7 @@ All those steps are executed in [def last_tests_results_from_junit_artifacts()](
 1) fetch a list of recent builds (see [def recent_builds()](circleci_utils.py))
 2) find last build for specific job (see [def last_build_per_job()](circleci_utils.py) & `DIRECTORY_LOAD_TESTS_JOB_NAME_MAPPINGS`)
 3) get test job artifacts from CircleCI (stored as XML Junit report files) (see [def get_build_artifacts()](circleci_utils.py))
-4) parse those CSV files and extract relevant metrics (see [def get_results_distribution()](circleci_utils.py) & [def get_load_tests_requests_results()](circleci_utils.py))
+4) parse those CSV files and extract relevant metrics (see [def get_load_test_response_time_distribution()](circleci_utils.py) & [def get_load_test_response_time_metrics()](circleci_utils.py))
 
 For more details check [circleci_utils.py](./circleci_utils.py)
 

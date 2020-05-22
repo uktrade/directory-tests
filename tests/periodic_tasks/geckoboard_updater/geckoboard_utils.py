@@ -7,8 +7,8 @@ import requests
 from tests.periodic_tasks.geckoboard_updater.circleci_utils import (
     DIRECTORY_LOAD_TESTS_JOB_NAME_MAPPINGS,
     DIRECTORY_PERIODIC_TESTS_JOB_NAME_MAPPINGS,
-    get_load_tests_requests_results,
-    get_results_distribution,
+    get_load_test_response_time_distribution,
+    get_load_test_response_time_metrics,
     last_directory_service_build_results,
     last_directory_tests_results,
     last_load_test_artifacts,
@@ -319,10 +319,10 @@ def push_circleci_test_results(datasets: GeckoboardDatasets):
         "directory-tests",
         job_name_mappings=DIRECTORY_LOAD_TESTS_JOB_NAME_MAPPINGS,
     )
-    load_tests_response_times_distributions = get_results_distribution(
+    load_tests_response_times_distributions = get_load_test_response_time_distribution(
         load_tests_artifacts
     )
-    load_tests_response_times_metrics = get_load_tests_requests_results(
+    load_tests_response_times_metrics = get_load_test_response_time_metrics(
         load_tests_artifacts
     )
 
