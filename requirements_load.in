@@ -2,5 +2,5 @@
 directory-cms-client
 directory-constants
 docopt
-locustio
+locust
 requests
