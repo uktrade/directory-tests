@@ -4,8 +4,8 @@ version: 2
 load_hatch_rate: &load_hatch_rate
     HATCH_RATE: 3
 
-load_num_clients: &load_num_clients
-    NUM_CLIENTS: 1000
+load_num_users: &load_num_users
+    NUM_USERS: 1000
 
 load_run_time: &load_run_time
     RUN_TIME: 5m
@@ -320,7 +320,7 @@ step_run_load_tests: &step_run_load_tests
       . venv/bin/activate
       python ./env_vars/env_writer.py --env=${TEST_ENV} --config=./env_vars/env.json
       source ./env_vars/.env_with_export;
-      NUM_CLIENTS=${NUM_CLIENTS} HATCH_RATE=${HATCH_RATE} RUN_TIME=${RUN_TIME} make rudimental_load_test_${SERVICE}
+      NUM_USERS=${NUM_USERS} HATCH_RATE=${HATCH_RATE} RUN_TIME=${RUN_TIME} make rudimental_load_test_${SERVICE}
 
 step_run_test_cms_pages_return_200: &step_run_test_cms_pages_return_200
   run:
@@ -871,7 +871,7 @@ jobs:
       TEST_ENV: "stage"
       <<: [
       *load_hatch_rate,
-      *load_num_clients,
+      *load_num_users,
       *load_run_time,
       ]
     <<: [
@@ -886,7 +886,7 @@ jobs:
       TEST_ENV: "stage"
       <<: [
       *load_hatch_rate,
-      *load_num_clients,
+      *load_num_users,
       *load_run_time,
       ]
     <<: [
@@ -901,7 +901,7 @@ jobs:
       TEST_ENV: "stage"
       <<: [
       *load_hatch_rate,
-      *load_num_clients,
+      *load_num_users,
       *load_run_time,
       ]
     <<: [
@@ -916,7 +916,7 @@ jobs:
       TEST_ENV: "stage"
       <<: [
       *load_hatch_rate,
-      *load_num_clients,
+      *load_num_users,
       *load_run_time,
       ]
     <<: [
@@ -931,7 +931,7 @@ jobs:
       TEST_ENV: "stage"
       <<: [
       *load_hatch_rate,
-      *load_num_clients,
+      *load_num_users,
       *load_run_time,
       ]
     <<: [
@@ -946,7 +946,7 @@ jobs:
       TEST_ENV: "stage"
       <<: [
       *load_hatch_rate,
-      *load_num_clients,
+      *load_num_users,
       *load_run_time,
       ]
     <<: [
@@ -961,7 +961,7 @@ jobs:
       TEST_ENV: "stage"
       <<: [
       *load_hatch_rate,
-      *load_num_clients,
+      *load_num_users,
       *load_run_time,
       ]
     <<: [
@@ -976,7 +976,7 @@ jobs:
       TEST_ENV: "stage"
       <<: [
       *load_hatch_rate,
-      *load_num_clients,
+      *load_num_users,
       *load_run_time,
       ]
     <<: [
@@ -991,7 +991,7 @@ jobs:
       TEST_ENV: "stage"
       <<: [
       *load_hatch_rate,
-      *load_num_clients,
+      *load_num_users,
       *load_run_time,
       ]
     <<: [

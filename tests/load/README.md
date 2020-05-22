@@ -57,14 +57,14 @@ This is useful when executing on CI.
 
 In order to run load tests locally, you'll need to specify `3` values:
 
-* `NUM_CLIENTS` - number of concurrent Locust users
+* `NUM_USERS` - number of concurrent Locust users
 * `HATCH_RATE` - the rate per second in which clients are spawned
 * `RUN_TIME` - stop after the specified amount of time
 
 Once you have those numbers, then simply run following command from repo's root directory:
 
 ```bash
-NUM_CLIENTS=5 HATCH_RATE=2 RUN_TIME=35 make rudimental_load_test_{service_name}
+NUM_USERS=5 HATCH_RATE=2 RUN_TIME=35 make rudimental_load_test_{service_name}
 ```
 
 Where `{service_short_name}` is one of the following:
@@ -147,8 +147,8 @@ Tests are controlled by `3` variables defined at the top of [config.yml](../../.
 load_hatch_rate: &load_hatch_rate
     HATCH_RATE: 5
 
-load_num_clients: &load_num_clients
-    NUM_CLIENTS: 20
+load_num_users: &load_num_users
+    NUM_USERS: 20
 
 load_run_time: &load_run_time
     RUN_TIME: 300

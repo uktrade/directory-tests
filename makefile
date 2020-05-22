@@ -43,11 +43,11 @@ compare_content:
 LOCUST := \
 	locust \
 		--locustfile $$LOCUST_FILE \
-		--clients=$$NUM_CLIENTS \
+		--users=$$NUM_USERS \
 		--hatch-rate=$$HATCH_RATE \
 		--run-time=$$RUN_TIME \
 		--csv=./reports/results \
-		--no-web || true
+		--headless || true
 
 rudimental_load_test_cms:
 	export LOCUST_FILE=./locustfile_rudimental_cms.py; \
