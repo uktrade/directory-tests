@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
 
-from locust import HttpLocust, events
+from locust import HttpUser, events
 from requests.exceptions import (
     InvalidSchema,
     InvalidURL,
@@ -74,9 +74,9 @@ class LocustCMSAPIAuthenticatedClient(DirectoryCMSClient):
                 print(f"GET {args[0]} -> {r.status_code}")
 
 
-class CMSAPIAuthClientMixin(HttpLocust):
-    def __init__(self):
-        super(CMSAPIAuthClientMixin, self).__init__()
+class CMSAPIAuthClientMixin(HttpUser):
+    def __init__(self, *args, **kwargs):
+        super(CMSAPIAuthClientMixin, self).__init__(*args, **kwargs)
         self.client = LocustCMSAPIAuthenticatedClient(
             base_url=self.host,
             api_key=CMS_API_KEY,

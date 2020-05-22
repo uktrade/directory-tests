@@ -225,5 +225,5 @@ class CMSTasks(TaskSet):
 
 class CMS(CMSAPIAuthClientMixin):
     host = settings.CMS_API_URL
-    task_set = CMSTasks
+    tasks = [CMSTasks]
     wait_time = between(settings.LOCUST_MIN_WAIT, settings.LOCUST_MAX_WAIT)
