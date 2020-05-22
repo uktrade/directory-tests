@@ -6,9 +6,9 @@ directory-sso-api-client
 directory-constants
 docopt
 lxml
-pytest
+pytest==5.3.5
 pytest-django
-pytest-sugar
+pytest-sugar==0.9.3
 requests
 retrying
 sigauth

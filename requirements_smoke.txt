@@ -29,7 +29,6 @@ envparse==0.2.0           # via directory-tests-shared
 future==0.18.2            # via directory-tests-shared, notifications-python-client
 hyperlink==19.0.0         # via directory-tests-shared, twisted
 idna==2.9                 # via directory-tests-shared, hyperlink, requests
-importlib-metadata==1.6.0  # via pluggy, pytest
 incremental==17.5.0       # via directory-tests-shared, twisted
 lxml==4.5.1               # via -r requirements_smoke.in, directory-tests-shared, parsel, scrapy
 mohawk==0.3.4             # via directory-tests-shared, sigauth
@@ -53,7 +52,7 @@ pyopenssl==19.1.0         # via directory-tests-shared, scrapy
 pyparsing==2.4.7          # via packaging
 pytest-django==3.9.0      # via -r requirements_smoke.in
 pytest-sugar==0.9.3       # via -r requirements_smoke.in
-pytest==5.4.2             # via -r requirements_smoke.in, allure-pytest, pytest-django, pytest-sugar
+pytest==5.3.5             # via -r requirements_smoke.in, allure-pytest, pytest-django, pytest-sugar
 pytz==2020.1              # via directory-tests-shared, django
 queuelib==1.5.0           # via directory-tests-shared, scrapy
 requests==2.23.0          # via -r requirements_smoke.in, directory-api-client, directory-client-core, directory-tests-shared, notifications-python-client
@@ -69,7 +68,6 @@ twisted==20.3.0           # via directory-tests-shared, scrapy
 urllib3==1.25.9           # via directory-tests-shared, requests
 w3lib==1.22.0             # via directory-client-core, directory-tests-shared, parsel, scrapy
 wcwidth==0.1.9            # via pytest
-zipp==3.1.0               # via importlib-metadata
 zope.interface==5.1.0     # via directory-tests-shared, scrapy, twisted
 
 # The following packages are considered to be unsafe in a requirements file:
