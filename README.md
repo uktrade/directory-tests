@@ -30,6 +30,23 @@ Please use a dedicated `virtualenv` for each type of tests.
 for creating & managing [virtual envs](https://pypi.org/project/virtualenv/).
 
 
+# Env Vars
+
+Before you can run any load tests you'll need to set all required environment variables.  
+You can find shell scripts with all env vars in Rattic (look for `DIT test env vars`).
+
+Once you get access to those shell scripts, you can add some handy aliases to your shell config, e.g.:
+
+```bash
+alias dev='source ~/dir-dev.sh';
+alias stage='source ~/dir-stage.sh';
+alias uat='source ~/dir-uat.sh';
+alias gecko='source ~/geckoboard.sh';
+alias periodic='source ~/periodic.sh';
+```
+
+Thanks to this you'll be able to can quickly change between test environments when running tests locally.
+
 ## Updating requirements_*.txt files
 
 We're using [pip-tools](https://pypi.org/project/pip-tools/) to generate pinned `requirements.txt`.  

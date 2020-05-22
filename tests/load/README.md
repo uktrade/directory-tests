@@ -6,7 +6,7 @@ Tests are driven by load test tool called [locust](https://locust.io/).
 
 Services covered with load tests:
 
-* `CMS-API`
+* `CMS API`
 * `ERP`
 * `Find a buyer`
 * `Find a supplier`
@@ -17,45 +17,32 @@ Services covered with load tests:
 * `Selling Online Overseas`
 
 
-# Requirements
+## Requirements
 
-* python 3.6
-* pip
+* python 3.8+
 * dependencies listed in [requirements_load.txt](../../requirements_load.txt)
-* required environment variables (see [env.json](../../env_vars/env.json)
+* env vars
+
+Although load tests explicitly depend only on following env vars:
+* BASICAUTH_USER, BASICAUTH_PASS, CMS_API_DEFAULT_TIMEOUT, CMS_API_KEY, CMS_API_SENDER_ID,
+
+All other environment variables defined in [env.json](../../env_vars/env.json) are also required.  
+This is because load tests depend on `directory_tests_shared` package, which requires all env vars from `env.json` to be set.
 
 
-# Installation and execution
+## Installation and execution
 
 1. Create dedicated virtualenv -> `mkvirtualenv -p python3.6 load`
-2. Install dependencies from [requirements_load.txt](../../requirements_load.txt) → `pip install -r requirements_load.txt`
-3. Set required env vars (see [Env Vars](#env-vars))
+2. Install dependencies `make requirements_load` (or `pip install -r requirements_load.txt`)
+3. Set required env vars (see `Env Vars` section in project's main [README](../../README.md#env-vars))
 4. Run tests with or without Web GUI -> see steps below
 
 
-# Env Vars
+### Run in headless mode
 
-Before running tests you'll need to set all required environment variables.  
-You can find those variables in Rattic.  
+[Makefile](../../makefile) contains dedicated targets which can execute load tests without WEB GUI.  
 
-The next steps is to define handy command aliases to make that process as simple as possible:
-
-```bash
-alias dev='source ~/dev.sh';
-alias stage='source ~/stage.sh';
-alias uat='source ~/uat.sh';
-```
-
-Once that's done, remember to run `dev`, `stage` or `uat` command prior running tests
-against desired environment.
-
-
-## Run without Web GUI
-
-Makefile contains targets per service which execute load tests without WEB GUI.  
-This is useful when executing on CI.
-
-In order to run load tests locally, you'll need to specify `3` values:
+In order to run load tests locally, you'll need to specify `3` values (env vars):
 
 * `NUM_USERS` - number of concurrent Locust users
 * `HATCH_RATE` - the rate per second in which clients are spawned
@@ -64,23 +51,28 @@ In order to run load tests locally, you'll need to specify `3` values:
 Once you have those numbers, then simply run following command from repo's root directory:
 
 ```bash
-NUM_USERS=5 HATCH_RATE=2 RUN_TIME=35 make rudimental_load_test_{service_name}
+NUM_USERS=5 HATCH_RATE=2 RUN_TIME=35 make load_test_{service_name}
 ```
 
 Where `{service_short_name}` is one of the following:
 
 * cms
+* domestic
+* erp
 * fab
 * fas
 * international
 * invest
 * isd
-* search
+* profile
 * soo
 
 Once test is finished, locust will:
 * print out the results to the console
-* save 2 CSV files [`results_distribution.csv` & `results_requests.csv`] in `./reports/`
+* and save CSV result files in `./reports/`
+    * `results_stats.csv` - this file is used by [Geckoboard Updater](../periodic_tasks/geckoboard_updater/README.md) script to populate 2 [Geckoboards](https://readme.trade.gov.uk/docs/playbooks/qa-geckoboards.html)
+    * `results_stats_history.csv` - might come in handy during debugging
+    * `results_failures.csv` - this one is generated only when at least 1 error occured
 
 Example results printed to console:
 ```bash
@@ -102,17 +94,16 @@ Percentage of the requests completed within given times
  Total                                      51    310    320    340    360    390    490    530    540    540
 ```
 
-## Run from Web GUI
+### Run via Web GUI
 
 Locust also offers an option to run tests from a nice Web GUI.
 
 In order to start the Web GUI, choose service name and from repo's root directory run:
 ```bash
-locust -f locustfile_rudimental_{service_name}.py
+locust -f locustfile_{service_name}.py
 ```
 
-Once web monitor is up, go to [http://localhost:8089/](http://localhost:8089/).  
-You'll be prompted to enter:
+Once web monitor is up, go to [http://localhost:8089/](http://localhost:8089/) and you'll be prompted to enter:
 
 * Number of users to simulate
 * Hatch rate (users spawned/second)
@@ -123,66 +114,43 @@ Clicking on `Start swarming` will start the test and allow you to see:
 * nice charts
 * failures
 * exceptions
-* and download statistics in form of CSV files
+* and download test results
 
 
-# CircleCI
+## Run on CircleCI
 
-All load tests are executed against staging environment every night on CircleCI.  
+All load tests are executed against staging environment every night (Mon through Fri) on CircleCI.  
 Load test workflows are defined in [config.yml](../../.circleci/config.yml).
 
-Below are the workflow names per specific service:
+List of load test workflow (at the time of writing (May 2020))
+
 * run_cms_load_tests_on_stage
+* run_domestic_load_tests_on_stage
 * run_fab_load_tests_on_stage
 * run_fas_load_tests_on_stage
 * run_international_load_tests_on_stage
 * run_invest_load_tests_on_stage
 * run_isd_load_tests_on_stage
-* run_search_load_tests_on_stage
+* run_profile_load_tests_on_stage
 * run_soo_load_tests_on_stage
 
 Tests are controlled by `3` variables defined at the top of [config.yml](../../.circleci/config.yml).
 
 ```yaml
 load_hatch_rate: &load_hatch_rate
-    HATCH_RATE: 5
+    HATCH_RATE: 3
 
 load_num_users: &load_num_users
-    NUM_USERS: 20
+    NUM_USERS: 1000
 
 load_run_time: &load_run_time
-    RUN_TIME: 300
+    RUN_TIME: 5m
 ```
 
 
-## Artifacts & Geckoboards
+### Artifacts & Geckoboards
 
-After each load test job is done, CircleCI will keep locust's test result files:
-`results_distribution.csv` & `results_requests.csv` as a job artifact.  
+After each load test run, CircleCI will keep all CSV result files as a job artifacts.  
 
-These `CSV` files are then consumed by [Geckoboard Updater](https://github.com/uktrade/directory-periodic-tests/tree/master/geckoboard_updater) script.
-Once fetched, parsed & converted into a JSON Dataset, Geckoboard Updater will push
-the load tests results to Geckoboard, where they're nicely visualised.
-
-
-# env vars
-
-In order to execute load tests following environment variables must be set:
-
-* `DIRECTORY_CMS_API_CLIENT_API_KEY`
-* `DIRECTORY_CMS_API_CLIENT_BASE_URL`
-* `DIRECTORY_UI_BUYER_URL`
-* `DIRECTORY_UI_INTERNATIONAL_URL`
-* `DIRECTORY_UI_SUPPLIER_URL`
-* `EXRED_UI_URL`
-* `INVEST_UI_URL`
-* `ISD_UI_URL`
-* `SOO_UI_URL`
-
-
-There are also optional environment variables which will use default values if unset:
-
-* `DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT=30`
-* `DIRECTORY_CMS_API_CLIENT_SENDER_ID=directory`
-* `LOCUST_MAX_WAIT=6000`
-* `LOCUST_MIN_WAIT=500`
+These `CSV` files are processed by [Geckoboard Updater](../periodic_tasks/geckoboard_updater/README.md) in order to
+populate load test [Geckoboards](https://readme.trade.gov.uk/docs/playbooks/qa-geckoboards.html).
