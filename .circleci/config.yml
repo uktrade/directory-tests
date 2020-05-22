@@ -999,6 +999,21 @@ jobs:
     *steps_run_load_tests,
     ]
 
+  load_profile_tests_stage:
+    working_directory: ~/directory-tests
+    environment:
+      SERVICE: "profile"
+      TEST_ENV: "stage"
+      <<: [
+      *load_hatch_rate,
+      *load_num_users,
+      *load_run_time,
+      ]
+    <<: [
+    *machine_python3_node,
+    *steps_run_load_tests,
+    ]
+
   dev_parallel_browser_tests_using_circleci:
     working_directory: ~/directory-tests
     parallelism: 12
@@ -1651,6 +1666,19 @@ workflows:
     jobs:
       - setup_env_for_load_tests
       - load_erp_tests_stage:
+          requires:
+            - setup_env_for_load_tests
+
+  run_profile_load_tests_on_stage:
+    triggers:
+      - schedule:
+          cron: "23 5 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_load_tests
+      - load_profile_tests_stage:
           requires:
             - setup_env_for_load_tests
 
