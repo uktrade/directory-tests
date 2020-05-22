@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import random
 
-from locust import HttpLocust, TaskSet, between, task
+from locust import HttpUser, TaskSet, between, task
 
 from directory_tests_shared import URLs, settings
 from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
@@ -90,7 +90,7 @@ class SOOTasks(TaskSet):
         )
 
 
-class SOO(HttpLocust):
+class SOO(HttpUser):
     host = settings.SOO_URL
-    task_set = SOOTasks
+    tasks = [SOOTasks]
     wait_time = between(settings.LOCUST_MIN_WAIT, settings.LOCUST_MAX_WAIT)

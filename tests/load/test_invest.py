@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from random import choice
 
-from locust import HttpLocust, TaskSet, between, task
+from locust import HttpUser, TaskSet, between, task
 
 from directory_tests_shared import URLs, settings
 from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
@@ -39,7 +39,7 @@ class InvestTasks(TaskSet):
         )
 
 
-class Invest(HttpLocust):
+class Invest(HttpUser):
     host = settings.INVEST_URL
-    task_set = InvestTasks
+    tasks = [InvestTasks]
     wait_time = between(settings.LOCUST_MIN_WAIT, settings.LOCUST_MAX_WAIT)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import random
 
-from locust import HttpLocust, TaskSet, between, task
+from locust import HttpUser, TaskSet, between, task
 
 from directory_tests_shared import URLs, settings
 from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
@@ -142,7 +142,7 @@ class ERPTasks(TaskSet):
         )
 
 
-class ERP(HttpLocust):
+class ERP(HttpUser):
     host = settings.ERP_URL
-    task_set = ERPTasks
+    tasks = [ERPTasks]
     wait_time = between(settings.LOCUST_MIN_WAIT, settings.LOCUST_MAX_WAIT)

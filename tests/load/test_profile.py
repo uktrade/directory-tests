@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import random
 
-from locust import HttpLocust, TaskSet, between, task
+from locust import HttpUser, TaskSet, between, task
 
 from directory_tests_shared import URLs, settings
 from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
@@ -22,7 +22,7 @@ class ProfileTasks(TaskSet):
         )
 
 
-class Profile(HttpLocust):
+class Profile(HttpUser):
     host = settings.PROFILE_URL
-    task_set = ProfileTasks
+    tasks = [ProfileTasks]
     wait_time = between(settings.LOCUST_MIN_WAIT, settings.LOCUST_MAX_WAIT)

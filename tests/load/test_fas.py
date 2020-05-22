@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import random
 
-from locust import HttpLocust, TaskSet, between, task
+from locust import HttpUser, TaskSet, between, task
 
 from directory_tests_shared import URLs, settings
 from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
@@ -68,7 +68,7 @@ class FASTasks(TaskSet):
         )
 
 
-class FAS(HttpLocust):
+class FAS(HttpUser):
     host = settings.FIND_A_SUPPLIER_URL
-    task_set = FASTasks
+    tasks = [FASTasks]
     wait_time = between(settings.LOCUST_MIN_WAIT, settings.LOCUST_MAX_WAIT)

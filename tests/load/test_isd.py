@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import random
 
-from locust import HttpLocust, TaskSet, between, task
+from locust import HttpUser, TaskSet, between, task
 
 from directory_constants.expertise import (
     BUSINESS_SUPPORT,
@@ -67,7 +67,7 @@ class ISDTasks(TaskSet):
         )
 
 
-class ISD(HttpLocust):
+class ISD(HttpUser):
     host = settings.ISD_URL
-    task_set = ISDTasks
+    tasks = [ISDTasks]
     wait_time = between(settings.LOCUST_MIN_WAIT, settings.LOCUST_MAX_WAIT)
