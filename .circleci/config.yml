@@ -969,10 +969,10 @@ jobs:
     *steps_run_load_tests,
     ]
 
-  load_search_tests_stage:
+  load_domestic_tests_stage:
     working_directory: ~/directory-tests
     environment:
-      SERVICE: "search"
+      SERVICE: "domestic"
       TEST_ENV: "stage"
       <<: [
       *load_hatch_rate,
@@ -1628,7 +1628,7 @@ workflows:
           requires:
             - setup_env_for_load_tests
 
-  run_search_load_tests_on_stage:
+  run_domestic_load_tests_on_stage:
     triggers:
       - schedule:
           cron: "11 5 * * 1-5"
@@ -1637,7 +1637,7 @@ workflows:
               only: master
     jobs:
       - setup_env_for_load_tests
-      - load_search_tests_stage:
+      - load_domestic_tests_stage:
           requires:
             - setup_env_for_load_tests
 

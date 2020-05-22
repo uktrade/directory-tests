@@ -2,17 +2,17 @@ DIT - Load tests
 ---------------------------------------
 
 This package contains a set of rudimentary load tests for various DIT services.  
-Tests are driven by load test tool called [locust.io](https://locust.io/).
+Tests are driven by load test tool called [locust](https://locust.io/).
 
 Services covered with load tests:
 
 * `CMS-API`
+* `ERP`
 * `Find a buyer`
 * `Find a supplier`
 * `Domestic site`
-* `Domestic search`
 * `International site`
-* `Invest`
+* `Invest pages`
 * `ISD`
 * `Selling Online Overseas`
 
