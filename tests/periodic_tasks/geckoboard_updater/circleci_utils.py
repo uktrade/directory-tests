@@ -465,7 +465,7 @@ def extract_response_time_distribution_from_csv(
             if key.lower() in ignored_columns:
                 continue
             if key == "Request Count":
-                clean_key = "# requests"
+                clean_key = "requests"
             else:
                 clean_key = key.replace("%", "").strip().lower()
             if value == "N/A":
