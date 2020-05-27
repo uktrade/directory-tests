@@ -6,6 +6,9 @@ from collections import Counter, defaultdict
 from typing import Tuple
 
 GREAT = os.environ["DOMESTIC_URL"]
+REPORT_FILE = os.getenv(
+    "REPORT_FILE", default="../../../reports/dead_links_report.json"
+)
 
 SERVICES = {
     "CMS": os.environ["CMS_API_URL"],
@@ -138,10 +141,8 @@ def service_contingency(report: dict) -> dict:
 
 
 if __name__ == "__main__":
-    with open("reports/dead_links_report.json", "r") as f:
+    with open(REPORT_FILE, "r") as f:
         REPORT = json.load(f)
-
-    scanned_pages = len(REPORT["pages"])
 
     print(
         f"Number of unique links (without links to static files, translations and "
@@ -151,6 +152,7 @@ if __name__ == "__main__":
         f"If a link contains any of following strings: {', '.join(SKIP_STRINGS)} then "
         f"it won't be included in the contingency report"
     )
+
     (
         scans_per_service,
         ignored_links_per_service,

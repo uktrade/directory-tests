@@ -9,7 +9,7 @@ This script does three things:
     * relevant data into [Geckoboard datasets](https://developer.geckoboard.com/hc/en-us/articles/360019745091-Getting-started-with-Datasets)
 * push
     * datasets to GeckoBoard so underlying data can be visualised on any board
-    * custom text data (a subset of HTML) to Geckoboard [text widgets](https://developer-custom.geckoboard.com/#text)
+    * custom text widget data (a subset of HTML) to Geckoboard [text widgets](https://developer-custom.geckoboard.com/#text)
 
 At the time of writing (May 2020) the [geckoboard_updater.py](./geckoboard_updater.py) script is scheduled to run twice a day.  
 Please refer to `refresh_geckoboard_periodically` workflow in [.circleci/config.yml](../../../.circleci/config.yml) for scheduling details.
@@ -25,7 +25,7 @@ Please refer to `refresh_geckoboard_periodically` workflow in [.circleci/config.
 
 ### Environment variables
 
-All env variables are in rattic (look for Geckoboard updater)
+All secrets required by this script are in Rattic (look for `Geckoboard updater` and then for `geckoboard.sh`)
 
 Required environment variables:
 

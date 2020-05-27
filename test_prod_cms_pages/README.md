@@ -1,52 +1,62 @@
-Check if all Production CMS pages are available
------------------------------------------------
+Check if all CMS pages are available
+------------------------------------
 
-This test goes through all published & draft versions of pages found with the
-use of CMS API and checks whether those pages can be visited without any error.
+There are two scripts in this directory:
 
+* [test_cms_pages_return_200.py](./test_cms_pages_return_200.py) - a test goes through all published & draft versions of pages exposed via CMS API and checks whether those pages can be visited without any error
+* [generate_page_status_report.py](./generate_page_status_report.py) - generates a simple CMS page status report
 
 ## Why is it here?
 
-This module should be placed in `tests/periodic_tasks` so it could make use of common
-helpers. Unfortunately it would mean that we'd have to have all required env vars
-(see [./env_vars/env.json](./env_vars/env.json) ) for Production environment set in CircleCI.
-This solution is rather far from ideal. Thus I've decided to keep these tests in a separate package.  
+This module should be placed in `tests/periodic_tasks` so it could make use of common helpers.  
+Unfortunately it would mean that we'd have to have all required env vars (see [./env_vars/env.json](./env_vars/env.json))
+ for Production environment set in CircleCI.  
+That would be rather far from ideal, thus I've decided to keep these tests in a separate package.  
 
 
 ## Requirements
 
+* [directory_cms_client](https://pypi.org/project/directory-cms-client/)
+* [envparse](https://pypi.org/project/envparse/)
 * [pytest](https://pypi.org/project/pytest/)
 * [requests](http://docs.python-requests.org/en/master/)
-* [directory_cms_client](https://pypi.org/project/directory-cms-client/)
+* [termcolor](https://pypi.org/project/termcolor/)
+* and CMS credentials exported as 2 env vars: `CMS_API_URL` & `CMS_API_KEY`
 
+## Development
 
-## Check if all Production CMS pages return 200 OK
+You can create a dedicated virtual env or use the same one as for [periodic tasks](../tests/periodic_tasks/README.md).
 
-When in project's root directory run:
+If you decide to create a dedicated venv then do so and install all dependencies and export mandatory env vars as follows:
+
+```bash
+mkvirtualenv -p python3.8 cms_status
+pip install directory-cms-client envparse pytest requests termcolor
+export CMS_API_URL=https://cms.api.url
+export CMS_API_KEY=SECRET_API_KEY
+```
+
+### Check if all CMS pages return 200 OK
+
+When in repo's root directory run:
 ```bash
 make test_cms_pages_return_200
 ```
 
-or:
-```bash
-cd test_prod_cms_pages
-pytest --capture=no --verbose
-```
-
-or in case you have some importing issues set `PYTHONPATH` to `.`:
+In case you encounter importing issues set `PYTHONPATH` to `.`:
 ```bash
 cd test_prod_cms_pages
 PYTHONPATH=. pytest --capture=no --verbose test_cms_pages_return_200.py
 ```
 
+[Geckoboard updater](../tests/periodic_tasks/geckoboard_updater/README.md) parses results from this tests are pushes them to `Great - CMS stats and dead links` geckoboard.
 
-## Generate report for CMS page status
 
-[generate_page_status_report.py](./generate_page_status_report.py) script generates a simple HTML report for all
-Production CMS pages. The report contains
+### Generate a report with CMS page status
 
+When in repo's root directory run:
 ```bash
 make cms_page_status_report
 ```
 
-A link to the latest version of that that report is published on `Great - CMS stats and dead links` geckoboard.
+A link to the latest version of that that report is published daily on `Great - CMS stats and dead links` geckoboard.

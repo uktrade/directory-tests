@@ -1,5 +1,5 @@
-DIT - Functional Tests
-----------------------------------
+GREAT platform - Functional (Integration) Tests
+-----------------------------------------------
 
 This repository contains UI tests automated using:
 * [Behave](https://pythonhosted.org/behave/)
@@ -7,24 +7,37 @@ This repository contains UI tests automated using:
 
 **IMPORTANT NOTE**
 
-Functional tests use `requests` library to perform all requests.
-It means no browser is used to execute test scenarios defined in feature files.
+Functional tests use `requests` library to perform all HTTP requests (GET, PUT, DELETE etc).
+It means that no browser is used to drive the tests.
 
 
 # Requirements
 
-* python 3.6
+* python 3.8+
 * pip
-* required environment variables (see [env.json](../../env_vars/env.json)
 * dependencies listed in [requirements_functional.txt](../../requirements_functional.txt)
+* all required env vars exported (e.g. using [Convenience shell scripts](../../README.md#Convenience-shell-scripts))
 
 
-# Installation
+# Installing
 
-* Create a dedicated virtualenv → `mkvirtualenv -p python3.6 functional`
-* Install dependencies from [requirements_functional.txt](../../requirements_functional.txt) → `pip install -r requirements_functional.txt`
-* set required env vars (see [Env Vars](#env-vars))
+You'll need [pip](https://pypi.org/project/pip/) to install required dependencies and [virtualenv](https://pypi.org/project/virtualenv/) to create a virtual python environment:
 
+```bash
+git clone https://github.com/uktrade/directory-tests
+virtualenv .venv -p python3.8
+source .venv/bin/activate
+make requirements_functional
+```
+
+or if you use [virtualenvwrapper](https://pypi.org/project/virtualenvwrapper/) then:
+
+```bash
+git clone https://github.com/uktrade/directory-tests
+cd directory-tests
+mkvirtualenv -p python3.8 functional
+make requirements_functional
+```
 
 # Env Vars
 
@@ -34,6 +47,7 @@ You can find those variables in Rattic.
 The next steps is to define handy command aliases to make that process as simple as possible:
 
 ```bash
+source ~/dir-{dev|stage|uat}.sh
 alias dev='source ~/dev.sh';
 alias stage='source ~/stage.sh';
 alias uat='source ~/uat.sh';

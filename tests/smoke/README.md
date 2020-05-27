@@ -1,79 +1,78 @@
-DIT - Smoke Tests
-----------------------------------
+GREAT platform - Smoke Tests
+----------------------------
 
-Smoke tests are executed using [pytest](https://pypi.org/project/pytest/) library.
+## Development
 
+
+### Installing
+
+You'll need [pip](https://pypi.org/project/pip/) to install required dependencies and [virtualenv](https://pypi.org/project/virtualenv/) to create a virtual python environment:
+
+```bash
+git clone https://github.com/uktrade/directory-tests
+cd directory-tests
+virtualenv .venv -p python3.8
+source .venv/bin/activate
+make requirements_smoke
+```
+
+or if you use [virtualenvwrapper](https://pypi.org/project/virtualenvwrapper/) then:
+
+```bash
+git clone https://github.com/uktrade/directory-tests
+cd directory-tests
+mkvirtualenv -p python3.8 smoke
+make requirements_smoke
+```
+
+### Requirements
+
+* python 3.8+
+* dependencies from [requirements_smoke.txt](../../requirements_smoke.txt)
+* all required env vars exported (e.g. using [Convenience shell scripts](../../README.md#Convenience-shell-scripts))
 
 **IMPORTANT NOTE**
 
-Majority of `smoke` tests use `requests` library to talk to our services and APIs.  
-Some of tests also use: `directory_client_core`, `directory_cms_client` or `directory_sso_api_client`.  
+Majority of `smoke` tests use `requests` library to talk to DIT services and APIs.  
+Some of tests also use: `directory_cms_client` or `directory_sso_api_client`.  
 
+#### Configuration
 
-# Requirements
+Secrets such as API keys and service URLs are specified in [env.json](../../env_vars/env.json).  
+You'll need to export all of them to your shell as environment variables prior
+to running smoke tests.  
+For more instructions please refer to `Env Vars` section of project's main [README](../../README.md#Env-vars).
 
-* python 3.6
-* pip
-* required environment variables (see [env.json](../../env_vars/env.json))
-* dependencies listed in [requirements_smoke.txt](../../requirements_smoke.txt)
+Furthermore, you can control the execution of smoke tests with `PYTEST_ARGS` env var.  
+It is an optional variable that is used to filter out tests which you don't want to run.
 
+### Running the tests
 
-# Installation
-
-* Create a dedicated virtualenv → `mkvirtualenv -p python3.6 smoke`
-* Install dependencies from [requirements_smoke.txt](../../requirements_smoke.txt) → `pip install -r requirements_smoke.txt`
-* set required env vars (see [Env Vars](#env-vars))
-
-
-# Env Vars
-
-Before running tests you'll need to set all required environment variables.  
-You can find those variables in Rattic.  
-
-The next steps is to define handy command aliases to make that process as simple as possible:
+To run smoke tests against specific `TEST_ENV` choose one of the following options:
 
 ```bash
-alias dev='source ~/dev.sh';
-alias stage='source ~/stage.sh';
-alias uat='source ~/uat.sh';
+TEST_ENV=DEV PYTEST_ARGS='-m "not stage and not uat and not prod"' make smoke_tests
+TEST_ENV=STAGE PYTEST_ARGS='-m "not dev and not uat and not prod"' make smoke_tests
+TEST_ENV=UAT PYTEST_ARGS='-m "not dev and not stage and not prod"' make smoke_tests
+TEST_ENV=PROD PYTEST_ARGS='-m "not dev and not stage and not uat"' make smoke_tests
 ```
 
-Once that's done, remember to run `dev`, `stage` or `uat` command prior running tests
-against desired environment.
+### Running the tests with pytest command
 
-
-# Run scenarios locally
-
-You can use a dedicated `smoke_tests` target to run all smoke tests:
+You can also use `pytest` command to run smoke tests:
 ```bash
-workon smoke
-dev
-PYTEST_ARGS='-m "not stage and not prod"' make smoke_tests
-```
-
-* `PYTEST_ARGS` - are used to filter out tests which you don't want to run
-
-
-You can also use `pytest` command to run scenarios from a specific test file:
-```bash
-workon smoke
-dev
 pytest tests/smoke/test_sitemaps.py
 ```
+This will run all tests from selected module (even those that should be skipped).
 
-This will run all tests from selected module (even those that should be skipped) and
-hide some logging on error.
-Thus it's better to run it with `--capture=no --verbose`:
+If you'd like to skip tests that are not meant to be run against currently selected environment,
+then use `-m` argument to filter them out, i.e.:
+```bash
+pytest tests/smoke/test_cms.py -m "not stage and not prod"
+```
+
+To get a bit better out from `pytests` run it with `--capture=no --verbose`:
 
 ```bash
-workon smoke
-dev
 pytest --capture=no --verbose tests/smoke/test_sitemaps.py
 ```
-
-If you'd like to skip tests not meant to be run against currently selected environment,
-then use `-m` to filter them out, i.e.:
-```bash
-pytest --capture=no --verbose tests/smoke/test_cms.py -m "not stage and not prod"
-```
-Will run all test except for those meant for `staging` and `production` environment.

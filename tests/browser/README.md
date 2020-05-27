@@ -1,52 +1,250 @@
-DIT - Functional Browser Tests
-----------------------------------
+GREAT platform - Functional (Browser) Tests
+-------------------------------------------
 
-This repository contains UI tests automated using:
-* [Behave](https://pythonhosted.org/behave/)
-* [Selenium with Python](https://selenium-python.readthedocs.io/)
-* [BrowserStack](https://www.browserstack.com/automate)
+Functional (Browser) tests for [https://www.great.gov.uk](https://www.great.gov.uk).
+
+This repository contains UI tests automated with:
+* [Behave](https://behave.readthedocs.io/en/latest/) & [Selenium Python](https://selenium-python.readthedocs.io/)
 
 
-# Requirements
+**HISTORICAL NOTE**
 
-* python 3.6
+Prior to mid Dec 2019 all Browser tests were executed in [BrowserStack](https://www.browserstack.com/).  
+Later on it's been decided that we're going to run those tests in parallel in CircleCI using dockerised Chrome & Firefox.  
+Thanks to this decision test execution times shrunk from roughly 2.5 hours to approx. 45 minutes in Dev and 21 minutes in Staging.  
+Apart from that the tests became more stable.  
+The only issue so far with this approach (as of May 2020) is that tests that require a sound playback won't work in Firefox.
+
+
+##### Table of Contents  
+* [Development](#Development)
+    * [Different namespace](#Different-namespace)
+    * [Installing](#Installing)
+    * [Requirements](#Requirements)
+* [Running the tests](#Running the tests)
+    * [Running browser tests in parallel in CircleCI](#Running-browser-tests-in-parallel-in-CircleCI)
+    * [Run all scenarios in locally installed browser](#Run-all-scenarios-in-locally-installed-browser)
+    * [Test environment specific scenarios](#Test-environment-specific-scenarios)
+    * [Run scenarios for a specific tag](#Run-scenarios-for-a-specific-tag)
+    * [Run scenarios with behave command](#Run-scenarios-with-behave-command)
+* [Tagging](#Tagging)
+    * [Suite](#Suite)
+    * [Severity](#Severity)
+    * [Links](#Links)
+* [Tips](#Tips)
+    * [Find all tags](#Find-all-tags)
+    * [Discover unused step definitions](#Discover-unused-step-definitions)
+
+
+## Development
+
+### Different namespace
+
+Browser (BDD) tests do not share the same namespace with other test suites from this repository.  
+It's because `Functional (BDD)` tests also use `Behave` framework and sharing the same namespace would
+mean that the step definitions would frequently overlap.
+This in turn would lead to unintentional misuse of steps that are meant to be used in different contexts.
+
+### Requirements
+
+* python 3.8+
 * pip
 * dependencies listed in [requirements_browser.txt](../../requirements_browser.txt)
-* required environment variables (see [env.json](../../env_vars/env.json)
 * [browser driver binaries](https://selenium-python.readthedocs.io/installation.html#drivers) installed in `$PATH`
-* a [BrowserStack](https://www.browserstack.com/users/sign_up) account (check Rattic)
+* all required env vars exported (e.g. using [Convenience shell scripts](../../README.md#Convenience-shell-scripts))
 
+### Installing
 
-# Installation
-
-* Create dedicated virtualenv → `mkvirtualenv -p python3.6 browser`
-* Install dependencies from [requirements_browser.txt](../../requirements_browser.txt) → `pip install -r requirements_browser.txt`
-* set required env vars (see [Env Vars](#env-vars))
-
-
-# Env Vars
-
-Before running tests you'll need to set all required environment variables.  
-You can find those variables in Rattic.  
-
-The next steps is to define handy command aliases to make that process as simple as possible:
+You'll need [pip](https://pypi.org/project/pip/) to install required dependencies and [virtualenv](https://pypi.org/project/virtualenv/) to create a virtual python environment:
 
 ```bash
-alias dev='source ~/dev.sh';
-alias stage='source ~/stage.sh';
-alias uat='source ~/uat.sh';
+git clone https://github.com/uktrade/directory-tests
+cd directory-tests/tests/browser
+virtualenv .venv -p python3.8
+source .venv/bin/activate
+cd ../..
+make requirements_browser
+cd tests/browser
 ```
 
-Once that's done, remember to run `dev`, `stage` or `uat` command prior running tests
-against desired environment.
+or if you use [virtualenvwrapper](https://pypi.org/project/virtualenvwrapper/) then:
+
+```bash
+git clone https://github.com/uktrade/directory-tests
+cd directory-tests
+mkvirtualenv -p python3.8 browser
+make requirements_browser
+cd tests/browser
+```
 
 
-# Tags
+## Running the tests
 
-## Suite
+Before you start working with Behave and especially with tags,
+it is highly recommended that you read introductory [tutorial](https://behave.readthedocs.io/en/latest/tutorial.html)
+and two sections on tags:
 
-Annotate `Feature` with a `@allure.suite` tag so that scenarios are nicely grouped
-in the `SUITES` section in Allure report.
+* [Controlling Things With Tags](https://behave.readthedocs.io/en/latest/tutorial.html#controlling-things-with-tags)
+* [Tag Expressions](https://behave.readthedocs.io/en/latest/tag_expressions.html)
+
+
+### Running browser tests in parallel in CircleCI
+
+[CircleCI CLI tool supports splitting tests across machines when running parallel jobs](https://circleci.com/docs/2.0/parallelism-faster-jobs/#using-the-circleci-cli-to-split-tests).  
+Unfortunately this tool doesn't support Gherkin feature files.  
+We've borrowed the concept of splitting the tests and implemented parallel browser test execution in a very simple way.  
+The whole process consist of 3 steps:
+
+1. Generate a list of all scenarios to run (take `BROWSER` and `TAGS` arguments into consideration) and save it in `scenario_titles.txt`
+2. Split `scenario_titles.txt` into `N` equal chunks (where `N` is equal to the number of nodes [which is controlled by job's `parallelism` value])
+3. Run scenarios (sequentially) from the Nth chunk of `scenario_titles.txt` on a node matching chunk number
+
+Step *1* is done in [step_prepare_list_of_scenarios_to_run_by_parallel_browser_tests](../../.circleci/config.yml#128)).  
+Whereas steps *2* & *3* are both done in [step_run_browser_tests_in_parallel](../../.circleci/config.yml#252)).
+
+
+### Run all scenarios in locally installed browser
+
+To run all scenarios in the default browser (Chrome) use:
+
+```bash
+make browser_tests_locally
+```
+
+*!!! IMPORTANT !!!*
+
+Using this command in such form is not recommended as it will run scenarios for the environment you're currently testing
+(e.g. DEV) and also those that are meant to work in other test environments, like Staging or UAT.  
+Please use `TAGS` argument instead.
+It will help you to run only a subset of scenarios that are meant to work on environment you want to test.
+
+### Test environment specific scenarios
+
+There multiple scenarios which work only in specific test environment e.g. DEV, Staging, UAT or Production.  
+Most of the time this is because of content differences or the fact that Captcha is not in [test mode](https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do).
+
+Such scenarios are annotated with following tags (click on any tag name to view such scenarios in Github):
+* [@dev-only](https://github.com/uktrade/directory-tests/search?q=dev-only+path%3Atests%2Fbrowser%2Ffeatures&unscoped_q=dev-only+path%3Atests%2Fbrowser%2Ffeatures) - works only in Dev
+* [@stage-only](https://github.com/uktrade/directory-tests/search?q=stage-only+path%3Atests%2Fbrowser%2Ffeatures&unscoped_q=stage-only+path%3Atests%2Fbrowser%2Ffeatures) - works only in Staging
+* [@uat-only](https://github.com/uktrade/directory-tests/search?q=uat-only+path%3Atests%2Fbrowser%2Ffeatures&unscoped_q=uat-only+path%3Atests%2Fbrowser%2Ffeatures) - works only in UAT
+* [@prod-only](https://github.com/uktrade/directory-tests/search?q=prod-only+path%3Atests%2Fbrowser%2Ffeatures&unscoped_q=prod-only+path%3Atests%2Fbrowser%2Ffeatures) - works only in Production
+* [@captcha](https://github.com/uktrade/directory-tests/search?q=captcha+path%3Atests%2Fbrowser%2Ffeatures&unscoped_q=captcha+path%3Atests%2Fbrowser%2Ffeatures) - require [Catpcha in test mode](https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do).
+* [@skip-in-firefox](https://github.com/uktrade/directory-tests/search?q=skip-in-firefox+path%3Atests%2Fbrowser%2Ffeatures&unscoped_q=skip-in-firefox+path%3Atests%2Fbrowser%2Ffeatures) - doesn't work in Firefox
+
+
+### Run scenarios for a specific tag
+
+To run a specific scenario or a set of scenarios tagged with the same tag (e.g. `@home-page`) use `TAGS` argument:  
+```bash
+TAGS="--tags=@home-page" \
+    make browser_tests_locally
+```
+
+To run the same scenario(s) in Firefox simply add `BROWSER=firefox` to the command:
+```bash
+BROWSER=firefox TAGS="--tags=@home-page" \
+    make browser_tests_locally
+```
+
+To run the same scenario(s) in headless Firefox simply add `HEADLESS=true` to the command:
+```bash
+HEADLESS=true BROWSER=firefox TAGS="--tags=@home-page" \
+    make browser_tests_locally
+```
+
+To disable `AUTO_RETRY` feature (which will run failing scenario one more time) simply add `AUTO_RETRY=false`:
+```bash
+AUTO_RETRY=false HEADLESS=true BROWSER=firefox TAGS="--tags=@home-page" \
+    make browser_tests_locally
+```
+
+To enable screenshot taking (disabled by default) add `TAKE_SCREENSHOTS=true`:
+```bash
+TAKE_SCREENSHOTS=true AUTO_RETRY=false HEADLESS=true BROWSER=firefox TAGS="--tags=@home-page" \
+    make browser_tests_locally
+```
+
+
+### Run scenarios with behave command
+
+You can also run the same scenario(s) using `behave` command when in `./tests/browser` directory:
+
+```bash
+cd tests/browser
+behave --tags=@home-page
+```
+
+All aforementioned arguments will also work:
+* AUTO_RETRY=false
+* BROWSER=firefox
+* HEADLESS=true
+* TAKE_SCREENSHOTS=true
+
+So to run scenarios annotated with `@home-page` in headless Firefox and with auto-retry feature off use:
+```bash
+AUTO_RETRY=false BROWSER=firefox HEADLESS=true \
+    behave \
+        --tags=@home-page
+```
+
+Running a scenario in that way will generate a lot of output.  
+Thus it's recommended to limit Behave's verbosity with some extra switches:
+
+```bash
+AUTO_RETRY=false BROWSER=firefox HEADLESS=true TAKE_SCREENSHOTS=true \
+    behave \
+        --format=pretty \
+        --logging-filter=-root \
+        --no-skipped \
+        --no-timing \
+        --tags=@home-page
+```
+
+To make Behave generate Allure result files, you'll need to enable `AllureFormatter` and specify an output folder with `--outfile`:
+
+```bash
+HEADLESS=true TAKE_SCREENSHOTS=true \
+    behave \
+        --format=allure_behave.formatter:AllureFormatter \
+        --outfile=results/ \
+        --format=pretty \
+        --logging-filter=-root \
+        --no-skipped \
+        --no-timing \
+        --tags=@home-page
+```
+
+It's also a good idea to skip scenarios which are not fully implemented or are failing because underlying issue is not fixed yet.
+To skip a scenario or scenarios annotated with `@wip` tag, simply prepend a `~` sign before its name:
+
+```bash
+HEADLESS=true \
+    behave \
+        --no-skipped \
+        --format pretty
+        --tags=~@wip \
+        --tags=@dev-only
+```
+
+Behave can also run a scenario or an particular scenario outline that is located at specific line in a feature file, e.g.
+```bash
+AUTO_RETRY=false BROWSER=chrome HEADLESS=true TAKE_SCREENSHOTS=true \
+    behave \
+        --no-skipped \
+        --format pretty
+        features/domestic/home_page.feature:10
+```
+
+
+## Tagging
+
+Since mid Dec 2019 this test suite use [allure-behave](https://pypi.org/project/allure-behave/) to generate test results
+which are then used to generate a test report using [Allure](https://github.com/allure-framework/allure2) reporting engine.
+
+### Suite
+
+Annotate `Features` with a `@allure.suite:{SUITE_NAME}` tag so that scenarios that belong to the same suite file are nicely grouped
+in the `SUITES` section of an Allure report.
 
 ```gherkin
 @allure.suite:SSO
@@ -54,19 +252,15 @@ Feature: SSO - Sign in
 ...
 ```
 
-You can be more granular and use the same name as the `Feature`.
-Just remember to replace spaces with underscores.
+Here's an example report with test scenarios grouped by suite name:
 
-```gherkin
-@allure.suite:SSO_-_Sign_in
-Feature: SSO - Sign in
-...
-```
+![Grouping scenarios by suite/feature](./docs/tagging-suite.png)
 
-## Severity
+
+### Severity
 
 Annotate `Scenario` or `Scenario Outline` with one of the following tags to define
-severity of an issue when this scenario fail:
+severity of an issue when this scenario fails:
 
 * `@blocker`
 * `@critical`
@@ -80,121 +274,81 @@ Scenario: If this scenario fails, then it should block the release
 ...
 ```
 
-## Links
+As a result Allure will show the severity level in two places:
+
+![A failed scenarios tagged with a severity tag](./docs/tagging-severity-report.png)
+
+![Stats for failed scenarios](./docs/tagging-severity-graphs.png)
+
+
+### Links
+
+It's very useful to annotate all scenarios with links to corresponding ticket in a Project management tool and a Bug tracker.  
+
+For example, annotating scenario with both links:
 
 ```gherkin
-@allure.link:PROJECT-MANAGEMENT-TICKET-4321
-@allure.issue:BUG-TRACKER-ISSUE-1234
+@allure.link:ED-2661
+@allure.issue:ED-2702
 Scenario: An example scenario with links to PM & Bug Tracking systems
 ...
 ```
 
+Will result in seeing those links in Allure report:
 
-# Run scenarios locally with "behave" command
+![PR & Bug tracker links](./docs/tagging-links.png)
 
-You can also run the scenarios with `behave` command (defaults to Chrome):
+You don't have specify the whole URL to either ticket in the tag, as Allure can substitute them automatically with link patterns.
+
+These pattern can be defined upon report generation with these two arguments:
 ```bash
-cd tests/browser
-workon browser
-dev
-behave -k --format pretty --no-skipped features/domestic/home-page.feature --tags=~@wip --tags=~@skip --tags=~@fixme --stop
+        --define AllureFormatter.issue_pattern=${BUG_TRACKER_URL_PATTERN} \
+        --define AllureFormatter.link_pattern=${BUG_TRACKER_URL_PATTERN} \
 ```
 
-This command will run all scenarios from specified feature file which are not annotated
-with `@wip`, `@skip` or `@fixme` tags. Test execution will also stop on first error
-because `--stop` parameter was used.
+For more details of this functionality please have a look at:
 
-PS. you can use `--tags=` & `-t` interchangeably.
+* ["Use user-data to pass link patterns to Allure-Behave"](https://github.com/allure-framework/allure-python/pull/464) PR.
+* `step_run_browser_tests_in_parallel` step in [.circleci/config.yml](../../.circleci/config.yml)
 
 
-*IMPORTANT NOTE:*
+## Tips
 
-You can increase the control over test execution by using one or all of the following env vars:
+### Find all tags
 
-* `AUTO_RETRY` (defaults to `true`) - toggle `auto-retry` scheme (when on, then test will be marked as `failed` only when they fails twice in a row)
-* `BROWSER` (defaults to `chrome`) - change it to `firefox` if need be
-* `HEADLESS` (defaults to `true`) - run in a headless mode or not
+To list all tags that scenarios are annotated with run:
 
-So for example, if you'd like to run scenarios using `headless` Firefox and disable `auto-retry` scheme, then run:
 ```bash
-HEADLESS=false BROWSER=firefox AUTO_RETRY=false behave -k --format pretty --no-skipped features/domestic/home-page.feature --tags=~@wip --tags=~@skip --tags=~@fixme --stop
+cd tests/browser/features
+grep "@" **/*.feature | cut -d":" -f2 | sed 's/ //g' | sort -u
+
+@<business_type>
+@<expected_service>
+@<service>
+@<social_media>
+@<specific>
+@<value>
+@HPO
+@UK_business
+@accessibility
+@accessing-services
+@account-support
+@advice
+@allure.issue
+@allure.link
+@allure.suite
+@anchor
+@article
+@articles
+@breadcrumbs
+...
 ```
 
-# Run scenarios on BrowserStack
+### Discover unused step definitions
 
-Run specific scenario on [BrowserStack](https://www.browserstack.com/automate) using specific browser and browser version:
-```bash
-TAG=ED-2366 BROWSER=Edge VERSIONS=18.0 make browserstack
-```
+To discover unused steps we have to:
 
-
-To run all scenarios on [BrowserStack](https://www.browserstack.com/automate) with `behave` command (always defaults to `Chrome`):  
-```bash
-cd tests/browser
-BROWSER_ENVIRONMENT=remote BROWSER=chrome AUTO_RETRY=true behave -k --format progress3 --no-logcapture --stop --tags=~@wip --tags=~@skip --tags=~@fixme
-```
-
-
-To run specific scenario on [BrowserStack](https://www.browserstack.com/automate) with `behave` command):  
-```bash
-cd tests/browser
-BROWSER_ENVIRONMENT=remote BROWSER=Edge AUTO_RETRY=true behave -k --format progress3 --no-logcapture --stop --tags=~@wip --tags=~@skip --tags=~@fixme --tags={YOUR_TAG}
-```
-
-
-## BrowserStack - Custom browser capabilities
-
-In order to use custom browser capabilities, please provide them as a dict string in `CAPABILITIES` env var:
-```shell
-CAPABILITIES='{"pageLoadStrategy":"eager","marionette":true}' BROWSER_ENVIRONMENT=remote AUTO_RETRY=false BROWSERS=firefox behave -k --no-logcapture --tags=~@wip --tags=~@fixme features/ --stop --tags=<your_tag>
-```
-
-PS. When using custom browser capabilities in Firefox, then the [geckodriver](https://github.com/mozilla/geckodriver/) will always expect `marionette` set to `true`.
-
-In order to change `pageLoadStrategy` to `eager` in Chrome you'll have to set its value to `none`.
-See [this answer](https://stackoverflow.com/a/43737358) for more details.
-```shell
-CAPABILITIES='{"pageLoadStrategy":"none"}' BROWSER_ENVIRONMENT=remote AUTO_RETRY=false BROWSERS=chrome behave -k --no-logcapture --tags=~@wip --tags=~@fixme features/ --stop --tags=<your_tag>
-```
-
-
-# Run all scenarios using locally installed browser
-
-This command is not recommended as it will also execute scenarios which are not meant
-to work on the environment you want to run the tests against.
-
-Run all scenarios locally using default browser (defaults to Chrome):  
-```bash
-make browser_tests_locally
-```
-
-
-## Use specific browser
-
-If you want to run all the scenarios in a specific browser, then use `BROWSERS` environment variable:  
-```bash
-BROWSER=firefox make browser_tests_locally
-```
-
-## Run scenarios for specific tag
-
-If you want to run specific scenario in a specific browser, then use `TAG` & `BROWSERS` environment variables:  
-```bash
-TAGS="--tags=ED-2366" BROWSER=firefox make browser_tests_locally
-```
-
-
-## Useful BrowserStack related links
-
-* tutorial on using [browserstack with python](https://www.browserstack.com/automate/python)
-* tutorial on using [behave with browserstack](https://www.browserstack.com/automate/behave)
-* example [browserstack behave project](https://github.com/browserstack/behave-browserstack)
-* [browser capabilities]()https://www.browserstack.com/automate/capabilities)
-
-
-## Discover unused step definitions
-
-Find steps used in all feature files and replace parameters with "VAR":
+1 - Find out which steps are used in all feature files and replace parameter names with a generic "`VAR`":
 ```bash
 grep -R --no-filename -i "given\|and\|when\|then" features/ |\
  grep -v "Scenario\|Examples\|Feature\||\|@\|#" |\
@@ -207,7 +361,8 @@ grep -R --no-filename -i "given\|and\|when\|then" features/ |\
  sort -u
 ```
 
-List all step definitions known to `behave` and replace parameters with "VAR":
+2 - List all steps known to `Behave` and replace parameter names with "`VAR`":
+
 ```bash
 behave --steps-catalog |\
  grep -v "Trying base directory\|Using default path" |\
@@ -219,7 +374,8 @@ behave --steps-catalog |\
  sort -u
 ```
 
-List unused step definitions:
+Once we have both lists we can compare them with `diff` command to find unused steps:
+
 ```bash
 diff -C0 <(grep -R --no-filename -i "given\|and\|when\|then" features/ |\
            grep -v "Scenario\|Examples\|Feature\||\|@\|#" |\
