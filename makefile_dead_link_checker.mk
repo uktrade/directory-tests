@@ -366,6 +366,9 @@ dead_links_check_with_json_report:
 	    --ignore=`echo $${IGNORED_PREFIXES} | tr -d [:space:]` \
 	    $${TEST_URLS} || true
 
+service_contingency_report:
+	@REPORT_FILE="./reports/dead_links_report.json" ./tests/periodic_tasks/service_contingency/service_contingency.py
+
 # insipired by https://unix.stackexchange.com/a/29928
 # 1. tac - prints file contents in reverse order
 # 2. sed -e '..../I,+1 d' - deletes 1 line after the match (false positive results)
