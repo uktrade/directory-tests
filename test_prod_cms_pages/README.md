@@ -38,6 +38,10 @@ export CMS_API_KEY=SECRET_API_KEY
 
 ### Check if all CMS pages return 200 OK
 
+This test goes through all published & draft versions of pages exposed via CMS API and checks whether those pages can be visited without any error.  
+
+Moreover, [Geckoboard updater](../tests/periodic_tasks/geckoboard_updater/README.md) parses the result file from this tests and pushes them to `Great - CMS stats and dead links` geckoboard.
+
 When in repo's root directory run:
 ```bash
 make test_cms_pages_return_200
@@ -49,14 +53,13 @@ cd test_prod_cms_pages
 PYTHONPATH=. pytest --capture=no --verbose test_cms_pages_return_200.py
 ```
 
-[Geckoboard updater](../tests/periodic_tasks/geckoboard_updater/README.md) parses results from this tests are pushes them to `Great - CMS stats and dead links` geckoboard.
-
-
 ### Generate a report with CMS page status
 
-When in repo's root directory run:
+This script generates a simple CMS page status report.  
+A link to the latest version of such report is published daily on `Great - CMS stats and dead links` geckoboard.
+
+To generate a report locally from repo's root directory run:
+
 ```bash
 make cms_page_status_report
 ```
-
-A link to the latest version of that that report is published daily on `Great - CMS stats and dead links` geckoboard.

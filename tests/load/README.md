@@ -32,27 +32,23 @@ All other environment variables defined in [env.json](../../env_vars/env.json) m
 This is because load tests depend on `directory_tests_shared` package, which requires all env vars from `env.json`.
 
 
-### Installing
+## How to run load tests
 
-You'll need [pip](https://pypi.org/project/pip/) to install required dependencies and [virtualenv](https://pypi.org/project/virtualenv/) to create a virtual python environment:
+### Enable venv and export env vars
 
-```bash
-git clone https://github.com/uktrade/directory-tests
-virtualenv .venv -p python3.8
-source .venv/bin/activate
-make requirements_load
-```
+Before running load tests against lets say DEV test environment you want to enable venv and export env vars:
 
-or if you use [virtualenvwrapper](https://pypi.org/project/virtualenvwrapper/) then:
-
-```bash
-git clone https://github.com/uktrade/directory-tests
-cd directory-tests
-mkvirtualenv -p python3.8 load
-make requirements_load
-```
-
-## Running the tests
+1. Enable venv for load tests (`workon` command is part of [virtualenvwrapper](https://pypi.org/project/virtualenvwrapper/) package)
+    ```bash
+    workon load
+    ```
+2. Export env vars with `dir-dev.sh` convenience script
+    ```bash
+    # if you configured an alias then:
+    dev
+    # or source directly with:
+    source ~/dir-dev.sh
+    ```
 
 ### Run in headless mode
 
@@ -67,7 +63,8 @@ In order to run load tests locally, you'll need to specify `3` arguments (env va
 Once you have those numbers, then simply run following command from repo's root directory:
 
 ```bash
-NUM_USERS=5 HATCH_RATE=2 RUN_TIME=35 make load_test_{service_name}
+NUM_USERS=5 HATCH_RATE=2 RUN_TIME=35 \
+    make load_test_{service_name}
 ```
 
 Where `{service_name}` is one of the following:

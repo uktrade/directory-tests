@@ -19,14 +19,13 @@ The only issue so far with this approach (as of May 2020) is that tests that req
 ##### Table of Contents  
 * [Development](#Development)
     * [Different namespace](#Different-namespace)
-    * [Installing](#Installing)
     * [Requirements](#Requirements)
 * [Running the tests](#Running the tests)
     * [Running browser tests in parallel in CircleCI](#Running-browser-tests-in-parallel-in-CircleCI)
     * [Run all scenarios in locally installed browser](#Run-all-scenarios-in-locally-installed-browser)
     * [Test environment specific scenarios](#Test-environment-specific-scenarios)
-    * [Run scenarios for a specific tag](#Run-scenarios-for-a-specific-tag)
-    * [Run scenarios with behave command](#Run-scenarios-with-behave-command)
+    * [How to run scenarios for a specific tag](#How-to-run-scenarios-for-a-specific-tag)
+    * [How to run scenarios with behave command](#How-to-run-scenarios-with-behave-command)
 * [Tagging](#Tagging)
     * [Suite](#Suite)
     * [Severity](#Severity)
@@ -52,31 +51,6 @@ This in turn would lead to unintentional misuse of steps that are meant to be us
 * dependencies listed in [requirements_browser.txt](../../requirements_browser.txt)
 * [browser driver binaries](https://selenium-python.readthedocs.io/installation.html#drivers) installed in `$PATH`
 * all required env vars exported (e.g. using [Convenience shell scripts](../../README.md#Convenience-shell-scripts))
-
-### Installing
-
-You'll need [pip](https://pypi.org/project/pip/) to install required dependencies and [virtualenv](https://pypi.org/project/virtualenv/) to create a virtual python environment:
-
-```bash
-git clone https://github.com/uktrade/directory-tests
-cd directory-tests/tests/browser
-virtualenv .venv -p python3.8
-source .venv/bin/activate
-cd ../..
-make requirements_browser
-cd tests/browser
-```
-
-or if you use [virtualenvwrapper](https://pypi.org/project/virtualenvwrapper/) then:
-
-```bash
-git clone https://github.com/uktrade/directory-tests
-cd directory-tests
-mkvirtualenv -p python3.8 browser
-make requirements_browser
-cd tests/browser
-```
-
 
 ## Running the tests
 
@@ -105,25 +79,38 @@ Whereas steps *2* & *3* are both done in [step_run_browser_tests_in_parallel](..
 
 ### Run all scenarios in locally installed browser
 
-To run all scenarios in the default browser (Chrome) use:
+To run all scenarios in the default browser (Chrome) against DEV test environment:
 
-```bash
-make browser_tests_locally
-```
+1. Enable venv for browser tests (`workon` command is part of [virtualenvwrapper](https://pypi.org/project/virtualenvwrapper/) package)
+    ```bash
+    workon browser
+    ```
+2. Export env vars with `dir-dev.sh` convenience script
+    ```bash
+    # if you configured an alias then:
+    dev
+    # or source directly with:
+    source ~/dir-dev.sh
+    ```
+3. Run all the tests
+    ```bash
+    make browser_tests_locally
+    ```
 
 *!!! IMPORTANT !!!*
 
-Using this command in such form is not recommended as it will run scenarios for the environment you're currently testing
-(e.g. DEV) and also those that are meant to work in other test environments, like Staging or UAT.  
-Please use `TAGS` argument instead.
-It will help you to run only a subset of scenarios that are meant to work on environment you want to test.
+Using `make browser_tests_locally` without extra parameters is HIGHLY not recommended as it will run all test scenarios
+against the environment you're currently testing (e.g. DEV) and also those that are meant to work only in different test environment(s), like Staging or UAT.  
+To avoid problems please use `TAGS` argument. It will help you to run only a subset of scenarios that are meant to work on environment you want to test.
 
 ### Test environment specific scenarios
 
-There multiple scenarios which work only in specific test environment e.g. DEV, Staging, UAT or Production.  
-Most of the time this is because of content differences or the fact that Captcha is not in [test mode](https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do).
+There are multiple scenarios, in this test suite, which work only in a specific test environment e.g. DEV, Staging, UAT or Production.  
+Most of the time this is because of:
+* content differences between environments
+* or the fact that Captcha is not in [test mode](https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do).
 
-Such scenarios are annotated with following tags (click on any tag name to view such scenarios in Github):
+Such scenarios are annotated with following tags (click on any tag name to look for such scenarios in Github):
 * [@dev-only](https://github.com/uktrade/directory-tests/search?q=dev-only+path%3Atests%2Fbrowser%2Ffeatures&unscoped_q=dev-only+path%3Atests%2Fbrowser%2Ffeatures) - works only in Dev
 * [@stage-only](https://github.com/uktrade/directory-tests/search?q=stage-only+path%3Atests%2Fbrowser%2Ffeatures&unscoped_q=stage-only+path%3Atests%2Fbrowser%2Ffeatures) - works only in Staging
 * [@uat-only](https://github.com/uktrade/directory-tests/search?q=uat-only+path%3Atests%2Fbrowser%2Ffeatures&unscoped_q=uat-only+path%3Atests%2Fbrowser%2Ffeatures) - works only in UAT
@@ -132,7 +119,7 @@ Such scenarios are annotated with following tags (click on any tag name to view 
 * [@skip-in-firefox](https://github.com/uktrade/directory-tests/search?q=skip-in-firefox+path%3Atests%2Fbrowser%2Ffeatures&unscoped_q=skip-in-firefox+path%3Atests%2Fbrowser%2Ffeatures) - doesn't work in Firefox
 
 
-### Run scenarios for a specific tag
+### How to run scenarios for a specific tag
 
 To run a specific scenario or a set of scenarios tagged with the same tag (e.g. `@home-page`) use `TAGS` argument:  
 ```bash
@@ -165,7 +152,7 @@ TAKE_SCREENSHOTS=true AUTO_RETRY=false HEADLESS=true BROWSER=firefox TAGS="--tag
 ```
 
 
-### Run scenarios with behave command
+### How to run scenarios with behave command
 
 You can also run the same scenario(s) using `behave` command when in `./tests/browser` directory:
 

@@ -4,27 +4,6 @@ GREAT platform - Smoke Tests
 ## Development
 
 
-### Installing
-
-You'll need [pip](https://pypi.org/project/pip/) to install required dependencies and [virtualenv](https://pypi.org/project/virtualenv/) to create a virtual python environment:
-
-```bash
-git clone https://github.com/uktrade/directory-tests
-cd directory-tests
-virtualenv .venv -p python3.8
-source .venv/bin/activate
-make requirements_smoke
-```
-
-or if you use [virtualenvwrapper](https://pypi.org/project/virtualenvwrapper/) then:
-
-```bash
-git clone https://github.com/uktrade/directory-tests
-cd directory-tests
-mkvirtualenv -p python3.8 smoke
-make requirements_smoke
-```
-
 ### Requirements
 
 * python 3.8+
@@ -36,17 +15,34 @@ make requirements_smoke
 Majority of `smoke` tests use `requests` library to talk to DIT services and APIs.  
 Some of tests also use: `directory_cms_client` or `directory_sso_api_client`.  
 
-#### Configuration
+### Configuration
 
 Secrets such as API keys and service URLs are specified in [env.json](../../env_vars/env.json).  
-You'll need to export all of them to your shell as environment variables prior
-to running smoke tests.  
+You'll need to export all of them to your shell as environment variables prior to running smoke tests.  
 For more instructions please refer to `Env Vars` section of project's main [README](../../README.md#Env-vars).
 
 Furthermore, you can control the execution of smoke tests with `PYTEST_ARGS` env var.  
 It is an optional variable that is used to filter out tests which you don't want to run.
 
-### Running the tests
+## How to rum smoke tests
+
+### Enable venv and export env vars
+
+Before running smoke tests against lets say DEV test environment you want to enable venv and export env vars:
+
+1. Enable venv for smoke tests (`workon` command is part of [virtualenvwrapper](https://pypi.org/project/virtualenvwrapper/) package)
+    ```bash
+    workon smoke
+    ```
+2. Export env vars with `dir-dev.sh` convenience script
+    ```bash
+    # if you configured an alias then:
+    dev
+    # or source directly with:
+    source ~/dir-dev.sh
+    ```
+
+### Run smoke tests with makefile
 
 To run smoke tests against specific `TEST_ENV` choose one of the following options:
 
@@ -57,7 +53,7 @@ TEST_ENV=UAT PYTEST_ARGS='-m "not dev and not stage and not prod"' make smoke_te
 TEST_ENV=PROD PYTEST_ARGS='-m "not dev and not stage and not uat"' make smoke_tests
 ```
 
-### Running the tests with pytest command
+### How to rum smoke tests with pytest command
 
 You can also use `pytest` command to run smoke tests:
 ```bash

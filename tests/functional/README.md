@@ -10,8 +10,9 @@ This repository contains UI tests automated using:
 Functional tests use `requests` library to perform all HTTP requests (GET, PUT, DELETE etc).
 It means that no browser is used to drive the tests.
 
+## Development
 
-# Requirements
+### Requirements
 
 * python 3.8+
 * pip
@@ -19,76 +20,67 @@ It means that no browser is used to drive the tests.
 * all required env vars exported (e.g. using [Convenience shell scripts](../../README.md#Convenience-shell-scripts))
 
 
-# Installing
+### How to run tests locally
 
-You'll need [pip](https://pypi.org/project/pip/) to install required dependencies and [virtualenv](https://pypi.org/project/virtualenv/) to create a virtual python environment:
+To run functional tests locally against `DEV` environment:
 
-```bash
-git clone https://github.com/uktrade/directory-tests
-virtualenv .venv -p python3.8
-source .venv/bin/activate
-make requirements_functional
-```
+1. Enable venv for functional tests (`workon` command is part of [virtualenvwrapper](https://pypi.org/project/virtualenvwrapper/) package)
+    ```bash
+    workon functional
+    ```
+2. Export env vars with `dir-dev.sh` convenience script
+    ```bash
+    # if you configured an alias then:
+    dev
+    # or source directly with:
+    source ~/dir-dev.sh
+    ```
+3. To run all functional tests:
+    ```bash
+    TEST_ENV=dev \
+       make functional_tests
+    ```
+4. To run tests for specific service:
+    ```bash
+    FEATURE_DIR=international TEST_ENV=dev \
+       make functional_tests_feature_dir
+    ```
+5. To disable `AUTO_RETRY` on failures (which is enabled by default):
+    ```bash
+    FEATURE_DIR=international TEST_ENV=dev AUTO_RETRY=false \
+       make functional_tests_feature_dir
+    ```
+6. To run scenarios annotated with specific tag(s):
+    ```bash
+    FEATURE_DIR=international TEST_ENV=dev AUTO_RETRY=false TAGS="--tags=~@stage-only --tags=~@uat-only" \
+       make functional_tests_feature_dir
+    ```
 
-or if you use [virtualenvwrapper](https://pypi.org/project/virtualenvwrapper/) then:
 
-```bash
-git clone https://github.com/uktrade/directory-tests
-cd directory-tests
-mkvirtualenv -p python3.8 functional
-make requirements_functional
-```
+### How to run functional tests locally with "behave" command
 
-# Env Vars
-
-Before running tests you'll need to set all required environment variables.  
-You can find those variables in Rattic.  
-
-The next steps is to define handy command aliases to make that process as simple as possible:
-
-```bash
-source ~/dir-{dev|stage|uat}.sh
-alias dev='source ~/dev.sh';
-alias stage='source ~/stage.sh';
-alias uat='source ~/uat.sh';
-```
-
-Once that's done, remember to run `dev`, `stage` or `uat` command prior running tests
-against desired environment.
-
-
-# Run scenarios locally with "behave" command
-
-Use `behave` command to run scenarios from a specific feature file:
-```bash
-workon functional
-dev
-behave features/fas/search.feature
-```
-
-This will run all scenarios (even those that should be skipped) from selected feature
-file and produce rather verbose output.  
-Thus it's better to provide some extra parameter and skip scenarios annotated with
-`@wip`, `@skip` or `@fixme` tags, i.e.:
+To locally run all functional tests with `behave` command simply execute:
 
 ```bash
-workon functional
-dev
-behave -k --format pretty --no-skipped features/fas/search.feature --tags=~@wip --tags=~@skip --tags=~@fixme --stop
+behave tests/functional
 ```
 
-PS.
-* Test execution will also stop on first error because `--stop` parameter was used.
-* You can use `--tags=` & `-t` interchangeably.
+This will run all scenarios (even those that should be skipped) and produce rather verbose output.  
+Thus it's better to provide some extra parameters and skip scenarios annotated with `@wip`, `@skip` or `@fixme` tags, i.e.:
 
+```bash
+behave -k --format pretty --no-skipped tests/functional/ --tags=~@wip --tags=~@skip --tags=~@fixme --stop
+```
+
+Or execute tests from specific feature file:
+```bash
+behave -k --format pretty --no-skipped tests/functional/features/fas/search.feature --tags=~@wip --tags=~@skip --tags=~@fixme --stop
+```
 
 *IMPORTANT NOTE:*
 
-`Auto-retry` scheme is enabled by default, it means that a test will be marked as
-`failed` only when it fails twice in a row.  
-If you'd like to disable `auto-retry` scheme, then set `AUTO_RETRY=false`, e.g.:
+`Auto-retry` scheme is enabled by default, it means that a test will be marked as `failed` only when it fails twice in a row.  
+If you'd like to disable this feature, then set `AUTO_RETRY` to `false`, e.g.:
 ```bash
-workon functional
-dev
-AUTO_RETRY=false behave -k --format pretty --no-skipped features/fas/search.feature --tags=~@wip --tags=~@skip --tags=~@fixme --stop
+AUTO_RETRY=false behave -k --format pretty --no-skipped tests/functiona/features/fas/search.feature --tags=~@wip --tags=~@skip --tags=~@fixme --stop
 ```
