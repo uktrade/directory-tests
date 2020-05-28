@@ -136,6 +136,17 @@ Lets explain how this script works in a quasi-BDD scenario:
 
 Using env vars with test environment prefixes allowed us to keep multiple sets of secrets in one CircleCI project.  
 
+
+## Code style
+
+All code in this repository is formatted with [black](https://pypi.org/project/black/) & [isort](https://pypi.org/project/isort/).  
+It is highly advisable to use these tools to maintain a consistent code style across all test suites.  
+To automate the process of code formatting with all aforementioned code formatters, code checkers
+(like [flake8](https://pypi.org/project/flake8/)) and other linters you can use use [pre-commit](https://pre-commit.com/) tool.  
+
+A ready to use `pre-commit` configuration is in [.pre-commit-config.yaml](.pre-commit-config.yaml).
+
+
 ## Dead link checker
 
 "Dead link checker" is a simple tests that use [pylinkvalidator](https://pypi.org/project/pylinkvalidator/) to crawl

@@ -69,12 +69,26 @@ This will run all scenarios (even those that should be skipped) and produce rath
 Thus it's better to provide some extra parameters and skip scenarios annotated with `@wip`, `@skip` or `@fixme` tags, i.e.:
 
 ```bash
-behave -k --format pretty --no-skipped tests/functional/ --tags=~@wip --tags=~@skip --tags=~@fixme --stop
+behave \
+    --format pretty \
+    --no-skipped \
+    --tags=~@wip \
+    --tags=~@skip \
+    --tags=~@fixme \
+    --stop \
+    tests/functional/
 ```
 
 Or execute tests from specific feature file:
 ```bash
-behave -k --format pretty --no-skipped tests/functional/features/fas/search.feature --tags=~@wip --tags=~@skip --tags=~@fixme --stop
+behave \
+    --format pretty \
+    --no-skipped \
+    --tags=~@wip \
+    --tags=~@skip \
+    --tags=~@fixme \
+    --stop \
+    tests/functional/features/fas/search.feature
 ```
 
 *IMPORTANT NOTE:*
@@ -82,5 +96,13 @@ behave -k --format pretty --no-skipped tests/functional/features/fas/search.feat
 `Auto-retry` scheme is enabled by default, it means that a test will be marked as `failed` only when it fails twice in a row.  
 If you'd like to disable this feature, then set `AUTO_RETRY` to `false`, e.g.:
 ```bash
-AUTO_RETRY=false behave -k --format pretty --no-skipped tests/functiona/features/fas/search.feature --tags=~@wip --tags=~@skip --tags=~@fixme --stop
+AUTO_RETRY=false \
+    behave \
+        --format pretty \
+        --no-skipped \
+        --tags=~@wip \
+        --tags=~@skip \
+        --tags=~@fixme \
+        --stop \
+        tests/functiona/features/fas/search.feature
 ```

@@ -20,7 +20,7 @@ The only issue so far with this approach (as of May 2020) is that tests that req
 * [Development](#Development)
     * [Different namespace](#Different-namespace)
     * [Requirements](#Requirements)
-* [Running the tests](#Running the tests)
+* [Running the tests](#Running-the-tests)
     * [Running browser tests in parallel in CircleCI](#Running-browser-tests-in-parallel-in-CircleCI)
     * [Run all scenarios in locally installed browser](#Run-all-scenarios-in-locally-installed-browser)
     * [Test environment specific scenarios](#Test-environment-specific-scenarios)
@@ -73,8 +73,8 @@ The whole process consist of 3 steps:
 2. Split `scenario_titles.txt` into `N` equal chunks (where `N` is equal to the number of nodes [which is controlled by job's `parallelism` value])
 3. Run scenarios (sequentially) from the Nth chunk of `scenario_titles.txt` on a node matching chunk number
 
-Step *1* is done in [step_prepare_list_of_scenarios_to_run_by_parallel_browser_tests](../../.circleci/config.yml#128)).  
-Whereas steps *2* & *3* are both done in [step_run_browser_tests_in_parallel](../../.circleci/config.yml#252)).
+Step *1* is done in [step_prepare_list_of_scenarios_to_run_by_parallel_browser_tests](../../.circleci/config.yml#L128).  
+Whereas steps *2* & *3* are both done in [step_run_browser_tests_in_parallel](../../.circleci/config.yml#L252).
 
 
 ### Run all scenarios in locally installed browser

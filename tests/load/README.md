@@ -1,8 +1,7 @@
 GREAT platform - Load tests
 ---------------------------
 
-This package contains a set of rudimentary load tests for various DIT services.  
-Tests are driven by load test tool called [locust](https://locust.io/).
+A set of rudimentary load tests for various GREAT services.  
 
 Services covered with load tests:
 
@@ -22,6 +21,7 @@ Services covered with load tests:
 ### Requirements
 
 * python 3.8+
+* [locust](https://locust.io/)
 * dependencies listed in [requirements_load.txt](../../requirements_load.txt)
 * all required env vars exported (e.g. using [Convenience shell scripts](../../README.md#Convenience-shell-scripts))
 
@@ -52,22 +52,22 @@ Before running load tests against lets say DEV test environment you want to enab
 
 ### Run in headless mode
 
-[Makefile](../../makefile) contains dedicated targets which can execute load tests without WEB GUI (headless mode).  
+The main [makefile](../../makefile) contains dedicated targets for running load tests in headless mode (without WEB GUI).
 
-In order to run load tests locally, you'll need to specify `3` arguments (env vars):
+To run load tests locally, you'll need to specify `3` arguments (env vars):
 
 * `NUM_USERS` - number of concurrent Locust users
 * `HATCH_RATE` - the rate per second in which clients are spawned
 * `RUN_TIME` - stop after the specified amount of time
 
-Once you have those numbers, then simply run following command from repo's root directory:
+Once you have those numbers in place, then run following command from repo's root directory:
 
 ```bash
 NUM_USERS=5 HATCH_RATE=2 RUN_TIME=35 \
     make load_test_{service_name}
 ```
 
-Where `{service_name}` is one of the following:
+Where `{service_name}` can be one of the following options:
 
 * cms
 * domestic
@@ -80,7 +80,7 @@ Where `{service_name}` is one of the following:
 * profile
 * soo
 
-Once test is finished, locust will:
+Once the test is finished, locust will:
 * print out the results to the console
 * and save CSV result files in `./reports/`
     * `results_stats.csv` - this file is used by [Geckoboard Updater](../periodic_tasks/geckoboard_updater/README.md) script to populate 2 [Geckoboards](https://readme.trade.gov.uk/docs/playbooks/qa-geckoboards.html)
@@ -147,7 +147,8 @@ List of load test workflow (at the time of writing May 2020)
 * run_profile_load_tests_on_stage
 * run_soo_load_tests_on_stage
 
-Thes workflows are are controlled with the same `3` variables defined at the top of [config.yml](../../.circleci/config.yml):
+All of those workflows are controlled with the same `3` variables.  
+They're defined at the top of [config.yml](../../.circleci/config.yml#L3):
 
 ```yaml
 load_hatch_rate: &load_hatch_rate
