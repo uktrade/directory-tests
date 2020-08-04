@@ -6,7 +6,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="directory_tests_shared",
-    version="1.1",
+    version="1.2",
     url="https://github.com/uktrade/directory-tests",
     license="MIT",
     author="Department for International Trade",
