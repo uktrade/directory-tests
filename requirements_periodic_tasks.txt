@@ -5,82 +5,57 @@
 #    pip-compile requirements_periodic_tasks.in
 #
 -e ./directory_tests_shared/
--e git+https://github.com/kowalcj0/pylinkvalidator.git@json-reporter#egg=pylinkvalidator  # via -r requirements_periodic_tasks.in
+-e file:///home/dependabot/dependabot-updater/tmp/dependabot_20201027-72-1eb0243/directory_tests_shared  # via -r requirements_periodic_tasks.in
 allure-behave==2.8.15     # via -r requirements_periodic_tasks.in
 allure-python-commons==2.8.15  # via allure-behave
-attrs==19.3.0             # via allure-python-commons, automat, directory-tests-shared, pytest, service-identity, twisted
-automat==20.2.0           # via directory-tests-shared, twisted
+attrs==19.3.0             # via allure-python-commons, pytest
 beautifulsoup4==4.9.1     # via -r requirements_periodic_tasks.in, pylinkvalidator
 behave==1.2.6             # via -r requirements_periodic_tasks.in, allure-behave
-certifi==2020.4.5.1       # via directory-tests-shared, requests
-cffi==1.14.0              # via cryptography, directory-tests-shared
-chardet==3.0.4            # via directory-tests-shared, requests
+certifi==2020.4.5.1       # via requests
+cffi==1.14.0              # via cryptography
+chardet==3.0.4            # via requests
 circleclient==0.1.6       # via -r requirements_periodic_tasks.in
-constantly==15.1.0        # via directory-tests-shared, twisted
-cryptography==2.9.2       # via directory-tests-shared, oauthlib, pyopenssl, scrapy, service-identity
-cssselect==1.1.0          # via directory-tests-shared, parsel, scrapy
+cryptography==3.2         # via oauthlib
 defusedxml==0.6.0         # via jira
-directory-api-client==21.8.0  # via directory-tests-shared
-directory-client-core==6.1.0  # via directory-api-client, directory-cms-client, directory-forms-api-client, directory-sso-api-client, directory-tests-shared
+directory-client-core==6.1.0  # via directory-cms-client
+directory-cms-client==11.1.1  # via -r requirements_periodic_tasks.in
 directory-constants==20.11.0  # via -r requirements_periodic_tasks.in
-directory-forms-api-client==5.3.0  # via directory-tests-shared
-directory-sso-api-client==6.3.0  # via directory-tests-shared
-directory_cms_client==11.1.1  # via -r requirements_periodic_tasks.in, directory-tests-shared
-django==2.2.12            # via directory-api-client, directory-client-core, directory-constants, directory-tests-shared, djangorestframework, sigauth
-djangorestframework==3.11.0  # via directory-tests-shared, sigauth
-docopt==0.6.2             # via directory-tests-shared, notifications-python-client
-envparse==0.2.0           # via directory-tests-shared
-future==0.18.2            # via directory-tests-shared, notifications-python-client
+django==2.2.12            # via directory-client-core, directory-constants, djangorestframework, sigauth
+djangorestframework==3.11.0  # via sigauth
 geckoboard.py==1.1.0      # via -r requirements_periodic_tasks.in
-hyperlink==19.0.0         # via directory-tests-shared, twisted
-idna==2.9                 # via directory-tests-shared, hyperlink, requests
+idna==2.9                 # via requests
 importlib-metadata==1.6.0  # via pluggy, pytest
-incremental==17.5.0       # via directory-tests-shared, twisted
 jira==2.0.0               # via -r requirements_periodic_tasks.in
 junit-xml==1.9            # via -r requirements_periodic_tasks.in
-lxml==4.5.1               # via -r requirements_periodic_tasks.in, directory-tests-shared, parsel, scrapy
-mohawk==0.3.4             # via -r requirements_periodic_tasks.in, directory-tests-shared, sigauth
-monotonic==1.5            # via directory-client-core, directory-tests-shared, notifications-python-client
+lxml==4.5.1               # via -r requirements_periodic_tasks.in
+mohawk==0.3.4             # via -r requirements_periodic_tasks.in, sigauth
+monotonic==1.5            # via directory-client-core
 more-itertools==8.3.0     # via pytest
-notifications-python-client==5.5.1  # via directory-tests-shared
 oauthlib[signedtoken]==3.1.0  # via jira, requests-oauthlib
 packaging==20.4           # via pytest
 parse-type==0.5.2         # via behave
-parse==1.15.0             # via behave, directory-tests-shared, parse-type
-parsel==1.6.0             # via directory-tests-shared, scrapy
+parse==1.15.0             # via behave, parse-type
 pbr==5.4.5                # via jira
-pdfminer2==20151206       # via directory-tests-shared
 pluggy==0.13.1            # via allure-python-commons, pytest
-protego==0.1.16           # via directory-tests-shared, scrapy
 py==1.8.1                 # via pytest
-pyasn1-modules==0.2.8     # via directory-tests-shared, service-identity
-pyasn1==0.4.8             # via directory-tests-shared, pyasn1-modules, service-identity
-pycparser==2.20           # via cffi, directory-tests-shared
-pydispatcher==2.0.5       # via directory-tests-shared, scrapy
-pyhamcrest==2.0.2         # via directory-tests-shared, twisted
-pyjwt==1.7.1              # via directory-tests-shared, notifications-python-client, oauthlib
-pyopenssl==19.1.0         # via directory-tests-shared, scrapy
+pycparser==2.20           # via cffi
+pyjwt==1.7.1              # via oauthlib
 pyparsing==2.4.7          # via packaging
 pytest==5.4.2             # via -r requirements_periodic_tasks.in
-pytz==2020.1              # via directory-tests-shared, django
-queuelib==1.5.0           # via directory-tests-shared, scrapy
+pytz==2020.1              # via django
 requests-oauthlib==1.3.0  # via jira
 requests-toolbelt==0.9.1  # via jira
-requests==2.23.0          # via -r requirements_periodic_tasks.in, circleclient, directory-api-client, directory-client-core, directory-tests-shared, geckoboard.py, jira, notifications-python-client, requests-oauthlib, requests-toolbelt
-retrying==1.3.3           # via -r requirements_periodic_tasks.in, directory-tests-shared
-scrapy==2.1.0             # via directory-tests-shared
-service-identity==18.1.0  # via directory-tests-shared, scrapy
-sigauth==4.1.1            # via directory-client-core, directory-tests-shared
-six==1.15.0               # via allure-python-commons, automat, behave, cryptography, directory-tests-shared, jira, junit-xml, mohawk, packaging, parse-type, parsel, pdfminer2, protego, pyopenssl, retrying, w3lib
+requests==2.23.0          # via -r requirements_periodic_tasks.in, circleclient, directory-client-core, geckoboard.py, jira, requests-oauthlib, requests-toolbelt
+retrying==1.3.3           # via -r requirements_periodic_tasks.in
+sigauth==4.1.1            # via directory-client-core
+six==1.15.0               # via allure-python-commons, behave, cryptography, jira, junit-xml, mohawk, packaging, parse-type, retrying, w3lib
 soupsieve==2.0.1          # via beautifulsoup4
-sqlparse==0.3.1           # via directory-tests-shared, django
-termcolor==1.1.0          # via -r requirements_periodic_tasks.in, directory-tests-shared
-twisted==20.3.0           # via directory-tests-shared, scrapy
-urllib3==1.25.9           # via directory-tests-shared, requests
-w3lib==1.22.0             # via directory-client-core, directory-tests-shared, parsel, scrapy
+sqlparse==0.3.1           # via django
+termcolor==1.1.0          # via -r requirements_periodic_tasks.in
+urllib3==1.25.9           # via requests
+w3lib==1.22.0             # via directory-client-core
 wcwidth==0.1.9            # via pytest
 zipp==3.1.0               # via importlib-metadata
-zope.interface==5.1.0     # via directory-tests-shared, scrapy, twisted
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
