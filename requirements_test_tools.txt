@@ -34,8 +34,8 @@ prompt-toolkit==3.0.5     # via ipython
 ptyprocess==0.6.0         # via pexpect
 pycodestyle==2.6.0        # via flake8
 pyflakes==2.2.0           # via flake8
-pygments==2.6.1           # via ipython
-pyyaml==5.3.1             # via pre-commit
+pygments==2.7.4           # via ipython
+pyyaml==5.4               # via pre-commit
 regex==2020.5.14          # via black
 six==1.15.0               # via pip-tools, traitlets, virtualenv
 toml==0.10.1              # via black, pre-commit
