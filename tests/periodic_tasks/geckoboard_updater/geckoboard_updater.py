@@ -21,7 +21,7 @@ if __name__ == "__main__":
     print("Pushing datasets to Geckoboard...")
     push_jira_stats(datasets)
     push_circleci_test_results(datasets)
-    push_pa11y_test_results(datasets)
+    #push_pa11y_test_results(datasets)
 
     print(f"Pushing text widget data to GeckoBoard...")
     push_jira_links()
