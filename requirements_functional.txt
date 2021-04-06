@@ -15,7 +15,7 @@ certifi==2020.4.5.1       # via directory-tests-shared, requests
 cffi==1.14.0              # via cryptography, directory-tests-shared
 chardet==3.0.4            # via directory-tests-shared, requests
 constantly==15.1.0        # via directory-tests-shared, twisted
-cryptography==2.9.2       # via directory-tests-shared, pyopenssl, scrapy, service-identity
+cryptography==3.2       # via directory-tests-shared, pyopenssl, scrapy, service-identity
 cssselect==1.1.0          # via directory-tests-shared, parsel, scrapy
 directory-api-client==21.8.0  # via -r requirements_functional.in, directory-tests-shared
 directory-client-core==6.1.0  # via directory-api-client, directory-cms-client, directory-forms-api-client, directory-sso-api-client, directory-tests-shared
@@ -23,8 +23,8 @@ directory-cms-client==11.1.1  # via directory-tests-shared
 directory-constants==20.11.0  # via -r requirements_functional.in
 directory-forms-api-client==5.3.0  # via directory-tests-shared
 directory-sso-api-client==6.3.0  # via -r requirements_functional.in, directory-tests-shared
-django==2.2.12            # via directory-api-client, directory-client-core, directory-constants, directory-tests-shared, djangorestframework, sigauth
-djangorestframework==3.11.0  # via directory-tests-shared, sigauth
+django==2.2.18            # via directory-api-client, directory-client-core, directory-constants, directory-tests-shared, djangorestframework, sigauth
+djangorestframework==3.11.2  # via directory-tests-shared, sigauth
 docopt==0.6.2             # via -r requirements_functional.in, directory-tests-shared, notifications-python-client
 envparse==0.2.0           # via directory-tests-shared
 future==0.18.2            # via directory-tests-shared, notifications-python-client
@@ -34,7 +34,7 @@ importlib-metadata==1.6.0  # via jsonschema, pluggy, pytest
 incremental==17.5.0       # via directory-tests-shared, twisted
 jsonschema==3.2.0         # via -r requirements_functional.in
 langdetect==1.0.8         # via -r requirements_functional.in
-lxml==4.5.1               # via directory-tests-shared, parsel, scrapy
+lxml==4.6.3               # via directory-tests-shared, parsel, scrapy
 mohawk==0.3.4             # via directory-tests-shared, sigauth
 monotonic==1.5            # via directory-client-core, directory-tests-shared, notifications-python-client
 more-itertools==8.3.0     # via pytest
