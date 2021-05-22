@@ -14,7 +14,7 @@ certifi==2020.4.5.1       # via directory-tests-shared, requests
 cffi==1.14.0              # via cryptography, directory-tests-shared
 chardet==3.0.4            # via directory-tests-shared, requests
 constantly==15.1.0        # via directory-tests-shared, twisted
-cryptography==3.2       # via directory-tests-shared, pyopenssl, scrapy, service-identity
+cryptography==3.3.2      # via directory-tests-shared, pyopenssl, scrapy, service-identity
 cssselect==1.1.0          # via directory-tests-shared, parsel, scrapy
 directory-api-client==21.8.0  # via directory-tests-shared
 directory-client-core==6.1.0  # via directory-api-client, directory-cms-client, directory-forms-api-client, directory-sso-api-client, directory-tests-shared
@@ -22,7 +22,7 @@ directory-cms-client==11.1.1  # via -r requirements_smoke.in, directory-tests-sh
 directory-constants==20.11.0  # via -r requirements_smoke.in
 directory-forms-api-client==5.3.0  # via directory-tests-shared
 directory-sso-api-client==6.3.0  # via -r requirements_smoke.in, directory-tests-shared
-django==2.2.18            # via directory-api-client, directory-client-core, directory-constants, directory-tests-shared, djangorestframework, sigauth
+django==2.2.20            # via directory-api-client, directory-client-core, directory-constants, directory-tests-shared, djangorestframework, sigauth
 djangorestframework==3.11.2  # via directory-tests-shared, sigauth
 docopt==0.6.2             # via -r requirements_smoke.in, directory-tests-shared, notifications-python-client
 envparse==0.2.0           # via directory-tests-shared
@@ -41,7 +41,7 @@ parsel==1.6.0             # via directory-tests-shared, scrapy
 pdfminer2==20151206       # via directory-tests-shared
 pluggy==0.13.1            # via allure-python-commons, pytest
 protego==0.1.16           # via directory-tests-shared, scrapy
-py==1.8.1                 # via pytest
+py==1.10.0                # via pytest
 pyasn1-modules==0.2.8     # via directory-tests-shared, service-identity
 pyasn1==0.4.8             # via directory-tests-shared, pyasn1-modules, service-identity
 pycparser==2.20           # via cffi, directory-tests-shared
