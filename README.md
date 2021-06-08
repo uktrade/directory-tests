@@ -1,6 +1,7 @@
 GREAT platform - Tests
 ----------------------
 
+
 [![circle-ci-image]][circle-ci]
 [![snyk-image]][snyk]
 
