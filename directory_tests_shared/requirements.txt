@@ -51,7 +51,7 @@ six==1.15.0
 sqlparse==0.3.1
 termcolor==1.1.0
 twisted==20.3.0
-urllib3==1.26.5
+urllib3==1.25.9
 w3lib==1.22.0
 zope.interface==5.1.0
 

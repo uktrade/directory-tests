@@ -67,7 +67,7 @@ six==1.15.0               # via automat, cryptography, directory-tests-shared, g
 sqlparse==0.3.1           # via directory-tests-shared, django
 termcolor==1.1.0          # via directory-tests-shared
 twisted==20.3.0           # via directory-tests-shared, scrapy
-urllib3==1.26.5           # via directory-tests-shared, requests
+urllib3==1.25.9           # via directory-tests-shared, requests
 w3lib==1.22.0             # via directory-client-core, directory-tests-shared, parsel, scrapy
 werkzeug==1.0.1           # via flask
 zope.interface==5.1.0     # via directory-tests-shared, scrapy, twisted
