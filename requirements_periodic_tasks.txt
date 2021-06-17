@@ -26,7 +26,7 @@ directory-constants==20.11.0  # via -r requirements_periodic_tasks.in
 directory-forms-api-client==5.3.0  # via directory-tests-shared
 directory-sso-api-client==6.3.0  # via directory-tests-shared
 directory_cms_client==11.1.1  # via -r requirements_periodic_tasks.in, directory-tests-shared
-django==2.2.21            # via directory-api-client, directory-client-core, directory-constants, directory-tests-shared, djangorestframework, sigauth
+django==2.2.24            # via directory-api-client, directory-client-core, directory-constants, directory-tests-shared, djangorestframework, sigauth
 djangorestframework==3.11.2  # via directory-tests-shared, sigauth
 docopt==0.6.2             # via directory-tests-shared, notifications-python-client
 envparse==0.2.0           # via directory-tests-shared
