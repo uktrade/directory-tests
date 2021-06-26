@@ -17,7 +17,7 @@ directory-client-core==6.1.0
 directory-cms-client==11.1.1
 directory-forms-api-client==5.3.0
 directory-sso-api-client==6.3.0
-django==2.2.21
+django==2.2.24
 djangorestframework==3.11.2
 docopt==0.6.2
 envparse==0.2.0
