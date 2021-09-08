@@ -59,13 +59,13 @@ monotonic==1.5
     #   notifications-python-client
 notifications-python-client==5.5.1
     # via -r requirements_browser.in
-parse-type==0.5.2
-    # via behave
 parse==1.15.0
     # via
     #   behave
     #   parse-type
-pillow==8.2.0
+parse-type==0.5.2
+    # via behave
+pillow==8.3.2
     # via -r requirements_browser.in
 pluggy==0.13.1
     # via allure-python-commons
@@ -81,7 +81,7 @@ requests==2.23.0
     #   notifications-python-client
 retrying==1.3.3
     # via -r requirements_browser.in
-file:///home/dependabot/dependabot-updater/tmp/dependabot_20210617-8-vvey1f/directory_tests_shared
+file:///home/dependabot/dependabot-updater/tmp/dependabot_20210908-8-4w8sv2/directory_tests_shared
     # via -r requirements_browser.in
 selenium==3.141.0
     # via -r requirements_browser.in
