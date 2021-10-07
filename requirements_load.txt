@@ -60,7 +60,7 @@ pyzmq==19.0.1             # via locust
 queuelib==1.5.0           # via directory-tests-shared, scrapy
 requests==2.23.0          # via -r requirements_load.in, directory-api-client, directory-client-core, directory-tests-shared, locust, notifications-python-client
 retrying==1.3.3           # via directory-tests-shared
-scrapy==2.1.0             # via directory-tests-shared
+scrapy==2.5.1             # via directory-tests-shared
 service-identity==18.1.0  # via directory-tests-shared, scrapy
 sigauth==4.1.1            # via directory-client-core, directory-tests-shared
 six==1.15.0               # via automat, cryptography, directory-tests-shared, geventhttpclient-wheels, mohawk, parsel, pdfminer2, protego, pyopenssl, retrying, w3lib

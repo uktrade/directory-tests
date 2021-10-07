@@ -40,7 +40,7 @@ parse-type==0.5.2         # via behave
 parse==1.15.0             # via behave, directory-tests-shared, parse-type
 parsel==1.6.0             # via directory-tests-shared, scrapy
 pdfminer2==20151206       # via directory-tests-shared
-pillow==8.3.2            # via -r requirements_browser.in
+pillow>=8.3.2            # via -r requirements_browser.in
 pluggy==0.13.1            # via allure-python-commons
 protego==0.1.16           # via directory-tests-shared, scrapy
 pyasn1-modules==0.2.8     # via directory-tests-shared, service-identity
@@ -54,7 +54,7 @@ pytz==2020.1              # via directory-tests-shared, django
 queuelib==1.5.0           # via directory-tests-shared, scrapy
 requests==2.23.0          # via -r requirements_browser.in, directory-api-client, directory-client-core, directory-tests-shared, notifications-python-client
 retrying==1.3.3           # via -r requirements_browser.in, directory-tests-shared
-scrapy==2.1.0             # via directory-tests-shared
+scrapy==2.5.1             # via directory-tests-shared
 selenium==3.141.0         # via -r requirements_browser.in
 service-identity==18.1.0  # via directory-tests-shared, scrapy
 sigauth==4.1.1            # via -r requirements_browser.in, directory-client-core, directory-tests-shared
