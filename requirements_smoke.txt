@@ -46,7 +46,7 @@ importlib-metadata==4.5.0
     # via
     #   pluggy
     #   pytest
-lxml==4.6.3
+lxml==4.6.5
     # via -r requirements_smoke.in
 mohawk==0.3.4
     # via sigauth
@@ -66,16 +66,16 @@ py==1.10.0
     # via pytest
 pyparsing==2.4.7
     # via packaging
-pytest-django==3.9.0
-    # via -r requirements_smoke.in
-pytest-sugar==0.9.3
-    # via -r requirements_smoke.in
 pytest==5.3.5
     # via
     #   -r requirements_smoke.in
     #   allure-pytest
     #   pytest-django
     #   pytest-sugar
+pytest-django==3.9.0
+    # via -r requirements_smoke.in
+pytest-sugar==0.9.3
+    # via -r requirements_smoke.in
 pytz==2020.1
     # via django
 requests==2.23.0
