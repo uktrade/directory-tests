@@ -32,7 +32,7 @@ hyperlink==19.0.0         # via directory-tests-shared, twisted
 idna==2.9                 # via directory-tests-shared, hyperlink, requests
 importlib-metadata==1.6.0  # via pluggy
 incremental==17.5.0       # via directory-tests-shared, twisted
-lxml==4.6.3               # via directory-tests-shared, parsel, scrapy
+lxml==4.6.5               # via directory-tests-shared, parsel, scrapy
 mohawk==0.3.4             # via directory-tests-shared, sigauth
 monotonic==1.5            # via directory-client-core, directory-tests-shared, notifications-python-client
 notifications-python-client==5.5.1  # via -r requirements_browser.in, directory-tests-shared

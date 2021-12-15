@@ -30,7 +30,7 @@ future==0.18.2            # via directory-tests-shared, notifications-python-cli
 hyperlink==19.0.0         # via directory-tests-shared, twisted
 idna==2.9                 # via directory-tests-shared, hyperlink, requests
 incremental==17.5.0       # via directory-tests-shared, twisted
-lxml==4.6.3               # via -r requirements_smoke.in, directory-tests-shared, parsel, scrapy
+lxml==4.6.5               # via -r requirements_smoke.in, directory-tests-shared, parsel, scrapy
 mohawk==0.3.4             # via directory-tests-shared, sigauth
 monotonic==1.5            # via directory-client-core, directory-tests-shared, notifications-python-client
 more-itertools==8.3.0     # via pytest
