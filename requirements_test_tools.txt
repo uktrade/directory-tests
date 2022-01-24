@@ -19,7 +19,7 @@ identify==1.4.15          # via pre-commit
 importlib-metadata==1.6.0  # via flake8, pre-commit, virtualenv
 ipdb==0.13.2              # via -r requirements_test_tools.in
 ipython-genutils==0.2.0   # via traitlets
-ipython==7.14.0           # via ipdb
+ipython==7.16.3           # via ipdb
 isort==4.3.21             # via -r requirements_test_tools.in
 jedi==0.17.0              # via ipython
 mccabe==0.6.1             # via flake8
