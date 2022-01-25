@@ -13,7 +13,7 @@ jira
 junit-xml
 lxml
 mohawk
-pytest
+pytest==6.2.5
 requests
 retrying
 termcolor
