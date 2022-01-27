@@ -8,7 +8,7 @@ directory-cms-client
 directory-sso-api-client
 docopt
 notifications-python-client
-pillow
+Pillow>=9.0.0
 requests
 retrying
 selenium
