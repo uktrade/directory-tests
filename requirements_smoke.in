@@ -6,7 +6,7 @@ directory-sso-api-client
 directory-constants
 docopt
 lxml
-pytest==5.3.5
+pytest==6.2.5
 pytest-django
 pytest-sugar==0.9.3
 requests
