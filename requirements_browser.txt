@@ -41,7 +41,7 @@ cffi==1.15.0
     # via
     #   cryptography
     #   directory-tests-shared
-charset-normalizer==2.0.10
+charset-normalizer==2.0.11
     # via
     #   directory-tests-shared
     #   requests
@@ -86,7 +86,7 @@ directory-sso-api-client==6.5.6
     #   directory-tests-shared
 directory-tests-shared @ file:///var/www/dit/directory-tests/directory_tests_shared
     # via -r requirements_browser.in
-django==2.2.26
+django==2.2.27
     # via
     #   directory-api-client
     #   directory-client-core
@@ -180,7 +180,7 @@ parsel==1.6.0
     #   scrapy
 pdfminer2==20151206
     # via directory-tests-shared
-pillow==9.0.0
+pillow==9.0.1
     # via -r requirements_browser.in
 pluggy==1.0.0
     # via allure-python-commons
@@ -213,7 +213,7 @@ pyjwt==2.3.0
     # via
     #   directory-tests-shared
     #   notifications-python-client
-pyopenssl==21.0.0
+pyopenssl==22.0.0
     # via
     #   directory-tests-shared
     #   scrapy
@@ -262,7 +262,6 @@ six==1.16.0
     #   parsel
     #   pdfminer2
     #   protego
-    #   pyopenssl
     #   retrying
     #   service-identity
     #   w3lib
@@ -286,7 +285,7 @@ trio==0.19.0
     #   trio-websocket
 trio-websocket==0.9.2
     # via selenium
-twisted[http2]==21.7.0
+twisted[http2]==22.1.0
     # via
     #   directory-tests-shared
     #   scrapy

@@ -27,7 +27,7 @@ cffi==1.15.0
     # via
     #   cryptography
     #   directory-tests-shared
-charset-normalizer==2.0.10
+charset-normalizer==2.0.11
     # via
     #   directory-tests-shared
     #   requests
@@ -69,7 +69,7 @@ directory-forms-api-client==6.1.0
     # via directory-tests-shared
 directory-sso-api-client==6.5.6
     # via directory-tests-shared
-django==2.2.26
+django==2.2.27
     # via
     #   directory-api-client
     #   directory-client-core
@@ -148,7 +148,7 @@ jmespath==0.10.0
     # via
     #   directory-tests-shared
     #   itemloaders
-locust==2.6.1
+locust==2.7.3
     # via -r requirements_load.in
 lxml==4.7.1
     # via
@@ -209,7 +209,7 @@ pyjwt==2.3.0
     # via
     #   directory-tests-shared
     #   notifications-python-client
-pyopenssl==21.0.0
+pyopenssl==22.0.0
     # via
     #   directory-tests-shared
     #   scrapy
@@ -256,7 +256,6 @@ six==1.16.0
     #   parsel
     #   pdfminer2
     #   protego
-    #   pyopenssl
     #   retrying
     #   service-identity
     #   w3lib
@@ -266,7 +265,7 @@ sqlparse==0.4.2
     #   django
 termcolor==1.1.0
     # via directory-tests-shared
-twisted[http2]==21.7.0
+twisted[http2]==22.1.0
     # via
     #   directory-tests-shared
     #   scrapy
@@ -286,7 +285,7 @@ w3lib==1.22.0
     #   itemloaders
     #   parsel
     #   scrapy
-werkzeug==2.0.2
+werkzeug==2.0.3
     # via
     #   flask
     #   locust
