@@ -17,7 +17,7 @@ directory-client-core==6.3.0
 directory-cms-client==11.1.1
 directory-forms-api-client==6.1.0
 directory-sso-api-client==6.5.6
-django==2.2.26
+django==2.2.27
 djangorestframework==3.13.1
 docopt==0.6.2
 envparse==0.2.0
@@ -59,7 +59,7 @@ twisted[http2]==21.7.0
 typing-extensions==4.0.1
 urllib3==1.26.8
 w3lib==1.22.0
-zope.interface==5.4.0
+zope-interface==5.4.0
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
