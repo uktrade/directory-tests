@@ -8,7 +8,7 @@ attrs==21.4.0
 automat==20.2.0
 certifi==2021.10.8
 cffi==1.15.0
-charset-normalizer==2.0.10
+charset-normalizer==2.0.11
 constantly==15.1.0
 cryptography==36.0.1
 cssselect==1.1.0
@@ -17,7 +17,7 @@ directory-client-core==6.3.0
 directory-cms-client==11.1.1
 directory-forms-api-client==6.1.0
 directory-sso-api-client==6.5.6
-django==2.2.26
+django==2.2.27
 djangorestframework==3.13.1
 docopt==0.6.2
 envparse==0.2.0
@@ -44,7 +44,7 @@ pyasn1-modules==0.2.8
 pycparser==2.21
 pydispatcher==2.0.5
 pyjwt==2.3.0
-pyopenssl==21.0.0
+pyopenssl==22.0.0
 pytz==2021.3
 queuelib==1.6.2
 requests==2.27.1
@@ -55,7 +55,7 @@ sigauth==4.3.0
 six==1.16.0
 sqlparse==0.4.2
 termcolor==1.1.0
-twisted[http2]==21.7.0
+twisted[http2]==22.1.0
 typing-extensions==4.0.1
 urllib3==1.26.8
 w3lib==1.22.0

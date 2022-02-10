@@ -9,3 +9,4 @@ pdfminer2
 retrying
 scrapy
 termcolor
+django==2.2.27

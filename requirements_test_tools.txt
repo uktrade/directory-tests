@@ -8,7 +8,7 @@ asttokens==2.0.5
     # via stack-data
 backcall==0.2.0
     # via ipython
-black==21.12b0
+black==22.1.0
     # via
     #   -r requirements_test_tools.in
     #   ipython
@@ -34,7 +34,7 @@ flake8==4.0.1
     #   flake8-spellcheck
 flake8-spellcheck==0.24.0
     # via -r requirements_test_tools.in
-identify==2.4.5
+identify==2.4.9
     # via pre-commit
 ipdb==0.13.9
     # via -r requirements_test_tools.in
@@ -62,15 +62,15 @@ pexpect==4.8.0
     # via ipython
 pickleshare==0.7.5
     # via ipython
-pip-tools==6.4.0
+pip-tools==6.5.1
     # via -r requirements_test_tools.in
-platformdirs==2.4.1
+platformdirs==2.5.0
     # via
     #   black
     #   virtualenv
 pre-commit==2.17.0
     # via -r requirements_test_tools.in
-prompt-toolkit==3.0.24
+prompt-toolkit==3.0.27
     # via ipython
 ptyprocess==0.7.0
     # via pexpect
@@ -93,7 +93,7 @@ toml==0.10.2
     #   ipdb
     #   pre-commit
     #   vulture
-tomli==1.2.3
+tomli==2.0.1
     # via
     #   black
     #   pep517
@@ -103,7 +103,7 @@ traitlets==5.1.1
     #   matplotlib-inline
 typing-extensions==4.0.1
     # via black
-virtualenv==20.13.0
+virtualenv==20.13.1
     # via pre-commit
 vulture==2.3
     # via -r requirements_test_tools.in
