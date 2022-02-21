@@ -19,7 +19,7 @@ def update_allure_feature_name(results_dir: str, prefix: str):
         if filename.endswith(".json"):
             result_file = os.path.join(results_dir_path, filename)
             with open(result_file, "r") as json_file:
-                report = json.loads(json_file.read())
+                report = json.load(json_file)
                 report["name"] = f"{prefix} - {report['name']}"
                 report["historyId"] = f"{prefix}{report['historyId']}"
                 report["uuid"] = f"{prefix}{report['uuid']}"
