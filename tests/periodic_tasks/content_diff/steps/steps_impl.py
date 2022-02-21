@@ -201,7 +201,7 @@ def look_for_differences(context: Context):
 
     contents_file_name = "./reports/{}.json".format(clean_endpoint)
     with open(contents_file_name, "w") as file:
-        file.write(json.dumps(contents))
+        json.dump(contents, file)
 
     assert found_on_both_sites, f"{endpoint} doesn't exist on both sites"
     no_differences = "No Differences Found" in html
