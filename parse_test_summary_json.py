@@ -11,7 +11,7 @@ def parse_summary_json(summary_path: str):
         return
 
     with open(summary_path, "r") as json_file:
-        report = json.loads(json_file.read())
+        report = json.load(json_file)
         stats = report["statistic"]
 
     message = (
