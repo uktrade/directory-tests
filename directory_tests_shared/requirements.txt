@@ -54,7 +54,7 @@ six==1.16.0
 sqlparse==0.4.2
 termcolor==1.1.0
 tldextract==3.2.0
-twisted==22.1.0
+twisted==22.2.0
 typing-extensions==4.1.1
 urllib3==1.26.8
 w3lib==1.22.0

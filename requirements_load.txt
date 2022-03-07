@@ -264,7 +264,7 @@ tldextract==3.2.0
     # via
     #   directory-tests-shared
     #   scrapy
-twisted==22.1.0
+twisted==22.2.0
     # via
     #   directory-tests-shared
     #   scrapy

@@ -285,7 +285,7 @@ trio==0.20.0
     #   trio-websocket
 trio-websocket==0.9.2
     # via selenium
-twisted==22.1.0
+twisted==22.2.0
     # via
     #   directory-tests-shared
     #   scrapy

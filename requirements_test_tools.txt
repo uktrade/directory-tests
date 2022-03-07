@@ -30,7 +30,7 @@ flake8==4.0.1
     # via
     #   -r requirements_test_tools.in
     #   flake8-spellcheck
-flake8-spellcheck==0.24.0
+flake8-spellcheck==0.25.0
     # via -r requirements_test_tools.in
 identify==2.4.11
     # via pre-commit
