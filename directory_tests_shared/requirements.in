@@ -10,3 +10,4 @@ retrying
 scrapy
 termcolor
 django==2.2.27
+twisted==22.2.0
