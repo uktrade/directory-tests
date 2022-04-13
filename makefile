@@ -130,37 +130,37 @@ requirements_tests_shared:
 
 compile_requirements_browser:
 	@rm -fr requirements_browser.txt
-	python3 -m piptools compile --quiet requirements_browser.in
+	python -m piptools compile --quiet requirements_browser.in
 	@sed -i '/^file.*/d' requirements_browser.txt
 	@sed -i '7i.\/directory_tests_shared\/' requirements_browser.txt
 
 compile_requirements_functional:
 	@rm -fr requirements_functional.txt
-	python3 -m piptools compile --quiet requirements_functional.in
+	python -m piptools compile --quiet requirements_functional.in
 	@sed -i 's/^\-e file.*/\-e .\/directory_tests_shared\//' requirements_functional.txt
 
 compile_requirements_periodic_tasks:
 	@rm -fr requirements_periodic_tasks.txt
-	python3 -m piptools compile --quiet requirements_periodic_tasks.in
+	python -m piptools compile --quiet requirements_periodic_tasks.in
 	@sed -i 's/^\-e file.*/\-e .\/directory_tests_shared\//' requirements_periodic_tasks.txt
 
 compile_requirements_smoke:
 	@rm -fr requirements_smoke.txt
-	python3 -m piptools compile --quiet requirements_smoke.in
+	python -m piptools compile --quiet requirements_smoke.in
 	@sed -i 's/^\-e file.*/\-e .\/directory_tests_shared\//' requirements_smoke.txt
 
 compile_requirements_load:
 	@rm -fr requirements_load.txt
-	python3 -m piptools compile --quiet requirements_load.in
+	python -m piptools compile --quiet requirements_load.in
 	@sed -i 's/^\-e file.*/\-e .\/directory_tests_shared\//' requirements_load.txt
 
 compile_requirements_test_tools:
 	@rm -fr requirements_test_tools.txt
-	python3 -m piptools compile --quiet requirements_test_tools.in
+	python -m piptools compile --quiet requirements_test_tools.in
 
 compile_requirements_tests_shared:
 	@rm -fr ./directory_tests_shared/requirements.txt
-	python3 -m piptools compile --quiet --no-annotate --output-file ./directory_tests_shared/requirements.txt ./directory_tests_shared/requirements.in
+	python -m piptools compile --quiet --no-annotate --output-file ./directory_tests_shared/requirements.txt ./directory_tests_shared/requirements.in
 
 compile_all_requirements: compile_requirements_tests_shared compile_requirements_browser compile_requirements_functional compile_requirements_periodic_tasks compile_requirements_smoke compile_requirements_load compile_requirements_test_tools
 

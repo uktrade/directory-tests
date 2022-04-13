@@ -8,11 +8,11 @@ asttokens==2.0.5
     # via stack-data
 backcall==0.2.0
     # via ipython
-black==22.1.0
+black==22.3.0
     # via -r requirements_test_tools.in
 cfgv==3.3.1
     # via pre-commit
-click==8.0.4
+click==8.1.2
     # via
     #   black
     #   pip-tools
@@ -30,13 +30,13 @@ flake8==4.0.1
     # via
     #   -r requirements_test_tools.in
     #   flake8-spellcheck
-flake8-spellcheck==0.25.0
+flake8-spellcheck==0.28.0
     # via -r requirements_test_tools.in
-identify==2.4.11
+identify==2.4.12
     # via pre-commit
 ipdb==0.13.9
     # via -r requirements_test_tools.in
-ipython==8.1.1
+ipython==8.2.0
     # via ipdb
 isort==5.10.1
     # via -r requirements_test_tools.in
@@ -60,15 +60,15 @@ pexpect==4.8.0
     # via ipython
 pickleshare==0.7.5
     # via ipython
-pip-tools==6.5.1
+pip-tools==6.6.0
     # via -r requirements_test_tools.in
 platformdirs==2.5.1
     # via
     #   black
     #   virtualenv
-pre-commit==2.17.0
+pre-commit==2.18.1
     # via -r requirements_test_tools.in
-prompt-toolkit==3.0.28
+prompt-toolkit==3.0.29
     # via ipython
 ptyprocess==0.7.0
     # via pexpect
@@ -101,7 +101,7 @@ traitlets==5.1.1
     #   matplotlib-inline
 typing-extensions==4.1.1
     # via black
-virtualenv==20.13.2
+virtualenv==20.14.1
     # via pre-commit
 vulture==2.3
     # via -r requirements_test_tools.in

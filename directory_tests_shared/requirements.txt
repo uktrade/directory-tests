@@ -10,12 +10,12 @@ certifi==2021.10.8
 cffi==1.15.0
 charset-normalizer==2.0.12
 constantly==15.1.0
-cryptography==36.0.1
+cryptography==36.0.2
 cssselect==1.1.0
-directory-api-client==24.1.0
+directory-api-client==24.2.0
 directory-client-core==6.3.0
 directory-cms-client==11.1.1
-directory-forms-api-client==6.1.0
+directory-forms-api-client==6.2.0
 directory-sso-api-client==6.5.6
 django==2.2.27
 djangorestframework==3.13.1
@@ -25,9 +25,9 @@ filelock==3.6.0
 hyperlink==21.0.0
 idna==3.3
 incremental==21.3.0
-itemadapter==0.4.0
+itemadapter==0.5.0
 itemloaders==1.0.4
-jmespath==0.10.0
+jmespath==1.0.0
 lxml==4.8.0
 mohawk==1.1.0
 monotonic==1.6
@@ -42,7 +42,7 @@ pycparser==2.21
 pydispatcher==2.0.5
 pyjwt==2.3.0
 pyopenssl==22.0.0
-pytz==2021.3
+pytz==2022.1
 queuelib==1.6.2
 requests==2.27.1
 requests-file==1.5.1
@@ -53,12 +53,12 @@ sigauth==4.3.0
 six==1.16.0
 sqlparse==0.4.2
 termcolor==1.1.0
-tldextract==3.2.0
-twisted==22.2.0
+tldextract==3.2.1
+twisted==22.4.0rc1
 typing-extensions==4.1.1
-urllib3==1.26.8
+urllib3==1.26.9
 w3lib==1.22.0
-zope.interface==5.4.0
+zope-interface==5.4.0
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

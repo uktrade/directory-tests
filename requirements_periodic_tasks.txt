@@ -24,7 +24,7 @@ automat==20.2.0
     # via
     #   directory-tests-shared
     #   twisted
-beautifulsoup4==4.10.0
+beautifulsoup4==4.11.1
     # via
     #   -r requirements_periodic_tasks.in
     #   pylinkvalidator
@@ -50,7 +50,7 @@ constantly==15.1.0
     # via
     #   directory-tests-shared
     #   twisted
-cryptography==36.0.1
+cryptography==36.0.2
     # via
     #   directory-tests-shared
     #   pyopenssl
@@ -64,7 +64,7 @@ cssselect==1.1.0
     #   scrapy
 defusedxml==0.7.1
     # via jira
-directory-api-client==24.1.0
+directory-api-client==24.2.0
     # via directory-tests-shared
 directory-client-core==6.3.0
     # via
@@ -79,7 +79,7 @@ directory-cms-client==11.1.1
     #   directory-tests-shared
 directory-constants==21.2.0
     # via -r requirements_periodic_tasks.in
-directory-forms-api-client==6.1.0
+directory-forms-api-client==6.2.0
     # via directory-tests-shared
 directory-sso-api-client==6.5.6
     # via directory-tests-shared
@@ -105,7 +105,7 @@ filelock==3.6.0
     # via
     #   directory-tests-shared
     #   tldextract
-geckoboard.py==1.1.0
+geckoboard-py==1.1.0
     # via -r requirements_periodic_tasks.in
 hyperlink==21.0.0
     # via
@@ -117,7 +117,7 @@ idna==3.3
     #   hyperlink
     #   requests
     #   tldextract
-importlib-metadata==4.11.2
+importlib-metadata==4.11.3
     # via keyring
 incremental==21.3.0
     # via
@@ -125,7 +125,7 @@ incremental==21.3.0
     #   twisted
 iniconfig==1.1.1
     # via pytest
-itemadapter==0.4.0
+itemadapter==0.5.0
     # via
     #   directory-tests-shared
     #   itemloaders
@@ -134,13 +134,13 @@ itemloaders==1.0.4
     # via
     #   directory-tests-shared
     #   scrapy
-jeepney==0.7.1
+jeepney==0.8.0
     # via
     #   keyring
     #   secretstorage
 jira==3.1.1
     # via -r requirements_periodic_tasks.in
-jmespath==0.10.0
+jmespath==1.0.0
     # via
     #   directory-tests-shared
     #   itemloaders
@@ -218,11 +218,11 @@ pyopenssl==22.0.0
     # via
     #   directory-tests-shared
     #   scrapy
-pyparsing==3.0.7
+pyparsing==3.0.8
     # via packaging
 pytest==6.2.5
     # via -r requirements_periodic_tasks.in
-pytz==2021.3
+pytz==2022.1
     # via
     #   directory-tests-shared
     #   django
@@ -238,7 +238,7 @@ requests==2.27.1
     #   directory-api-client
     #   directory-client-core
     #   directory-tests-shared
-    #   geckoboard.py
+    #   geckoboard-py
     #   jira
     #   notifications-python-client
     #   requests-file
@@ -285,7 +285,7 @@ six==1.16.0
     #   retrying
     #   service-identity
     #   w3lib
-soupsieve==2.3.1
+soupsieve==2.3.2
     # via beautifulsoup4
 sqlparse==0.4.2
     # via
@@ -295,13 +295,13 @@ termcolor==1.1.0
     # via
     #   -r requirements_periodic_tasks.in
     #   directory-tests-shared
-tldextract==3.2.0
+tldextract==3.2.1
     # via
     #   directory-tests-shared
     #   scrapy
 toml==0.10.2
     # via pytest
-twisted==22.2.0
+twisted==22.4.0rc1
     # via
     #   directory-tests-shared
     #   scrapy
@@ -309,7 +309,7 @@ typing-extensions==4.1.1
     # via
     #   directory-tests-shared
     #   twisted
-urllib3==1.26.8
+urllib3==1.26.9
     # via
     #   directory-tests-shared
     #   requests
@@ -320,9 +320,9 @@ w3lib==1.22.0
     #   itemloaders
     #   parsel
     #   scrapy
-zipp==3.7.0
+zipp==3.8.0
     # via importlib-metadata
-zope.interface==5.4.0
+zope-interface==5.4.0
     # via
     #   directory-tests-shared
     #   scrapy
