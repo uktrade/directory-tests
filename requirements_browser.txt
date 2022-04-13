@@ -26,7 +26,7 @@ automat==20.2.0
     # via
     #   directory-tests-shared
     #   twisted
-beautifulsoup4==4.10.0
+beautifulsoup4==4.11.1
     # via -r requirements_browser.in
 behave==1.2.6
     # via
@@ -49,7 +49,7 @@ constantly==15.1.0
     # via
     #   directory-tests-shared
     #   twisted
-cryptography==36.0.1
+cryptography==36.0.2
     # via
     #   directory-tests-shared
     #   pyopenssl
@@ -63,7 +63,7 @@ cssselect==1.1.0
     #   scrapy
 datadiff==2.0.0
     # via -r requirements_browser.in
-directory-api-client==24.1.0
+directory-api-client==24.2.0
     # via
     #   -r requirements_browser.in
     #   directory-tests-shared
@@ -78,7 +78,7 @@ directory-cms-client==11.1.1
     # via
     #   -r requirements_browser.in
     #   directory-tests-shared
-directory-forms-api-client==6.1.0
+directory-forms-api-client==6.2.0
     # via directory-tests-shared
 directory-sso-api-client==6.5.6
     # via
@@ -125,7 +125,7 @@ incremental==21.3.0
     # via
     #   directory-tests-shared
     #   twisted
-itemadapter==0.4.0
+itemadapter==0.5.0
     # via
     #   directory-tests-shared
     #   itemloaders
@@ -134,7 +134,7 @@ itemloaders==1.0.4
     # via
     #   directory-tests-shared
     #   scrapy
-jmespath==0.10.0
+jmespath==1.0.0
     # via
     #   directory-tests-shared
     #   itemloaders
@@ -171,7 +171,7 @@ parsel==1.6.0
     #   scrapy
 pdfminer2==20151206
     # via directory-tests-shared
-pillow==9.0.1
+pillow==9.1.0
     # via -r requirements_browser.in
 pluggy==1.0.0
     # via allure-python-commons
@@ -207,7 +207,7 @@ pyopenssl==22.0.0
     #   urllib3
 pysocks==1.7.1
     # via urllib3
-pytz==2021.3
+pytz==2022.1
     # via
     #   directory-tests-shared
     #   django
@@ -235,7 +235,7 @@ retrying==1.3.3
     #   directory-tests-shared
 scrapy==2.6.1
     # via directory-tests-shared
-selenium==4.1.2
+selenium==4.1.3
     # via -r requirements_browser.in
 service-identity==21.1.0
     # via
@@ -265,7 +265,7 @@ sniffio==1.2.0
     # via trio
 sortedcontainers==2.4.0
     # via trio
-soupsieve==2.3.1
+soupsieve==2.3.2
     # via beautifulsoup4
 sqlparse==0.4.2
     # via
@@ -275,7 +275,7 @@ termcolor==1.1.0
     # via
     #   -r requirements_browser.in
     #   directory-tests-shared
-tldextract==3.2.0
+tldextract==3.2.1
     # via
     #   directory-tests-shared
     #   scrapy
@@ -285,7 +285,7 @@ trio==0.20.0
     #   trio-websocket
 trio-websocket==0.9.2
     # via selenium
-twisted==22.2.0
+twisted==22.4.0rc1
     # via
     #   directory-tests-shared
     #   scrapy
@@ -293,7 +293,7 @@ typing-extensions==4.1.1
     # via
     #   directory-tests-shared
     #   twisted
-urllib3[secure,socks]==1.26.8
+urllib3[secure,socks]==1.26.9
     # via
     #   -r requirements_browser.in
     #   directory-tests-shared
@@ -310,7 +310,7 @@ wsproto==1.1.0
     # via trio-websocket
 xmltodict==0.12.0
     # via -r requirements_browser.in
-zope.interface==5.4.0
+zope-interface==5.4.0
     # via
     #   directory-tests-shared
     #   scrapy
