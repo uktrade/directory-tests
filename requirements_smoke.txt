@@ -24,7 +24,7 @@ automat==20.2.0
     #   twisted
 beautifulsoup4==4.11.1
     # via -r requirements_smoke.in
-certifi==2021.10.8
+certifi==2022.5.18.1
     # via
     #   directory-tests-shared
     #   requests
@@ -40,7 +40,7 @@ constantly==15.1.0
     # via
     #   directory-tests-shared
     #   twisted
-cryptography==36.0.2
+cryptography==37.0.2
     # via
     #   directory-tests-shared
     #   pyopenssl
@@ -51,7 +51,7 @@ cssselect==1.1.0
     #   directory-tests-shared
     #   parsel
     #   scrapy
-directory-api-client==24.2.0
+directory-api-client==24.5.1
     # via directory-tests-shared
 directory-client-core==6.3.0
     # via
@@ -64,7 +64,7 @@ directory-cms-client==11.1.1
     # via
     #   -r requirements_smoke.in
     #   directory-tests-shared
-directory-constants==21.2.0
+directory-constants==21.3.0
     # via -r requirements_smoke.in
 directory-forms-api-client==6.2.0
     # via directory-tests-shared
@@ -91,7 +91,7 @@ docopt==0.6.2
     #   notifications-python-client
 envparse==0.2.0
     # via directory-tests-shared
-filelock==3.6.0
+filelock==3.7.0
     # via
     #   directory-tests-shared
     #   tldextract
@@ -111,7 +111,7 @@ incremental==21.3.0
     #   twisted
 iniconfig==1.1.1
     # via pytest
-itemadapter==0.5.0
+itemadapter==0.6.0
     # via
     #   directory-tests-shared
     #   itemloaders
@@ -180,7 +180,7 @@ pydispatcher==2.0.5
     # via
     #   directory-tests-shared
     #   scrapy
-pyjwt==2.3.0
+pyjwt==2.4.0
     # via
     #   directory-tests-shared
     #   notifications-python-client
@@ -188,7 +188,7 @@ pyopenssl==22.0.0
     # via
     #   directory-tests-shared
     #   scrapy
-pyparsing==3.0.8
+pyparsing==3.0.9
     # via packaging
 pytest==6.2.5
     # via
@@ -251,7 +251,7 @@ six==1.16.0
     #   retrying
     #   service-identity
     #   w3lib
-soupsieve==2.3.2
+soupsieve==2.3.2.post1
     # via beautifulsoup4
 sqlparse==0.4.2
     # via
@@ -261,17 +261,17 @@ termcolor==1.1.0
     # via
     #   directory-tests-shared
     #   pytest-sugar
-tldextract==3.2.1
+tldextract==3.3.0
     # via
     #   directory-tests-shared
     #   scrapy
 toml==0.10.2
     # via pytest
-twisted==22.4.0rc1
+twisted==22.4.0
     # via
     #   directory-tests-shared
     #   scrapy
-typing-extensions==4.1.1
+typing-extensions==4.2.0
     # via
     #   directory-tests-shared
     #   twisted
@@ -286,7 +286,7 @@ w3lib==1.22.0
     #   itemloaders
     #   parsel
     #   scrapy
-zope-interface==5.4.0
+zope.interface==5.4.0
     # via
     #   directory-tests-shared
     #   scrapy
