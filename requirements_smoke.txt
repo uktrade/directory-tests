@@ -267,7 +267,7 @@ tldextract==3.3.0
     #   scrapy
 toml==0.10.2
     # via pytest
-twisted==22.4.0rc1
+twisted==22.4.0
     # via
     #   directory-tests-shared
     #   scrapy

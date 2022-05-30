@@ -36,7 +36,7 @@ identify==2.5.1
     # via pre-commit
 ipdb==0.13.9
     # via -r requirements_test_tools.in
-ipython==8.3.0
+ipython==8.4.0
     # via ipdb
 isort==5.10.1
     # via -r requirements_test_tools.in
