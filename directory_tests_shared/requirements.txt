@@ -28,7 +28,7 @@ incremental==21.3.0
 itemadapter==0.6.0
 itemloaders==1.0.4
 jmespath==1.0.0
-lxml==4.8.0
+lxml==4.9.1
 mohawk==1.1.0
 monotonic==1.6
 notifications-python-client==6.3.0
@@ -58,7 +58,7 @@ twisted==22.4.0
 typing-extensions==4.2.0
 urllib3==1.26.9
 w3lib==1.22.0
-zope.interface==5.4.0
+zope-interface==5.4.0
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
