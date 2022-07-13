@@ -29,15 +29,15 @@ behave==1.2.6
     # via
     #   -r requirements_functional.in
     #   allure-behave
-certifi==2022.5.18.1
+certifi==2022.6.15
     # via
     #   directory-tests-shared
     #   requests
-cffi==1.15.0
+cffi==1.15.1
     # via
     #   cryptography
     #   directory-tests-shared
-charset-normalizer==2.0.12
+charset-normalizer==2.1.0
     # via
     #   directory-tests-shared
     #   requests
@@ -45,7 +45,7 @@ constantly==15.1.0
     # via
     #   directory-tests-shared
     #   twisted
-cryptography==37.0.2
+cryptography==37.0.4
     # via
     #   directory-tests-shared
     #   pyopenssl
@@ -69,7 +69,7 @@ directory-client-core==6.3.0
     #   directory-tests-shared
 directory-cms-client==11.1.1
     # via directory-tests-shared
-directory-constants==21.3.0
+directory-constants==21.4.0
     # via -r requirements_functional.in
 directory-forms-api-client==6.2.0
     # via directory-tests-shared
@@ -96,7 +96,7 @@ docopt==0.6.2
     #   notifications-python-client
 envparse==0.2.0
     # via directory-tests-shared
-filelock==3.7.0
+filelock==3.7.1
     # via
     #   directory-tests-shared
     #   tldextract
@@ -125,15 +125,15 @@ itemloaders==1.0.4
     # via
     #   directory-tests-shared
     #   scrapy
-jmespath==1.0.0
+jmespath==1.0.1
     # via
     #   directory-tests-shared
     #   itemloaders
-jsonschema==4.5.1
+jsonschema==4.7.2
     # via -r requirements_functional.in
 langdetect==1.0.9
     # via -r requirements_functional.in
-lxml==4.8.0
+lxml==4.9.1
     # via
     #   directory-tests-shared
     #   parsel
@@ -216,7 +216,7 @@ queuelib==1.6.2
     # via
     #   directory-tests-shared
     #   scrapy
-requests==2.27.1
+requests==2.28.1
     # via
     #   -r requirements_functional.in
     #   directory-api-client
@@ -272,7 +272,7 @@ termcolor==1.1.0
     # via
     #   -r requirements_functional.in
     #   directory-tests-shared
-tldextract==3.3.0
+tldextract==3.3.1
     # via
     #   directory-tests-shared
     #   scrapy
@@ -282,11 +282,11 @@ twisted==22.4.0
     # via
     #   directory-tests-shared
     #   scrapy
-typing-extensions==4.2.0
+typing-extensions==4.3.0
     # via
     #   directory-tests-shared
     #   twisted
-urllib3==1.26.9
+urllib3==1.26.10
     # via
     #   directory-tests-shared
     #   requests
