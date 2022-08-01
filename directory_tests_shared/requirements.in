@@ -7,7 +7,7 @@ notifications-python-client
 parse
 pdfminer2
 retrying
-scrapy
+scrapy==2.6.2
 termcolor
 django==2.2.28
 twisted==22.4.0
