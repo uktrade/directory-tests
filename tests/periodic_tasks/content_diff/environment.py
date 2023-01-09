@@ -41,7 +41,7 @@ def extract_summary_from_report_file(file_path: str) -> Summary:
 
     contents_json = file_path.replace(".html", ".json")
     with open(contents_json, "r") as f:
-        contents = json.loads(f.read())
+        contents = json.load(f)
         os.remove(contents_json)
 
     result = "Found differences"
